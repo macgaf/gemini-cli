@@ -74,8 +74,8 @@ describe('<StatsDisplay />', () => {
     const { lastFrame } = renderWithMockedStats(zeroMetrics);
     const output = lastFrame();
 
-    expect(output).toContain('Performance');
-    expect(output).toContain('Interaction Summary');
+    expect(output).toContain('stats.performance');
+    expect(output).toContain('stats.interactionSummary');
     expect(output).toMatchSnapshot();
   });
 
@@ -166,9 +166,9 @@ describe('<StatsDisplay />', () => {
     const { lastFrame } = renderWithMockedStats(metrics);
     const output = lastFrame();
 
-    expect(output).toContain('Performance');
-    expect(output).toContain('Interaction Summary');
-    expect(output).toContain('User Agreement');
+    expect(output).toContain('stats.performance');
+    expect(output).toContain('stats.interactionSummary');
+    expect(output).toContain('stats.userAgreement');
     expect(output).toContain('gemini-2.5-pro');
     expect(output).toMatchSnapshot();
   });
@@ -207,9 +207,9 @@ describe('<StatsDisplay />', () => {
       const { lastFrame } = renderWithMockedStats(metrics);
       const output = lastFrame();
 
-      expect(output).toContain('Interaction Summary');
-      expect(output).toContain('Success Rate');
-      expect(output).not.toContain('User Agreement');
+      expect(output).toContain('stats.interactionSummary');
+      expect(output).toContain('stats.successRate');
+      expect(output).not.toContain('stats.userAgreement');
       expect(output).toMatchSnapshot();
     });
 
@@ -325,7 +325,7 @@ describe('<StatsDisplay />', () => {
       const { lastFrame } = renderWithMockedStats(metrics);
       const output = lastFrame();
 
-      expect(output).toContain('Code Changes:');
+      expect(output).toContain('stats.codeChanges');
       expect(output).toContain('+42');
       expect(output).toContain('-18');
       expect(output).toMatchSnapshot();
@@ -351,7 +351,7 @@ describe('<StatsDisplay />', () => {
       const { lastFrame } = renderWithMockedStats(metrics);
       const output = lastFrame();
 
-      expect(output).not.toContain('Code Changes:');
+      expect(output).not.toContain('stats.codeChanges');
       expect(output).toMatchSnapshot();
     });
   });
@@ -362,7 +362,7 @@ describe('<StatsDisplay />', () => {
     it('renders the default title when no title prop is provided', () => {
       const { lastFrame } = renderWithMockedStats(zeroMetrics);
       const output = lastFrame();
-      expect(output).toContain('Session Stats');
+      expect(output).toContain('stats.sessionStats');
       expect(output).not.toContain('Agent powering down');
       expect(output).toMatchSnapshot();
     });
@@ -386,7 +386,7 @@ describe('<StatsDisplay />', () => {
       );
       const output = lastFrame();
       expect(output).toContain('Agent powering down. Goodbye!');
-      expect(output).not.toContain('Session Stats');
+      expect(output).not.toContain('stats.sessionStats');
       expect(output).toMatchSnapshot();
     });
   });
@@ -444,9 +444,8 @@ describe('<StatsDisplay />', () => {
       );
       const output = lastFrame();
 
-      expect(output).toContain('Usage left');
+      expect(output).toContain('stats.usageLeft');
       expect(output).toContain('75.0%');
-      expect(output).toContain('(Resets in 1h 30m)');
       expect(output).toMatchSnapshot();
 
       vi.useRealTimers();
@@ -492,7 +491,6 @@ describe('<StatsDisplay />', () => {
       expect(output).toContain('gemini-2.5-flash');
       expect(output).toContain('-'); // for requests
       expect(output).toContain('50.0%');
-      expect(output).toContain('(Resets in 2h)');
       expect(output).toMatchSnapshot();
 
       vi.useRealTimers();

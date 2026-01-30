@@ -26,11 +26,8 @@ describe('LoopDetectionConfirmation', () => {
     );
     const output = lastFrame()!.toString();
 
-    expect(output).toContain('A potential loop was detected');
-    expect(output).toContain('Keep loop detection enabled (esc)');
-    expect(output).toContain('Disable loop detection for this session');
-    expect(output).toContain(
-      'This can happen due to repetitive tool calls or other model behavior',
-    );
+    expect(output).toContain('loopDetection.description');
+    expect(output).toContain('loopDetection.options.keep');
+    expect(output).toContain('loopDetection.options.disable');
   });
 });

@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { ThemedGradient } from './ThemedGradient.js';
 import { theme } from '../semantic-colors.js';
 import { formatDuration } from '../utils/formatters.js';
@@ -25,6 +26,7 @@ import {
   type RetrieveUserQuotaResponse,
   VALID_GEMINI_MODELS,
 } from '@google/gemini-cli-core';
+import type { i18n as I18nType, TFunction } from 'i18next';
 
 // A more flexible and powerful StatRow component
 interface StatRowProps {
@@ -121,7 +123,11 @@ const buildModelRows = (
   return [...activeRows, ...quotaRows];
 };
 
-const formatResetTime = (resetTime: string): string => {
+const formatResetTime = (
+  resetTime: string,
+  t: TFunction,
+  language?: string,
+): string => {
   const diff = new Date(resetTime).getTime() - Date.now();
   if (diff <= 0) return '';
 
@@ -129,20 +135,27 @@ const formatResetTime = (resetTime: string): string => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
+  const locale = language || 'en';
   const fmt = (val: number, unit: 'hour' | 'minute') =>
-    new Intl.NumberFormat('en', {
+    new Intl.NumberFormat(locale, {
       style: 'unit',
       unit,
       unitDisplay: 'narrow',
     }).format(val);
 
   if (hours > 0 && minutes > 0) {
-    return `(Resets in ${fmt(hours, 'hour')} ${fmt(minutes, 'minute')})`;
+    return t('stats.resetsIn', {
+      time: `${fmt(hours, 'hour')} ${fmt(minutes, 'minute')}`,
+    });
   } else if (hours > 0) {
-    return `(Resets in ${fmt(hours, 'hour')})`;
+    return t('stats.resetsIn', {
+      time: fmt(hours, 'hour'),
+    });
   }
 
-  return `(Resets in ${fmt(minutes, 'minute')})`;
+  return t('stats.resetsIn', {
+    time: fmt(minutes, 'minute'),
+  });
 };
 
 const ModelUsageTable: React.FC<{
@@ -150,7 +163,9 @@ const ModelUsageTable: React.FC<{
   quotas?: RetrieveUserQuotaResponse;
   cacheEfficiency: number;
   totalCachedTokens: number;
-}> = ({ models, quotas, cacheEfficiency, totalCachedTokens }) => {
+  t: TFunction;
+  i18n?: I18nType;
+}> = ({ models, quotas, cacheEfficiency, totalCachedTokens, t, i18n }) => {
   const rows = buildModelRows(models, quotas);
 
   if (rows.length === 0) {
@@ -166,7 +181,8 @@ const ModelUsageTable: React.FC<{
   const outputTokensWidth = 15;
   const usageLimitWidth = showQuotaColumn ? 28 : 0;
 
-  const cacheEfficiencyColor = getStatusColor(cacheEfficiency, {
+  // cacheEfficiencyColor removed as it was unused warning
+  void getStatusColor(cacheEfficiency, {
     green: CACHE_EFFICIENCY_HIGH,
     yellow: CACHE_EFFICIENCY_MEDIUM,
   });
@@ -184,7 +200,7 @@ const ModelUsageTable: React.FC<{
       <Box alignItems="flex-end">
         <Box width={nameWidth}>
           <Text bold color={theme.text.primary} wrap="truncate-end">
-            Model Usage
+            {t('stats.modelUsage')}
           </Text>
         </Box>
         <Box
@@ -194,7 +210,7 @@ const ModelUsageTable: React.FC<{
           flexShrink={0}
         >
           <Text bold color={theme.text.primary}>
-            Reqs
+            {t('stats.requests')}
           </Text>
         </Box>
         {!showQuotaColumn && (
@@ -206,7 +222,7 @@ const ModelUsageTable: React.FC<{
               flexShrink={0}
             >
               <Text bold color={theme.text.primary}>
-                Input Tokens
+                {t('stats.inputTokens')}
               </Text>
             </Box>
             <Box
@@ -216,7 +232,7 @@ const ModelUsageTable: React.FC<{
               flexShrink={0}
             >
               <Text bold color={theme.text.primary}>
-                Cache Reads
+                {t('stats.cacheReads')}
               </Text>
             </Box>
             <Box
@@ -226,7 +242,7 @@ const ModelUsageTable: React.FC<{
               flexShrink={0}
             >
               <Text bold color={theme.text.primary}>
-                Output Tokens
+                {t('stats.outputTokens')}
               </Text>
             </Box>
           </>
@@ -238,7 +254,7 @@ const ModelUsageTable: React.FC<{
             alignItems="flex-end"
           >
             <Text bold color={theme.text.primary}>
-              Usage left
+              {t('stats.usageLeft')}
             </Text>
           </Box>
         )}
@@ -324,7 +340,7 @@ const ModelUsageTable: React.FC<{
               row.bucket.resetTime && (
                 <Text color={theme.text.secondary} wrap="truncate-end">
                   {(row.bucket.remainingFraction * 100).toFixed(1)}%{' '}
-                  {formatResetTime(row.bucket.resetTime)}
+                  {formatResetTime(row.bucket.resetTime, t, i18n?.language)}
                 </Text>
               )}
           </Box>
@@ -334,12 +350,13 @@ const ModelUsageTable: React.FC<{
       {cacheEfficiency > 0 && !showQuotaColumn && (
         <Box flexDirection="column" marginTop={1}>
           <Text color={theme.text.primary}>
-            <Text color={theme.status.success}>Savings Highlight:</Text>{' '}
-            {totalCachedTokens.toLocaleString()} (
-            <Text color={cacheEfficiencyColor}>
-              {cacheEfficiency.toFixed(1)}%
-            </Text>
-            ) of input tokens were served from the cache, reducing costs.
+            <Text color={theme.status.success}>
+              {t('stats.savingsHighlightLabel')}
+            </Text>{' '}
+            {t('stats.savingsHighlightBody', {
+              cached: totalCachedTokens.toLocaleString(),
+              percent: cacheEfficiency.toFixed(1),
+            })}
           </Text>
         </Box>
       )}
@@ -347,13 +364,9 @@ const ModelUsageTable: React.FC<{
       {showQuotaColumn && (
         <>
           <Box marginTop={1} marginBottom={2}>
-            <Text color={theme.text.primary}>
-              {`Usage limits span all sessions and reset daily.\n/auth to upgrade or switch to API key.`}
-            </Text>
+            <Text color={theme.text.primary}>{t('stats.usageLimits')}</Text>
           </Box>
-          <Text color={theme.text.secondary}>
-            » Tip: For a full token breakdown, run `/stats model`.
-          </Text>
+          <Text color={theme.text.secondary}>{t('stats.modelTip')}</Text>
         </>
       )}
     </Box>
@@ -371,6 +384,7 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
   title,
   quotas,
 }) => {
+  const { t, i18n } = useTranslation('common');
   const { stats } = useSessionStats();
   const { metrics } = stats;
   const { models, tools, files } = metrics;
@@ -396,7 +410,7 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
     }
     return (
       <Text bold color={theme.text.accent}>
-        Session Stats
+        {t('stats.sessionStats')}
       </Text>
     );
   };
@@ -413,33 +427,35 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
       {renderTitle()}
       <Box height={1} />
 
-      <Section title="Interaction Summary">
-        <StatRow title="Session ID:">
+      <Section title={t('stats.interactionSummary')}>
+        <StatRow title={t('stats.sessionId')}>
           <Text color={theme.text.primary}>{stats.sessionId}</Text>
         </StatRow>
-        <StatRow title="Tool Calls:">
+        <StatRow title={t('stats.toolCalls')}>
           <Text color={theme.text.primary}>
             {tools.totalCalls} ({' '}
             <Text color={theme.status.success}>✓ {tools.totalSuccess}</Text>{' '}
             <Text color={theme.status.error}>x {tools.totalFail}</Text> )
           </Text>
         </StatRow>
-        <StatRow title="Success Rate:">
+        <StatRow title={t('stats.successRate')}>
           <Text color={successColor}>{computed.successRate.toFixed(1)}%</Text>
         </StatRow>
         {computed.totalDecisions > 0 && (
-          <StatRow title="User Agreement:">
+          <StatRow title={t('stats.userAgreement')}>
             <Text color={agreementColor}>
               {computed.agreementRate.toFixed(1)}%{' '}
               <Text color={theme.text.secondary}>
-                ({computed.totalDecisions} reviewed)
+                {t('stats.reviewedCount', {
+                  count: computed.totalDecisions,
+                })}
               </Text>
             </Text>
           </StatRow>
         )}
         {files &&
           (files.totalLinesAdded > 0 || files.totalLinesRemoved > 0) && (
-            <StatRow title="Code Changes:">
+            <StatRow title={t('stats.codeChanges')}>
               <Text color={theme.text.primary}>
                 <Text color={theme.status.success}>
                   +{files.totalLinesAdded}
@@ -452,16 +468,16 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
           )}
       </Section>
 
-      <Section title="Performance">
-        <StatRow title="Wall Time:">
+      <Section title={t('stats.performance')}>
+        <StatRow title={t('stats.wallTime')}>
           <Text color={theme.text.primary}>{duration}</Text>
         </StatRow>
-        <StatRow title="Agent Active:">
+        <StatRow title={t('stats.agentActive')}>
           <Text color={theme.text.primary}>
             {formatDuration(computed.agentActiveTime)}
           </Text>
         </StatRow>
-        <SubStatRow title="API Time:">
+        <SubStatRow title={t('stats.apiTime')}>
           <Text color={theme.text.primary}>
             {formatDuration(computed.totalApiTime)}{' '}
             <Text color={theme.text.secondary}>
@@ -469,7 +485,7 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
             </Text>
           </Text>
         </SubStatRow>
-        <SubStatRow title="Tool Time:">
+        <SubStatRow title={t('stats.toolTime')}>
           <Text color={theme.text.primary}>
             {formatDuration(computed.totalToolTime)}{' '}
             <Text color={theme.text.secondary}>
@@ -483,6 +499,8 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
         quotas={quotas}
         cacheEfficiency={computed.cacheEfficiency}
         totalCachedTokens={computed.totalCachedTokens}
+        t={t}
+        i18n={i18n}
       />
     </Box>
   );

@@ -1,0 +1,408 @@
+{
+  "model": {
+    "title": "Select Model",
+    "autoDescription": "Let Gemini CLI decide the best model for the task",
+    "manual": "Manual",
+    "manualDescription": "Manually select a model",
+    "rememberForFuture": "Remember model for future sessions:",
+    "pressTabToToggle": "(Press Tab to toggle)",
+    "startupModelHint": "> To use a specific Gemini model on startup, use the --model flag.",
+    "pressEscToClose": "(Press Esc to close)",
+    "gemini3Available": "Gemini 3 is now available.",
+    "gemini3ComingSoon": "Gemini 3 is coming soon.",
+    "enablePreviewFeatures": "Enable \"Preview features\" in /settings.\nLearn more at https://goo.gle/enable-preview-features"
+  },
+  "theme": {
+    "title": "Select Theme",
+    "selectTheme": "Select Theme",
+    "preview": "Preview",
+    "incompatible": "(Incompatible)",
+    "matchesTerminal": "(Matches terminal)",
+    "custom": "Custom",
+    "helpText": "(Use Enter to select, Tab to configure scope, Esc to close)",
+    "helpTextScope": "(Use Enter to apply scope, Tab to select theme, Esc to close)"
+  },
+  "settings": {
+    "title": "Settings",
+    "searchPlaceholder": "Search to filter",
+    "noMatchesFound": "No matches found.",
+    "applyTo": "Apply To",
+    "helpText": "(Use Enter to select, Tab to change focus, Esc to close)",
+    "helpTextNoScope": "(Use Enter to select, Esc to close)",
+    "restartRequired": "To see changes, Gemini CLI must be restarted. Press r to exit and apply changes now.",
+    "items": {
+      "general_previewFeatures": {
+        "label": "Preview Features (e.g., models)",
+        "description": "Enable preview features (e.g., preview models)."
+      },
+      "general_vimMode": {
+        "label": "Vim Mode",
+        "description": "Enable Vim keybindings"
+      },
+      "general_language": {
+        "label": "Language",
+        "description": "Interface language (en, zh-CN)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "Enable Auto Update",
+        "description": "Enable automatic updates."
+      },
+      "general_enablePromptCompletion": {
+        "label": "Enable Prompt Completion",
+        "description": "Enable AI-powered prompt completion suggestions while typing."
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "Debug Keystroke Logging",
+        "description": "Enable debug logging of keystrokes to the console."
+      },
+      "general_sessionRetention_enabled": {
+        "label": "Enable Session Cleanup",
+        "description": "Enable automatic session cleanup"
+      },
+      "output_format": {
+        "label": "Output Format",
+        "description": "The format of the CLI output. Can be `text` or `json`."
+      },
+      "ui_hideWindowTitle": {
+        "label": "Hide Window Title",
+        "description": "Hide the window title bar"
+      },
+      "ui_showStatusInTitle": {
+        "label": "Show Thoughts in Title",
+        "description": "Show Gemini CLI model thoughts in the terminal window title during the working phase"
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "Dynamic Window Title",
+        "description": "Update the terminal window title with current status icons (Ready: ◇, Action Required: ✋, Working: ✦)"
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "Show Home Directory Warning",
+        "description": "Show a warning when running Gemini CLI in the home directory."
+      },
+      "ui_hideTips": {
+        "label": "Hide Tips",
+        "description": "Hide helpful tips in the UI"
+      },
+      "ui_hideBanner": {
+        "label": "Hide Banner",
+        "description": "Hide the application banner"
+      },
+      "ui_hideContextSummary": {
+        "label": "Hide Context Summary",
+        "description": "Hide the context summary (GEMINI.md, MCP servers) above the input."
+      },
+      "ui_footer_hideCWD": {
+        "label": "Hide CWD",
+        "description": "Hide the current working directory path in the footer."
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "Hide Sandbox Status",
+        "description": "Hide the sandbox status indicator in the footer."
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "Hide Model Info",
+        "description": "Hide the model name and context usage in the footer."
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "Hide Context Window Percentage",
+        "description": "Hides the context window remaining percentage."
+      },
+      "ui_hideFooter": {
+        "label": "Hide Footer",
+        "description": "Hide the footer from the UI"
+      },
+      "ui_showMemoryUsage": {
+        "label": "Show Memory Usage",
+        "description": "Display memory usage information in the UI"
+      },
+      "ui_showLineNumbers": {
+        "label": "Show Line Numbers",
+        "description": "Show line numbers in the chat."
+      },
+      "ui_showCitations": {
+        "label": "Show Citations",
+        "description": "Show citations for generated text in the chat."
+      },
+      "ui_showModelInfoInChat": {
+        "label": "Show Model Info In Chat",
+        "description": "Show the model name in the chat for each model turn."
+      },
+      "ui_useFullWidth": {
+        "label": "Use Full Width",
+        "description": "Use the entire width of the terminal for output."
+      },
+      "ui_useAlternateBuffer": {
+        "label": "Use Alternate Screen Buffer",
+        "description": "Use an alternate screen buffer for the UI, preserving shell history."
+      },
+      "ui_incrementalRendering": {
+        "label": "Incremental Rendering",
+        "description": "Enable incremental rendering for the UI. This option will reduce flickering but may cause rendering artifacts. Only supported when useAlternateBuffer is enabled."
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "Enable Loading Phrases",
+        "description": "Enable loading phrases during operations."
+      },
+      "ui_accessibility_screenReader": {
+        "label": "Screen Reader Mode",
+        "description": "Render output in plain-text to be more screen reader accessible"
+      },
+      "ide_enabled": {
+        "label": "IDE Mode",
+        "description": "Enable IDE integration mode."
+      },
+      "model_maxSessionTurns": {
+        "label": "Max Session Turns",
+        "description": "Maximum number of user/model/tool turns to keep in a session. -1 means unlimited."
+      },
+      "model_compressionThreshold": {
+        "label": "Compression Threshold",
+        "description": "The fraction of context usage at which to trigger context compression (e.g. 0.2, 0.3)."
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "Skip Next Speaker Check",
+        "description": "Skip the next speaker check."
+      },
+      "context_discoveryMaxDirs": {
+        "label": "Memory Discovery Max Dirs",
+        "description": "Maximum number of directories to search for memory."
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "Load Memory From Include Directories",
+        "description": "Controls how /memory refresh loads GEMINI.md files. When true, include directories are scanned; when false, only the current directory is used."
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": "Respect .gitignore",
+        "description": "Respect .gitignore files when searching."
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": "Respect .geminiignore",
+        "description": "Respect .geminiignore files when searching."
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "Enable Recursive File Search",
+        "description": "Enable recursive file search functionality when completing @ references in the prompt."
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "Enable Fuzzy Search",
+        "description": "Enable fuzzy search when searching for files."
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "Enable Interactive Shell",
+        "description": "Use node-pty for an interactive shell experience. Fallback to child_process still applies."
+      },
+      "tools_shell_showColor": {
+        "label": "Show Color",
+        "description": "Show color in shell output."
+      },
+      "tools_autoAccept": {
+        "label": "Auto Accept",
+        "description": "Automatically accept and execute tool calls that are considered safe (e.g., read-only operations)."
+      },
+      "tools_useRipgrep": {
+        "label": "Use Ripgrep",
+        "description": "Use ripgrep for file content search instead of the fallback implementation. Provides faster search performance."
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "Enable Tool Output Truncation",
+        "description": "Enable truncation of large tool outputs."
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "Tool Output Truncation Threshold",
+        "description": "Truncate tool output if it is larger than this many characters. Set to -1 to disable."
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "Tool Output Truncation Lines",
+        "description": "The number of lines to keep when truncating tool output."
+      },
+      "tools_disableLLMCorrection": {
+        "label": "Disable LLM Correction",
+        "description": "Disable LLM-based error correction for edit tools. When enabled, tools will fail immediately if exact string matches are not found, instead of attempting to self-correct."
+      },
+      "security_disableYoloMode": {
+        "label": "Disable YOLO Mode",
+        "description": "Disable YOLO mode, even if enabled by a flag."
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "Allow Permanent Tool Approval",
+        "description": "Enable the \"Allow for all future sessions\" option in tool confirmation dialogs."
+      },
+      "security_blockGitExtensions": {
+        "label": "Blocks extensions from Git",
+        "description": "Blocks installing and loading extensions from Git."
+      },
+      "security_folderTrust_enabled": {
+        "label": "Folder Trust",
+        "description": "Setting to track whether Folder trust is enabled."
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "Enable Environment Variable Redaction",
+        "description": "Enable redaction of environment variables that may contain secrets."
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "Enable Codebase Investigator",
+        "description": "Enable the Codebase Investigator agent."
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "Codebase Investigator Max Num Turns",
+        "description": "Maximum number of turns for the Codebase Investigator agent."
+      },
+      "experimental_useOSC52Paste": {
+        "label": "Use OSC 52 Paste",
+        "description": "Use OSC 52 sequence for pasting instead of clipboardy (useful for remote sessions)."
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "Enable CLI Help Agent",
+        "description": "Enable the CLI Help Agent."
+      },
+      "experimental_plan": {
+        "label": "Plan",
+        "description": "Enable planning features (Plan Mode and tools)."
+      },
+      "skills_enabled": {
+        "label": "Enable Agent Skills",
+        "description": "Enable Agent Skills."
+      },
+      "hooksConfig_notifications": {
+        "label": "Hook Notifications",
+        "description": "Show visual indicators when hooks are executing."
+      }
+    },
+    "scope": {
+      "user": "User Settings",
+      "workspace": "Workspace Settings",
+      "system": "System Settings",
+      "alsoModifiedIn": "(Also modified in {{scopes}})",
+      "modifiedIn": "(Modified in {{scopes}})"
+    }
+  },
+  "auth": {
+    "title": "Authentication",
+    "getStarted": "Get started",
+    "howToAuthenticate": "How would you like to authenticate for this project?",
+    "loginWithGoogle": "Login with Google",
+    "useCloudShell": "Use Cloud Shell user credentials",
+    "useMetadataServer": "Use metadata server application default credentials",
+    "useGeminiApiKey": "Use Gemini API Key",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "(Use Enter to select)",
+    "termsOfService": "Terms of Services and Privacy Notice for Gemini CLI",
+    "loggingIn": "Logging in with Google... Restarting Gemini CLI to continue.",
+    "mustSelectAuth": "You must select an auth method to proceed. Press Ctrl+C twice to exit."
+  },
+  "permissions": {
+    "title": "Permissions",
+    "allow": "Allow",
+    "deny": "Deny",
+    "always": "Always",
+    "once": "Once",
+    "session": "This session"
+  },
+  "folderTrust": {
+    "title": "Do you trust this folder?",
+    "description": "Trusting a folder allows Gemini to execute commands it suggests. This is a security feature to prevent accidental execution in untrusted directories.",
+    "trustFolder": "Trust folder",
+    "trustParent": "Trust parent folder",
+    "dontTrust": "Don't trust",
+    "restarting": "Gemini CLI is restarting to apply the trust changes...",
+    "exitingNoTrust": "A folder trust level must be selected to continue. Exiting since escape was pressed."
+  },
+  "rewind": {
+    "title": "Confirm Rewind",
+    "fileSingle": "1 file affected: {{file}}",
+    "filesAffected": "{{count}} files affected",
+    "linesAdded": "+{{count}} lines",
+    "linesRemoved": "-{{count}} lines",
+    "notice": "This will revert file changes.",
+    "noChanges": "No files have been changed.",
+    "selectAction": "Select an action:",
+    "options": {
+      "rewindAndRevert": "Rewind conversation and revert file changes",
+      "rewindOnly": "Rewind conversation only",
+      "revertOnly": "Revert file changes only",
+      "cancel": "Cancel"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "Do you trust these folders?",
+    "description": "Trusting folders allows Gemini to execute commands inside them.",
+    "cancelled": "Cancelled trusting folders:\n{{list}}",
+    "configNotAvailable": "Configuration not available.",
+    "notTrusted": "The following folders were not trusted:\n{{list}}",
+    "errorAdding": "Error trusting {{dir}}: {{error}}",
+    "applying": "Applying trust settings...",
+    "options": {
+      "yes": "Yes",
+      "yesRemember": "Yes, and remember",
+      "no": "No"
+    }
+  },
+  "loopDetection": {
+    "title": "Loop Detection",
+    "description": "It looks like the agent might be in a loop.",
+    "ariaLabel": "Loop Detection Warning",
+    "options": {
+      "keep": "Keep loop detection enabled",
+      "disable": "Disable loop detection for this session"
+    }
+  },
+  "rewindViewer": {
+    "title": "Rewind Conversation",
+    "stay": "Stay at current position",
+    "rewinding": "Rewinding...",
+    "cancelText": "Cancel rewind and stay here",
+    "fileChangeSingle": "1 file changed",
+    "fileChange": "{{count}} files changed",
+    "noFileChange": "No files have been changed",
+    "helpText": "(Use Enter to select a message, Esc to close, Right/Left to expand/collapse)"
+  },
+  "logout": {
+    "title": "You are now logged out.",
+    "message": "Login again to continue using Gemini CLI, or exit the application.",
+    "login": "Login",
+    "exit": "Exit",
+    "helpText": "(Use Enter to select, Esc to close)"
+  },
+  "editor": {
+    "title": "Editor Settings",
+    "selectEditor": "Select editor",
+    "custom": "Custom",
+    "enterCommand": "Enter editor command"
+  },
+  "scope": {
+    "user": "User",
+    "workspace": "Workspace"
+  },
+  "ideIntegrationNudge": {
+    "title": "Do you want to connect {{editor}} to Gemini CLI?",
+    "descriptionInstall": "If you select Yes, we'll install an extension that allows the CLI to access your open files and display diffs directly in {{editor}}.",
+    "descriptionInstalled": "If you select Yes, the CLI will have access to your open files and display diffs directly in {{editor}}.",
+    "defaultEditor": "your editor",
+    "options": {
+      "yes": "Yes",
+      "noEsc": "No (esc)",
+      "noDontAskAgain": "No, don't ask again"
+    }
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info",
+    "true": "true",
+    "false": "false"
+  }
+}

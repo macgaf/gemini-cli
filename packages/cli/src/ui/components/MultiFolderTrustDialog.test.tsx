@@ -76,9 +76,7 @@ describe('MultiFolderTrustDialog', () => {
       <MultiFolderTrustDialog {...defaultProps} folders={folders} />,
     );
 
-    expect(lastFrame()).toContain(
-      'Do you trust the following folders being added to this workspace?',
-    );
+    expect(lastFrame()).toContain('multiFolderTrust.title');
     expect(lastFrame()).toContain('- /path/to/folder1');
     expect(lastFrame()).toContain('- /path/to/folder2');
   });
@@ -103,9 +101,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       [],
-      [
-        'Operation cancelled. The following directories were not added:\n- /path/to/folder1',
-      ],
+      ['multiFolderTrust.cancelled'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
   });
@@ -123,9 +119,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       [],
-      [
-        'The following directories were not added because they were not trusted:\n- /path/to/folder1',
-      ],
+      ['multiFolderTrust.notTrusted'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
     expect(mockAddDirectory).not.toHaveBeenCalled();
@@ -194,7 +188,7 @@ describe('MultiFolderTrustDialog', () => {
       onSelect(MultiFolderTrustChoice.NO);
     });
 
-    expect(lastFrame()).toContain('Applying trust settings...');
+    expect(lastFrame()).toContain('multiFolderTrust.applying');
   });
 
   it('shows an error message and completes when config is missing', async () => {
@@ -214,7 +208,7 @@ describe('MultiFolderTrustDialog', () => {
 
     expect(mockAddItem).toHaveBeenCalledWith({
       type: MessageType.ERROR,
-      text: 'Configuration is not available.',
+      text: 'multiFolderTrust.configNotAvailable',
     });
     expect(mockOnComplete).toHaveBeenCalled();
     expect(mockFinishAddingDirectories).not.toHaveBeenCalled();
@@ -248,7 +242,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       ['/path/to/good'],
-      ['initial error', "Error adding '/path/to/error': Test error"],
+      ['initial error', 'multiFolderTrust.errorAdding'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
   });

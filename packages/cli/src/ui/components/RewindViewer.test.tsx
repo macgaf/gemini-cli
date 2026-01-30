@@ -198,7 +198,7 @@ describe('RewindViewer', () => {
         ) => {
           // Wait for confirmation dialog to be rendered and interactive
           await waitFor(() => {
-            expect(lastFrame()).toContain('Confirm Rewind');
+            expect(lastFrame()).toContain('rewind.title');
           });
           act(() => {
             stdin.write('\r');
@@ -213,14 +213,14 @@ describe('RewindViewer', () => {
         ) => {
           // Wait for confirmation dialog
           await waitFor(() => {
-            expect(lastFrame()).toContain('Confirm Rewind');
+            expect(lastFrame()).toContain('rewind.title');
           });
           act(() => {
             stdin.write('\x1b');
           });
           // Wait for return to main view
           await waitFor(() => {
-            expect(lastFrame()).toContain('> Rewind');
+            expect(lastFrame()).toContain('> rewindViewer.title');
           });
         },
       },
@@ -287,7 +287,7 @@ describe('RewindViewer', () => {
 
       // Wait for confirmation dialog
       await waitFor(() => {
-        expect(lastFrame()).toContain('Confirm Rewind');
+        expect(lastFrame()).toContain('rewind.title');
       });
     });
   });
