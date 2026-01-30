@@ -11,6 +11,7 @@ import * as os from 'node:os';
 import { RipGrepTool } from '../packages/core/src/tools/ripGrep.js';
 import { Config } from '../packages/core/src/config/config.js';
 import { WorkspaceContext } from '../packages/core/src/utils/workspaceContext.js';
+import type { MessageBus } from '../packages/core/src/confirmation-bus/message-bus.js';
 
 // Mock Config to provide necessary context
 class MockConfig {
@@ -50,7 +51,13 @@ describe('ripgrep-real-direct', () => {
     await fs.writeFile(path.join(tempDir, 'file3.txt'), 'goodbye moon\n');
 
     const config = new MockConfig(tempDir) as unknown as Config;
-    tool = new RipGrepTool(config);
+    // Mock MessageBus
+    const mockMessageBus = {
+      emit: () => {},
+      on: () => {},
+      off: () => {},
+    } as unknown as MessageBus;
+    tool = new RipGrepTool(config, mockMessageBus);
   });
 
   afterAll(async () => {

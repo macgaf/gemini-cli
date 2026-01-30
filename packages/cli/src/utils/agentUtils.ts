@@ -7,6 +7,8 @@
 import { SettingScope } from '../config/settings.js';
 import type { AgentActionResult } from './agentSettings.js';
 
+import { i18n } from '../i18n/index.js';
+
 /**
  * Shared logic for building the core agent action message while allowing the
  * caller to control how each scope and its path are rendered (e.g., bolding or
@@ -23,24 +25,26 @@ export function renderAgentActionFeedback(
 
   if (status === 'error') {
     return (
-      error ||
-      `An error occurred while attempting to ${action} agent "${agentName}".`
+      error || i18n.t('commands:agents.feedback.error', { action, agentName })
     );
   }
 
   if (status === 'no-op') {
-    return `Agent "${agentName}" is already ${action === 'enable' ? 'enabled' : 'disabled'}.`;
+    return action === 'enable'
+      ? i18n.t('commands:agents.feedback.alreadyEnabled', { agentName })
+      : i18n.t('commands:agents.feedback.alreadyDisabled', { agentName });
   }
 
   const isEnable = action === 'enable';
   const actionVerb = isEnable ? 'enabled' : 'disabled';
-  const preposition = isEnable
-    ? 'by setting it to enabled in'
-    : 'by setting it to disabled in';
+  // preposition logic removed as we use full sentences
 
   const formatScopeItem = (s: { scope: SettingScope; path: string }) => {
-    const label =
-      s.scope === SettingScope.Workspace ? 'project' : s.scope.toLowerCase();
+    const labelKey =
+      s.scope === SettingScope.Workspace
+        ? 'commands:agents.feedback.scopeProject'
+        : 'commands:agents.feedback.scopeUser';
+    const label = i18n.t(labelKey, { defaultValue: s.scope.toLowerCase() });
     return formatScope(label, s.path);
   };
 
@@ -54,12 +58,25 @@ export function renderAgentActionFeedback(
     const s2 = formatScopeItem(totalAffectedScopes[1]);
 
     if (isEnable) {
-      return `Agent "${agentName}" ${actionVerb} ${preposition} ${s1} and ${s2} settings.`;
+      return i18n.t('commands:agents.feedback.enabledTwoScopes', {
+        agentName,
+        scope1: s1,
+        scope2: s2,
+      });
     } else {
-      return `Agent "${agentName}" is now disabled in both ${s1} and ${s2} settings.`;
+      return i18n.t('commands:agents.feedback.disabledTwoScopes', {
+        agentName,
+        scope1: s1,
+        scope2: s2,
+      });
     }
   }
 
   const s = formatScopeItem(totalAffectedScopes[0]);
-  return `Agent "${agentName}" ${actionVerb} ${preposition} ${s} settings.`;
+  return i18n.t('commands:agents.feedback.singleScope', {
+    agentName,
+    actionVerb,
+    enabledDisabled: isEnable ? 'enabled' : 'disabled',
+    scope: s,
+  });
 }

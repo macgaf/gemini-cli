@@ -1,0 +1,543 @@
+{
+  "help": {
+    "name": "help",
+    "description": "Show help information",
+    "usage": "Display available commands and usage instructions",
+    "sections": {
+      "basics": "Basics:",
+      "commands": "Commands:",
+      "shortcuts": "Keyboard Shortcuts:",
+      "addContext": "Add context",
+      "addContextDesc": "Use @ to specify files for context (e.g., @src/myFile.ts) to target specific files or folders.",
+      "addContextPrefix": "Use ",
+      "addContextMiddle": " to specify files for context (e.g., ",
+      "addContextSuffix": ") to target specific files or folders.",
+      "shellMode": "Shell mode",
+      "shellModeDesc": "Execute shell commands via ! (e.g., !npm run start) or use natural language (e.g. start server).",
+      "shellModePrefix": "Execute shell commands via ",
+      "shellModeMiddle1": " (e.g., ",
+      "shellModeMiddle2": ") or use natural language (e.g. ",
+      "shellModeSuffix": ").",
+      "shellModeExample": "start server",
+      "shellCommand": "shell command",
+      "mcpNote": "[MCP] - Model Context Protocol command (from external servers)"
+    }
+  },
+  "clear": {
+    "name": "clear",
+    "description": "Clear the conversation",
+    "usage": "Clear the current conversation history"
+  },
+  "quit": {
+    "name": "quit",
+    "description": "Exit the CLI",
+    "usage": "Exit Gemini CLI"
+  },
+  "model": {
+    "name": "model",
+    "description": "Change or view the current model",
+    "usage": "View or switch the AI model"
+  },
+  "theme": {
+    "name": "theme",
+    "description": "Change the color theme",
+    "usage": "Switch between available color themes"
+  },
+  "stats": {
+    "name": "stats",
+    "description": "Check session stats. Usage: /stats [session|model|tools]",
+    "usage": "Display token usage and session information",
+    "sessionStartUnavailable": "Session start time is unavailable, cannot calculate stats.",
+    "session": {
+      "description": "Show session-specific usage statistics"
+    },
+    "model": {
+      "description": "Show model-specific usage statistics"
+    },
+    "tools": {
+      "description": "Show tool-specific usage statistics"
+    }
+  },
+  "copy": {
+    "name": "copy",
+    "description": "Copy the last response",
+    "usage": "Copy the last AI response to clipboard"
+  },
+  "save": {
+    "name": "save",
+    "description": "Save the conversation",
+    "usage": "Save the current conversation to a file"
+  },
+  "restore": {
+    "name": "restore",
+    "description": "Restore a previous conversation",
+    "usage": "Restore a previously saved conversation",
+    "geminiDirNotFound": "Could not determine the .gemini directory path.",
+    "noRestorable": "No restorable tool calls found.",
+    "availableList": "Available checkpoints:\n{{list}}",
+    "fileNotFound": "File not found: {{file}}",
+    "invalidCheckpoint": "Invalid checkpoint file: {{error}}",
+    "errorReading": "Could not read restorable tool calls. This is the error: {{error}}"
+  },
+  "memory": {
+    "name": "memory",
+    "description": "Commands for interacting with memory",
+    "usage": "View or manage conversation memory",
+    "show": {
+      "description": "Show the current memory contents"
+    },
+    "add": {
+      "description": "Add content to the memory",
+      "saving": "Attempting to save to memory: \"{{content}}\""
+    },
+    "refresh": {
+      "description": "Refresh the memory from the source",
+      "refreshing": "Refreshing memory from source files...",
+      "error": "Error refreshing memory: {{error}}"
+    },
+    "list": {
+      "description": "Lists the paths of the GEMINI.md files in use"
+    }
+  },
+  "tools": {
+    "name": "tools",
+    "description": "List available Gemini CLI tools. Usage: /tools [desc]",
+    "usage": "Display all available tools",
+    "noRegistry": "Could not retrieve tool registry."
+  },
+  "mcp": {
+    "name": "mcp",
+    "description": "Manage configured Model Context Protocol (MCP) servers",
+    "usage": "Configure Model Context Protocol servers",
+    "configNotLoaded": "Config not loaded.",
+    "noOAuthServers": "No MCP servers configured with OAuth authentication.",
+    "oauthServersList": "MCP servers with OAuth authentication:",
+    "useAuthHint": "Use /mcp auth <server-name> to authenticate.",
+    "serverNotFound": "MCP server '{{name}}' not found.",
+    "noClientManager": "Could not retrieve mcp client manager.",
+    "restarting": "Restarting MCP servers...",
+    "auth": {
+      "description": "Authenticate with an OAuth-enabled MCP server",
+      "starting": "Starting OAuth authentication for MCP server '{{name}}'...",
+      "success": "Successfully authenticated with MCP server '{{name}}'!",
+      "restarting": "Restarting MCP server '{{name}}'...",
+      "refreshed": "Successfully authenticated and refreshed tools for '{{name}}'.",
+      "failed": "Failed to authenticate with MCP server '{{name}}': {{error}}"
+    },
+    "list": {
+      "description": "List configured MCP servers and tools"
+    },
+    "desc": {
+      "description": "List configured MCP servers and tools with descriptions"
+    },
+    "schema": {
+      "description": "List configured MCP servers and tools with descriptions and schemas"
+    },
+    "refresh": {
+      "description": "Restarts MCP servers"
+    }
+  },
+  "chat": {
+    "name": "chat",
+    "description": "Manage chat sessions",
+    "usage": "Start a fresh conversation",
+    "list": {
+      "description": "List saved chat checkpoints"
+    },
+    "save": {
+      "description": "Save the current conversation to a checkpoint"
+    },
+    "resume": {
+      "description": "Resume a saved conversation checkpoint"
+    },
+    "delete": {
+      "description": "Delete a saved conversation checkpoint"
+    },
+    "share": {
+      "description": "Export the conversation to a file (.md or .json)"
+    },
+    "debug": {
+      "description": "Export the latest API request for debugging"
+    },
+    "noCheckpoints": "No saved conversation checkpoints found.",
+    "listTitle": "List of saved conversations:",
+    "invalidDate": "Invalid Date",
+    "newestLast": "Note: Newest last, oldest first"
+  },
+  "compress": {
+    "name": "compress",
+    "description": "Compress conversation history",
+    "usage": "Compress the conversation to save context space"
+  },
+  "about": {
+    "description": "Show version info",
+    "title": "About Gemini CLI",
+    "cliVersion": "CLI Version",
+    "gitCommit": "Git Commit",
+    "model": "Model",
+    "sandbox": "Sandbox",
+    "noSandbox": "no sandbox",
+    "os": "OS",
+    "authMethod": "Auth Method",
+    "userEmail": "User Email",
+    "gcpProject": "GCP Project",
+    "ideClient": "IDE Client"
+  },
+  "bug": {
+    "description": "Submit a bug report",
+    "submitPrompt": "To submit your bug report, please open the following URL in your browser:",
+    "historyExported": "📄 **Chat History Exported**\nTo help us debug, we've exported your current chat history to:",
+    "attachPrompt": "Please consider attaching this file to your GitHub issue if you feel comfortable doing so.",
+    "privacyDisclaimer": "**Privacy Disclaimer:** Please do not upload any logs containing sensitive or private information that you are not comfortable sharing publicly.",
+    "actionRequired": "[ACTION REQUIRED] 📎 PLEASE ATTACH THE EXPORTED CHAT HISTORY JSON FILE TO THIS ISSUE IF YOU FEEL COMFORTABLE SHARING IT.",
+    "openError": "Could not open URL in browser: {{error}}"
+  },
+  "docs": {
+    "description": "Open the full Gemini CLI documentation in your browser",
+    "openInBrowser": "Please open the following URL in your browser to view the documentation:",
+    "opening": "Opening documentation in your browser:"
+  },
+  "directory": {
+    "description": "Manage workspace directories",
+    "currentWorkspace": "Current workspace directories:",
+    "add": {
+      "description": "Add directories to the workspace. Use comma to separate multiple paths"
+    },
+    "show": {
+      "description": "Show all directories in the workspace"
+    },
+    "configNotAvailable": "Configuration is not available.",
+    "successAddedGeminiMd": "Successfully added GEMINI.md files from the following directories if there are:",
+    "errorRefreshingMemory": "Error refreshing memory: {{error}}",
+    "successAddedDirs": "Successfully added directories:",
+    "sandboxNotSupported": "The /directory add command is not supported in restrictive sandbox profiles. Please use --include-directories when starting the session instead.",
+    "provideAtLeastOnePath": "Please provide at least one path to add.",
+    "alreadyInWorkspace": "The following directories are already in the workspace:",
+    "untrustedDirs": "The following directories are explicitly untrusted and cannot be added to a trusted workspace:",
+    "usePermissionsCommand": "Please use the permissions command to modify their trust level.",
+    "errorAdding": "Error adding '{{path}}': {{error}}"
+  },
+  "extensions": {
+    "description": "Manage Gemini CLI extensions.",
+    "demandClient": "You need at least one command before continuing.",
+    "updateAvailable": "You have {{count}} extension(s) with available updates. Run",
+    "install": {
+      "description": "Installs an extension from a git repository URL or a local path.",
+      "source": "The github URL or local path of the extension to install.",
+      "ref": "The git ref to install from.",
+      "autoUpdate": "Enable auto-update for this extension.",
+      "preRelease": "Enable pre-release versions for this extension.",
+      "consent": "Acknowledge the security risks of installing an extension and skip the confirmation prompt.",
+      "error": {
+        "noSource": "The source argument must be provided."
+      },
+      "log": {
+        "consent": "You have consented to the following:",
+        "success": "Extension \"{{name}}\" installed successfully and enabled."
+      }
+    },
+    "list": {
+      "description": "Lists installed extensions.",
+      "log": {
+        "empty": "No extensions installed."
+      }
+    },
+    "update": {
+      "description": "Updates all extensions or a named extension to the latest version.",
+      "name": "The name of the extension to update.",
+      "all": "Update all extensions.",
+      "error": {
+        "missingArgs": "Either an extension name or --all must be provided"
+      },
+      "log": {
+        "success": "Extension \"{{name}}\" successfully updated: {{v1}} → {{v2}}.",
+        "notFound": "Extension \"{{name}}\" not found.",
+        "missingMetadata": "Unable to install extension \"{{name}}\" due to missing install metadata",
+        "upToDate": "Extension \"{{name}}\" is already up to date.",
+        "noneToUpdate": "No extensions to update."
+      }
+    },
+    "disable": {
+      "description": "Disables an extension.",
+      "name": "The name of the extension to disable.",
+      "scope": "The scope to disable the extension in.",
+      "error": {
+        "invalidScope": "Invalid scope: {{scope}}. Please use one of {{allowed}}."
+      },
+      "log": {
+        "success": "Extension \"{{name}}\" successfully disabled for scope \"{{scope}}\"."
+      }
+    },
+    "enable": {
+      "description": "Enables an extension.",
+      "name": "The name of the extension to enable.",
+      "scope": "The scope to enable the extension in. If not set, will be enabled in all scopes.",
+      "error": {
+        "invalidScope": "Invalid scope: {{scope}}. Please use one of {{allowed}}."
+      },
+      "log": {
+        "success": "Extension \"{{name}}\" successfully enabled for scope \"{{scope}}\".",
+        "successAll": "Extension \"{{name}}\" successfully enabled in all scopes."
+      }
+    },
+    "link": {
+      "description": "Links an extension from a local path. Updates made to the local path will always be reflected.",
+      "path": "The name of the extension to link.",
+      "consent": "Acknowledge the security risks of installing an extension and skip the confirmation prompt.",
+      "log": {
+        "success": "Extension \"{{name}}\" linked successfully and enabled."
+      }
+    },
+    "new": {
+      "description": "Create a new extension from a boilerplate example.",
+      "path": "The path to create the extension in.",
+      "template": "The boilerplate template to use.",
+      "log": {
+        "successTemplate": "Successfully created new extension from template \"{{template}}\" at {{path}}.",
+        "success": "Successfully created new extension at {{path}}.",
+        "hint": "You can install this using \"gemini extensions link {{path}}\" to test it out."
+      }
+    },
+    "validate": {
+      "description": "Validates an extension from a local path.",
+      "path": "The path of the extension to validate.",
+      "log": {
+        "success": "Extension {{path}} has been successfully validated.",
+        "warnings": "Validation warnings:",
+        "errors": "Validation failed with the following errors:"
+      },
+      "error": {
+        "failed": "Extension validation failed."
+      }
+    },
+    "configure": {
+      "description": "Configure extension settings.",
+      "name": "Name of the extension to configure.",
+      "setting": "The specific setting to configure (name or env var).",
+      "scope": "The scope to set the setting in.",
+      "log": {
+        "disabled": "Extension configuration is currently disabled. Enable it by setting \"experimental.extensionConfig\" to true.",
+        "invalidName": "Invalid extension name. Names cannot contain path separators or \"..\".",
+        "notFound": "Could not find configuration for extension \"{{name}}\".",
+        "noSettings": "Extension \"{{name}}\" has no settings to configure.",
+        "configuring": "Configuring settings for \"{{name}}\"...",
+        "noInstalled": "No extensions installed.",
+        "alreadyConfigured": "Note: Setting \"{{name}}\" is already configured in the workspace scope.",
+        "promptOverwrite": "Setting \"{{name}}\" ({{env}}) is already set. Overwrite?"
+      }
+    },
+    "home": {
+      "description": "Go to extension home"
+    },
+    "uninstall": {
+      "description": "Uninstall an extension"
+    },
+    "explore": {
+      "description": "Browse the extensions gallery"
+    },
+    "restart": {
+      "description": "Restart active extensions"
+    }
+  },
+  "settings": {
+    "description": "Open settings"
+  },
+  "auth": {
+    "description": "Manage authentication",
+    "login": {
+      "description": "Login or change the auth method"
+    },
+    "logout": {
+      "description": "Log out and clear all cached credentials"
+    }
+  },
+  "privacy": {
+    "description": "View privacy settings"
+  },
+  "permissions": {
+    "description": "Manage permissions"
+  },
+  "skills": {
+    "description": "List, enable, disable, or reload Gemini CLI agent skills. Usage: /skills [list | disable <name> | enable <name> | reload]",
+    "noSkillManager": "Could not retrieve skill manager.",
+    "noConfig": "Could not retrieve configuration.",
+    "reloading": "Reloading agent skills...",
+    "reloadSuccess": "Agent skills reloaded successfully.",
+    "newlyAvailable": "{{count}} newly available skill(s)",
+    "noLongerAvailable": "{{count}} skill(s) no longer available",
+    "reloadHint": "Use \"/skills reload\" for it to take effect.",
+    "reloadFailed": "Failed to reload skills: {{error}}",
+    "disabledByAdmin": "Agent skills are disabled by your admin.",
+    "notFound": "Skill \"{{name}}\" not found.",
+    "noSkillNameDisable": "Please provide a skill name to disable.",
+    "noSkillNameEnable": "Please provide a skill name to enable.",
+    "list": {
+      "description": "List available agent skills. Usage: /skills list [nodesc] [all]"
+    },
+    "disable": {
+      "description": "Disable a skill by name. Usage: /skills disable <name>"
+    },
+    "enable": {
+      "description": "Enable a disabled skill by name. Usage: /skills enable <name>"
+    },
+    "reload": {
+      "description": "Reload the list of discovered skills. Usage: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "Jump back to a specific message and restart the conversation",
+    "noConfig": "Config not found",
+    "noClient": "Client not initialized",
+    "noRecording": "Recording service unavailable",
+    "noConversation": "No conversation found.",
+    "nothingToRewind": "Nothing to rewind to.",
+    "fetchFailed": "Could not fetch conversation file",
+    "unknownError": "Unknown error during rewind",
+    "filesReverted": "File changes reverted."
+  },
+  "hooks": {
+    "description": "Manage hooks",
+    "list": {
+      "description": "List all hooks"
+    },
+    "panel": {
+      "description": "Display all registered hooks with their status"
+    },
+    "enable": {
+      "description": "Enable a hook by name"
+    },
+    "disable": {
+      "description": "Disable a hook by name"
+    },
+    "enableAll": {
+      "description": "Enable all disabled hooks"
+    },
+    "disableAll": {
+      "description": "Disable all enabled hooks"
+    },
+    "configNotLoaded": "Config not loaded.",
+    "hookSystemNotEnabled": "Hook system is not enabled.",
+    "usageEnable": "Usage: /hooks enable <hook-name>",
+    "usageDisable": "Usage: /hooks disable <hook-name>",
+    "enabledSuccess": "Hook \"{{name}}\" enabled successfully.",
+    "disabledSuccess": "Hook \"{{name}}\" disabled successfully.",
+    "failedToEnable": "Failed to enable hook: {{error}}",
+    "failedToDisable": "Failed to disable hook: {{error}}",
+    "noHooksConfigured": "No hooks configured.",
+    "allHooksEnabled": "All hooks are already enabled.",
+    "allHooksDisabled": "All hooks are already disabled.",
+    "enabledCount": "Enabled {{count}} hook(s) successfully.",
+    "disabledCount": "Disabled {{count}} hook(s) successfully.",
+    "failedToEnableAll": "Failed to enable hooks: {{error}}",
+    "failedToDisableAll": "Failed to disable hooks: {{error}}"
+  },
+  "policies": {
+    "description": "View policies"
+  },
+  "profile": {
+    "description": "Manage profiles"
+  },
+  "init": {
+    "description": "Initialize a new project",
+    "configNotAvailable": "Configuration is not available.",
+    "emptyCreated": "Created empty GEMINI.md file."
+  },
+  "editor": {
+    "description": "Open in editor"
+  },
+  "ide": {
+    "description": "IDE integration commands",
+    "status": {
+      "description": "Check status of IDE integration",
+      "connected": "Connected to {{ide}}",
+      "connecting": "Connecting...",
+      "disconnected": "Disconnected",
+      "disconnectedWithDetails": "Disconnected: {{details}}",
+      "activeSuffix": "(Active)",
+      "fileListNote": "Note: Only active file is tracked",
+      "openFilesHeader": "Open Files:"
+    },
+    "install": {
+      "description": "Install the IDE extension for {{ide}}",
+      "noInstaller": "No installer available for {{ide}} ({{extension}})",
+      "installing": "Installing extension...",
+      "autoEnableFailed": "Failed to automatically enable IDE integration. To fix this, run the CLI in a new terminal window."
+    },
+    "enable": {
+      "description": "Enable IDE integration"
+    },
+    "disable": {
+      "description": "Disable IDE integration"
+    },
+    "unsupported": "IDE integration is not supported in this environment."
+  },
+  "vim": {
+    "description": "Toggle vim mode",
+    "entered": "Entered vim mode.",
+    "exited": "Exited vim mode."
+  },
+  "terminalSetup": {
+    "description": "Configure terminal settings",
+    "restartRequired": "Please restart your terminal for changes to take effect.",
+    "failed": "Terminal setup failed: {{error}}",
+    "windowsConfigPathMissing": "Could not find {{terminal}} config directory. Is it installed?",
+    "keybindingsNotArray": "{{terminal}} keybindings file ({{file}}) is not a JSON array.",
+    "keybindingsParseFailed": "Failed to parse {{terminal}} keybindings file ({{file}}): {{error}}",
+    "alreadyConfigured": "{{terminal}} is already configured for Shift+Enter support.",
+    "existingBindingsShift": "- Existing 'shift+enter' binding found",
+    "existingBindingsCtrl": "- Existing 'ctrl+enter' binding found",
+    "existingBindingsHeader": "Found existing conflicting keybindings:",
+    "existingBindingsFooter": "Please manually edit {{file}} to add the bindings if desired.",
+    "addedBindings": "Successfully configured {{terminal}}! Added keybindings to {{file}}.",
+    "configureFailed": "Failed to configure {{terminal}} ({{file}}): {{error}}",
+    "kittyAlreadyConfigured": "Kitty keyboard protocol support detected! Multiline input should work automatically without additional configuration.",
+    "detectFailed": "Could not automatically detect your terminal emulator. Please check documentation for manual configuration.",
+    "notSupported": "Automatic configuration is not currently supported for {{terminal}}. Please check documentation for manual configuration."
+  },
+  "setupGithub": {
+    "description": "Set up GitHub integration"
+  },
+  "resume": {
+    "description": "Resume a previous session"
+  },
+  "agents": {
+    "description": "Manage AI agents",
+    "list": {
+      "description": "List available local and remote agents",
+      "configNotLoaded": "Config not loaded.",
+      "registryNotFound": "Agent registry not found."
+    },
+    "enable": {
+      "description": "Enable a disabled agent",
+      "usage": "Usage: /agents enable <agent-name>",
+      "registryNotFound": "Agent registry not found.",
+      "alreadyEnabled": "Agent \"{{name}}\" is already enabled.",
+      "notFound": "Agent \"{{name}}\" not found.",
+      "enabling": "Enabling {{name}}..."
+    },
+    "disable": {
+      "description": "Disable an enabled agent",
+      "usage": "Usage: /agents disable <agent-name>",
+      "registryNotFound": "Agent registry not found.",
+      "alreadyDisabled": "Agent \"{{name}}\" is already disabled.",
+      "notFound": "Agent \"{{name}}\" not found.",
+      "disabling": "Disabling {{name}}..."
+    },
+    "refresh": {
+      "description": "Reload the agent registry",
+      "registryNotFound": "Agent registry not found.",
+      "refreshing": "Refreshing agents...",
+      "success": "Agents refreshed successfully."
+    },
+    "feedback": {
+      "error": "An error occurred while attempting to {{action}} agent \"{{agentName}}\".",
+      "alreadyEnabled": "Agent \"{{agentName}}\" is already enabled.",
+      "alreadyDisabled": "Agent \"{{agentName}}\" is already disabled.",
+      "enabledTwoScopes": "Agent \"{{agentName}}\" enabled by setting it to enabled in {{scope1}} and {{scope2}} settings.",
+      "disabledTwoScopes": "Agent \"{{agentName}}\" is now disabled in both {{scope1}} and {{scope2}} settings.",
+      "singleScope": "Agent \"{{agentName}}\" {{actionVerb}} by setting it to {{enabledDisabled}} in {{scope}} settings.",
+      "scopeProject": "project",
+      "scopeUser": "user"
+    }
+  }
+}
