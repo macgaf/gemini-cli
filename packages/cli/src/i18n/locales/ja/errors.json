@@ -1,0 +1,30 @@
+{
+  "network": {
+    "title": "ネットワークエラー",
+    "description": "インターネット接続を確認してください。"
+  },
+  "auth": {
+    "title": "認証エラー",
+    "description": "もう一度ログインしてみてください。"
+  },
+  "api": {
+    "title": "APIエラー",
+    "description": "APIがエラーを返しました。"
+  },
+  "file": {
+    "title": "ファイルエラー",
+    "description": "ファイルにアクセスできませんでした。"
+  },
+  "config": {
+    "title": "設定エラー",
+    "description": "設定が無効です。"
+  },
+  "tool": {
+    "title": "ツールエラー",
+    "description": "ツールの実行に失敗しました。"
+  },
+  "validation": {
+    "title": "検証エラー",
+    "description": "入力の検証に失敗しました。"
+  }
+}

@@ -38,6 +38,46 @@ import zhCNKeyboard from './locales/zh-CN/keyboard.json' with { type: 'json' };
 import zhCNDialogs from './locales/zh-CN/dialogs.json' with { type: 'json' };
 import zhCNPrivacy from './locales/zh-CN/privacy.json' with { type: 'json' };
 import zhCNPhrases from './locales/zh-CN/phrases.json' with { type: 'json' };
+
+import zhTWCommon from './locales/zh-TW/common.json' with { type: 'json' };
+import zhTWCommands from './locales/zh-TW/commands.json' with { type: 'json' };
+import zhTWErrors from './locales/zh-TW/errors.json' with { type: 'json' };
+import zhTWAuth from './locales/zh-TW/auth.json' with { type: 'json' };
+import zhTWTips from './locales/zh-TW/tips.json' with { type: 'json' };
+import zhTWKeyboard from './locales/zh-TW/keyboard.json' with { type: 'json' };
+import zhTWDialogs from './locales/zh-TW/dialogs.json' with { type: 'json' };
+import zhTWPrivacy from './locales/zh-TW/privacy.json' with { type: 'json' };
+import zhTWPhrases from './locales/zh-TW/phrases.json' with { type: 'json' };
+import frCommon from './locales/fr/common.json' with { type: 'json' };
+import frCommands from './locales/fr/commands.json' with { type: 'json' };
+import frErrors from './locales/fr/errors.json' with { type: 'json' };
+import frAuth from './locales/fr/auth.json' with { type: 'json' };
+import frTips from './locales/fr/tips.json' with { type: 'json' };
+import frKeyboard from './locales/fr/keyboard.json' with { type: 'json' };
+import frDialogs from './locales/fr/dialogs.json' with { type: 'json' };
+import frPrivacy from './locales/fr/privacy.json' with { type: 'json' };
+import frPhrases from './locales/fr/phrases.json' with { type: 'json' };
+
+import deCommon from './locales/de/common.json' with { type: 'json' };
+import deCommands from './locales/de/commands.json' with { type: 'json' };
+import deErrors from './locales/de/errors.json' with { type: 'json' };
+import deAuth from './locales/de/auth.json' with { type: 'json' };
+import deTips from './locales/de/tips.json' with { type: 'json' };
+import deKeyboard from './locales/de/keyboard.json' with { type: 'json' };
+import deDialogs from './locales/de/dialogs.json' with { type: 'json' };
+import dePrivacy from './locales/de/privacy.json' with { type: 'json' };
+import dePhrases from './locales/de/phrases.json' with { type: 'json' };
+
+import jaCommon from './locales/ja/common.json' with { type: 'json' };
+import jaCommands from './locales/ja/commands.json' with { type: 'json' };
+import jaErrors from './locales/ja/errors.json' with { type: 'json' };
+import jaAuth from './locales/ja/auth.json' with { type: 'json' };
+import jaTips from './locales/ja/tips.json' with { type: 'json' };
+import jaKeyboard from './locales/ja/keyboard.json' with { type: 'json' };
+import jaDialogs from './locales/ja/dialogs.json' with { type: 'json' };
+import jaPrivacy from './locales/ja/privacy.json' with { type: 'json' };
+import jaPhrases from './locales/ja/phrases.json' with { type: 'json' };
+
 /* eslint-enable import/no-internal-modules */
 
 const resources = {
@@ -63,9 +103,92 @@ const resources = {
     privacy: zhCNPrivacy,
     phrases: zhCNPhrases,
   },
+  'zh-TW': {
+    common: zhTWCommon,
+    commands: zhTWCommands,
+    errors: zhTWErrors,
+    auth: zhTWAuth,
+    tips: zhTWTips,
+    keyboard: zhTWKeyboard,
+    dialogs: zhTWDialogs,
+    privacy: zhTWPrivacy,
+    phrases: zhTWPhrases,
+  },
+  fr: {
+    common: frCommon,
+    commands: frCommands,
+    errors: frErrors,
+    auth: frAuth,
+    tips: frTips,
+    keyboard: frKeyboard,
+    dialogs: frDialogs,
+    privacy: frPrivacy,
+    phrases: frPhrases,
+  },
+  ja: {
+    common: jaCommon,
+    commands: jaCommands,
+    errors: jaErrors,
+    auth: jaAuth,
+    tips: jaTips,
+    keyboard: jaKeyboard,
+    dialogs: jaDialogs,
+    privacy: jaPrivacy,
+    phrases: jaPhrases,
+  },
+  es: {
+    common: zhCNCommon,
+    commands: zhCNCommands,
+    errors: zhCNErrors,
+    auth: zhCNAuth,
+    tips: zhCNTips,
+    keyboard: zhCNKeyboard,
+    dialogs: zhCNDialogs,
+    privacy: zhCNPrivacy,
+    phrases: zhCNPhrases,
+  },
+  ru: {
+    common: zhCNCommon,
+    commands: zhCNCommands,
+    errors: zhCNErrors,
+    auth: zhCNAuth,
+    tips: zhCNTips,
+    keyboard: zhCNKeyboard,
+    dialogs: zhCNDialogs,
+    privacy: zhCNPrivacy,
+    phrases: zhCNPhrases,
+  },
+  de: {
+    common: deCommon,
+    commands: deCommands,
+    errors: deErrors,
+    auth: deAuth,
+    tips: deTips,
+    keyboard: deKeyboard,
+    dialogs: deDialogs,
+    privacy: dePrivacy,
+    phrases: dePhrases,
+  },
 };
 
 const fallbackResources = resources.en;
+const PLACEHOLDER_PREFIX: Partial<Record<SupportedLanguage, string>> = {
+  // 当前不使用占位前缀，避免干扰中文输出
+};
+
+const shouldApplyPlaceholder = (language: SupportedLanguage): boolean =>
+  Boolean(PLACEHOLDER_PREFIX[language]);
+
+const applyPlaceholder = (
+  value: string,
+  language: SupportedLanguage,
+): string => {
+  const prefix = PLACEHOLDER_PREFIX[language];
+  if (!prefix) {
+    return value;
+  }
+  return `${prefix}${value}`;
+};
 
 const interpolateFallback = (
   template: string,
@@ -97,8 +220,14 @@ const resolveFallbackValue = (
   namespace: TranslationNamespace,
   keyPath: string,
 ): unknown => {
+  const root = fallbackResources[namespace] as
+    | Record<string, unknown>
+    | undefined;
+  if (root && keyPath in root) {
+    return root[keyPath];
+  }
   const parts = keyPath.split('.');
-  let current: unknown = fallbackResources[namespace];
+  let current: unknown = root;
   for (const part of parts) {
     if (!current || typeof current !== 'object') {
       return undefined;
@@ -116,13 +245,16 @@ const resolveFallbackValue = (
  * 带有后备值的翻译函数（用于 i18n 尚未初始化时）。
  */
 export function t(key: string, options?: Record<string, unknown>): string {
+  const language = getCurrentLanguage();
   const translated = i18nextT(key, {
     ...(options ?? {}),
     returnObjects: false,
     returnDetails: false,
   }) as unknown;
   if (typeof translated === 'string' && translated && translated !== key) {
-    return translated;
+    return shouldApplyPlaceholder(language)
+      ? applyPlaceholder(translated, language)
+      : translated;
   }
 
   const [ns, path] = parseKey(key);
@@ -138,12 +270,18 @@ export function t(key: string, options?: Record<string, unknown>): string {
       )
       .filter((item) => item.length > 0);
     if (joined.length > 0) {
-      return joined.join('\n');
+      const text = joined.join('\n');
+      return shouldApplyPlaceholder(language)
+        ? applyPlaceholder(text, language)
+        : text;
     }
   }
 
   if (typeof fallbackValue === 'string') {
-    return interpolateFallback(fallbackValue, options);
+    const text = interpolateFallback(fallbackValue, options);
+    return shouldApplyPlaceholder(language)
+      ? applyPlaceholder(text, language)
+      : text;
   }
 
   const defaultValue = options?.['defaultValue'];
@@ -159,7 +297,10 @@ export function t(key: string, options?: Record<string, unknown>): string {
       )
       .filter((item) => item.length > 0);
     if (joined.length > 0) {
-      return joined.join('\n');
+      const text = joined.join('\n');
+      return shouldApplyPlaceholder(language)
+        ? applyPlaceholder(text, language)
+        : text;
     }
   }
 
@@ -206,6 +347,7 @@ export function tArray(
   key: string,
   options?: Record<string, unknown>,
 ): string[] {
+  const language = getCurrentLanguage();
   const translated = i18nextT(key, {
     ...(options ?? {}),
     returnObjects: true,
@@ -213,15 +355,23 @@ export function tArray(
   }) as unknown;
   const normalized = toStringArray(translated, options);
   if (normalized.length > 0) {
-    return normalized;
+    return shouldApplyPlaceholder(language)
+      ? normalized.map((value) => applyPlaceholder(value, language))
+      : normalized;
   }
 
   if (typeof translated === 'string' && translated && translated !== key) {
-    return [interpolateFallback(translated, options)];
+    const text = interpolateFallback(translated, options);
+    return shouldApplyPlaceholder(language)
+      ? [applyPlaceholder(text, language)]
+      : [text];
   }
 
   const [ns, path] = parseKey(key);
-  return resolveFallbackArray(ns, path, options);
+  const fallbackArray = resolveFallbackArray(ns, path, options);
+  return shouldApplyPlaceholder(language)
+    ? fallbackArray.map((value) => applyPlaceholder(value, language))
+    : fallbackArray;
 }
 
 /**

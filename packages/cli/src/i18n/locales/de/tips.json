@@ -1,0 +1,24 @@
+{
+  "gettingStarted": {
+    "title": "Tipps für den Einstieg:",
+    "tip1": "Stellen Sie Fragen, bearbeiten Sie Dateien oder führen Sie Befehle aus.",
+    "tip2": "Seien Sie konkret für beste Ergebnisse.",
+    "tip3Prefix": "Erstellen Sie",
+    "tip3Suffix": "Dateien, um Ihre Interaktionen mit Gemini anzupassen.",
+    "tip4Suffix": "für weitere Informationen."
+  },
+  "welcome": {
+    "title": "Willkommen bei Gemini CLI",
+    "subtitle": "Ihr KI-gestützter Programmierassistent"
+  },
+  "shortcuts": {
+    "title": "Tastaturkürzel:",
+    "helpHint": "Geben Sie /help für verfügbare Befehle ein"
+  },
+  "features": {
+    "codeEditing": "Dateien direkt bearbeiten",
+    "runCommands": "Shell-Befehle ausführen",
+    "askQuestions": "Programmierfragen stellen",
+    "generateCode": "Code-Snippets generieren"
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "model": {
+    "title": "モデルを選択",
+    "autoDescription": "Gemini CLI にタスクに最適なモデルを決定させる",
+    "manual": "手動",
+    "manualDescription": "モデルを手動で選択する",
+    "rememberForFuture": "将来のセッションのためにモデルを記憶する:",
+    "pressTabToToggle": "(Tabキーで切り替え)",
+    "startupModelHint": "> 起動時に特定の Gemini モデルを使用するには、--model フラグを使用します。",
+    "pressEscToClose": "(Escキーで閉じる)",
+    "gemini3Available": "Gemini 3 が利用可能になりました。",
+    "gemini3ComingSoon": "Gemini 3 はまもなく登場します。",
+    "enablePreviewFeatures": "/settings で「プレビュー機能」を有効にしてください。\n詳細は https://goo.gle/enable-preview-features をご覧ください"
+  },
+  "theme": {
+    "title": "テーマを選択",
+    "selectTheme": "テーマを選択",
+    "preview": "プレビュー",
+    "incompatible": "(非互換)",
+    "matchesTerminal": "(ターミナルに一致)",
+    "custom": "カスタム",
+    "helpText": "(Enterで選択、Tabでスコープ設定、Escで閉じる)",
+    "helpTextScope": "(Enterでスコープ適用、Tabでテーマ選択、Escで閉じる)",
+    "noColorUnsupported": "このターミナルでは「色なし」テーマはサポートされていません。",
+    "notFound": "テーマ \"{{name}}\" が見つかりません。",
+    "notFoundInScope": "現在のスコープにテーマ \"{{name}}\" が見つかりません。"
+  },
+  "settings": {
+    "title": "設定",
+    "searchPlaceholder": "検索してフィルタリング",
+    "noMatchesFound": "一致するものが見つかりません。",
+    "applyTo": "適用先",
+    "helpText": "(Enterで選択、Tabでフォーカス切り替え、Escで閉じる)",
+    "helpTextNoScope": "(Enterで選択、Escで閉じる)",
+    "restartRequired": "変更を確認するには、Gemini CLI を再起動する必要があります。r キーを押して終了し、変更を適用してください。",
+    "items": {
+      "general_previewFeatures": {
+        "label": "プレビュー機能 (例: モデル)",
+        "description": "プレビュー機能 (例: プレビューモデル) を有効にします。"
+      },
+      "general_vimMode": {
+        "label": "Vim モード",
+        "description": "Vim キーバインドを有効にします"
+      },
+      "general_language": {
+        "label": "言語",
+        "description": "インターフェース言語 (en, zh-CN, zh-TW, fr, ja, es, ru, de)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "自動更新を有効にする",
+        "description": "自動更新を有効にします。"
+      },
+      "general_enablePromptCompletion": {
+        "label": "プロンプト補完を有効にする",
+        "description": "入力中の AI によるプロンプト補完提案を有効にします。"
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "キーストロークのログ記録をデバッグ",
+        "description": "コンソールへのキーストロークのデバッグログ記録を有効にします。"
+      },
+      "general_sessionRetention_enabled": {
+        "label": "セッションのクリーンアップを有効にする",
+        "description": "自動セッションクリーンアップを有効にします"
+      },
+      "output_format": {
+        "label": "出力形式",
+        "description": "CLI の出力形式。`text` または `json` を指定可能。"
+      },
+      "ui_hideWindowTitle": {
+        "label": "ウィンドウタイトルを隠す",
+        "description": "ウィンドウタイトルバーを隠します"
+      },
+      "ui_userMessageColor": {
+        "label": "ユーザーメッセージの色",
+        "description": "チャット履歴のユーザーメッセージの色を上書きします。Hex または名前付き ANSI カラー (例: \"#B27CFF\" または \"magenta\") を受け付けます。"
+      },
+      "ui_showStatusInTitle": {
+        "label": "タイトルに思考を表示",
+        "description": "作業フェーズ中にターミナルウィンドウのタイトルに Gemini CLI モデルの思考を表示します"
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "動的ウィンドウタイトル",
+        "description": "現在のステータスアイコンでターミナルウィンドウのタイトルを更新します (準備完了: ◇, アクションが必要: ✋, 作業中: ✦)"
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "ホームディレクトリ警告を表示",
+        "description": "ホームディレクトリで Gemini CLI を実行しているときに警告を表示します。"
+      },
+      "ui_hideTips": {
+        "label": "ヒントを隠す",
+        "description": "UI の役立つヒントを隠します"
+      },
+      "ui_hideBanner": {
+        "label": "バナーを隠す",
+        "description": "アプリケーションバナーを隠します"
+      },
+      "ui_hideContextSummary": {
+        "label": "コンテキストサマリーを隠す",
+        "description": "入力の上のコンテキストサマリー (GEMINI.md, MCP サーバー) を隠します。"
+      },
+      "ui_footer_hideCWD": {
+        "label": "CWD を隠す",
+        "description": "フッターの現在の作業ディレクトリパスを隠します。"
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "サンドボックスステータスを隠す",
+        "description": "フッターのサンドボックスステータスインジケーターを隠します。"
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "モデル情報を隠す",
+        "description": "フッターのモデル名とコンテキスト使用量を隠します。"
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "コンテキストウィンドウの割合を隠す",
+        "description": "残りのコンテキストウィンドウの割合を隠します。"
+      },
+      "ui_hideFooter": {
+        "label": "フッターを隠す",
+        "description": "UI からフッターを隠します"
+      },
+      "ui_showMemoryUsage": {
+        "label": "メモリ使用量を表示",
+        "description": "UI にメモリ使用量情報を表示します"
+      },
+      "ui_showLineNumbers": {
+        "label": "行番号を表示",
+        "description": "チャットに行番号を表示します。"
+      },
+      "ui_showCitations": {
+        "label": "引用を表示",
+        "description": "チャットで生成されたテキストの引用を表示します。"
+      },
+      "ui_showModelInfoInChat": {
+        "label": "チャットにモデル情報を表示",
+        "description": "各モデルターンごとにチャットにモデル名を表示します。"
+      },
+      "ui_useFullWidth": {
+        "label": "全幅を使用",
+        "description": "出力にターミナルの全幅を使用します。"
+      },
+      "ui_useAlternateBuffer": {
+        "label": "代替画面バッファを使用",
+        "description": "UI に代替画面バッファを使用し、シェル履歴を保持します。"
+      },
+      "ui_incrementalRendering": {
+        "label": "インクリメンタルレンダリング",
+        "description": "UI のインクリメンタルレンダリングを有効にします。ちらつきは減りますが、レンダリングアーティファクトが発生する可能性があります。「代替画面バッファを使用」が有効な場合のみサポートされます。"
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "読み込みフレーズを有効にする",
+        "description": "操作中の読み込みフレーズを有効にします。"
+      },
+      "ui_accessibility_screenReader": {
+        "label": "スクリーンリーダーモード",
+        "description": "スクリーンリーダーでアクセスしやすいようにプレーンテキストで出力をレンダリングします"
+      },
+      "ide_enabled": {
+        "label": "IDE モード",
+        "description": "IDE 統合モードを有効にします。"
+      },
+      "model_maxSessionTurns": {
+        "label": "最大セッションターン数",
+        "description": "セッションに保持するユーザー/モデル/ツールの最大ターン数。 -1 は無制限を意味します。"
+      },
+      "model_compressionThreshold": {
+        "label": "圧縮しきい値",
+        "description": "コンテキスト圧縮をトリガーするコンテキスト使用量の割合 (例: 0.2, 0.3)。"
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "次の話者チェックをスキップ",
+        "description": "次の話者チェックをスキップします。"
+      },
+      "context_discoveryMaxDirs": {
+        "label": "メモリ検出最大ディレクトリ数",
+        "description": "メモリを検索する最大ディレクトリ数。"
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "インクルードディレクトリからメモリを読み込む",
+        "description": "/memory refresh が GEMINI.md ファイルを読み込む方法を制御します。true の場合、インクルードディレクトリがスキャンされます。false の場合、現在のディレクトリのみが使用されます。"
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": ".gitignore を尊重する",
+        "description": "検索時に .gitignore ファイルを尊重します。"
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": ".geminiignore を尊重する",
+        "description": "検索時に .geminiignore ファイルを尊重します。"
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "再帰的ファイル検索を有効にする",
+        "description": "プロンプトでの @ 参照補完時に再帰的ファイル検索機能を有効にします。"
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "あいまい検索を有効にする",
+        "description": "ファイルの検索時にあいまい検索を有効にします。"
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "インタラクティブシェルを有効にする",
+        "description": "インタラクティブなシェル体験のために node-pty を使用します。child_process へのフォールバックは引き続き適用されます。"
+      },
+      "tools_shell_showColor": {
+        "label": "色を表示",
+        "description": "シェル出力に色を表示します。"
+      },
+      "tools_autoAccept": {
+        "label": "自動承認",
+        "description": "安全と見なされるツール呼び出し (読み取り専用操作など) を自動的に承認して実行します。"
+      },
+      "tools_useRipgrep": {
+        "label": "Ripgrep を使用",
+        "description": "ファイルコンテンツ検索にフォールバック実装の代わりに ripgrep を使用します。より高速な検索パフォーマンスを提供します。"
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "ツール出力の切り捨てを有効にする",
+        "description": "大きなツール出力の切り捨てを有効にします。"
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "ツール出力切り捨てしきい値",
+        "description": "ツール出力がこの文字数より大きい場合に切り捨てます。無効にするには -1 に設定します。"
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "ツール出力切り捨て行数",
+        "description": "ツール出力を切り捨てる際に保持する行数。"
+      },
+      "tools_disableLLMCorrection": {
+        "label": "LLM 修正を無効にする",
+        "description": "編集ツールの LLM ベースのエラー修正を無効にします。有効にすると、完全な文字列一致が見つからない場合、自己修正を試みるのではなく、ツールは即座に失敗します。"
+      },
+      "security_disableYoloMode": {
+        "label": "YOLO モードを無効にする",
+        "description": "フラグで有効にされている場合でも、YOLO モードを無効にします。"
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "恒久的なツール承認を許可する",
+        "description": "ツール確認ダイアログで「今後のすべてのセッションで許可する」オプションを有効にします。"
+      },
+      "security_blockGitExtensions": {
+        "label": "Git からの拡張機能をブロック",
+        "description": "Git からの拡張機能のインストールと読み込みをブロックします。"
+      },
+      "security_folderTrust_enabled": {
+        "label": "フォルダの信頼",
+        "description": "フォルダの信頼が有効かどうかを追跡するための設定。"
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "環境変数の秘匿化を有効にする",
+        "description": "秘密を含む可能性のある環境変数の秘匿化を有効にします。"
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "Codebase Investigator を有効にする",
+        "description": "Codebase Investigator エージェントを有効にします。"
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "Codebase Investigator 最大ターン数",
+        "description": "Codebase Investigator エージェントの最大ターン数。"
+      },
+      "experimental_useOSC52Paste": {
+        "label": "OSC 52 ペーストを使用",
+        "description": "clipboardy の代わりに OSC 52 シーケンスを使用してペーストします (リモートセッションに便利)。"
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "CLI ヘルプエージェントを有効にする",
+        "description": "CLI ヘルプエージェントを有効にします。"
+      },
+      "experimental_plan": {
+        "label": "プラン",
+        "description": "計画機能を有効にします (プランモードとツール)。"
+      },
+      "skills_enabled": {
+        "label": "エージェントスキルを有効にする",
+        "description": "エージェントスキルを有効にします。"
+      },
+      "hooksConfig_notifications": {
+        "label": "フック通知",
+        "description": "フックの実行中に視覚的なインジケーターを表示します。"
+      }
+    },
+    "scope": {
+      "user": "ユーザー設定",
+      "workspace": "ワークスペース設定",
+      "system": "システム設定",
+      "alsoModifiedIn": "({{scopes}} でも変更されました)",
+      "modifiedIn": "({{scopes}} で変更されました)"
+    }
+  },
+  "auth": {
+    "title": "認証",
+    "getStarted": "始める",
+    "howToAuthenticate": "このプロジェクトでどのように認証しますか？",
+    "loginWithGoogle": "Google でログイン",
+    "useCloudShell": "Cloud Shell ユーザー資格情報を使用",
+    "useMetadataServer": "メタデータサーバーのアプリケーションのデフォルト資格情報を使用",
+    "useGeminiApiKey": "Gemini API キーを使用",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "(Enterで選択)",
+    "termsOfService": "Gemini CLI の利用規約とプライバシー通知",
+    "loggingIn": "Google でログイン中... 続行するには Gemini CLI を再起動してください。",
+    "mustSelectAuth": "続行するには認証方法を選択する必要があります。終了するには Ctrl+C を2回押してください。"
+  },
+  "permissions": {
+    "title": "権限",
+    "allow": "許可",
+    "deny": "拒否",
+    "always": "常に",
+    "once": "今回のみ",
+    "session": "このセッション"
+  },
+  "folderTrust": {
+    "title": "このフォルダを信頼しますか？",
+    "description": "フォルダを信頼すると、Gemini は提案されたコマンドを実行できます。これは、信頼できないディレクトリでの誤った実行を防ぐためのセキュリティ機能です。",
+    "trustFolder": "フォルダを信頼する",
+    "trustParent": "親フォルダを信頼する",
+    "dontTrust": "信頼しない",
+    "restarting": "信頼設定を適用するために Gemini CLI を再起動しています...",
+    "exitingNoTrust": "続行するにはフォルダの信頼レベルを選択する必要があります。Esc が押されたため終了します。"
+  },
+  "rewind": {
+    "title": "巻き戻しの確認",
+    "fileSingle": "1 ファイルが影響を受けます: {{file}}",
+    "filesAffected": "{{count}} ファイルが影響を受けます",
+    "linesAdded": "+{{count}} 行",
+    "linesRemoved": "-{{count}} 行",
+    "notice": "これによりファイルの変更が元に戻ります。",
+    "noChanges": "ファイルは変更されていません。",
+    "selectAction": "アクションを選択:",
+    "options": {
+      "rewindAndRevert": "会話を巻き戻してファイルの変更を元に戻す",
+      "rewindOnly": "会話のみ巻き戻す",
+      "revertOnly": "ファイルの変更のみ元に戻す",
+      "cancel": "キャンセル"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "これらのフォルダを信頼しますか？",
+    "description": "フォルダを信頼すると、Gemini はその中でコマンドを実行できます。",
+    "cancelled": "フォルダの信頼をキャンセルしました:\n{{list}}",
+    "configNotAvailable": "設定は利用できません。",
+    "notTrusted": "以下のフォルダは信頼されませんでした:\n{{list}}",
+    "errorAdding": "{{dir}} の信頼中にエラーが発生しました: {{error}}",
+    "applying": "信頼設定を適用中...",
+    "options": {
+      "yes": "はい",
+      "yesRemember": "はい、記憶する",
+      "no": "いいえ"
+    }
+  },
+  "loopDetection": {
+    "title": "ループ検出",
+    "description": "エージェントがループしている可能性があります。",
+    "ariaLabel": "ループ検出警告",
+    "options": {
+      "keep": "ループ検出を有効のままにする",
+      "disable": "このセッションでループ検出を無効にする"
+    }
+  },
+  "rewindViewer": {
+    "title": "会話を巻き戻す",
+    "stay": "現在の位置に留まる",
+    "rewinding": "巻き戻し中...",
+    "cancelText": "巻き戻しをキャンセルしてここに留まる",
+    "fileChangeSingle": "1 ファイル変更",
+    "fileChange": "{{count}} ファイル変更",
+    "noFileChange": "ファイルは変更されていません",
+    "helpText": "(Enterでメッセージ選択、Escで閉じる、右/左で展開/折りたたみ)"
+  },
+  "logout": {
+    "title": "ログアウトしました。",
+    "message": "Gemini CLI を使い続けるには再度ログインするか、アプリケーションを終了してください。",
+    "login": "ログイン",
+    "exit": "終了",
+    "helpText": "(Enterで選択、Escで閉じる)"
+  },
+  "editor": {
+    "title": "エディタ設定",
+    "selectEditor": "エディタを選択",
+    "custom": "カスタム",
+    "enterCommand": "エディタコマンドを入力",
+    "preferenceSet": "{{scope}} 設定でエディタの優先設定を \"{{editor}}\" に設定しました。",
+    "preferenceCleared": "{{scope}} 設定でエディタの優先設定をクリアしました。",
+    "preferenceSetFailed": "エディタの優先設定の設定に失敗しました: {{error}}",
+    "unsupported": "エディタ \"{{editor}}\" はサポートされていません。",
+    "alsoModifiedIn": "({{scope}} 設定でも変更されました)",
+    "modifiedIn": "({{scope}} 設定で変更されました)",
+    "none": "なし",
+    "preferenceTitle": "エディタの優先設定",
+    "supportedNote": "このシステムで検出されたサポートされているエディタ。",
+    "preferredPrefix": "優先エディタ: ",
+    "preferredSuffix": ""
+  },
+  "scope": {
+    "user": "ユーザー",
+    "workspace": "ワークスペース"
+  },
+  "ideIntegrationNudge": {
+    "title": "{{editor}} を Gemini CLI に接続しますか？",
+    "descriptionInstall": "「はい」を選択すると、CLI が開いているファイルにアクセスし、{{editor}} で差分を直接表示できるようにする拡張機能がインストールされます。",
+    "descriptionInstalled": "「はい」を選択すると、CLI は開いているファイルにアクセスし、{{editor}} で差分を直接表示します。",
+    "defaultEditor": "あなたのエディタ",
+    "options": {
+      "yes": "はい",
+      "noEsc": "いいえ (esc)",
+      "noDontAskAgain": "いいえ、今後確認しない"
+    }
+  },
+  "common": {
+    "yes": "はい",
+    "no": "いいえ",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "close": "閉じる",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "warning": "警告",
+    "info": "情報",
+    "true": "true",
+    "false": "false"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "注: 親フォルダが信頼されているため、このフォルダは依然として信頼されています。",
+    "noteTrustedByIde": "注: 接続されている IDE ワークスペースが信頼されているため、このフォルダは依然として信頼されています。",
+    "saveFailed": "信頼設定の保存に失敗しました。変更は保持されない可能性があります。",
+    "title": "信頼レベルの変更",
+    "folderLabel": "フォルダ:",
+    "currentLevel": "現在のレベル:",
+    "notSet": "未設定",
+    "inheritedParentNote": "注: 親フォルダの1つが信頼されているため、このフォルダは信頼されたフォルダとして動作します。",
+    "inheritedIdeNote": "注: 接続されている IDE ワークスペースが信頼されているため、このフォルダは信頼されたフォルダとして動作します。",
+    "helpText": "(Enterで選択、Escで閉じる)",
+    "restartWarning": "信頼設定が変更されました。'r' を押して今すぐ再起動してください。",
+    "options": {
+      "trustFolder": "このフォルダを信頼する ({{folder}})",
+      "trustParent": "親フォルダを信頼する ({{folder}})",
+      "dontTrust": "信頼しない"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "試行を続ける",
+    "stop": "停止",
+    "switchTo": "{{model}} に切り替え",
+    "upgrade": "制限の高いプランにアップグレード",
+    "allProModels": "すべての Pro モデル",
+    "usageLimitReached": "{{model}} の使用制限に達しました。",
+    "resetTime": "アクセスは {{time}} にリセットされます",
+    "statsHint": "使用状況の詳細は /stats",
+    "modelHint": "モデルを切り替えるには /model を使用してください。",
+    "authHint": "API キーに切り替えるには /auth を使用してください。",
+    "noAccess": "{{model}} へのアクセス権がないようです。",
+    "previewLearnMore": "詳細は https://goo.gle/enable-preview-features をご覧ください",
+    "disablePreview": "{{model}} を無効にするには、/settings で「プレビュー機能」を無効にしてください。",
+    "highDemand": "現在、需要が高まっています。",
+    "highDemandApology": "ご不便をおかけして申し訳ありません。",
+    "switchedToFallback": "フォールバックモデル {{model}} に切り替えました"
+  },
+  "ideTrustChange": {
+    "default": "ワークスペースの信頼が変更されました。",
+    "connectionChange": "IDE 接続の変更により、ワークスペースの信頼が変更されました。",
+    "trustChange": "IDE 信頼の変更により、ワークスペースの信頼が変更されました。",
+    "restartHint": "'r' を押して Gemini を再起動してください"
+  },
+  "sessionBrowser": {
+    "loading": "読み込み中...",
+    "error": "エラー: {{error}}",
+    "pressToExit": "q を押して終了",
+    "empty": "自動保存された会話は見つかりませんでした。",
+    "searchLabel": "検索:",
+    "searchCancel": "(Escでキャンセル)",
+    "filteredSuffix": "、フィルタリング済み",
+    "sortField": {
+      "date": "日付",
+      "messages": "メッセージ",
+      "name": "名前"
+    },
+    "sortOrder": {
+      "asc": "昇順",
+      "desc": "降順"
+    },
+    "listTitle": "チャットセッション (合計 {{count}}{{filtered}})",
+    "sortedBy": "{{field}} でソート ({{order}})",
+    "help": {
+      "navigate": "移動",
+      "resume": "再開",
+      "search": "検索",
+      "delete": "削除",
+      "quit": "終了",
+      "sort": "ソート",
+      "reverse": "反転",
+      "firstLast": "最初/最後"
+    },
+    "columns": {
+      "index": "#",
+      "messages": "Msgs",
+      "age": "期間",
+      "match": "一致",
+      "name": "名前"
+    },
+    "noResults": "\"{{query}}\" の結果はありません。",
+    "roleUser": "ユーザー",
+    "roleModel": "アシスタント",
+    "current": "(現在)",
+    "moreMatches": "(+{{count}} その他)",
+    "noMessages": "メッセージなし",
+    "loadFailed": "セッションの読み込みに失敗しました",
+    "loadFullFailed": "完全なセッションコンテンツの読み込みに失敗しました",
+    "deleteFailed": "セッションの削除に失敗しました: {{error}}",
+    "unknownError": "不明なエラー"
+  },
+  "toolConfirmation": {
+    "applyChange": "この変更を適用しますか？",
+    "execMultiple": "{{count}} 個のコマンドの実行を許可しますか？",
+    "execSingle": "'{{command}}' の実行を許可しますか？",
+    "proceedQuestion": "続行しますか？",
+    "mcpQuestion": "サーバー \"{{server}}\" からの MCP ツール \"{{tool}}\" の実行を許可しますか？",
+    "options": {
+      "allowOnce": "今回のみ許可",
+      "allowSession": "このセッションで許可",
+      "allowAllFuture": "今後のすべてのセッションで許可",
+      "modifyExternalEditor": "外部エディタで変更",
+      "suggestChangesEsc": "いいえ、変更を提案 (esc)",
+      "allowToolSession": "このセッションでツールを許可",
+      "allowServerToolsSession": "このセッションですべてのサーバーツールを許可",
+      "allowToolAllFuture": "今後のすべてのセッションでツールを許可"
+    },
+    "redirection": {
+      "noteLabel": "注: ",
+      "noteText": "コマンドにリダイレクトが含まれており、望ましくない可能性があります。",
+      "tipLabel": "ヒント: ",
+      "tipText": "自動編集 (Shift+Tab) を切り替えて、将来的にリダイレクトを許可します。"
+    },
+    "urlsToFetch": "取得する URL:",
+    "mcpServer": "MCP サーバー: {{server}}",
+    "mcpTool": "ツール: {{tool}}",
+    "modifyInProgress": "変更中:",
+    "modifyHint": "変更を適用するには外部エディタを使用してください。"
+  }
+}

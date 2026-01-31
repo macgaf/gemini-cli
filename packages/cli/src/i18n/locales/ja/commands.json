@@ -1,0 +1,495 @@
+{
+  "help": {
+    "description": "コマンドと使用方法に関するヘルプを表示します",
+    "usage": "使用法: /help <コマンド>"
+  },
+  "clear": {
+    "description": "画面とチャット履歴をクリアします",
+    "cleared": "画面と履歴をクリアしました。"
+  },
+  "quit": {
+    "description": "Gemini CLI を終了します"
+  },
+  "model": {
+    "description": "現在の Gemini モデルを表示または変更します",
+    "current": "現在のモデル: {{model}}",
+    "changed": "モデルを {{model}} に変更しました",
+    "usage": "使用法: /model [モデル名]",
+    "list": "利用可能なモデル:"
+  },
+  "theme": {
+    "description": "CLI のテーマを変更します",
+    "current": "現在のテーマ: {{theme}}",
+    "changed": "テーマを {{theme}} に変更しました",
+    "usage": "使用法: /theme [テーマ名]",
+    "list": "利用可能なテーマ:"
+  },
+  "stats": {
+    "description": "使用統計を表示します",
+    "usage": "使用法: /stats [model | tools]"
+  },
+  "copy": {
+    "description": "最後の応答をクリップボードにコピーします",
+    "copied": "クリップボードにコピーしました！",
+    "noResponse": "コピーする応答がありません。"
+  },
+  "save": {
+    "description": "現在のチャット履歴をファイルに保存します",
+    "usage": "使用法: /save <ファイルパス>",
+    "saved": "チャット履歴を {{path}} に保存しました",
+    "error": "保存に失敗しました: {{error}}"
+  },
+  "restore": {
+    "description": "ファイルからチャット履歴を復元します",
+    "usage": "使用法: /restore <ファイルパス>",
+    "restored": "チャット履歴を {{path}} から復元しました",
+    "error": "復元に失敗しました: {{error}}"
+  },
+  "memory": {
+    "description": "コンテキストメモリ（GEMINI.md）を表示または管理します",
+    "usage": "使用法: /memory [show | add | clear | list | refresh]",
+    "show": {
+      "description": "現在のコンテキストメモリを表示します",
+      "empty": "メモリは空です。"
+    },
+    "add": {
+      "description": "メモリにコンテンツを追加します",
+      "usage": "使用法: /memory add <コンテンツ>",
+      "added": "メモリに追加しました。"
+    },
+    "clear": {
+      "description": "メモリをクリアします",
+      "cleared": "メモリをクリアしました。"
+    },
+    "list": {
+      "description": "読み込まれたすべての GEMINI.md ファイルを一覧表示します",
+      "empty": "GEMINI.md ファイルは読み込まれていません。"
+    },
+    "refresh": {
+      "description": "GEMINI.md ファイルからメモリを再読み込みします",
+      "refreshed": "メモリを再読み込みしました。"
+    }
+  },
+  "tools": {
+    "description": "利用可能なツールを一覧表示します",
+    "list": "利用可能なツール:",
+    "noTools": "利用可能なツールはありません。"
+  },
+  "mcp": {
+    "description": "Model Context Protocol (MCP) サーバーとツールを管理します",
+    "usage": "使用法: /mcp [list | auth | refresh]",
+    "list": {
+      "description": "接続されているすべての MCP サーバーとツールを一覧表示します",
+      "servers": "MCP サーバー:",
+      "tools": "ツール:",
+      "noServers": "MCP サーバーは接続されていません。",
+      "noTools": "ツールはありません。"
+    },
+    "auth": {
+      "description": "MCP サーバーで認証します",
+      "usage": "使用法: /mcp auth <サーバー名>",
+      "success": "{{server}} で認証されました。",
+      "failed": "{{server}} での認証に失敗しました: {{error}}"
+    },
+    "refresh": {
+      "description": "MCP サーバーの接続とツールを更新します",
+      "refreshing": "MCP サーバーを更新中...",
+      "success": "MCP サーバーを更新しました。",
+      "failed": "MCP サーバーの更新に失敗しました: {{error}}"
+    }
+  },
+  "chat": {
+    "description": "チャットセッションを管理します",
+    "usage": "使用法: /chat [list | save | resume | delete | share]",
+    "list": {
+      "description": "保存されたチャットセッションを一覧表示します",
+      "empty": "保存されたチャットセッションはありません。"
+    },
+    "save": {
+      "description": "現在のチャットセッションを保存します",
+      "usage": "使用法: /chat save <タグ>",
+      "saved": "チャットセッションをタグ \"{{tag}}\" で保存しました。"
+    },
+    "resume": {
+      "description": "保存されたチャットセッションを再開します",
+      "usage": "使用法: /chat resume <タグ>",
+      "resumed": "タグ \"{{tag}}\" のチャットセッションを再開しました。",
+      "notFound": "タグ \"{{tag}}\" のチャットセッションが見つかりません。"
+    },
+    "delete": {
+      "description": "保存されたチャットセッションを削除します",
+      "usage": "使用法: /chat delete <タグ>",
+      "deleted": "タグ \"{{tag}}\" のチャットセッションを削除しました。",
+      "notFound": "タグ \"{{tag}}\" のチャットセッションが見つかりません。"
+    },
+    "share": {
+      "description": "チャットセッションを共有可能なファイル（markdown）にエクスポートします",
+      "usage": "使用法: /chat share <ファイルパス>",
+      "shared": "チャットセッションを {{path}} にエクスポートしました。"
+    }
+  },
+  "compress": {
+    "description": "コンテキストウィンドウを節約するためにチャット履歴を圧縮します",
+    "compressing": "チャット履歴を圧縮中...",
+    "success": "チャット履歴を圧縮しました。 ({{ratio}}%削減)",
+    "failed": "チャット履歴の圧縮に失敗しました: {{error}}"
+  },
+  "about": {
+    "description": "Gemini CLI に関する情報を表示します",
+    "title": "Gemini CLI について",
+    "version": "バージョン: {{version}}"
+  },
+  "bug": {
+    "description": "バグを報告します",
+    "usage": "使用法: /bug [タイトル]",
+    "opened": "お使いのブラウザでバグレポートページを開きました。"
+  },
+  "docs": {
+    "description": "ドキュメントを開きます",
+    "opened": "お使いのブラウザでドキュメントを開きました。"
+  },
+  "directory": {
+    "description": "ワークスペースディレクトリを管理します",
+    "usage": "使用法: /directory [add | remove | list | show]",
+    "add": {
+      "description": "ワークスペースにディレクトリを追加します",
+      "usage": "使用法: /directory add <パス>",
+      "added": "ディレクトリ {{path}} を追加しました。"
+    },
+    "remove": {
+      "description": "ワークスペースからディレクトリを削除します",
+      "usage": "使用法: /directory remove <パス>",
+      "removed": "ディレクトリ {{path}} を削除しました。"
+    },
+    "list": {
+      "description": "ワークスペース内のすべてのディレクトリを一覧表示します",
+      "empty": "ディレクトリはありません。"
+    },
+    "show": {
+      "description": "ワークスペース内のすべてのディレクトリを表示します（エイリアス）"
+    }
+  },
+  "extensions": {
+    "description": "拡張機能を管理します",
+    "install": {
+      "success": "拡張機能 \"{{name}}\" をインストールしました。",
+      "failed": "拡張機能 \"{{name}}\" のインストールに失敗しました: {{error}}",
+      "description": "拡張機能をインストールします。使用法: /extensions install <名前>"
+    },
+    "uninstall": {
+      "success": "拡張機能 \"{{name}}\" をアンインストールしました。",
+      "failed": "拡張機能 \"{{name}}\" のアンインストールに失敗しました: {{error}}",
+      "description": "拡張機能をアンインストールします。使用法: /extensions uninstall <名前>"
+    },
+    "update": {
+      "success": "拡張機能 \"{{name}}\" を更新しました。",
+      "successAll": "すべての拡張機能を更新しました。",
+      "failed": "拡張機能 \"{{name}}\" の更新に失敗しました: {{error}}",
+      "failedAll": "すべての拡張機能の更新に失敗しました: {{error}}",
+      "upToDate": "拡張機能 \"{{name}}\" は最新です。",
+      "upToDateAll": "すべての拡張機能は最新です。",
+      "description": "拡張機能を更新します。使用法: /extensions update [名前]"
+    },
+    "list": {
+      "platform": "プラットフォーム",
+      "user": "ユーザー",
+      "workspace": "ワークスペース",
+      "description": "インストールされている拡張機能を一覧表示します"
+    },
+    "link": {
+      "success": "拡張機能 \"{{name}}\" をリンクしました。",
+      "failed": "拡張機能 \"{{name}}\" のリンクに失敗しました: {{error}}",
+      "description": "ローカル拡張機能を開発用にリンクします。使用法: /extensions link <パス>"
+    },
+    "new": {
+      "description": "新しい拡張機能を作成します。使用法: /extensions new <名前>"
+    },
+    "validate": {
+      "description": "拡張機能を検証します。使用法: /extensions validate <パス>"
+    },
+    "configure": {
+      "description": "拡張機能を設定します。使用法: /extensions configure <名前>"
+    },
+    "enable": {
+      "description": "拡張機能を有効にします。使用法: /extensions enable <名前>",
+      "success": "拡張機能 \"{{name}}\" を有効にしました。",
+      "failed": "拡張機能 \"{{name}}\" の有効化に失敗しました: {{error}}"
+    },
+    "disable": {
+      "description": "拡張機能を無効にします。使用法: /extensions disable <名前>",
+      "success": "拡張機能 \"{{name}}\" を無効にしました。",
+      "failed": "拡張機能 \"{{name}}\" の無効化に失敗しました: {{error}}"
+    },
+    "scopeUnsupported": "サポートされていないスコープ: {{scope}}",
+    "describe": "Gemini CLI 拡張機能を管理します。"
+  },
+  "settings": {
+    "description": "Gemini CLI の設定を表示および編集します"
+  },
+  "auth": {
+    "description": "認証を管理します",
+    "login": {
+      "description": "ログインまたは認証方法を変更します"
+    },
+    "logout": {
+      "description": "ログアウトし、キャッシュされたすべての認証情報をクリアします"
+    }
+  },
+  "privacy": {
+    "description": "プライバシー通知を表示します"
+  },
+  "permissions": {
+    "description": "フォルダの信頼設定とその他の権限を管理します",
+    "trust": {
+      "description": "フォルダの信頼設定を管理します。使用法: /permissions trust [<ディレクトリパス>]"
+    }
+  },
+  "skills": {
+    "description": "Gemini CLI エージェントスキルを一覧表示、有効化、無効化、または再読み込みします。使用法: /skills [list | disable <名前> | enable <名前> | reload]",
+    "noSkillManager": "スキルマネージャーを取得できませんでした。",
+    "noConfig": "設定を取得できませんでした。",
+    "reloading": "エージェントスキルを再読み込み中...",
+    "reloadSuccess": "エージェントスキルを正常に再読み込みしました。",
+    "newlyAvailable": "{{count}} 個の新しいスキルが利用可能です{{suffix}}",
+    "noLongerAvailable": "{{count}} 個のスキルが利用できなくなりました{{suffix}}",
+    "reloadHint": "有効にするには \"/skills reload\" を使用してください。",
+    "reloadFailed": "スキルの再読み込みに失敗しました: {{error}}",
+    "disabledByAdmin": "エージェントスキルは管理者によって無効にされています。",
+    "notFound": "スキル \"{{name}}\" が見つかりません。",
+    "noSkillNameDisable": "無効にするスキル名を指定してください。",
+    "noSkillNameEnable": "有効にするスキル名を指定してください。",
+    "consent": {
+      "installingSkillsFrom": "\"{{source}}\" からエージェントスキルをインストールしています。",
+      "skillsWillBeInstalled": "以下のエージェントスキルがインストールされます:",
+      "installDestination": "インストール先: {{path}}"
+    },
+    "list": {
+      "description": "利用可能なエージェントスキルを一覧表示します。使用法: /skills list [nodesc] [all]",
+      "availableTitle": "利用可能なエージェントスキル:",
+      "disabledTitle": "無効化されたスキル:",
+      "empty": "利用可能なスキルはありません",
+      "builtinBadge": " [組み込み]"
+    },
+    "disable": {
+      "description": "名前でスキルを無効にします。使用法: /skills disable <名前>"
+    },
+    "enable": {
+      "description": "名前で無効化されたスキルを有効にします。使用法: /skills enable <名前>"
+    },
+    "reload": {
+      "description": "検出されたスキルのリストを再読み込みします。使用法: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "特定のメッセージまで戻り、会話を再開します",
+    "noConfig": "設定が見つかりません",
+    "noClient": "クライアントが初期化されていません",
+    "noRecording": "録画サービスが利用できません",
+    "noConversation": "会話が見つかりません。",
+    "nothingToRewind": "巻き戻すものがありません。",
+    "fetchFailed": "会話ファイルを取得できませんでした",
+    "unknownError": "巻き戻し中に不明なエラーが発生しました",
+    "filesReverted": "ファイルの変更を元に戻しました。",
+    "revert": {
+      "readError": "元に戻す間の {{fileName}} の読み取りエラー: {{error}}",
+      "smartFailed": "{{fileName}} のスマートリバートに失敗しました",
+      "missingFile": "元に戻す間のファイル {{fileName}} が見つかりません。",
+      "unexpectedError": "{{fileName}} を元に戻す間に予期しないエラーが発生しました。"
+    }
+  },
+  "hooks": {
+    "description": "フックを管理します",
+    "list": {
+      "description": "すべてのフックを一覧表示します"
+    },
+    "panel": {
+      "description": "登録されているすべてのフックとそのステータスを表示します",
+      "securityWarningTitle": "セキュリティ警告",
+      "securityWarningBody": "フックはコンピュータ上でコマンドを実行できます。信頼できるソースからのフックのみを有効にしてください。",
+      "learnMoreLabel": "詳細:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "構成されたフック:",
+      "unknown": "不明",
+      "status": {
+        "enabled": "有効",
+        "disabled": "無効"
+      },
+      "sourceLabel": "ソース: {{source}}",
+      "commandLabel": "コマンド: {{command}}",
+      "matcherLabel": "マッチャー: {{matcher}}",
+      "sequentialLabel": "順次",
+      "timeoutLabel": "タイムアウト: {{seconds}}秒",
+      "tip": {
+        "prefix": "ヒント: ",
+        "or": " または ",
+        "middle": "。 ",
+        "suffix": " を使用することもできます。"
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<フック名>"
+    },
+    "enable": {
+      "description": "名前でフックを有効にします"
+    },
+    "disable": {
+      "description": "名前でフックを無効にします"
+    },
+    "enableAll": {
+      "description": "無効化されているすべてのフックを有効にします"
+    },
+    "disableAll": {
+      "description": "有効化されているすべてのフックを無効にします"
+    },
+    "configNotLoaded": "設定が読み込まれていません。",
+    "hookSystemNotEnabled": "フックシステムが有効になっていません。",
+    "usageEnable": "使用法: /hooks enable <フック名>",
+    "usageDisable": "使用法: /hooks disable <フック名>",
+    "enabledSuccess": "フック \"{{name}}\" を正常に有効にしました。",
+    "disabledSuccess": "フック \"{{name}}\" を正常に無効にしました。",
+    "failedToEnable": "フックの有効化に失敗しました: {{error}}",
+    "failedToDisable": "フックの無効化に失敗しました: {{error}}",
+    "noHooksConfigured": "フックが構成されていません。",
+    "allHooksEnabled": "すべてのフックは既に有効です。",
+    "allHooksDisabled": "すべてのフックは既に無効です。",
+    "enabledCount": "{{count}} 個のフックを正常に有効にしました。",
+    "disabledCount": "{{count}} 個のフックを正常に無効にしました。",
+    "failedToEnableAll": "フックの有効化に失敗しました: {{error}}",
+    "failedToDisableAll": "フックの無効化に失敗しました: {{error}}"
+  },
+  "policies": {
+    "description": "ポリシーを管理します",
+    "errorConfigNotAvailable": "エラー: 設定が利用できません。",
+    "noActive": "アクティブなポリシーはありません。",
+    "list": {
+      "description": "すべてのアクティブなポリシーを一覧表示します",
+      "title": "アクティブなポリシー",
+      "tool": "ツール",
+      "allTools": "すべてのツール",
+      "argsMatch": "引数一致",
+      "priority": "優先度",
+      "source": "ソース"
+    }
+  },
+  "profile": {
+    "description": "プロファイルを管理します",
+    "toggled": "プロファイル表示を切り替えました。"
+  },
+  "init": {
+    "description": "新しいプロジェクトを初期化します",
+    "configNotAvailable": "設定は利用できません。",
+    "alreadyExists": "このディレクトリにはすでに GEMINI.md ファイルが存在します。変更は行われませんでした。",
+    "emptyCreated": "空の GEMINI.md ファイルを作成しました。"
+  },
+  "editor": {
+    "description": "外部エディタの優先設定を設定します"
+  },
+  "ide": {
+    "description": "IDE 統合コマンド",
+    "status": {
+      "description": "IDE 統合のステータスを確認します",
+      "connected": "{{ide}} に接続済み",
+      "connecting": "接続中...",
+      "disconnected": "切断",
+      "disconnectedWithDetails": "切断: {{details}}",
+      "activeSuffix": "(アクティブ)",
+      "fileListNote": "注: アクティブなファイルのみが追跡されます",
+      "openFilesHeader": "開いているファイル:"
+    },
+    "install": {
+      "description": "{{ide}} 用の IDE 拡張機能をインストールします",
+      "noInstaller": "{{ide}} ({{extension}}) 用のインストーラーが利用できません",
+      "installing": "拡張機能をインストール中...",
+      "autoEnableFailed": "IDE 統合の自動有効化に失敗しました。これを修正するには、新しいターミナルウィンドウで CLI を起動してください。"
+    },
+    "enable": {
+      "description": "IDE 統合を有効にします"
+    },
+    "disable": {
+      "description": "IDE 統合を無効にします"
+    },
+    "unsupported": "IDE 統合はこの環境ではサポートされていません。"
+  },
+  "vim": {
+    "description": "Vim モードを切り替えます",
+    "entered": "Vim モードに入りました。",
+    "exited": "Vim モードを終了しました。"
+  },
+  "terminalSetup": {
+    "description": "ターミナル設定を構成します",
+    "restartRequired": "変更を有効にするには、ターミナルを再起動してください。",
+    "failed": "ターミナル設定に失敗しました: {{error}}",
+    "windowsConfigPathMissing": "{{terminal}} の設定ディレクトリが見つかりませんでした。インストールされていますか？",
+    "keybindingsNotArray": "{{terminal}} のキーバインドファイル ({{file}}) は JSON 配列ではありません。",
+    "keybindingsParseFailed": "{{terminal}} のキーバインドファイル ({{file}}) の解析に失敗しました: 無効な JSON ({{error}})",
+    "alreadyConfigured": "{{terminal}} は既に Shift+Enter サポート用に構成されています。",
+    "existingBindingsShift": "- 既存の 'shift+enter' バインドが見つかりました",
+    "existingBindingsCtrl": "- 既存の 'ctrl+enter' バインドが見つかりました",
+    "existingBindingsHeader": "既存の競合するキーバインドが見つかりました:",
+    "existingBindingsFooter": "必要に応じて、バインドを追加するために {{file}} を手動で編集してください。",
+    "addedBindings": "{{terminal}} を正常に構成しました！ {{file}} にキーバインドを追加しました。",
+    "configureFailed": "{{terminal}} ({{file}}) の構成に失敗しました: {{error}}",
+    "kittyAlreadyConfigured": "Kitty Keyboard Protocol サポートが検出されました！ 複数行入力は追加の設定なしで自動的に機能するはずです。",
+    "detectFailed": "ターミナルエミュレーターを自動検出できませんでした。手動設定についてはドキュメントを確認してください。",
+    "notSupported": "{{terminal}} の自動設定は現在サポートされていません。手動設定についてはドキュメントを確認してください。"
+  },
+  "setupGithub": {
+    "description": "GitHub 統合を設定します",
+    "notGitRepo": "GitHub リポジトリではありません。",
+    "downloadSuccess": "{{workflows}} 個のワークフローと {{commands}} 個のコマンドファイルをダウンロードしました。設定を完了するには {{url}} を参照してください。",
+    "toolDescription": "GitHub Actions を設定します"
+  },
+  "resume": {
+    "description": "以前のセッションを再開します"
+  },
+  "agents": {
+    "description": "AI エージェントを管理します",
+    "list": {
+      "description": "利用可能なローカルおよびリモートエージェントを一覧表示します",
+      "configNotLoaded": "設定が読み込まれていません。",
+      "registryNotFound": "エージェントレジストリが見つかりません。",
+      "empty": "利用可能なエージェントはありません。",
+      "localTitle": "ローカルエージェント",
+      "remoteTitle": "リモートエージェント"
+    },
+    "enable": {
+      "description": "無効化されたエージェントを有効にします",
+      "usage": "使用法: /agents enable <エージェント名>",
+      "registryNotFound": "エージェントレジストリが見つかりません。",
+      "alreadyEnabled": "エージェント \"{{name}}\" は既に有効です。",
+      "notFound": "エージェント \"{{name}}\" が見つかりません。",
+      "enabling": "{{name}} を有効にしています..."
+    },
+    "disable": {
+      "description": "有効化されたエージェントを無効にします",
+      "usage": "使用法: /agents disable <エージェント名>",
+      "registryNotFound": "エージェントレジストリが見つかりません。",
+      "alreadyDisabled": "エージェント \"{{name}}\" は既に無効です。",
+      "notFound": "エージェント \"{{name}}\" が見つかりません。",
+      "disabling": "{{name}} を無効にしています..."
+    },
+    "refresh": {
+      "description": "エージェントレジストリを再読み込みします",
+      "registryNotFound": "エージェントレジストリが見つかりません。",
+      "refreshing": "エージェントを更新中...",
+      "success": "エージェントを正常に更新しました。"
+    },
+    "feedback": {
+      "error": "エージェント \"{{agentName}}\" を {{action}} しようとしてエラーが発生しました。",
+      "alreadyEnabled": "エージェント \"{{agentName}}\" は既に有効です。",
+      "alreadyDisabled": "エージェント \"{{agentName}}\" は既に無効です。",
+      "enabledTwoScopes": "{{scope1}} および {{scope2}} 設定の両方で有効にすることで、エージェント \"{{agentName}}\" を有効にしました。",
+      "disabledTwoScopes": "エージェント \"{{agentName}}\" は現在、{{scope1}} および {{scope2}} 設定の両方で無効になっています。",
+      "singleScope": "{{scope}} 設定で {{enabledDisabled}} に設定することで、エージェント \"{{agentName}}\" を {{actionVerb}} ました。",
+      "scopeProject": "プロジェクト",
+      "scopeUser": "ユーザー"
+    }
+  },
+  "corgi": {
+    "description": "コーギーモードを切り替えます"
+  }
+}

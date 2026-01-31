@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "Drücken Sie Esc zum Beenden."
+  },
+  "gemini": {
+    "title": "Gemini API-Schlüssel Hinweis",
+    "description1": "Durch die Nutzung der Gemini API",
+    "description2": ", Google AI Studio",
+    "description3": ", und anderer Google-Entwicklerdienste, die auf diese Bedingungen verweisen (zusammen die \"APIs\" oder \"Dienste\"), stimmen Sie den Google APIs-Nutzungsbedingungen (die \"API-Bedingungen\") zu",
+    "description4": ", und den Zusätzlichen Nutzungsbedingungen für die Gemini API (die \"Zusätzlichen Bedingungen\")"
+  },
+  "vertexAI": {
+    "title": "Vertex AI Hinweis",
+    "description1": "Dienstspezifische Bedingungen",
+    "description2": " sind in den Vertrag integriert, unter dem Google vereinbart hat, Google Cloud Platform bereitzustellen",
+    "description3": " an den Kunden (der \"Vertrag\"). Wenn der Vertrag den Wiederverkauf oder die Bereitstellung der Google Cloud Platform im Rahmen eines Google Cloud-Partner- oder Wiederverkäuferprogramms autorisiert, bedeuten alle Verweise auf Kunden in den dienstspezifischen Bedingungen Partner oder Wiederverkäufer (soweit zutreffend), außer im Abschnitt mit dem Titel \"Partnerspezifische Bedingungen\", und alle Verweise auf Kundendaten in den dienstspezifischen Bedingungen bedeuten Partnerdaten. Begriffe, die in den dienstspezifischen Bedingungen verwendet, aber nicht definiert sind, haben die im Vertrag festgelegte Bedeutung."
+  },
+  "codeAssist": {
+    "title": "Gemini Code Assist Datenschutzerklärung"
+  },
+  "cloudFree": {
+    "title": "Gemini Code Assist für Einzelpersonen Datenschutzerklärung",
+    "description1": "Dieser Hinweis und unsere Datenschutzerklärung",
+    "description2": " beschreiben, wie Gemini Code Assist Ihre Daten behandelt. Bitte lesen Sie sie sorgfältig durch.",
+    "dataCollection": "Wenn Sie Gemini Code Assist für Einzelpersonen mit Gemini CLI verwenden, sammelt Google Ihre Prompts, zugehörigen Code, generierte Ausgaben, Codeänderungen, zugehörige Nutzungsinformationen und Ihr Feedback, um Google-Produkte und -Dienste sowie Technologien für maschinelles Lernen bereitzustellen, zu verbessern und zu entwickeln.",
+    "humanReviewers": "Um bei der Qualität zu helfen und unsere Produkte (wie generative Modelle für maschinelles Lernen) zu verbessern, können menschliche Prüfer die oben gesammelten Daten lesen, kommentieren und verarbeiten. Wir ergreifen Maßnahmen zum Schutz Ihrer Privatsphäre als Teil dieses Prozesses. Dazu gehört das Trennen der Daten von Ihrem Google-Konto, bevor Prüfer sie sehen oder kommentieren, und das Speichern dieser getrennten Kopien für bis zu 18 Monate. Bitte übermitteln Sie keine vertraulichen Informationen oder Daten, die kein Prüfer sehen oder die Google nicht zur Verbesserung unserer Produkte, Dienste und Technologien für maschinelles Lernen verwenden sollte.",
+    "allowDataUse": "Google erlauben, diese Daten zur Entwicklung und Verbesserung unserer Produkte zu verwenden?",
+    "pressEnterToChoose": "Drücken Sie Enter, um eine Option auszuwählen und zu beenden.",
+    "errorLoading": "Fehler beim Laden der Opt-in-Einstellungen: {{error}}"
+  }
+}

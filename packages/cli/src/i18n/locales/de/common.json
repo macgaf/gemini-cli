@@ -1,0 +1,356 @@
+{
+  "cancel": "Abbrechen",
+  "confirm": "Bestätigen",
+  "yes": "Ja",
+  "no": "Nein",
+  "ok": "OK",
+  "close": "Schließen",
+  "save": "Speichern",
+  "loading": "Laden...",
+  "loading.escToCancel": "(esc zum Abbrechen, {{time}})",
+  "loading.interactiveShellWaiting": "Interaktive Shell erwartet Eingabe... Drücken Sie Tab, um zur Shell zu wechseln",
+  "loading.waitingForConfirmation": "Warte auf Benutzerbestätigung...",
+  "loading.retrying": "Versuche {{model}} zu erreichen (Versuch {{attempt}}/{{maxAttempts}})",
+  "modelRespondingWith": "Antwortet mit {{model}}",
+  "error": "Fehler",
+  "warning": "Warnung",
+  "info": "Info",
+  "success": "Erfolg",
+  "retry": "Wiederholen",
+  "back": "Zurück",
+  "next": "Weiter",
+  "done": "Fertig",
+  "exit": "Beenden",
+  "quit": "Beenden",
+  "help": "Hilfe",
+  "settings": "Einstellungen",
+  "version": "Version",
+  "versionDisplay": "v{{version}}",
+  "pressToExit": "Drücken Sie {{key}} zum Beenden",
+  "pressToCancel": "Drücken Sie {{key}} zum Abbrechen",
+  "pressToContinue": "Drücken Sie {{key}} zum Fortfahren",
+  "or": "oder",
+  "and": "und",
+  "enabled": "Aktiviert",
+  "disabled": "Deaktiviert",
+  "on": "An",
+  "off": "Aus",
+  "notAvailable": "Nicht verfügbar",
+  "unknown": "Unbekannt",
+  "unknownError": "Unbekannter Fehler",
+  "none": "Keine",
+  "default": "Standard",
+  "custom": "Benutzerdefiniert",
+  "recommended": "Empfohlen",
+  "optional": "Optional",
+  "required": "Erforderlich",
+  "exitWarning": {
+    "ctrlC": "Drücken Sie erneut Strg+C zum Beenden.",
+    "ctrlD": "Drücken Sie erneut Strg+D zum Beenden."
+  },
+  "copyMode": {
+    "warning": "Kopiermodus. Drücken Sie eine beliebige Taste zum Beenden."
+  },
+  "shellMode": {
+    "enabled": "Shell-Modus aktiviert",
+    "escToDisable": "(esc zum Deaktivieren)"
+  },
+  "rawMarkdown": {
+    "mode": "Raw-Markdown-Modus",
+    "toggle": "{{key}} zum Umschalten"
+  },
+  "escapePrompt": {
+    "rewind": "Drücken Sie erneut Esc zum Zurückspulen.",
+    "clearPrompt": "Drücken Sie erneut Esc, um die Eingabeaufforderung zu löschen."
+  },
+  "alerts": {
+    "selectionMode": "Mausauswahl ist deaktiviert, während Gemini CLI Mausereignisse verarbeitet.",
+    "pasteTimeout": "Einfüge-Operation abgelaufen. Bitte versuchen Sie es erneut.",
+    "shiftTabFocusOut": "Drücken Sie erneut Umschalt+Tab, um den Fokus auf die CLI zurückzusetzen."
+  },
+  "loopDetection": {
+    "disabledRetry": "Schleifenerkennung wurde für diese Sitzung deaktiviert. Anfrage wird wiederholt...",
+    "haltMessage": "Eine mögliche Schleife wurde erkannt. Dies kann durch wiederholte Werkzeugaufrufe oder anderes Modellverhalten geschehen. Die Anfrage wurde angehalten."
+  },
+  "screenReader": {
+    "userPrefix": "Benutzer: ",
+    "modelPrefix": "Modell: ",
+    "loading": "lädt",
+    "responding": "antwortet"
+  },
+  "redirectionWarning": {
+    "noteLabel": "Hinweis: ",
+    "noteText": "Der Befehl enthält eine Umleitung, was unerwünscht sein kann.",
+    "tipLabel": "Tipp:  ",
+    "tipText": "Schalten Sie die automatische Bearbeitung (Umschalt+Tab) um, um Umleitungen in Zukunft zuzulassen."
+  },
+  "updateCheck": {
+    "newVersionAvailable": "Eine neue Version von Gemini CLI ist verfügbar! {{current}} → {{latest}}",
+    "updateAvailable": "Gemini CLI Update verfügbar! {{current}} → {{latest}}"
+  },
+  "slashCommand": {
+    "requiresSubcommand": "Befehl '/{{name}}' erfordert einen Unterbefehl. Verfügbar:",
+    "unknownCommand": "Unbekannter Befehl: {{command}}",
+    "unknownCommandMcpLoading": "Unbekannter Befehl: {{command}}. Befehl könnte von einem MCP-Server stammen, aber MCP-Server sind noch nicht vollständig geladen.",
+    "shellExpansionDeclined": "Shell-Ausführung des Slash-Befehls abgelehnt.",
+    "operationCancelled": "Vorgang abgebrochen.",
+    "shellExpansion": {
+      "title": "Shell-Erweiterung bestätigen",
+      "name": "Erweiterung",
+      "description": "Befehlserweiterung benötigt Shell-Zugriff"
+    }
+  },
+  "contextSummary": {
+    "openFiles": "{{count}} geöffnete Datei",
+    "openFilesPlural": "{{count}} geöffnete Dateien",
+    "openFilesHint": "(Strg+g zum Anzeigen)",
+    "contextFile": "{{count}} {{name}} Datei",
+    "contextFilePlural": "{{count}} {{name}} Dateien",
+    "mcpServer": "{{count}} MCP-Server",
+    "mcpServerPlural": "{{count}} MCP-Server",
+    "blockedMcpServer": "{{count}} blockiert",
+    "blockedMcpServerPlural": "{{count}} blockierte MCP-Server",
+    "skill": "{{count}} Skill",
+    "skillPlural": "{{count}} Skills"
+  },
+  "footer": {
+    "noSandbox": "keine Sandbox",
+    "seeDocs": "(siehe /docs)",
+    "untrusted": "nicht vertrauenswürdig",
+    "contextLeft": "% Kontext übrig",
+    "modelCommand": "/model",
+    "seatbelt": "macOS Seatbelt"
+  },
+  "mcp": {
+    "noServersConfigured": "Keine MCP-Server konfiguriert.",
+    "serversStartingUp": "⏳ MCP-Server starten",
+    "configuredServers": "Konfigurierte MCP-Server:",
+    "connectingToServers": "Verbindung zu MCP-Servern... ({{connected}}/{{total}})",
+    "waitingFor": "Warte auf: {{servers}}",
+    "viewDocs": "Bitte sehen Sie sich die MCP-Dokumentation in Ihrem Browser an:",
+    "orUseDocs": "oder verwenden Sie den Befehl /docs",
+    "initializing": "{{count}} initialisieren",
+    "firstStartupNote": "Hinweis: Der erste Start kann länger dauern. Werkzeugverfügbarkeit wird automatisch aktualisiert.",
+    "ready": "Bereit",
+    "starting": "Starten... (erster Start kann länger dauern)",
+    "disconnected": "Getrennt",
+    "fromExtension": "von {{name}}",
+    "tool": "{{count}} Werkzeug",
+    "toolPlural": "{{count}} Werkzeuge",
+    "prompt": "{{count}} Prompt",
+    "promptPlural": "{{count}} Prompts",
+    "resource": "{{count}} Ressource",
+    "resourcePlural": "{{count}} Ressourcen",
+    "resourceFallback": "Ressource",
+    "oauthLabel": "OAuth",
+    "oauthExpired": "OAuth abgelaufen",
+    "oauthNotAuthenticated": "OAuth nicht authentifiziert",
+    "toolsWillAppear": "Werzeuge und Prompts erscheinen, wenn sie bereit sind",
+    "toolsCached": "{{count}} Werkzeuge zwischengespeichert",
+    "tools": "Werkzeuge:",
+    "parameters": "Parameter:",
+    "prompts": "Prompts:",
+    "resources": "Ressourcen:",
+    "resourcesHidden": "{{count}} Ressource ausgeblendet",
+    "resourcesHiddenPlural": "{{count}} Ressourcen ausgeblendet",
+    "blocked": "Blockiert"
+  },
+  "input": {
+    "placeholder": "Was möchten Sie tun?",
+    "reverseSearchIndicator": "(r:)"
+  },
+  "debugConsole": {
+    "title": "Debug-Konsole",
+    "closeHint": "(drücken Sie `, um zu schließen)",
+    "repeatCount": "(x{{count}})"
+  },
+  "consoleSummary": {
+    "errorCount": "{{count}} Fehler",
+    "errorCountPlural": "{{count}} Fehler",
+    "details": "(F12 für Details)"
+  },
+  "queue": {
+    "title": "In Warteschlange (drücken Sie ↑ zum Bearbeiten):",
+    "more": "... (+{{count}} mehr)",
+    "shellCommandsCannotBeQueued": "Shell-Befehle können nicht in die Warteschlange gestellt werden",
+    "slashCommandsCannotBeQueued": "Slash-Befehle können nicht in die Warteschlange gestellt werden"
+  },
+  "toolDisplay": {
+    "shell": {
+      "currentDir": "{{command}} [aktuelles Arbeitsverzeichnis {{dir}}]",
+      "inDir": "{{command}} [in {{dir}}]",
+      "descriptionSuffix": "({{description}})"
+    }
+  },
+  "diff": {
+    "noContent": "Kein Diff-Inhalt.",
+    "noChanges": "Keine Änderungen erkannt.",
+    "lineType": {
+      "add": "hinzugefügt",
+      "del": "entfernt",
+      "context": "Kontext",
+      "hunk": "Hunk",
+      "other": "andere"
+    }
+  },
+  "suggestions": {
+    "loading": "Lade Vorschläge...",
+    "mcpSuffix": " [MCP]",
+    "agentSuffix": " [Agent]"
+  },
+  "todo": {
+    "title": "To-do",
+    "progress": "{{completed}}/{{total}} erledigt",
+    "toggleHint": "({{key}} zum Umschalten)",
+    "ariaLabel": "To-do-Liste",
+    "status": {
+      "completed": "Erledigt",
+      "inProgress": "In Bearbeitung",
+      "pending": "Ausstehend",
+      "cancelled": "Abgebrochen"
+    }
+  },
+  "showMoreLines": "Drücken Sie Strg-s, um mehr Zeilen anzuzeigen",
+  "hooks": {
+    "executingSingle": "Führe Hook aus",
+    "executingMultiple": "Führe Hooks aus"
+  },
+  "stats": {
+    "sessionStats": "Sitzungsstatistiken",
+    "interactionSummary": "Interaktionszusammenfassung",
+    "sessionId": "Sitzungs-ID",
+    "toolCalls": "Werkzeugaufrufe",
+    "successRate": "Erfolgsquote",
+    "userAgreement": "Benutzerzustimmung",
+    "reviewedCount": "({{count}} überprüft)",
+    "codeChanges": "Code-Änderungen",
+    "performance": "Leistung",
+    "wallTime": "Laufzeit",
+    "agentActive": "Agent aktiv",
+    "apiTime": "API-Zeit",
+    "toolTime": "Werkzeug-Ausführungszeit",
+    "modelUsage": "Modell",
+    "requests": "Anfragen",
+    "inputTokens": "Eingabe-Token",
+    "cacheReads": "Cache-Lesevorgänge",
+    "outputTokens": "Ausgabe-Token",
+    "usageLeft": "Verbleibende Nutzung",
+    "resetsIn": "Rücksetzung in {{time}}",
+    "savingsHighlightLabel": "Cache-Einsparungen:",
+    "savingsHighlightBody": "{{cached}} Token zwischengespeichert ({{percent}}% Effizienz)",
+    "usageLimits": "Nutzungsgrenzen",
+    "modelTip": "Hinweis: Kontingente sind ungefähre Angaben."
+  },
+  "agentExecution": {
+    "stopped": "Agent-Ausführung gestoppt: {{reason}}",
+    "blocked": "Agent-Ausführung blockiert: {{reason}}"
+  },
+  "atCommand": {
+    "toolNotFound": "read_many_files Werkzeug nicht gefunden.",
+    "loneAtDetected": "Einzelnes @ erkannt, wird als Text in der geänderten Abfrage behandelt.",
+    "invalidCommandNoPath": "Ungültiger @ Befehl \"{{command}}\": Pfad fehlt.",
+    "pathOutsideWorkspace": "Pfad {{path}} liegt nicht im Arbeitsbereich und wird übersprungen.",
+    "reasonGit": "git-ignoriert",
+    "reasonGemini": "gemini-ignoriert",
+    "reasonBoth": "git-ignoriert und gemini-ignoriert",
+    "pathIgnored": "Pfad {{path}} ist {{reason}} und wird übersprungen.",
+    "resolvedPath": "Pfad {{path}} aufgelöst zu {{absolute}} unter Verwendung des relativen Pfads: {{relative}}",
+    "resolvedDirectoryGlob": "Pfad {{path}} zu Verzeichnis aufgelöst, verwende Glob: {{glob}}",
+    "notFoundTryGlob": "Pfad {{path}} nicht direkt gefunden, versuche Glob-Suche.",
+    "globFound": "Glob-Suche für \"{{path}}\" ergab Treffer {{match}}, verwende relativen Pfad: {{relative}}.",
+    "globNoUsable": "Glob-Suche für \"{{path}}\" ergab keine brauchbaren Treffer. Pfad {{path}} wird übersprungen.",
+    "globNoFiles": "Glob-Suche für '**/*{{path}}*' fand keine Dateien oder einen Fehler. Pfad {{path}} wird übersprungen.",
+    "globError": "Fehler bei Glob-Suche für {{path}}. Pfad {{path}} wird übersprungen.",
+    "globToolNotFound": "Glob-Werkzeug nicht gefunden. Pfad {{path}} wird übersprungen.",
+    "statError": "Fehler beim Abrufen von {{path}}.",
+    "ignoredGit": "Git-ignoriert: {{paths}}",
+    "ignoredGemini": "Gemini-ignoriert: {{paths}}",
+    "ignoredBoth": "Git-ignoriert und Gemini-ignoriert: {{paths}}",
+    "ignoredFiles": "Ignorierte {{count}} Dateien:\n{{details}}",
+    "noValidPaths": "Keine gültigen @ Pfade gefunden. Fahre ohne Dateilesevorgänge fort.",
+    "resourceClientUnavailable": "MCP-Client für Server '{{server}}' ist nicht verfügbar oder nicht verbunden.",
+    "resourceReadSuccess": "Ressource {{uri}} gelesen.",
+    "resourceReadError": "Fehler beim Lesen der Ressource {{uri}}: {{error}}",
+    "readManySuccess": "Dateien gelesen: {{files}}",
+    "readManyNoContent": "read_many_files Werkzeug lieferte keinen Inhalt oder leeren Inhalt.",
+    "readManyErrorDescription": "Lese viele Dateien",
+    "readManyError": "Fehler beim Lesen von Dateien ({{files}}): {{error}}",
+    "exitingProcessingError": "Beenden aufgrund eines Fehlers bei der Verarbeitung des @ Befehls: {{error}}"
+  },
+  "autoAccept": {
+    "yoloDisabled": "Sie können den YOLO-Modus nicht aktivieren, da er in Ihren Einstellungen deaktiviert ist."
+  },
+  "compression": {
+    "thresholdExceeded": "Komprimierungsschwelle überschritten ({{original}} → {{updated}} Token)."
+  },
+  "contextWindow": {
+    "mightExceed": "Das Senden dieser Nachricht ({{estimated}} Token) könnte das verbleibende Kontextfensterlimit ({{remaining}} Token) überschreiten.",
+    "tryReduce": "Bitte versuchen Sie, die Größe Ihrer Nachricht zu reduzieren oder verwenden Sie den Befehl `/compress`, um den Chatverlauf zu komprimieren."
+  },
+  "conversation": {
+    "contextCleared": "Gesprächskontext gelöscht."
+  },
+  "finishReason": {
+    "maxTokens": "Antwort aufgrund von Token-Limits abgeschnitten.",
+    "safety": "Antwort aus Sicherheitsgründen gestoppt.",
+    "recitation": "Antwort aufgrund von Rezitationsrichtlinien gestoppt.",
+    "language": "Antwort aufgrund nicht unterstützter Sprache gestoppt.",
+    "blocklist": "Antwort aufgrund verbotener Begriffe gestoppt.",
+    "prohibitedContent": "Antwort aufgrund verbotener Inhalte gestoppt.",
+    "spii": "Antwort aufgrund sensibler personenbezogener Daten gestoppt.",
+    "other": "Antwort aus anderen Gründen gestoppt.",
+    "malformedFunctionCall": "Antwort aufgrund fehlerhaften Funktionsaufrufs gestoppt.",
+    "imageSafety": "Antwort aufgrund von Bildsicherheitsverletzungen gestoppt.",
+    "unexpectedToolCall": "Antwort aufgrund unerwarteten Werkzeugaufrufs gestoppt.",
+    "imageProhibitedContent": "Antwort aufgrund verbotener Bildinhalte gestoppt.",
+    "noImage": "Antwort gestoppt, da kein Bild bereitgestellt wurde."
+  },
+  "sessionSummary": {
+    "goodbye": "Agent fährt herunter. Auf Wiedersehen!"
+  },
+  "folderTrust": {
+    "untrustedWarning": "Dieser Ordner ist nicht vertrauenswürdig. Einige Funktionen sind möglicherweise deaktiviert. Verwenden Sie den Befehl `/permissions`, um die Vertrauensebene zu ändern.",
+    "saveFailedExiting": "Fehler beim Speichern der Vertrauenseinstellungen. Gemini CLI wird beendet."
+  },
+  "memory": {
+    "highUsage": "Hohe Speichernutzung erkannt: {{usage}} GB. Wenn ein Absturz auftritt, melden Sie bitte einen Fehlerbericht mit `/bug`"
+  },
+  "request": {
+    "cancelled": "Anfrage abgebrochen.",
+    "userCancelled": "Benutzer hat die Anfrage abgebrochen."
+  },
+  "session": {
+    "maxTurnsReached": "Maximale Anzahl an Sitzungsrunden erreicht ({{max}})."
+  },
+  "shell": {
+    "aborting": "Befehl wird abgebrochen (PID {{pid}}).",
+    "executing": "Ausführung in {{dir}}: {{command}}",
+    "binaryReceiving": "[Empfange Binärausgabe... {{size}} empfangen]",
+    "binaryDetected": "[Binärausgabe erkannt. Stream angehalten...]",
+    "binaryOutputHidden": "[Befehl erzeugte Binärausgabe, die nicht angezeigt wird.]",
+    "noOutput": "Keine Ausgabe.",
+    "commandCancelled": "Befehl abgebrochen.",
+    "commandSignal": "Befehl durch Signal {{signal}} beendet",
+    "commandExitCode": "Befehl mit Code {{code}} beendet",
+    "statelessWarning": "WARNUNG: Shell-Modus ist zustandslos; der Verzeichniswechsel zu '{{path}}' bleibt nicht bestehen.",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten: {{error}}"
+  },
+  "toolStats": {
+    "title": "Werkzeug-Statistiken",
+    "empty": "In dieser Sitzung wurden keine Werkzeugaufrufe getätigt.",
+    "header": {
+      "toolName": "Werkzeug",
+      "calls": "Aufrufe",
+      "successRate": "Erfolgsquote",
+      "avgDuration": "Ø Dauer"
+    },
+    "userDecision": {
+      "title": "Benutzerentscheidungen",
+      "totalReviewed": "Insgesamt überprüfte Vorschläge:",
+      "accepted": "» Akzeptiert:",
+      "rejected": "» Abgelehnt:",
+      "modified": "» Geändert:",
+      "overallAgreement": "Gesamtübereinstimmungsrate:"
+    }
+  }
+}

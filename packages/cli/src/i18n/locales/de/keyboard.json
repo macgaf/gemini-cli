@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "Tastaturkürzel",
+    "submit": "Nachricht senden",
+    "newline": "Neue Zeile",
+    "newlineLinux": "Neue Zeile (Alt+Enter funktioniert bei bestimmten Linux-Distributionen)",
+    "cancel": "Abbrechen/Unterbrechen",
+    "clear": "Bildschirm löschen",
+    "exit": "Beenden",
+    "copy": "Letzte Antwort kopieren",
+    "paste": "Aus der Zwischenablage einfügen",
+    "jumpWords": "Durch Wörter in der Eingabe springen",
+    "quit": "Anwendung beenden",
+    "clearScreen": "Den Bildschirm löschen",
+    "selectionMode": "Auswahlmodus zum Kopieren von Text eingeben",
+    "externalEditor": "Eingabe in externem Editor öffnen",
+    "yoloMode": "YOLO-Modus umschalten",
+    "sendMessage": "Nachricht senden",
+    "cancelOrClear": "Operation abbrechen / Eingabe löschen (zweimal drücken)",
+    "scrollPage": "Seite hoch/runter scrollen",
+    "autoAcceptEdits": "Automatisches Akzeptieren von Änderungen umschalten",
+    "promptHistory": "Durch Ihren Prompt-Verlauf blättern",
+    "fullListSee": "Für eine vollständige Liste der Tastaturkürzel, siehe",
+    "history": {
+      "title": "Verlauf",
+      "previous": "Vorherige Nachricht",
+      "next": "Nächste Nachricht"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "scrollUp": "Hochscrollen",
+      "scrollDown": "Runterscrollen",
+      "top": "Zum Anfang",
+      "bottom": "Zum Ende"
+    }
+  },
+  "keys": {
+    "enter": "Enter",
+    "shift": "Shift",
+    "ctrl": "Strg",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Leertaste",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "Normalmodus",
+    "insert": "Einfügemodus",
+    "visual": "Visueller Modus"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "gettingStarted": {
+    "title": "開始するためのヒント:",
+    "tip1": "質問したり、ファイルを編集したり、コマンドを実行したりします。",
+    "tip2": "最良の結果を得るには具体的にしてください。",
+    "tip3Prefix": "作成",
+    "tip3Suffix": "ファイルを作成して、Gemini との対話をカスタマイズします。",
+    "tip4Suffix": "詳細については。"
+  },
+  "welcome": {
+    "title": "Gemini CLI へようこそ",
+    "subtitle": "あなたの AI 駆動コーディングアシスタント"
+  },
+  "shortcuts": {
+    "title": "キーボードショートカット:",
+    "helpHint": "利用可能なコマンドについては /help を入力してください"
+  },
+  "features": {
+    "codeEditing": "ファイルを直接編集",
+    "runCommands": "シェルコマンドを実行",
+    "askQuestions": "コーディングの質問をする",
+    "generateCode": "コードスニペットを生成"
+  }
+}

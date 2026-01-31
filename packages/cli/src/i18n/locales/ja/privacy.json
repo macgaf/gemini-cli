@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "Esc を押して終了します。"
+  },
+  "gemini": {
+    "title": "Gemini API キーに関する通知",
+    "description1": "Gemini API を使用することにより",
+    "description2": "、Google AI Studio",
+    "description3": "、およびこれらの条件を参照するその他の Google 開発者サービス (総称して「API」または「サービス」) を使用することにより、Google API 利用規約 (「API 利用規約」) に同意したことになります",
+    "description4": "、および Gemini API 追加利用規約 (「追加規約」)"
+  },
+  "vertexAI": {
+    "title": "Vertex AI に関する通知",
+    "description1": "サービス固有の条件",
+    "description2": " は、Google が Google Cloud Platform を提供することに合意した契約に組み込まれています",
+    "description3": " 顧客へ (「契約」)。契約が Google Cloud パートナーまたは再販業者プログラムの下での Google Cloud Platform の再販または供給を許可する場合、「パートナー固有の条件」というタイトルのセクションを除き、サービス固有の条件における顧客へのすべての言及はパートナーまたは再販業者 (該当する場合) を意味し、サービス固有の条件における顧客データへのすべての言及はパートナーデータを意味します。サービス固有の条件で使用されているが定義されていない大文字の用語は、契約でそれらに与えられた意味を持ちます。"
+  },
+  "codeAssist": {
+    "title": "Gemini Code Assist プライバシー通知"
+  },
+  "cloudFree": {
+    "title": "Gemini Code Assist for Individuals プライバシー通知",
+    "description1": "この通知とプライバシーポリシー",
+    "description2": " は、Gemini Code Assist がデータをどのように処理するかについて説明しています。よくお読みください。",
+    "dataCollection": "Gemini CLI で Gemini Code Assist for individuals を使用する場合、Google 製品およびサービス、機械学習技術を提供、改善、開発するために、Google はプロンプト、関連コード、生成された出力、コード編集、関連機能の使用状況情報、およびフィードバックを収集します。",
+    "humanReviewers": "品質を支援し、製品 (生成機械学習モデルなど) を改善するために、人間のレビュアーが上記で収集されたデータを読み、注釈を付け、処理する場合があります。このプロセスの一環として、プライバシーを保護するための措置を講じています。これには、レビュアーが見たり注釈を付けたりする前にデータを Google アカウントから切断し、それらの切断されたコピーを最大18か月間保存することが含まれます。機密情報や、レビュアーに見られたくないデータ、または Google が製品、サービス、機械学習技術を改善するために使用したくないデータは送信しないでください。",
+    "allowDataUse": "Google がこのデータを使用して製品を開発および改善することを許可しますか？",
+    "pressEnterToChoose": "Enter を押してオプションを選択し、終了します。",
+    "errorLoading": "オプトイン設定の読み込み中にエラーが発生しました: {{error}}"
+  }
+}

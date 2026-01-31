@@ -1,0 +1,42 @@
+{
+  "generic": "Ein Fehler ist aufgetreten",
+  "network": {
+    "connectionFailed": "Verbindung fehlgeschlagen",
+    "timeout": "Zeitüberschreitung der Anfrage",
+    "noInternet": "Keine Internetverbindung"
+  },
+  "auth": {
+    "failed": "Authentifizierung fehlgeschlagen",
+    "expired": "Sitzung abgelaufen",
+    "invalidCredentials": "Ungültige Anmeldeinformationen",
+    "notLoggedIn": "Nicht angemeldet"
+  },
+  "api": {
+    "rateLimited": "Ratenlimit überschritten. Bitte versuchen Sie es später erneut.",
+    "quotaExceeded": "API-Kontingent überschritten",
+    "serverError": "Serverfehler aufgetreten",
+    "invalidResponse": "Ungültige Antwort vom Server"
+  },
+  "file": {
+    "notFound": "Datei nicht gefunden: {{path}}",
+    "readError": "Fehler beim Lesen der Datei: {{path}}",
+    "writeError": "Fehler beim Schreiben der Datei: {{path}}",
+    "permissionDenied": "Zugriff verweigert: {{path}}"
+  },
+  "config": {
+    "invalidSettings": "Ungültige Einstellungskonfiguration",
+    "loadError": "Fehler beim Laden der Konfiguration",
+    "saveError": "Fehler beim Speichern der Konfiguration"
+  },
+  "tool": {
+    "notFound": "Werkzeug nicht gefunden: {{name}}",
+    "executionFailed": "Werkzeugausführung fehlgeschlagen: {{name}}",
+    "timeout": "Werkzeugausführung Zeitüberschreitung"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalid": "Ungültiger Wert",
+    "tooLong": "Wert ist zu lang",
+    "tooShort": "Wert ist zu kurz"
+  }
+}

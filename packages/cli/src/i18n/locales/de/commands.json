@@ -1,0 +1,764 @@
+{
+  "help": {
+    "name": "help",
+    "description": "Hilfe-Informationen anzeigen",
+    "usage": "Verfügbare Befehle und Gebrauchsanweisung anzeigen",
+    "sections": {
+      "basics": "Grundlagen:",
+      "commands": "Befehle:",
+      "shortcuts": "Tastaturkürzel:",
+      "addContext": "Kontext hinzufügen",
+      "addContextDesc": "Verwenden Sie @ um Dateien für den Kontext anzugeben (z.B. @src/myFile.ts), um bestimmte Dateien oder Ordner auszuwählen.",
+      "addContextPrefix": "Verwenden Sie ",
+      "addContextMiddle": " um Dateien für den Kontext anzugeben (z.B. ",
+      "addContextSuffix": "), um bestimmte Dateien oder Ordner auszuwählen.",
+      "shellMode": "Shell-Modus",
+      "shellModeDesc": "Führen Sie Shell-Befehle über ! aus (z.B. !npm run start) oder verwenden Sie natürliche Sprache (z.B. starte Server).",
+      "shellModePrefix": "Führen Sie Shell-Befehle über ",
+      "shellModeMiddle1": " (z.B. ",
+      "shellModeMiddle2": ") aus oder verwenden Sie natürliche Sprache (z.B. ",
+      "shellModeSuffix": ").",
+      "shellModeExample": "starte Server",
+      "shellCommand": "Shell-Befehl",
+      "mcpNote": "[MCP] - Model Context Protocol Befehl (von externen Servern)"
+    }
+  },
+  "clear": {
+    "name": "clear",
+    "description": "Konversation löschen",
+    "usage": "Aktuellen Gesprächsverlauf löschen",
+    "clearingTerminal": "Terminal wird gelöscht.",
+    "clearingTerminalAndResettingChat": "Terminal wird gelöscht und Chat zurückgesetzt."
+  },
+  "quit": {
+    "name": "quit",
+    "description": "CLI beenden",
+    "usage": "Gemini CLI verlassen"
+  },
+  "model": {
+    "name": "model",
+    "description": "Öffnet einen Dialog zur Konfiguration des Modells",
+    "usage": "AI-Modell anzeigen oder wechseln"
+  },
+  "theme": {
+    "name": "theme",
+    "description": "Thema ändern",
+    "usage": "Zwischen verfügbaren Farbthemen wechseln"
+  },
+  "stats": {
+    "name": "stats",
+    "description": "Sitzungsstatistiken prüfen. Verwendung: /stats [session|model|tools]",
+    "usage": "Token-Nutzung und Sitzungsinformationen anzeigen",
+    "sessionStartUnavailable": "Sitzungsstartzeit nicht verfügbar, Statistiken können nicht berechnet werden.",
+    "session": {
+      "description": "Sitzungsspezifische Nutzungsstatistiken anzeigen"
+    },
+    "model": {
+      "description": "Modellspezifische Nutzungsstatistiken anzeigen"
+    },
+    "tools": {
+      "description": "Werkzeugspezifische Nutzungsstatistiken anzeigen"
+    }
+  },
+  "copy": {
+    "name": "copy",
+    "description": "Letzte Antwort kopieren",
+    "usage": "Letzte AI-Antwort in die Zwischenablage kopieren",
+    "noOutput": "Keine Ausgabe im Verlauf",
+    "copied": "Letzte Ausgabe in die Zwischenablage kopiert",
+    "failed": "Kopieren in die Zwischenablage fehlgeschlagen. {{error}}",
+    "noText": "Letzte AI-Ausgabe enthält keinen Text zum Kopieren."
+  },
+  "save": {
+    "name": "save",
+    "description": "Konversation speichern",
+    "usage": "Aktuelle Konversation in einer Datei speichern"
+  },
+  "restore": {
+    "name": "restore",
+    "description": "Eine frühere Konversation wiederherstellen",
+    "usage": "Eine zuvor gespeicherte Konversation wiederherstellen",
+    "geminiDirNotFound": "Konnte den Pfad des .gemini-Verzeichnisses nicht ermitteln.",
+    "noRestorable": "Keine wiederherstellbaren Werkzeugaufrufe gefunden.",
+    "availableList": "Verfügbare Checkpoints:\n{{list}}",
+    "fileNotFound": "Datei nicht gefunden: {{file}}",
+    "invalidCheckpoint": "Ungültige Checkpoint-Datei: {{error}}",
+    "gitServiceUnavailable": "Git-Dienst nicht verfügbar, Checkpoint kann nicht wiederhergestellt werden. Bitte stellen Sie sicher, dass Sie sich in einem Git-Repository befinden.",
+    "restored": "Projektstatus vor dem Werkzeugaufruf wiederhergestellt.",
+    "commitNotFound": "Der mit diesem Checkpoint verknüpfte Commit-Hash '{{commitHash}}' konnte in Ihrem Git-Repository nicht gefunden werden. Dies kann passieren, wenn das Repository neu geklont, zurückgesetzt wurde oder alte Commits bereinigt wurden. Dieser Checkpoint kann nicht wiederhergestellt werden.",
+    "errorReading": "Konnte wiederherstellbare Werkzeugaufrufe nicht lesen. Fehler: {{error}}"
+  },
+  "memory": {
+    "name": "memory",
+    "description": "Befehle zur Interaktion mit dem Speicher",
+    "usage": "Gesprächsspeicher anzeigen oder verwalten",
+    "show": {
+      "description": "Aktuellen Speicherinhalt anzeigen",
+      "configNotAvailable": "Konfiguration nicht verfügbar. Speicher kann nicht angezeigt werden.",
+      "contextLabel": "Kontextdateien",
+      "loadedFromSingle": "Speicher aus {{count}} {{name}} Datei geladen.",
+      "loadedFromPlural": "Speicher aus {{count}} {{name}} Dateien geladen.",
+      "currentContentWithCount": "Aktueller Speicherinhalt aus {{count}} Datei(en):\n\n---\n{{content}}\n---",
+      "currentContent": "Aktueller Speicherinhalt:\n\n---\n{{content}}\n---",
+      "emptyContent": "Hierarchischer Speicher (GEMINI.md oder andere Kontextdateien) ist geladen, aber der Inhalt ist leer.",
+      "noneLoaded": "Speicher ist derzeit leer."
+    },
+    "add": {
+      "description": "Inhalt zum Speicher hinzufügen",
+      "usage": "Verwendung: /memory add <Text zum Merken>",
+      "saving": "Versuche im Speicher zu speichern: \"{{content}}\""
+    },
+    "refresh": {
+      "description": "Speicher aus der Quelle aktualisieren",
+      "refreshing": "Aktualisiere Speicher aus Quelldateien...",
+      "successWithCount": "Speicher erfolgreich aktualisiert. {{chars}} Zeichen aus {{count}} Datei(en) geladen.",
+      "successEmpty": "Speicher erfolgreich aktualisiert. Kein Speicherinhalt gefunden.",
+      "error": "Fehler beim Aktualisieren des Speichers: {{error}}"
+    },
+    "list": {
+      "description": "Listet die Pfade der verwendeten GEMINI.md Dateien auf",
+      "withCount": "Es werden {{count}} GEMINI.md Datei(en) verwendet:\n\n{{list}}",
+      "empty": "Keine GEMINI.md Dateien in Verwendung."
+    }
+  },
+  "tools": {
+    "name": "tools",
+    "description": "Verfügbare Gemini CLI Werkzeuge auflisten. Verwendung: /tools [desc]",
+    "usage": "Alle verfügbaren Werkzeuge anzeigen",
+    "noRegistry": "Konnte Werkzeug-Registry nicht abrufen.",
+    "list": {
+      "title": "Verfügbare Gemini CLI Werkzeuge:",
+      "empty": "Keine Werkzeuge verfügbar"
+    }
+  },
+  "mcp": {
+    "name": "mcp",
+    "description": "Konfigurierte Model Context Protocol (MCP) Server verwalten",
+    "usage": "Model Context Protocol Server konfigurieren",
+    "configNotLoaded": "Konfiguration nicht geladen.",
+    "noOAuthServers": "Keine MCP-Server mit OAuth-Authentifizierung konfiguriert.",
+    "oauthServersList": "MCP-Server mit OAuth-Authentifizierung:",
+    "useAuthHint": "Verwende /mcp auth <server-name> zum Authentifizieren.",
+    "serverNotFound": "MCP-Server '{{name}}' nicht gefunden.",
+    "noClientManager": "Konnte MCP-Client-Manager nicht abrufen.",
+    "restarting": "Starte MCP-Server neu...",
+    "auth": {
+      "description": "Mit einem OAuth-fähigen MCP-Server authentifizieren",
+      "starting": "Starte OAuth-Authentifizierung für MCP-Server '{{name}}'...",
+      "success": "Erfolgreich mit MCP-Server '{{name}}' authentifiziert!",
+      "restarting": "Starte MCP-Server '{{name}}' neu...",
+      "refreshed": "Erfolgreich authentifiziert und Werkzeuge für '{{name}}' aktualisiert.",
+      "failed": "Fehler bei der Authentifizierung mit MCP-Server '{{name}}': {{error}}"
+    },
+    "list": {
+      "description": "Konfigurierte MCP-Server und Werkzeuge auflisten"
+    },
+    "desc": {
+      "description": "Konfigurierte MCP-Server und Werkzeuge mit Beschreibungen auflisten"
+    },
+    "schema": {
+      "description": "Konfigurierte MCP-Server und Werkzeuge mit Beschreibungen und Schemata auflisten"
+    },
+    "refresh": {
+      "description": "Startet MCP-Server neu"
+    }
+  },
+  "chat": {
+    "name": "chat",
+    "description": "Gesprächsverlauf verwalten",
+    "usage": "Eine neue Konversation starten",
+    "list": {
+      "description": "Gespeicherte Chat-Checkpoints auflisten"
+    },
+    "save": {
+      "description": "Aktuelle Konversation als Checkpoint speichern",
+      "missingTag": "Tag fehlt. Verwendung: /chat save <tag>",
+      "noClient": "Kein Chat-Client verfügbar, um Konversation zu speichern.",
+      "noConversation": "Keine Konversation zum Speichern gefunden.",
+      "saved": "Konversations-Checkpoint mit Tag gespeichert: {{tag}}.",
+      "overwritePromptPrefix": "Konversations-Checkpoint existiert bereits für Tag ",
+      "overwritePromptSuffix": ". Überschreiben?"
+    },
+    "resume": {
+      "description": "Einen gespeicherten Konversations-Checkpoint fortsetzen",
+      "missingTag": "Tag fehlt. Verwendung: /chat resume <tag>",
+      "noCheckpoint": "Kein gespeicherter Checkpoint mit Tag gefunden: {{tag}}.",
+      "authMismatch": "Chat kann nicht fortgesetzt werden. Er wurde mit einer anderen Authentifizierungsmethode ({{saved}}) gespeichert als die aktuelle ({{current}})."
+    },
+    "delete": {
+      "description": "Einen gespeicherten Konversations-Checkpoint löschen",
+      "missingTag": "Tag fehlt. Verwendung: /chat delete <tag>",
+      "deleted": "Konversations-Checkpoint '{{tag}}' wurde gelöscht.",
+      "notFound": "Fehler: Kein Checkpoint mit Tag '{{tag}}' gefunden."
+    },
+    "share": {
+      "description": "Konversation in eine Datei exportieren (.md oder .json)",
+      "noClient": "Kein Chat-Client verfügbar, um Konversation zu teilen.",
+      "noConversation": "Keine Konversation zum Teilen gefunden.",
+      "shared": "Konversation geteilt nach {{path}}",
+      "shareFailed": "Fehler beim Teilen der Konversation: {{error}}"
+    },
+    "debug": {
+      "description": "Letzte API-Anfrage zum Debuggen exportieren",
+      "noRecentRequest": "Keine kürzliche API-Anfrage zum Exportieren gefunden.",
+      "saved": "Debug-API-Anfrage gespeichert in {{filename}}",
+      "saveFailed": "Fehler beim Speichern der Debug-Anfrage: {{error}}"
+    },
+    "noCheckpoints": "Keine gespeicherten Konversations-Checkpoints gefunden.",
+    "listTitle": "Liste der gespeicherten Konversationen:",
+    "invalidDate": "Ungültiges Datum",
+    "newestLast": "Hinweis: Neueste zuerst, älteste zuletzt",
+    "export": {
+      "invalidFormat": "Ungültiges Dateiformat. Nur .md und .json werden unterstützt."
+    }
+  },
+  "compress": {
+    "name": "compress",
+    "description": "Chatverlauf komprimieren",
+    "usage": "Konversation komprimieren, um Kontextplatz zu sparen",
+    "alreadyCompressing": "Bereits am Komprimieren, warte auf Abschluss der vorherigen Anfrage",
+    "failed": "Fehler beim Komprimieren des Chatverlaufs.",
+    "failedWithError": "Fehler beim Komprimieren des Chatverlaufs: {{error}}",
+    "status": {
+      "pending": "Komprimiere Chatverlauf",
+      "compressed": "Chatverlauf von {{original}} auf {{new}} Token komprimiert.",
+      "notBeneficial": "Komprimierung war für diese Verlaufsgröße nicht vorteilhaft.",
+      "noReduction": "Chatverlauf-Komprimierung hat Größe nicht reduziert.",
+      "tokenCountError": "Konnte Chatverlauf aufgrund eines Token-Zählfehlers nicht komprimieren.",
+      "emptySummary": "Chatverlauf-Komprimierung fehlgeschlagen: Das Modell gab eine leere Zusammenfassung zurück.",
+      "noop": "Keine Komprimierung erforderlich."
+    }
+  },
+  "about": {
+    "description": "Versionsinfo anzeigen",
+    "title": "Über Gemini CLI",
+    "cliVersion": "CLI-Version",
+    "gitCommit": "Git Commit",
+    "model": "Modell",
+    "sandbox": "Sandbox",
+    "noSandbox": "keine Sandbox",
+    "os": "Betriebssystem",
+    "authMethod": "Auth-Methode",
+    "userEmail": "Benutzer-E-Mail",
+    "gcpProject": "GCP-Projekt",
+    "ideClient": "IDE-Client",
+    "sandboxExec": "sandbox-exec ({{profile}})"
+  },
+  "bug": {
+    "description": "Einen Fehlerbericht senden",
+    "submitPrompt": "Um Ihren Fehlerbericht zu senden, öffnen Sie bitte die folgende URL in Ihrem Browser:",
+    "historyExported": "📄 **Chatverlauf exportiert**\nUm uns beim Debuggen zu helfen, haben wir Ihren aktuellen Chatverlauf exportiert nach:",
+    "attachPrompt": "Bitte erwägen Sie, diese Datei an Ihr GitHub-Issue anzuhängen, wenn Sie sich dabei wohl fühlen.",
+    "privacyDisclaimer": "**Datenschutzhinweis:** Bitte laden Sie keine Logs hoch, die sensible oder private Informationen enthalten, die Sie nicht öffentlich teilen möchten.",
+    "actionRequired": "[AKTION ERFORDERLICH] 📎 BITTE HÄNGEN SIE DIE EXPORTIERTE CHATVERLAUF-JSON-DATEI AN DIESES ISSUE AN, WENN SIE SICH DAMIT WOHL FÜHLEN.",
+    "openError": "Konnte URL nicht im Browser öffnen: {{error}}",
+    "kittySupported": "Unterstützt",
+    "kittyUnsupported": "Nicht unterstützt",
+    "info": {
+      "cliVersion": "CLI-Version",
+      "gitCommit": "Git Commit",
+      "sessionId": "Sitzungs-ID",
+      "operatingSystem": "Betriebssystem",
+      "sandboxEnv": "Sandbox-Umgebung",
+      "modelVersion": "Modellversion",
+      "memoryUsage": "Speichernutzung",
+      "terminalName": "Terminal-Name",
+      "terminalBackground": "Terminal-Hintergrund",
+      "kittyKeyboard": "Kitty Keyboard Protocol",
+      "ideClient": "IDE Client"
+    }
+  },
+  "docs": {
+    "description": "Die vollständige Gemini CLI Dokumentation im Browser öffnen",
+    "openInBrowser": "Bitte öffnen Sie die folgende URL in Ihrem Browser, um die Dokumentation anzusehen:",
+    "opening": "Öffne Dokumentation in Ihrem Browser:"
+  },
+  "directory": {
+    "description": "Arbeitsbereichsverzeichnisse verwalten",
+    "currentWorkspace": "Aktuelle Arbeitsbereichsverzeichnisse:",
+    "add": {
+      "description": "Verzeichnisse zum Arbeitsbereich hinzufügen. Verwenden Sie Kommas, um mehrere Pfade zu trennen"
+    },
+    "show": {
+      "description": "Alle Verzeichnisse im Arbeitsbereich anzeigen"
+    },
+    "configNotAvailable": "Konfiguration ist nicht verfügbar.",
+    "successAddedGeminiMd": "Erfolgreich GEMINI.md Dateien aus den folgenden Verzeichnissen hinzugefügt, falls vorhanden:",
+    "errorRefreshingMemory": "Fehler beim Aktualisieren des Speichers: {{error}}",
+    "successAddedDirs": "Erfolgreich Verzeichnisse hinzugefügt:",
+    "sandboxNotSupported": "Der /directory add Befehl wird in restriktiven Sandbox-Profilen nicht unterstützt. Bitte verwenden Sie stattdessen --include-directories beim Starten der Sitzung.",
+    "provideAtLeastOnePath": "Bitte geben Sie mindestens einen Pfad zum Hinzufügen an.",
+    "alreadyInWorkspace": "Die folgenden Verzeichnisse befinden sich bereits im Arbeitsbereich:",
+    "untrustedDirs": "Die folgenden Verzeichnisse sind explizit nicht vertrauenswürdig und können nicht zu einem vertrauenswürdigen Arbeitsbereich hinzugefügt werden:",
+    "usePermissionsCommand": "Bitte verwenden Sie den permissions Befehl, um ihre Vertrauensebene zu ändern.",
+    "errorAdding": "Fehler beim Hinzufügen von '{{path}}': {{error}}"
+  },
+  "extensions": {
+    "description": "Gemini CLI Erweiterungen verwalten.",
+    "demandClient": "Sie benötigen mindestens einen Befehl, bevor Sie fortfahren können.",
+    "updateAvailable": "Sie haben {{count}} Erweiterung(en) mit verfügbaren Updates. Führen Sie aus",
+    "install": {
+      "description": "Installiert eine Erweiterung von einer Git-Repository-URL oder einem lokalen Pfad.",
+      "source": "Die Github-URL oder der lokalen Pfad der zu installierenden Erweiterung.",
+      "ref": "Die Git-Ref, von der installiert werden soll.",
+      "autoUpdate": "Automatisches Update für diese Erweiterung aktivieren.",
+      "preRelease": "Vorabversionen für diese Erweiterung aktivieren.",
+      "consent": "Bestätigen Sie die Sicherheitsrisiken der Installation einer Erweiterung und überspringen Sie die Bestätigungsaufforderung.",
+      "error": {
+        "noSource": "Das Quellargument muss angegeben werden."
+      },
+      "log": {
+        "consent": "Sie haben zugestimmt zu:",
+        "success": "Erweiterung \"{{name}}\" erfolgreich installiert und aktiviert."
+      },
+      "describe": "Installiert eine Erweiterung von einer Git-Repository-URL oder einem lokalen Pfad.",
+      "usage": "Verwendung: /extensions install <quelle>",
+      "invalidSource": "Ungültige Quelle: {{source}}",
+      "installing": "Installiere Erweiterung von \"{{source}}\"...",
+      "success": "Erweiterung \"{{name}}\" erfolgreich installiert.",
+      "failed": "Fehler beim Installieren der Erweiterung von \"{{source}}\": {{error}}"
+    },
+    "list": {
+      "description": "Listet installierte Erweiterungen auf.",
+      "log": {
+        "empty": "Keine Erweiterungen installiert."
+      },
+      "describe": "Listet installierte Erweiterungen auf.",
+      "empty": "Keine Erweiterungen installiert. Führen Sie `/extensions explore` aus, um die Galerie zu durchsuchen.",
+      "installedTitle": "Installierte Erweiterungen:",
+      "status": {
+        "active": "aktiv",
+        "disabled": "deaktiviert"
+      },
+      "updateState": {
+        "unknown": "unbekannter Status",
+        "checkingForUpdates": "suche nach Updates",
+        "updating": "aktualisiere",
+        "updateAvailable": "Update verfügbar",
+        "updatedNeedsRestart": "aktualisiert, Neustart erforderlich",
+        "updated": "aktualisiert",
+        "error": "Fehler",
+        "upToDate": "aktuell",
+        "notUpdatable": "nicht aktualisierbar"
+      },
+      "settingsLabel": "Einstellungen:"
+    },
+    "update": {
+      "description": "Aktualisiert alle Erweiterungen oder eine benannte Erweiterung auf die neueste Version.",
+      "name": "Der Name der zu aktualisierenden Erweiterung.",
+      "all": "Alle Erweiterungen aktualisieren.",
+      "error": {
+        "missingArgs": "Entweder ein Erweiterungsname oder --all muss angegeben werden"
+      },
+      "log": {
+        "success": "Erweiterung \"{{name}}\" erfolgreich aktualisiert: {{v1}} → {{v2}}.",
+        "notFound": "Erweiterung \"{{name}}\" nicht gefunden.",
+        "missingMetadata": "Konnte Erweiterung \"{{name}}\" aufgrund fehlender Installationsmetadaten nicht installieren",
+        "upToDate": "Erweiterung \"{{name}}\" ist bereits aktuell.",
+        "noneToUpdate": "Keine Erweiterungen zum Aktualisieren."
+      },
+      "usage": "Verwendung: /extensions update <erweiterungs-namen>|--all",
+      "none": "Keine Erweiterungen zum Aktualisieren.",
+      "notFound": "Erweiterung \"{{name}}\" nicht gefunden.",
+      "available": "Sie haben {{count}} Erweiterung{{suffix}} mit einem verfügbaren Update. Führen Sie \"/extensions update {{names}}\" aus."
+    },
+    "disable": {
+      "description": "Deaktiviert eine Erweiterung.",
+      "name": "Der Name der zu deaktivierenden Erweiterung.",
+      "scope": "Der Geltungsbereich, in dem die Erweiterung deaktiviert werden soll.",
+      "error": {
+        "invalidScope": "Ungültiger Geltungsbereich: {{scope}}. Bitte verwenden Sie einen von {{allowed}}."
+      },
+      "log": {
+        "success": "Erweiterung \"{{name}}\" erfolgreich deaktiviert für Geltungsbereich \"{{scope}}\"."
+      },
+      "success": "Erweiterung \"{{name}}\" deaktiviert für {{scope}} Geltungsbereich."
+    },
+    "enable": {
+      "description": "Aktiviert eine Erweiterung.",
+      "name": "Der Name der zu aktivierenden Erweiterung.",
+      "scope": "Der Geltungsbereich, in dem die Erweiterung aktiviert werden soll. Wenn nicht gesetzt, wird sie in allen Geltungsbereichen aktiviert.",
+      "error": {
+        "invalidScope": "Ungültiger Geltungsbereich: {{scope}}. Bitte verwenden Sie einen von {{allowed}}."
+      },
+      "log": {
+        "success": "Erweiterung \"{{name}}\" erfolgreich aktiviert für Geltungsbereich \"{{scope}}\".",
+        "successAll": "Erweiterung \"{{name}}\" erfolgreich aktiviert in allen Geltungsbereichen."
+      },
+      "success": "Erweiterung \"{{name}}\" aktiviert für {{scope}} Geltungsbereich."
+    },
+    "link": {
+      "description": "Verknüpft eine Erweiterung von einem lokalen Pfad. Änderungen am lokalen Pfad werden immer übernommen.",
+      "path": "Der Name der zu verknüpfenden Erweiterung.",
+      "consent": "Bestätigen Sie die Sicherheitsrisiken der Installation einer Erweiterung und überspringen Sie die Bestätigungsaufforderung.",
+      "log": {
+        "success": "Erweiterung \"{{name}}\" erfolgreich verknüpft und aktiviert."
+      },
+      "usage": "Verwendung: /extensions link <quelle>",
+      "disallowedPath": "Ungültige Quelle: {{path}}",
+      "invalidSource": "Ungültige Quelle: {{source}}",
+      "linking": "Verknüpfe Erweiterung von \"{{source}}\"...",
+      "success": "Erweiterung \"{{name}}\" erfolgreich verknüpft.",
+      "failed": "Fehler beim Verknüpfen der Erweiterung von \"{{source}}\": {{error}}"
+    },
+    "new": {
+      "description": "Erstellt eine neue Erweiterung aus einer Boilerplate-Vorlage.",
+      "path": "Der Pfad, in dem die Erweiterung erstellt werden soll.",
+      "template": "Die zu verwendende Boilerplate-Vorlage.",
+      "log": {
+        "successTemplate": "Erfolgreich neue Erweiterung aus Vorlage \"{{template}}\" in {{path}} erstellt.",
+        "success": "Erfolgreich neue Erweiterung in {{path}} erstellt.",
+        "hint": "Sie können diese mit \"gemini extensions link {{path}}\" installieren, um sie zu testen."
+      }
+    },
+    "validate": {
+      "description": "Validiert eine Erweiterung von einem lokalen Pfad.",
+      "path": "Der Pfad der zu validierenden Erweiterung.",
+      "log": {
+        "success": "Erweiterung {{path}} wurde erfolgreich validiert.",
+        "warnings": "Validierungswarnungen:",
+        "errors": "Validierung fehlgeschlagen mit folgenden Fehlern:"
+      },
+      "error": {
+        "failed": "Erweiterungsvalidierung fehlgeschlagen."
+      }
+    },
+    "configure": {
+      "description": "Erweiterungseinstellungen konfigurieren.",
+      "name": "Name der zu konfigurierenden Erweiterung.",
+      "setting": "Die spezifische Einstellung zum Konfigurieren (Name oder Env-Var).",
+      "scope": "Der Geltungsbereich, in dem die Einstellung gesetzt werden soll.",
+      "log": {
+        "disabled": "Erweiterungskonfiguration ist derzeit deaktiviert. Aktivieren Sie sie, indem Sie \"experimental.extensionConfig\" auf true setzen.",
+        "invalidName": "Ungültiger Erweiterungsname. Namen dürfen keine Pfadtrennzeichen oder \"..\" enthalten.",
+        "notFound": "Konnte Konfiguration für Erweiterung \"{{name}}\" nicht finden.",
+        "noSettings": "Erweiterung \"{{name}}\" hat keine Einstellungen zum Konfigurieren.",
+        "configuring": "Konfiguriere Einstellungen für \"{{name}}\"...",
+        "noInstalled": "Keine Erweiterungen installiert.",
+        "alreadyConfigured": "Hinweis: Einstellung \"{{name}}\" ist bereits im Workspace-Geltungsbereich konfiguriert.",
+        "promptOverwrite": "Einstellung \"{{name}}\" ({{env}}) ist bereits gesetzt. Überschreiben?"
+      }
+    },
+    "home": {
+      "description": "Zur Erweiterungs-Startseite gehen"
+    },
+    "uninstall": {
+      "description": "Eine Erweiterung deinstallieren",
+      "usage": "Verwendung: /extensions uninstall <erweiterungs-name>",
+      "uninstalling": "Deinstalliere Erweiterung \"{{name}}\"...",
+      "success": "Erweiterung \"{{name}}\" erfolgreich deinstalliert.",
+      "failed": "Fehler beim Deinstallieren der Erweiterung \"{{name}}\": {{error}}"
+    },
+    "explore": {
+      "description": "Die Erweiterungsgalerie durchsuchen",
+      "opening": "Öffne Erweiterungsseite in Ihrem Browser: {{url}}",
+      "viewAvailable": "Verfügbare Erweiterungen ansehen unter {{url}}",
+      "skippedTest": "Würde Erweiterungsseite in Ihrem Browser öffnen: {{url}} (in Testumgebung übersprungen)",
+      "openFailed": "Fehler beim Öffnen des Browsers. Schauen Sie sich die Erweiterungsgalerie an unter {{url}}"
+    },
+    "restart": {
+      "description": "Aktive Erweiterungen neu starten",
+      "notLoaded": "Erweiterungen sind noch nicht geladen, Neustart noch nicht möglich",
+      "usage": "Verwendung: /extensions restart <erweiterungs-namen>|--all",
+      "restartingSingle": "Starte Erweiterung neu...",
+      "restartingMultiple": "Starte {{count}} Erweiterungen neu...",
+      "failedSome": "Fehler beim Neustarten einiger Erweiterungen:\n  {{errors}}",
+      "notFoundOrInactive": "Erweiterung(en) nicht gefunden oder nicht aktiv: {{names}}",
+      "successSingle": "Erweiterung erfolgreich neu gestartet.",
+      "successMultiple": "{{count}} Erweiterungen erfolgreich neu gestartet."
+    },
+    "consent": {
+      "installingExtension": "Installiere Erweiterung \"{{name}}\".",
+      "mcpServersTitle": "Diese Erweiterung wird die folgenden MCP-Server ausführen:",
+      "mcpServerLocal": "lokal",
+      "mcpServerRemote": "entfernt",
+      "mcpServerEntry": "  * {{name}} ({{location}}): {{source}}",
+      "contextFile": "Diese Erweiterung wird Informationen zu Ihrem gemini.md Kontext unter Verwendung von {{name}} hinzufügen",
+      "excludeTools": "Diese Erweiterung wird die folgenden Kernwerkzeuge ausschließen: {{tools}}",
+      "hooksWarning": "⚠️  Diese Erweiterung enthält Hooks, die automatisch Befehle ausführen können.",
+      "agentSkillsTitle": "Agent Skills:",
+      "agentSkillsIntro": "Diese Erweiterung wird die folgenden Agent Skills installieren:",
+      "installWarning": "Die Erweiterung, die Sie installieren möchten, wurde möglicherweise von einem Drittanbieter entwickelt und stammt aus einem öffentlichen Repository. Google prüft, unterstützt oder garantiert nicht die Funktionalität oder Sicherheit von Erweiterungen. Bitte überprüfen Sie jede Erweiterung und ihren Quellcode sorgfältig vor der Installation, um die erforderlichen Berechtigungen und möglichen Aktionen zu verstehen.",
+      "skillsWarning": "Agent Skills fügen spezialisierte Anweisungen und domänenspezifisches Wissen in den System-Prompt des Agenten ein. Dies kann ändern, wie der Agent Ihre Anfragen interpretiert und mit Ihrer Umgebung interagiert. Überprüfen Sie die Skill-Definitionen an den unten angegebenen Orten, um sicherzustellen, dass sie Ihren Sicherheitsstandards entsprechen.",
+      "continuePrompt": "Möchten Sie fortfahren?",
+      "continuePromptWithDefault": "Möchten Sie fortfahren? [J/n]: ",
+      "skillSourceLabel": "Quelle",
+      "skillItemsCount": "({{count}} Elemente im Verzeichnis)",
+      "skillItemsCountFailed": "⚠️ (Konnte Elemente im Verzeichnis nicht zählen)"
+    },
+    "enableDisable": {
+      "usage": "Verwendung: /extensions {{action}} <erweiterung> [--scope=<user|workspace|session>]"
+    },
+    "scopeUnsupported": "Nicht unterstützter Geltungsbereich: {{scope}}",
+    "describe": "Gemini CLI Erweiterungen verwalten."
+  },
+  "settings": {
+    "description": "Gemini CLI Einstellungen anzeigen und bearbeiten"
+  },
+  "auth": {
+    "description": "Authentifizierung verwalten",
+    "login": {
+      "description": "Anmelden oder Auth-Methode ändern"
+    },
+    "logout": {
+      "description": "Abmelden und alle zwischengespeicherten Anmeldeinformationen löschen"
+    }
+  },
+  "privacy": {
+    "description": "Datenschutzhinweis anzeigen"
+  },
+  "permissions": {
+    "description": "Ordnervertrauenseinstellungen und andere Berechtigungen verwalten",
+    "trust": {
+      "description": "Ordnervertrauenseinstellungen verwalten. Verwendung: /permissions trust [<verzeichnis-pfad>]"
+    }
+  },
+  "skills": {
+    "description": "Gemini CLI Agent Skills auflisten, aktivieren, deaktivieren oder neu laden. Verwendung: /skills [list | disable <name> | enable <name> | reload]",
+    "noSkillManager": "Konnte Skill-Manager nicht abrufen.",
+    "noConfig": "Konnte Konfiguration nicht abrufen.",
+    "reloading": "Lade Agent Skills neu...",
+    "reloadSuccess": "Agent Skills erfolgreich neu geladen.",
+    "newlyAvailable": "{{count}} neu verfügbare(r) Skill{{suffix}}",
+    "noLongerAvailable": "{{count}} Skill{{suffix}} nicht mehr verfügbar",
+    "reloadHint": "Verwenden Sie \"/skills reload\", damit es wirksam wird.",
+    "reloadFailed": "Fehler beim Neuladen der Skills: {{error}}",
+    "disabledByAdmin": "Agent Skills sind von Ihrem Admin deaktiviert.",
+    "notFound": "Skill \"{{name}}\" nicht gefunden.",
+    "noSkillNameDisable": "Bitte geben Sie einen Skill-Namen zum Deaktivieren an.",
+    "noSkillNameEnable": "Bitte geben Sie einen Skill-Namen zum Aktivieren an.",
+    "consent": {
+      "installingSkillsFrom": "Installiere Agent Skill(s) von \"{{source}}\".",
+      "skillsWillBeInstalled": "Die folgenden Agent Skill(s) werden installiert:",
+      "installDestination": "Installationsziel: {{path}}"
+    },
+    "list": {
+      "description": "Verfügbare Agent Skills auflisten. Verwendung: /skills list [nodesc] [all]",
+      "availableTitle": "Verfügbare Agent Skills:",
+      "disabledTitle": "Deaktivierte Skills:",
+      "empty": "Keine Skills verfügbar",
+      "builtinBadge": " [Eingebaut]"
+    },
+    "disable": {
+      "description": "Einen Skill nach Namen deaktivieren. Verwendung: /skills disable <name>"
+    },
+    "enable": {
+      "description": "Einen deaktivierten Skill nach Namen aktivieren. Verwendung: /skills enable <name>"
+    },
+    "reload": {
+      "description": "Die Liste der entdeckten Skills neu laden. Verwendung: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "Zu einer bestimmten Nachricht zurückspringen und die Konversation neu starten",
+    "noConfig": "Konfiguration nicht gefunden",
+    "noClient": "Client nicht initialisiert",
+    "noRecording": "Aufnahmedienst nicht verfügbar",
+    "noConversation": "Keine Konversation gefunden.",
+    "nothingToRewind": "Nichts zum Zurückspulen.",
+    "fetchFailed": "Konnte Konversationsdatei nicht abrufen",
+    "unknownError": "Unbekannter Fehler beim Zurückspulen",
+    "filesReverted": "Dateiänderungen rückgängig gemacht.",
+    "revert": {
+      "readError": "Fehler beim Lesen von {{fileName}} während Rückgängigmachen: {{error}}",
+      "smartFailed": "Intelligentes Rückgängigmachen für {{fileName}} fehlgeschlagen",
+      "missingFile": "Fehlende Datei {{fileName}} während Rückgängigmachen.",
+      "unexpectedError": "Unerwarteter Fehler beim Rückgängigmachen von {{fileName}}."
+    }
+  },
+  "hooks": {
+    "description": "Hooks verwalten",
+    "list": {
+      "description": "Alle Hooks auflisten"
+    },
+    "panel": {
+      "description": "Alle registrierten Hooks mit ihrem Status anzeigen",
+      "securityWarningTitle": "Sicherheitswarnung",
+      "securityWarningBody": "Hooks können Befehle auf Ihrem Computer ausführen. Aktivieren Sie nur Hooks aus Quellen, denen Sie vertrauen.",
+      "learnMoreLabel": "Mehr erfahren:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "Konfigurierte Hooks:",
+      "unknown": "Unbekannt",
+      "status": {
+        "enabled": "Aktiviert",
+        "disabled": "Deaktiviert"
+      },
+      "sourceLabel": "Quelle: {{source}}",
+      "commandLabel": "Befehl: {{command}}",
+      "matcherLabel": "Matcher: {{matcher}}",
+      "sequentialLabel": "Sequenziell",
+      "timeoutLabel": "Zeitüberschreitung: {{seconds}}s",
+      "tip": {
+        "prefix": "Tipp: ",
+        "or": " oder ",
+        "middle": ". Sie können auch ",
+        "suffix": " verwenden."
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<hook-name>"
+    },
+    "enable": {
+      "description": "Einen Hook nach Namen aktivieren"
+    },
+    "disable": {
+      "description": "Einen Hook nach Namen deaktivieren"
+    },
+    "enableAll": {
+      "description": "Alle deaktivierten Hooks aktivieren"
+    },
+    "disableAll": {
+      "description": "Alle aktivierten Hooks deaktivieren"
+    },
+    "configNotLoaded": "Konfiguration nicht geladen.",
+    "hookSystemNotEnabled": "Hook-System ist nicht aktiviert.",
+    "usageEnable": "Verwendung: /hooks enable <hook-name>",
+    "usageDisable": "Verwendung: /hooks disable <hook-name>",
+    "enabledSuccess": "Hook \"{{name}}\" erfolgreich aktiviert.",
+    "disabledSuccess": "Hook \"{{name}}\" erfolgreich deaktiviert.",
+    "failedToEnable": "Fehler beim Aktivieren des Hooks: {{error}}",
+    "failedToDisable": "Fehler beim Deaktivieren des Hooks: {{error}}",
+    "noHooksConfigured": "Keine Hooks konfiguriert.",
+    "allHooksEnabled": "Alle Hooks sind bereits aktiviert.",
+    "allHooksDisabled": "Alle Hooks sind bereits deaktiviert.",
+    "enabledCount": "{{count}} Hook(s) erfolgreich aktiviert.",
+    "disabledCount": "{{count}} Hook(s) erfolgreich deaktiviert.",
+    "failedToEnableAll": "Fehler beim Aktivieren der Hooks: {{error}}",
+    "failedToDisableAll": "Fehler beim Deaktivieren der Hooks: {{error}}"
+  },
+  "policies": {
+    "description": "Richtlinien verwalten",
+    "errorConfigNotAvailable": "Fehler: Konfiguration nicht verfügbar.",
+    "noActive": "Keine aktiven Richtlinien.",
+    "list": {
+      "description": "Alle aktiven Richtlinien auflisten",
+      "title": "Aktive Richtlinien",
+      "tool": "Werkzeug",
+      "allTools": "alle Werkzeuge",
+      "argsMatch": "Argumente entsprechen",
+      "priority": "Priorität",
+      "source": "Quelle"
+    }
+  },
+  "profile": {
+    "description": "Profile verwalten",
+    "toggled": "Profilanzeige umgeschaltet."
+  },
+  "init": {
+    "description": "Ein neues Projekt initialisieren",
+    "configNotAvailable": "Konfiguration ist nicht verfügbar.",
+    "alreadyExists": "Eine GEMINI.md Datei existiert bereits in diesem Verzeichnis. Es wurden keine Änderungen vorgenommen.",
+    "emptyCreated": "Leere GEMINI.md Datei erstellt."
+  },
+  "editor": {
+    "description": "Externe Editor-Präferenz festlegen"
+  },
+  "ide": {
+    "description": "IDE-Integrationsbefehle",
+    "status": {
+      "description": "Status der IDE-Integration prüfen",
+      "connected": "Verbunden mit {{ide}}",
+      "connecting": "Verbinde...",
+      "disconnected": "Getrennt",
+      "disconnectedWithDetails": "Getrennt: {{details}}",
+      "activeSuffix": "(Aktiv)",
+      "fileListNote": "Hinweis: Nur aktive Datei wird verfolgt",
+      "openFilesHeader": "Geöffnete Dateien:"
+    },
+    "install": {
+      "description": "Die IDE-Erweiterung für {{ide}} installieren",
+      "noInstaller": "Kein Installer verfügbar für {{ide}} ({{extension}})",
+      "installing": "Installiere Erweiterung...",
+      "autoEnableFailed": "Fehler beim automatischen Aktivieren der IDE-Integration. Um dies zu beheben, starten Sie die CLI in einem neuen Terminalfenster."
+    },
+    "enable": {
+      "description": "IDE-Integration aktivieren"
+    },
+    "disable": {
+      "description": "IDE-Integration deaktivieren"
+    },
+    "unsupported": "IDE-Integration wird in dieser Umgebung nicht unterstützt."
+  },
+  "vim": {
+    "description": "Vim-Modus umschalten",
+    "entered": "Vim-Modus aktiviert.",
+    "exited": "Vim-Modus deaktiviert."
+  },
+  "terminalSetup": {
+    "description": "Terminal-Einstellungen konfigurieren",
+    "restartRequired": "Bitte starten Sie Ihr Terminal neu, damit die Änderungen wirksam werden.",
+    "failed": "Terminal-Einrichtung fehlgeschlagen: {{error}}",
+    "windowsConfigPathMissing": "Konnte {{terminal}} Konfigurationsverzeichnis nicht finden. Ist es installiert?",
+    "keybindingsNotArray": "{{terminal}} Tastenbelegungsdatei ({{file}}) ist kein JSON-Array.",
+    "keybindingsParseFailed": "Fehler beim Parsen der {{terminal}} Tastenbelegungsdatei ({{file}}): ungültiges JSON ({{error}})",
+    "alreadyConfigured": "{{terminal}} ist bereits für Shift+Enter Unterstützung konfiguriert.",
+    "existingBindingsShift": "- Bestehende 'shift+enter' Belegung gefunden",
+    "existingBindingsCtrl": "- Bestehende 'ctrl+enter' Belegung gefunden",
+    "existingBindingsHeader": "Bestehende konfliktierende Tastenbelegungen gefunden:",
+    "existingBindingsFooter": "Bitte bearbeiten Sie {{file}} manuell, um die Belegungen hinzuzufügen, falls gewünscht.",
+    "addedBindings": "{{terminal}} erfolgreich konfiguriert! Tastenbelegungen zu {{file}} hinzugefügt.",
+    "configureFailed": "Fehler beim Konfigurieren von {{terminal}} ({{file}}): {{error}}",
+    "kittyAlreadyConfigured": "Kitty Keyboard Protocol Unterstützung erkannt! Mehrzeilige Eingabe sollte automatisch ohne zusätzliche Konfiguration funktionieren.",
+    "detectFailed": "Konnte Ihren Terminal-Emulator nicht automatisch erkennen. Bitte überprüfen Sie die Dokumentation für die manuelle Konfiguration.",
+    "notSupported": "Automatische Konfiguration wird derzeit für {{terminal}} nicht unterstützt. Bitte überprüfen Sie die Dokumentation für die manuelle Konfiguration."
+  },
+  "setupGithub": {
+    "description": "GitHub-Integration einrichten",
+    "notGitRepo": "Kein GitHub-Repository.",
+    "downloadSuccess": "{{workflows}} Workflow(s) und {{commands}} Befehlsdatei(en) heruntergeladen. Siehe {{url}}, um die Einrichtung abzuschließen.",
+    "toolDescription": "GitHub Actions einrichten"
+  },
+  "resume": {
+    "description": "Eine vorherige Sitzung fortsetzen"
+  },
+  "agents": {
+    "description": "AI-Agenten verwalten",
+    "list": {
+      "description": "Verfügbare lokale und entfernte Agenten auflisten",
+      "configNotLoaded": "Konfiguration nicht geladen.",
+      "registryNotFound": "Agenten-Registry nicht gefunden.",
+      "empty": "Keine Agenten verfügbar.",
+      "localTitle": "Lokale Agenten",
+      "remoteTitle": "Entfernte Agenten"
+    },
+    "enable": {
+      "description": "Einen deaktivierten Agenten aktivieren",
+      "usage": "Verwendung: /agents enable <agent-name>",
+      "registryNotFound": "Agenten-Registry nicht gefunden.",
+      "alreadyEnabled": "Agent \"{{name}}\" ist bereits aktiviert.",
+      "notFound": "Agent \"{{name}}\" nicht gefunden.",
+      "enabling": "Aktiviere {{name}}..."
+    },
+    "disable": {
+      "description": "Einen aktivierten Agenten deaktivieren",
+      "usage": "Verwendung: /agents disable <agent-name>",
+      "registryNotFound": "Agenten-Registry nicht gefunden.",
+      "alreadyDisabled": "Agent \"{{name}}\" ist bereits deaktiviert.",
+      "notFound": "Agent \"{{name}}\" nicht gefunden.",
+      "disabling": "Deaktiviere {{name}}..."
+    },
+    "refresh": {
+      "description": "Die Agenten-Registry neu laden",
+      "registryNotFound": "Agenten-Registry nicht gefunden.",
+      "refreshing": "Aktualisiere Agenten...",
+      "success": "Agenten erfolgreich aktualisiert."
+    },
+    "feedback": {
+      "error": "Ein Fehler ist beim Versuch aufgetreten, Agent \"{{agentName}}\" zu {{action}}.",
+      "alreadyEnabled": "Agent \"{{agentName}}\" ist bereits aktiviert.",
+      "alreadyDisabled": "Agent \"{{agentName}}\" ist bereits deaktiviert.",
+      "enabledTwoScopes": "Agent \"{{agentName}}\" aktiviert, indem er in den {{scope1}} und {{scope2}} Einstellungen aktiviert wurde.",
+      "disabledTwoScopes": "Agent \"{{agentName}}\" ist jetzt sowohl in den {{scope1}} als auch in den {{scope2}} Einstellungen deaktiviert.",
+      "singleScope": "Agent \"{{agentName}}\" {{actionVerb}}, indem er in den {{scope}} Einstellungen auf {{enabledDisabled}} gesetzt wurde.",
+      "scopeProject": "Projekt",
+      "scopeUser": "Benutzer"
+    }
+  },
+  "corgi": {
+    "description": "Schaltet den Corgi-Modus um"
+  }
+}

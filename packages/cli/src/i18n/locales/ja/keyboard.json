@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "キーボードショートカット",
+    "submit": "メッセージを送信",
+    "newline": "新しい行",
+    "newlineLinux": "新しい行 (一部の Linux ディストリビューションでは Alt+Enter)",
+    "cancel": "キャンセル/中断",
+    "clear": "画面をクリア",
+    "exit": "終了",
+    "copy": "最後の応答をコピー",
+    "paste": "クリップボードから貼り付け",
+    "jumpWords": "入力内の単語間をジャンプ",
+    "quit": "アプリケーションを終了",
+    "clearScreen": "画面をクリア",
+    "selectionMode": "テキストをコピーするための選択モードに入る",
+    "externalEditor": "入力を外部エディタで開く",
+    "yoloMode": "YOLO モードを切り替え",
+    "sendMessage": "メッセージを送信",
+    "cancelOrClear": "操作をキャンセル / 入力をクリア (2回押す)",
+    "scrollPage": "ページを上下にスクロール",
+    "autoAcceptEdits": "編集の自動承認を切り替え",
+    "promptHistory": "プロンプト履歴を循環",
+    "fullListSee": "ショートカットの完全なリストについては、以下を参照してください",
+    "history": {
+      "title": "履歴",
+      "previous": "前のメッセージ",
+      "next": "次のメッセージ"
+    },
+    "navigation": {
+      "title": "ナビゲーション",
+      "scrollUp": "上にスクロール",
+      "scrollDown": "下にスクロール",
+      "top": "トップへ移動",
+      "bottom": "ボトムへ移動"
+    }
+  },
+  "keys": {
+    "enter": "Enter",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Space",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "ノーマルモード",
+    "insert": "挿入モード",
+    "visual": "ビジュアルモード"
+  }
+}
