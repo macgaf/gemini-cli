@@ -20,7 +20,10 @@
     "matchesTerminal": "(Matches terminal)",
     "custom": "Custom",
     "helpText": "(Use Enter to select, Tab to configure scope, Esc to close)",
-    "helpTextScope": "(Use Enter to apply scope, Tab to select theme, Esc to close)"
+    "helpTextScope": "(Use Enter to apply scope, Tab to select theme, Esc to close)",
+    "noColorUnsupported": "The no-color theme is not supported in this terminal.",
+    "notFound": "Theme \"{{name}}\" not found.",
+    "notFoundInScope": "Theme \"{{name}}\" not found in the current scope."
   },
   "settings": {
     "title": "Settings",
@@ -66,6 +69,10 @@
       "ui_hideWindowTitle": {
         "label": "Hide Window Title",
         "description": "Hide the window title bar"
+      },
+      "ui_userMessageColor": {
+        "label": "User Message Color",
+        "description": "Override the user message color in chat history. Accepts hex or named ANSI colors (e.g., \"#B27CFF\" or \"magenta\")."
       },
       "ui_showStatusInTitle": {
         "label": "Show Thoughts in Title",
@@ -365,9 +372,20 @@
   },
   "editor": {
     "title": "Editor Settings",
-    "selectEditor": "Select editor",
+    "selectEditor": "Select Editor",
     "custom": "Custom",
-    "enterCommand": "Enter editor command"
+    "enterCommand": "Enter editor command",
+    "preferenceSet": "Editor preference set to \"{{editor}}\" in {{scope}} settings.",
+    "preferenceCleared": "Editor preference cleared in {{scope}} settings.",
+    "preferenceSetFailed": "Failed to set editor preference: {{error}}",
+    "unsupported": "Editor \"{{editor}}\" is not supported.",
+    "alsoModifiedIn": "(Also modified in {{scope}} settings)",
+    "modifiedIn": "(Modified in {{scope}} settings)",
+    "none": "None",
+    "preferenceTitle": "Editor Preference",
+    "supportedNote": "Supported editors detected on this system.",
+    "preferredPrefix": "Preferred editor: ",
+    "preferredSuffix": ""
   },
   "scope": {
     "user": "User",
@@ -404,5 +422,122 @@
     "info": "Info",
     "true": "true",
     "false": "false"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "Note: This folder is still trusted because a parent folder is trusted.",
+    "noteTrustedByIde": "Note: This folder is still trusted because the connected IDE workspace is trusted.",
+    "saveFailed": "Failed to save trust settings. Your changes may not persist.",
+    "title": "Modify Trust Level",
+    "folderLabel": "Folder:",
+    "currentLevel": "Current Level:",
+    "notSet": "Not Set",
+    "inheritedParentNote": "Note: This folder behaves as a trusted folder because one of the parent folders is trusted.",
+    "inheritedIdeNote": "Note: This folder behaves as a trusted folder because the connected IDE workspace is trusted.",
+    "helpText": "(Use Enter to select, Esc to close)",
+    "restartWarning": "Trust settings changed. Press 'r' to restart now.",
+    "options": {
+      "trustFolder": "Trust this folder ({{folder}})",
+      "trustParent": "Trust parent folder ({{folder}})",
+      "dontTrust": "Don't trust"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "Keep trying",
+    "stop": "Stop",
+    "switchTo": "Switch to {{model}}",
+    "upgrade": "Upgrade for higher limits",
+    "allProModels": "all pro models",
+    "usageLimitReached": "Usage limit reached for {{model}}.",
+    "resetTime": "Access resets at {{time}}",
+    "statsHint": "/stats for usage details",
+    "modelHint": "Use /model to switch models.",
+    "authHint": "Use /auth to switch to API key.",
+    "noAccess": "It seems like you don't have access to {{model}}.",
+    "previewLearnMore": "Learn more at https://goo.gle/enable-preview-features",
+    "disablePreview": "To disable {{model}}, disable \"Preview features\" in /settings.",
+    "highDemand": "We are currently experiencing high demand.",
+    "highDemandApology": "Sorry for the inconvenience.",
+    "switchedToFallback": "Switched to fallback model {{model}}"
+  },
+  "ideTrustChange": {
+    "default": "Workspace trust has changed.",
+    "connectionChange": "Workspace trust has changed due to a change in the IDE connection.",
+    "trustChange": "Workspace trust has changed due to a change in the IDE trust.",
+    "restartHint": "Press 'r' to restart Gemini"
+  },
+  "sessionBrowser": {
+    "loading": "Loading sessions...",
+    "error": "Error: {{error}}",
+    "pressToExit": "Press q to exit",
+    "empty": "No auto-saved conversations found.",
+    "searchLabel": "Search:",
+    "searchCancel": "(Esc to cancel)",
+    "filteredSuffix": ", filtered",
+    "sortField": {
+      "date": "date",
+      "messages": "messages",
+      "name": "name"
+    },
+    "sortOrder": {
+      "asc": "ascending",
+      "desc": "descending"
+    },
+    "listTitle": "Chat Sessions ({{count}} total{{filtered}})",
+    "sortedBy": "Sorted by {{field}} ({{order}})",
+    "help": {
+      "navigate": "Navigate",
+      "resume": "Resume",
+      "search": "Search",
+      "delete": "Delete",
+      "quit": "Quit",
+      "sort": "Sort",
+      "reverse": "Reverse",
+      "firstLast": "First/Last"
+    },
+    "columns": {
+      "index": "#",
+      "messages": "Msgs",
+      "age": "Age",
+      "match": "Match",
+      "name": "Name"
+    },
+    "noResults": "No results for \"{{query}}\".",
+    "roleUser": "user",
+    "roleModel": "assistant",
+    "current": "(current)",
+    "moreMatches": "(+{{count}} more)",
+    "noMessages": "No messages",
+    "loadFailed": "Failed to load sessions",
+    "loadFullFailed": "Failed to load full session content",
+    "deleteFailed": "Failed to delete session: {{error}}",
+    "unknownError": "Unknown error"
+  },
+  "toolConfirmation": {
+    "applyChange": "Apply this change?",
+    "execMultiple": "Allow execution of {{count}} commands?",
+    "execSingle": "Allow execution of: '{{command}}'?",
+    "proceedQuestion": "Do you want to proceed?",
+    "mcpQuestion": "Allow execution of MCP tool \"{{tool}}\" from server \"{{server}}\"?",
+    "options": {
+      "allowOnce": "Allow once",
+      "allowSession": "Allow for this session",
+      "allowAllFuture": "Allow for all future sessions",
+      "modifyExternalEditor": "Modify with external editor",
+      "suggestChangesEsc": "No, suggest changes (esc)",
+      "allowToolSession": "Allow tool for this session",
+      "allowServerToolsSession": "Allow all server tools for this session",
+      "allowToolAllFuture": "Allow tool for all future sessions"
+    },
+    "redirection": {
+      "noteLabel": "Note: ",
+      "noteText": "Command contains redirection which can be undesirable.",
+      "tipLabel": "Tip:  ",
+      "tipText": "Toggle auto-edit (Shift+Tab) to allow redirection in the future."
+    },
+    "urlsToFetch": "URLs to fetch:",
+    "mcpServer": "MCP Server: {{server}}",
+    "mcpTool": "Tool: {{tool}}",
+    "modifyInProgress": "Modify in progress:",
+    "modifyHint": "Use your external editor to apply changes."
   }
 }

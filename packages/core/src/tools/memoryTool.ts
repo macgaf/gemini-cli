@@ -25,25 +25,31 @@ import type {
 import { ToolErrorType } from './tool-error.js';
 import { MEMORY_TOOL_NAME } from './tool-names.js';
 import type { MessageBus } from '../confirmation-bus/message-bus.js';
+import { t } from '../i18n/index.js';
 
 const memoryToolSchemaData: FunctionDeclaration = {
   name: MEMORY_TOOL_NAME,
-  description:
-    'Saves a specific piece of information or fact to your long-term memory. Use this when the user explicitly asks you to remember something, or when they state a clear, concise fact that seems important to retain for future interactions.',
+  description: t('tools.memory.schema.description', {
+    defaultValue:
+      'Saves a specific piece of information or fact to your long-term memory. Use this when the user explicitly asks you to remember something, or when they state a clear, concise fact that seems important to retain for future interactions.',
+  }),
   parametersJsonSchema: {
     type: 'object',
     properties: {
       fact: {
         type: 'string',
-        description:
-          'The specific fact or piece of information to remember. Should be a clear, self-contained statement.',
+        description: t('tools.memory.schema.params.fact', {
+          defaultValue:
+            'The specific fact or piece of information to remember. Should be a clear, self-contained statement.',
+        }),
       },
     },
     required: ['fact'],
   },
 };
 
-const memoryToolDescription = `
+const memoryToolDescription = t('tools.memory.description', {
+  defaultValue: `
 Saves a specific piece of information or fact to your long-term memory.
 
 Use this tool:
@@ -59,7 +65,8 @@ Do NOT use this tool:
 
 ## Parameters
 
-- \`fact\` (string, required): The specific fact or piece of information to remember. This should be a clear, self-contained statement. For example, if the user says "My favorite color is blue", the fact would be "My favorite color is blue".`;
+- \`fact\` (string, required): The specific fact or piece of information to remember. This should be a clear, self-contained statement. For example, if the user says "My favorite color is blue", the fact would be "My favorite color is blue".`,
+});
 
 export const DEFAULT_CONTEXT_FILENAME = 'GEMINI.md';
 export const MEMORY_SECTION_HEADER = '## Gemini Added Memories';
@@ -188,7 +195,7 @@ class MemoryToolInvocation extends BaseToolInvocation<
 
   getDescription(): string {
     const memoryFilePath = getGlobalMemoryFilePath();
-    return `in ${tildeifyPath(memoryFilePath)}`;
+    return t('in {{path}}', { path: tildeifyPath(memoryFilePath) });
   }
 
   protected override async getConfirmationDetails(
@@ -216,7 +223,9 @@ class MemoryToolInvocation extends BaseToolInvocation<
 
     const confirmationDetails: ToolEditConfirmationDetails = {
       type: 'edit',
-      title: `Confirm Memory Save: ${tildeifyPath(memoryFilePath)}`,
+      title: t('Confirm Memory Save: {{path}}', {
+        path: tildeifyPath(memoryFilePath),
+      }),
       fileName: memoryFilePath,
       filePath: memoryFilePath,
       fileDiff,
@@ -246,7 +255,9 @@ class MemoryToolInvocation extends BaseToolInvocation<
           modified_content,
           'utf-8',
         );
-        const successMessage = `Okay, I've updated the memory file with your modifications.`;
+        const successMessage = t(
+          "Okay, I've updated the memory file with your modifications.",
+        );
         return {
           llmContent: JSON.stringify({
             success: true,
@@ -265,7 +276,9 @@ class MemoryToolInvocation extends BaseToolInvocation<
             mkdir: fs.mkdir,
           },
         );
-        const successMessage = `Okay, I've remembered that: "${fact}"`;
+        const successMessage = t('Okay, I\'ve remembered that: "{{fact}}"', {
+          fact,
+        });
         return {
           llmContent: JSON.stringify({
             success: true,
@@ -280,9 +293,13 @@ class MemoryToolInvocation extends BaseToolInvocation<
       return {
         llmContent: JSON.stringify({
           success: false,
-          error: `Failed to save memory. Detail: ${errorMessage}`,
+          error: t('Failed to save memory. Detail: {{error}}', {
+            error: errorMessage,
+          }),
         }),
-        returnDisplay: `Error saving memory: ${errorMessage}`,
+        returnDisplay: t('Error saving memory: {{error}}', {
+          error: errorMessage,
+        }),
         error: {
           message: errorMessage,
           type: ToolErrorType.MEMORY_TOOL_EXECUTION_ERROR,
@@ -301,7 +318,7 @@ export class MemoryTool
   constructor(messageBus: MessageBus) {
     super(
       MemoryTool.Name,
-      'SaveMemory',
+      t('tools.memory.displayName', { defaultValue: 'SaveMemory' }),
       memoryToolDescription,
       Kind.Think,
       memoryToolSchemaData.parametersJsonSchema as Record<string, unknown>,
@@ -315,7 +332,7 @@ export class MemoryTool
     params: SaveMemoryParams,
   ): string | null {
     if (params.fact.trim() === '') {
-      return 'Parameter "fact" must be a non-empty string.';
+      return t('Parameter "fact" must be a non-empty string.');
     }
 
     return null;
@@ -365,7 +382,9 @@ export class MemoryTool
       await fsAdapter.writeFile(memoryFilePath, newContent, 'utf-8');
     } catch (error) {
       throw new Error(
-        `[MemoryTool] Failed to add memory entry: ${error instanceof Error ? error.message : String(error)}`,
+        t('[MemoryTool] Failed to add memory entry: {{error}}', {
+          error: error instanceof Error ? error.message : String(error),
+        }),
       );
     }
   }

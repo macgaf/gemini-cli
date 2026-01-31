@@ -31,6 +31,7 @@ import { ToolErrorType } from './tool-error.js';
 import { READ_MANY_FILES_TOOL_NAME } from './tool-names.js';
 
 import { REFERENCE_CONTENT_END } from '../utils/constants.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the ReadManyFilesTool.
@@ -117,11 +118,13 @@ class ReadManyFilesToolInvocation extends BaseToolInvocation<
   }
 
   getDescription(): string {
-    const pathDesc = `using patterns: 
-${this.params.include.join('`, `')}
- (within target directory: 
-${this.config.getTargetDir()}
-) `;
+    const pathDesc = t(
+      'using patterns:\n{{patterns}}\n(within target directory:\n{{dir}}\n)',
+      {
+        patterns: this.params.include.join('`, `'),
+        dir: this.config.getTargetDir(),
+      },
+    );
 
     // Determine the final list of exclusion patterns exactly as in execute method
     const paramExcludes = this.params.exclude || [];
@@ -131,21 +134,31 @@ ${this.config.getTargetDir()}
         ? [...getDefaultExcludes(this.config), ...paramExcludes]
         : [...paramExcludes];
 
-    const excludeDesc = `Excluding: ${
-      finalExclusionPatternsForDescription.length > 0
-        ? `patterns like 
-${finalExclusionPatternsForDescription
-  .slice(0, 2)
-  .join(
-    '`, `',
-  )}${finalExclusionPatternsForDescription.length > 2 ? '...`' : '`'}`
-        : 'none specified'
-    }`;
+    const excludeDesc = t('Excluding: {{patterns}}', {
+      patterns:
+        finalExclusionPatternsForDescription.length > 0
+          ? t('patterns like \n{{patterns}}', {
+              patterns: `${finalExclusionPatternsForDescription
+                .slice(0, 2)
+                .join('`, `')}${
+                finalExclusionPatternsForDescription.length > 2 ? '...`' : '`'
+              }`,
+            })
+          : t('none specified'),
+    });
 
-    return `Will attempt to read and concatenate files ${pathDesc}. ${excludeDesc}. File encoding: ${DEFAULT_ENCODING}. Separator: "${DEFAULT_OUTPUT_SEPARATOR_FORMAT.replace(
-      '{filePath}',
-      'path/to/file.ext',
-    )}".`;
+    return t(
+      'Will attempt to read and concatenate files {{pathDesc}}. {{excludeDesc}}. File encoding: {{encoding}}. Separator: "{{separator}}".',
+      {
+        pathDesc,
+        excludeDesc,
+        encoding: DEFAULT_ENCODING,
+        separator: DEFAULT_OUTPUT_SEPARATOR_FORMAT.replace(
+          '{filePath}',
+          'path/to/file.ext',
+        ),
+      },
+    );
   }
 
   async execute(signal: AbortSignal): Promise<ToolResult> {
@@ -216,7 +229,10 @@ ${finalExclusionPatternsForDescription
         ) {
           skippedFiles.push({
             path: fullPath,
-            reason: `Security: Glob library returned path outside workspace. Path: ${fullPath}`,
+            reason: t(
+              'Security: Glob library returned path outside workspace. Path: {{path}}',
+              { path: fullPath },
+            ),
           });
           continue;
         }
@@ -226,15 +242,20 @@ ${finalExclusionPatternsForDescription
       // Add info about ignored files if any were filtered
       if (ignoredCount > 0) {
         skippedFiles.push({
-          path: `${ignoredCount} file(s)`,
-          reason: 'ignored by project ignore files',
+          path: t('{{count}} file(s)', { count: ignoredCount }),
+          reason: t('ignored by project ignore files'),
         });
       }
     } catch (error) {
-      const errorMessage = `Error during file search: ${getErrorMessage(error)}`;
+      const errorMessage = t('Error during file search: {{error}}', {
+        error: getErrorMessage(error),
+      });
       return {
         llmContent: errorMessage,
-        returnDisplay: `## File Search Error\n\nAn error occurred while searching for files:\n\`\`\`\n${getErrorMessage(error)}\n\`\`\``,
+        returnDisplay: t(
+          '## File Search Error\n\nAn error occurred while searching for files:\n```\n{{error}}\n```',
+          { error: getErrorMessage(error) },
+        ),
         error: {
           message: errorMessage,
           type: ToolErrorType.READ_MANY_FILES_SEARCH_ERROR,
@@ -274,8 +295,9 @@ ${finalExclusionPatternsForDescription
                 success: false,
                 filePath,
                 relativePathForDisplay,
-                reason:
+                reason: t(
                   'asset file (image/pdf/audio) was not explicitly requested by name or extension',
+                ),
               };
             }
           }
@@ -292,7 +314,9 @@ ${finalExclusionPatternsForDescription
               success: false,
               filePath,
               relativePathForDisplay,
-              reason: `Read error: ${fileReadResult.error}`,
+              reason: t('Read error: {{error}}', {
+                error: fileReadResult.error,
+              }),
             };
           }
 
@@ -311,7 +335,9 @@ ${finalExclusionPatternsForDescription
             success: false,
             filePath,
             relativePathForDisplay,
-            reason: `Unexpected error: ${error instanceof Error ? error.message : String(error)}`,
+            reason: t('Unexpected error: {{error}}', {
+              error: error instanceof Error ? error.message : String(error),
+            }),
           };
         }
       },
@@ -376,57 +402,78 @@ ${finalExclusionPatternsForDescription
         // Handle Promise rejection (unexpected errors)
         skippedFiles.push({
           path: 'unknown',
-          reason: `Unexpected error: ${result.reason}`,
+          reason: t('Unexpected error: {{error}}', { error: result.reason }),
         });
       }
     }
 
-    let displayMessage = `### ReadManyFiles Result (Target Dir: \`${this.config.getTargetDir()}\`)\n\n`;
+    let displayMessage = t(
+      '### ReadManyFiles Result (Target Dir: `{{dir}}`)\n\n',
+      { dir: this.config.getTargetDir() },
+    );
     if (processedFilesRelativePaths.length > 0) {
-      displayMessage += `Successfully read and concatenated content from **${processedFilesRelativePaths.length} file(s)**.\n`;
+      displayMessage += t(
+        'Successfully read and concatenated content from **{{count}} file(s)**.\n',
+        { count: processedFilesRelativePaths.length },
+      );
       if (processedFilesRelativePaths.length <= 10) {
-        displayMessage += `\n**Processed Files:**\n`;
+        displayMessage += t('\n**Processed Files:**\n');
         processedFilesRelativePaths.forEach(
-          (p) => (displayMessage += `- \`${p}\`\n`),
+          (p) => (displayMessage += t('- `{{path}}`\n', { path: p })),
         );
       } else {
-        displayMessage += `\n**Processed Files (first 10 shown):**\n`;
+        displayMessage += t('\n**Processed Files (first 10 shown):**\n');
         processedFilesRelativePaths
           .slice(0, 10)
-          .forEach((p) => (displayMessage += `- \`${p}\`\n`));
-        displayMessage += `- ...and ${processedFilesRelativePaths.length - 10} more.\n`;
+          .forEach((p) => (displayMessage += t('- `{{path}}`\n', { path: p })));
+        displayMessage += t('- ...and {{count}} more.\n', {
+          count: processedFilesRelativePaths.length - 10,
+        });
       }
     }
 
     if (skippedFiles.length > 0) {
       if (processedFilesRelativePaths.length === 0) {
-        displayMessage += `No files were read and concatenated based on the criteria.\n`;
+        displayMessage += t(
+          'No files were read and concatenated based on the criteria.\n',
+        );
       }
       if (skippedFiles.length <= 5) {
-        displayMessage += `\n**Skipped ${skippedFiles.length} item(s):**\n`;
+        displayMessage += t('\n**Skipped {{count}} item(s):**\n', {
+          count: skippedFiles.length,
+        });
       } else {
-        displayMessage += `\n**Skipped ${skippedFiles.length} item(s) (first 5 shown):**\n`;
-      }
-      skippedFiles
-        .slice(0, 5)
-        .forEach(
-          (f) => (displayMessage += `- \`${f.path}\` (Reason: ${f.reason})\n`),
+        displayMessage += t(
+          '\n**Skipped {{count}} item(s) (first 5 shown):**\n',
+          { count: skippedFiles.length },
         );
+      }
+      skippedFiles.slice(0, 5).forEach(
+        (f) =>
+          (displayMessage += t('- `{{path}}` (Reason: {{reason}})\n', {
+            path: f.path,
+            reason: f.reason,
+          })),
+      );
       if (skippedFiles.length > 5) {
-        displayMessage += `- ...and ${skippedFiles.length - 5} more.\n`;
+        displayMessage += t('- ...and {{count}} more.\n', {
+          count: skippedFiles.length - 5,
+        });
       }
     } else if (
       processedFilesRelativePaths.length === 0 &&
       skippedFiles.length === 0
     ) {
-      displayMessage += `No files were read and concatenated based on the criteria.\n`;
+      displayMessage += t(
+        'No files were read and concatenated based on the criteria.\n',
+      );
     }
 
     if (contentParts.length > 0) {
       contentParts.push(DEFAULT_OUTPUT_TERMINATOR);
     } else {
       contentParts.push(
-        'No files matching the criteria were found or all were skipped.',
+        t('No files matching the criteria were found or all were skipped.'),
       );
     }
     return {
@@ -461,8 +508,10 @@ export class ReadManyFilesTool extends BaseDeclarativeTool<
             minLength: 1,
           },
           minItems: 1,
-          description:
-            'An array of glob patterns or paths. Examples: ["src/**/*.ts"], ["README.md", "docs/"]',
+          description: t('tools.readManyFiles.params.include', {
+            defaultValue:
+              'An array of glob patterns or paths. Examples: ["src/**/*.ts"], ["README.md", "docs/"]',
+          }),
         },
         exclude: {
           type: 'array',
@@ -470,35 +519,50 @@ export class ReadManyFilesTool extends BaseDeclarativeTool<
             type: 'string',
             minLength: 1,
           },
-          description:
-            'Optional. Glob patterns for files/directories to exclude. Added to default excludes if useDefaultExcludes is true. Example: "**/*.log", "temp/"',
+          description: t('tools.readManyFiles.params.exclude', {
+            defaultValue:
+              'Optional. Glob patterns for files/directories to exclude. Added to default excludes if useDefaultExcludes is true. Example: "**/*.log", "temp/"',
+          }),
           default: [],
         },
         recursive: {
           type: 'boolean',
-          description:
-            'Optional. Whether to search recursively (primarily controlled by `**` in glob patterns). Defaults to true.',
+          description: t('tools.readManyFiles.params.recursive', {
+            defaultValue:
+              'Optional. Whether to search recursively (primarily controlled by `**` in glob patterns). Defaults to true.',
+          }),
           default: true,
         },
         useDefaultExcludes: {
           type: 'boolean',
-          description:
-            'Optional. Whether to apply a list of default exclusion patterns (e.g., node_modules, .git, binary files). Defaults to true.',
+          description: t('tools.readManyFiles.params.useDefaultExcludes', {
+            defaultValue:
+              'Optional. Whether to apply a list of default exclusion patterns (e.g., node_modules, .git, binary files). Defaults to true.',
+          }),
           default: true,
         },
         file_filtering_options: {
-          description:
-            'Whether to respect ignore patterns from .gitignore or .geminiignore',
+          description: t('tools.readManyFiles.params.file_filtering_options', {
+            defaultValue:
+              'Whether to respect ignore patterns from .gitignore or .geminiignore',
+          }),
           type: 'object',
           properties: {
             respect_git_ignore: {
-              description:
-                'Optional: Whether to respect .gitignore patterns when listing files. Only available in git repositories. Defaults to true.',
+              description: t('tools.readManyFiles.params.respect_git_ignore', {
+                defaultValue:
+                  'Optional: Whether to respect .gitignore patterns when listing files. Only available in git repositories. Defaults to true.',
+              }),
               type: 'boolean',
             },
             respect_gemini_ignore: {
-              description:
-                'Optional: Whether to respect .geminiignore patterns when listing files. Defaults to true.',
+              description: t(
+                'tools.readManyFiles.params.respect_gemini_ignore',
+                {
+                  defaultValue:
+                    'Optional: Whether to respect .geminiignore patterns when listing files. Defaults to true.',
+                },
+              ),
               type: 'boolean',
             },
           },
@@ -509,8 +573,9 @@ export class ReadManyFilesTool extends BaseDeclarativeTool<
 
     super(
       ReadManyFilesTool.Name,
-      'ReadManyFiles',
-      `Reads content from multiple files specified by glob patterns within a configured target directory. For text files, it concatenates their content into a single string. It is primarily designed for text-based files. However, it can also process image (e.g., .png, .jpg), audio (e.g., .mp3, .wav), and PDF (.pdf) files if their file names or extensions are explicitly included in the 'include' argument. For these explicitly requested non-text files, their data is read and included in a format suitable for model consumption (e.g., base64 encoded).
+      t('tools.readManyFiles.displayName', { defaultValue: 'ReadManyFiles' }),
+      t('tools.readManyFiles.description', {
+        defaultValue: `Reads content from multiple files specified by glob patterns within a configured target directory. For text files, it concatenates their content into a single string. It is primarily designed for text-based files. However, it can also process image (e.g., .png, .jpg), audio (e.g., .mp3, .wav), and PDF (.pdf) files if their file names or extensions are explicitly included in the 'include' argument. For these explicitly requested non-text files, their data is read and included in a format suitable for model consumption (e.g., base64 encoded).
 
 This tool is useful when you need to understand or analyze a collection of files, such as:
 - Getting an overview of a codebase or parts of it (e.g., all TypeScript files in the 'src' directory).
@@ -520,6 +585,7 @@ This tool is useful when you need to understand or analyze a collection of files
 - When the user asks to "read all files in X directory" or "show me the content of all Y files".
 
 Use this tool when the user's query implies needing the content of several files simultaneously for context, analysis, or summarization. For text files, it uses default UTF-8 encoding and a '--- {filePath} ---' separator between file contents. The tool inserts a '${REFERENCE_CONTENT_END}' after the last file. Ensure glob patterns are relative to the target directory. Glob patterns like 'src/**/*.js' are supported. Avoid using for single files if a more specific single-file reading tool is available, unless the user specifically requests to process a list containing just one file via this tool. Other binary files (not explicitly requested as image/audio/PDF) are generally skipped. Default excludes apply to common non-text files (except for explicitly requested images/audio/PDFs) and large dependency directories unless 'useDefaultExcludes' is false.`,
+      }),
       Kind.Read,
       parameterSchema,
       messageBus,

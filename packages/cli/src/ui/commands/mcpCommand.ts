@@ -23,10 +23,13 @@ import {
 } from '@google/gemini-cli-core';
 import { appEvents, AppEvent } from '../../utils/events.js';
 import { MessageType, type HistoryItemMcpStatus } from '../types.js';
+import { t } from '../../i18n/index.js';
 
 const authCommand: SlashCommand = {
   name: 'auth',
-  description: 'Authenticate with an OAuth-enabled MCP server',
+  get description() {
+    return t('commands:mcp.auth.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (
@@ -40,7 +43,7 @@ const authCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Config not loaded.',
+        content: t('commands:mcp.configNotLoaded'),
       };
     }
 
@@ -67,14 +70,14 @@ const authCommand: SlashCommand = {
         return {
           type: 'message',
           messageType: 'info',
-          content: 'No MCP servers configured with OAuth authentication.',
+          content: t('commands:mcp.noOAuthServers'),
         };
       }
 
       return {
         type: 'message',
         messageType: 'info',
-        content: `MCP servers with OAuth authentication:\n${allOAuthServers.map((s) => `  - ${s}`).join('\n')}\n\nUse /mcp auth <server-name> to authenticate.`,
+        content: `${t('commands:mcp.oauthServersList')}\n${allOAuthServers.map((s) => `  - ${s}`).join('\n')}\n\n${t('commands:mcp.useAuthHint')}`,
       };
     }
 
@@ -83,7 +86,7 @@ const authCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: `MCP server '${serverName}' not found.`,
+        content: t('commands:mcp.serverNotFound', { name: serverName }),
       };
     }
 
@@ -99,7 +102,7 @@ const authCommand: SlashCommand = {
     try {
       context.ui.addItem({
         type: 'info',
-        text: `Starting OAuth authentication for MCP server '${serverName}'...`,
+        text: t('commands:mcp.auth.starting', { name: serverName }),
       });
 
       // Import dynamically to avoid circular dependencies
@@ -121,7 +124,7 @@ const authCommand: SlashCommand = {
 
       context.ui.addItem({
         type: 'info',
-        text: `✅ Successfully authenticated with MCP server '${serverName}'!`,
+        text: `✅ ${t('commands:mcp.auth.success', { name: serverName })}`,
       });
 
       // Trigger tool re-discovery to pick up authenticated server
@@ -129,7 +132,7 @@ const authCommand: SlashCommand = {
       if (mcpClientManager) {
         context.ui.addItem({
           type: 'info',
-          text: `Restarting MCP server '${serverName}'...`,
+          text: t('commands:mcp.auth.restarting', { name: serverName }),
         });
         await mcpClientManager.restartServer(serverName);
       }
@@ -145,13 +148,16 @@ const authCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'info',
-        content: `Successfully authenticated and refreshed tools for '${serverName}'.`,
+        content: t('commands:mcp.auth.refreshed', { name: serverName }),
       };
     } catch (error) {
       return {
         type: 'message',
         messageType: 'error',
-        content: `Failed to authenticate with MCP server '${serverName}': ${getErrorMessage(error)}`,
+        content: t('commands:mcp.auth.failed', {
+          name: serverName,
+          error: getErrorMessage(error),
+        }),
       };
     } finally {
       appEvents.removeListener(AppEvent.OauthDisplayMessage, displayListener);
@@ -178,7 +184,7 @@ const listAction = async (
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Config not loaded.',
+      content: t('commands:mcp.configNotLoaded'),
     };
   }
 
@@ -187,7 +193,7 @@ const listAction = async (
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Could not retrieve tool registry.',
+      content: t('commands:tools.noRegistry'),
     };
   }
 
@@ -276,7 +282,9 @@ const listAction = async (
 const listCommand: SlashCommand = {
   name: 'list',
   altNames: ['ls', 'nodesc', 'nodescription'],
-  description: 'List configured MCP servers and tools',
+  get description() {
+    return t('commands:mcp.list.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: (context) => listAction(context),
@@ -285,7 +293,9 @@ const listCommand: SlashCommand = {
 const descCommand: SlashCommand = {
   name: 'desc',
   altNames: ['description'],
-  description: 'List configured MCP servers and tools with descriptions',
+  get description() {
+    return t('commands:mcp.desc.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: (context) => listAction(context, true),
@@ -293,8 +303,9 @@ const descCommand: SlashCommand = {
 
 const schemaCommand: SlashCommand = {
   name: 'schema',
-  description:
-    'List configured MCP servers and tools with descriptions and schemas',
+  get description() {
+    return t('commands:mcp.schema.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: (context) => listAction(context, true, true),
@@ -302,7 +313,9 @@ const schemaCommand: SlashCommand = {
 
 const refreshCommand: SlashCommand = {
   name: 'refresh',
-  description: 'Restarts MCP servers',
+  get description() {
+    return t('commands:mcp.refresh.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (
@@ -313,7 +326,7 @@ const refreshCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Config not loaded.',
+        content: t('commands:mcp.configNotLoaded'),
       };
     }
 
@@ -322,13 +335,13 @@ const refreshCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Could not retrieve mcp client manager.',
+        content: t('commands:mcp.noClientManager'),
       };
     }
 
     context.ui.addItem({
       type: 'info',
-      text: 'Restarting MCP servers...',
+      text: t('commands:mcp.restarting'),
     });
 
     await mcpClientManager.restart();
@@ -348,7 +361,9 @@ const refreshCommand: SlashCommand = {
 
 export const mcpCommand: SlashCommand = {
   name: 'mcp',
-  description: 'Manage configured Model Context Protocol (MCP) servers',
+  get description() {
+    return t('commands:mcp.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   subCommands: [

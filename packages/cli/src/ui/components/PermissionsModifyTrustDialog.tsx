@@ -5,6 +5,7 @@
  */
 
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import type React from 'react';
 import * as process from 'node:process';
 import * as path from 'node:path';
@@ -30,23 +31,28 @@ export function PermissionsModifyTrustDialog({
   addItem,
   targetDirectory,
 }: PermissionsModifyTrustDialogProps): React.JSX.Element {
+  const { t } = useTranslation('dialogs');
   const currentDirectory = targetDirectory ?? process.cwd();
   const dirName = path.basename(currentDirectory);
   const parentFolder = path.basename(path.dirname(currentDirectory));
 
   const TRUST_LEVEL_ITEMS = [
     {
-      label: `Trust this folder (${dirName})`,
+      label: t('permissionsModifyTrust.options.trustFolder', {
+        folder: dirName,
+      }),
       value: TrustLevel.TRUST_FOLDER,
       key: TrustLevel.TRUST_FOLDER,
     },
     {
-      label: `Trust parent folder (${parentFolder})`,
+      label: t('permissionsModifyTrust.options.trustParent', {
+        folder: parentFolder,
+      }),
       value: TrustLevel.TRUST_PARENT,
       key: TrustLevel.TRUST_PARENT,
     },
     {
-      label: "Don't trust",
+      label: t('permissionsModifyTrust.options.dontTrust'),
       value: TrustLevel.DO_NOT_TRUST,
       key: TrustLevel.DO_NOT_TRUST,
     },
@@ -94,25 +100,28 @@ export function PermissionsModifyTrustDialog({
         padding={1}
       >
         <Box flexDirection="column" paddingBottom={1}>
-          <Text bold>{'> '}Modify Trust Level</Text>
+          <Text bold>
+            {'> '}
+            {t('permissionsModifyTrust.title')}
+          </Text>
           <Box marginTop={1} />
-          <Text>Folder: {cwd}</Text>
           <Text>
-            Current Level: <Text bold>{currentTrustLevel || 'Not Set'}</Text>
+            {t('permissionsModifyTrust.folderLabel')} {cwd}
+          </Text>
+          <Text>
+            {t('permissionsModifyTrust.currentLevel')}{' '}
+            <Text bold>
+              {currentTrustLevel || t('permissionsModifyTrust.notSet')}
+            </Text>
           </Text>
           {isInheritedTrustFromParent && (
             <Text color={theme.text.secondary}>
-              Note: This folder behaves as a trusted folder because one of the
-              parent folders is trusted. It will remain trusted even if you set
-              a different trust level here. To change this, you need to modify
-              the trust setting in the parent folder.
+              {t('permissionsModifyTrust.inheritedParentNote')}
             </Text>
           )}
           {isInheritedTrustFromIde && (
             <Text color={theme.text.secondary}>
-              Note: This folder behaves as a trusted folder because the
-              connected IDE workspace is trusted. It will remain trusted even if
-              you set a different trust level here.
+              {t('permissionsModifyTrust.inheritedIdeNote')}
             </Text>
           )}
         </Box>
@@ -125,15 +134,14 @@ export function PermissionsModifyTrustDialog({
         />
         <Box marginTop={1}>
           <Text color={theme.text.secondary}>
-            (Use Enter to select, Esc to close)
+            {t('permissionsModifyTrust.helpText')}
           </Text>
         </Box>
       </Box>
       {needsRestart && (
         <Box marginLeft={1} marginTop={1}>
           <Text color={theme.status.warning}>
-            To apply the trust changes, Gemini CLI must be restarted. Press
-            &apos;r&apos; to restart CLI now.
+            {t('permissionsModifyTrust.restartWarning')}
           </Text>
         </Box>
       )}

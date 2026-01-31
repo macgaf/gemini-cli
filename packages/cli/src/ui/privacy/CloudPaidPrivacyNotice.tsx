@@ -5,6 +5,7 @@
  */
 
 import { Box, Newline, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { useKeypress } from '../hooks/useKeypress.js';
 
@@ -15,6 +16,7 @@ interface CloudPaidPrivacyNoticeProps {
 export const CloudPaidPrivacyNotice = ({
   onExit,
 }: CloudPaidPrivacyNoticeProps) => {
+  const { t } = useTranslation('privacy');
   useKeypress(
     (key) => {
       if (key.name === 'escape') {
@@ -27,21 +29,15 @@ export const CloudPaidPrivacyNotice = ({
   return (
     <Box flexDirection="column" marginBottom={1}>
       <Text bold color={theme.text.accent}>
-        Vertex AI Notice
+        {t('vertexAI.title')}
       </Text>
       <Newline />
       <Text color={theme.text.primary}>
-        Service Specific Terms<Text color={theme.text.link}>[1]</Text> are
-        incorporated into the agreement under which Google has agreed to provide
-        Google Cloud Platform<Text color={theme.status.success}>[2]</Text> to
-        Customer (the “Agreement”). If the Agreement authorizes the resale or
-        supply of Google Cloud Platform under a Google Cloud partner or reseller
-        program, then except for in the section entitled “Partner-Specific
-        Terms”, all references to Customer in the Service Specific Terms mean
-        Partner or Reseller (as applicable), and all references to Customer Data
-        in the Service Specific Terms mean Partner Data. Capitalized terms used
-        but not defined in the Service Specific Terms have the meaning given to
-        them in the Agreement.
+        {t('vertexAI.description1')}
+        <Text color={theme.text.link}>[1]</Text>
+        {t('vertexAI.description2')}
+        <Text color={theme.status.success}>[2]</Text>
+        {t('vertexAI.description3')}
       </Text>
       <Newline />
       <Text color={theme.text.primary}>
@@ -53,7 +49,7 @@ export const CloudPaidPrivacyNotice = ({
         https://cloud.google.com/terms/services
       </Text>
       <Newline />
-      <Text color={theme.text.secondary}>Press Esc to exit.</Text>
+      <Text color={theme.text.secondary}>{t('common.pressEscToExit')}</Text>
     </Box>
   );
 };

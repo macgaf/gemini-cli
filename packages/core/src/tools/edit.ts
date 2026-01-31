@@ -26,6 +26,7 @@ import { makeRelative, shortenPath } from '../utils/paths.js';
 import { isNodeError } from '../utils/errors.js';
 import type { Config } from '../config/config.js';
 import { ApprovalMode } from '../policy/types.js';
+import { t } from '../i18n/index.js';
 
 import { DEFAULT_DIFF_OPTIONS, getDiffStat } from './diffOptions.js';
 import {
@@ -741,7 +742,7 @@ class EditToolInvocation
       this.config.getTargetDir(),
     );
     if (this.params.old_string === '') {
-      return `Create ${shortenPath(relativePath)}`;
+      return t('Create {{path}}', { path: shortenPath(relativePath) });
     }
 
     const oldStringSnippet =
@@ -752,9 +753,15 @@ class EditToolInvocation
       (this.params.new_string.length > 30 ? '...' : '');
 
     if (this.params.old_string === this.params.new_string) {
-      return `No file changes to ${shortenPath(relativePath)}`;
+      return t('No file changes to {{path}}', {
+        path: shortenPath(relativePath),
+      });
     }
-    return `${shortenPath(relativePath)}: ${oldStringSnippet} => ${newStringSnippet}`;
+    return t('{{path}}: {{old}} => {{new}}', {
+      path: shortenPath(relativePath),
+      old: oldStringSnippet,
+      new: newStringSnippet,
+    });
   }
 
   /**
@@ -772,8 +779,10 @@ class EditToolInvocation
       }
       const errorMsg = error instanceof Error ? error.message : String(error);
       return {
-        llmContent: `Error preparing edit: ${errorMsg}`,
-        returnDisplay: `Error preparing edit: ${errorMsg}`,
+        llmContent: t('Error preparing edit: {{error}}', { error: errorMsg }),
+        returnDisplay: t('Error preparing edit: {{error}}', {
+          error: errorMsg,
+        }),
         error: {
           message: errorMsg,
           type: ToolErrorType.EDIT_PREPARATION_FAILURE,
@@ -784,7 +793,9 @@ class EditToolInvocation
     if (editData.error) {
       return {
         llmContent: editData.error.raw,
-        returnDisplay: `Error: ${editData.error.display}`,
+        returnDisplay: t('Error: {{message}}', {
+          message: editData.error.display,
+        }),
         error: {
           message: editData.error.raw,
           type: editData.error.type,
@@ -806,7 +817,11 @@ class EditToolInvocation
 
       let displayResult: ToolResultDisplay;
       if (editData.isNewFile) {
-        displayResult = `Created ${shortenPath(makeRelative(this.params.file_path, this.config.getTargetDir()))}`;
+        displayResult = t('Created {{path}}', {
+          path: shortenPath(
+            makeRelative(this.params.file_path, this.config.getTargetDir()),
+          ),
+        });
       } else {
         // Generate diff for display, even though core logic doesn't technically need it
         // The CLI wrapper will use this part of the ToolResult
@@ -839,12 +854,19 @@ class EditToolInvocation
 
       const llmSuccessMessageParts = [
         editData.isNewFile
-          ? `Created new file: ${this.params.file_path} with provided content.`
-          : `Successfully modified file: ${this.params.file_path} (${editData.occurrences} replacements).`,
+          ? t('Created new file: {{path}} with provided content.', {
+              path: this.params.file_path,
+            })
+          : t(
+              'Successfully modified file: {{path}} ({{count}} replacements).',
+              { path: this.params.file_path, count: editData.occurrences },
+            ),
       ];
       if (this.params.modified_by_user) {
         llmSuccessMessageParts.push(
-          `User modified the \`new_string\` content to be: ${this.params.new_string}.`,
+          t('User modified the `new_string` content to be: {{content}}.', {
+            content: this.params.new_string,
+          }),
         );
       }
 
@@ -855,8 +877,12 @@ class EditToolInvocation
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
       return {
-        llmContent: `Error executing edit: ${errorMsg}`,
-        returnDisplay: `Error writing file: ${errorMsg}`,
+        llmContent: t('Error executing edit: {{error}}', {
+          error: errorMsg,
+        }),
+        returnDisplay: t('Error writing file: {{error}}', {
+          error: errorMsg,
+        }),
         error: {
           message: errorMsg,
           type: ToolErrorType.FILE_WRITE_FAILURE,
@@ -891,8 +917,9 @@ export class EditTool
   ) {
     super(
       EditTool.Name,
-      'Edit',
-      `Replaces text within a file. By default, replaces a single occurrence, but can replace multiple occurrences when \`expected_replacements\` is specified. This tool requires providing significant context around the change to ensure precise targeting. Always use the ${READ_FILE_TOOL_NAME} tool to examine the file's current content before attempting a text replacement.
+      t('tools.edit.displayName', { defaultValue: 'Edit' }),
+      t('tools.edit.description', {
+        defaultValue: `Replaces text within a file. By default, replaces a single occurrence, but can replace multiple occurrences when \`expected_replacements\` is specified. This tool requires providing significant context around the change to ensure precise targeting. Always use the ${READ_FILE_TOOL_NAME} tool to examine the file's current content before attempting a text replacement.
       
       The user has the ability to modify the \`new_string\` content. If modified, this will be stated in the response.
       
@@ -904,15 +931,19 @@ export class EditTool
       **Important:** If ANY of the above are not satisfied, the tool will fail. CRITICAL for \`old_string\`: Must uniquely identify the single instance to change. Include at least 3 lines of context BEFORE and AFTER the target text, matching whitespace and indentation precisely. If this string matches multiple locations, or does not match exactly, the tool will fail.
       5. Prefer to break down complex and long changes into multiple smaller atomic calls to this tool. Always check the content of the file after changes or not finding a string to match.
       **Multiple replacements:** Set \`expected_replacements\` to the number of occurrences you want to replace. The tool will replace ALL occurrences that match \`old_string\` exactly. Ensure the number of replacements matches your expectation.`,
+      }),
       Kind.Edit,
       {
         properties: {
           file_path: {
-            description: 'The path to the file to modify.',
+            description: t('tools.edit.params.file_path', {
+              defaultValue: 'The path to the file to modify.',
+            }),
             type: 'string',
           },
           instruction: {
-            description: `A clear, semantic instruction for the code change, acting as a high-quality prompt for an expert LLM assistant. It must be self-contained and explain the goal of the change.
+            description: t('tools.edit.params.instruction', {
+              defaultValue: `A clear, semantic instruction for the code change, acting as a high-quality prompt for an expert LLM assistant. It must be self-contained and explain the goal of the change.
 
 A good instruction should concisely answer:
 1.  WHY is the change needed? (e.g., "To fix a bug where users can be null...")
@@ -927,22 +958,29 @@ A good instruction should concisely answer:
 - "Fix the bug." (Doesn't explain the bug or the fix)
 - "Replace the line with this new line." (Brittle, just repeats the other parameters)
 `,
+            }),
             type: 'string',
           },
           old_string: {
-            description:
-              'The exact literal text to replace, preferably unescaped. For single replacements (default), include at least 3 lines of context BEFORE and AFTER the target text, matching whitespace and indentation precisely. If this string is not the exact literal text (i.e. you escaped it) or does not match exactly, the tool will fail.',
+            description: t('tools.edit.params.old_string', {
+              defaultValue:
+                'The exact literal text to replace, preferably unescaped. For single replacements (default), include at least 3 lines of context BEFORE and AFTER the target text, matching whitespace and indentation precisely. If this string is not the exact literal text (i.e. you escaped it) or does not match exactly, the tool will fail.',
+            }),
             type: 'string',
           },
           new_string: {
-            description:
-              'The exact literal text to replace `old_string` with, preferably unescaped. Provide the EXACT text. Ensure the resulting code is correct and idiomatic.',
+            description: t('tools.edit.params.new_string', {
+              defaultValue:
+                'The exact literal text to replace `old_string` with, preferably unescaped. Provide the EXACT text. Ensure the resulting code is correct and idiomatic.',
+            }),
             type: 'string',
           },
           expected_replacements: {
             type: 'number',
-            description:
-              'Number of replacements expected. Defaults to 1 if not specified. Use when you want to replace multiple occurrences.',
+            description: t('tools.edit.params.expected_replacements', {
+              defaultValue:
+                'Number of replacements expected. Defaults to 1 if not specified. Use when you want to replace multiple occurrences.',
+            }),
             minimum: 1,
           },
         },
@@ -964,7 +1002,7 @@ A good instruction should concisely answer:
     params: EditToolParams,
   ): string | null {
     if (!params.file_path) {
-      return "The 'file_path' parameter must be non-empty.";
+      return t("The 'file_path' parameter must be non-empty.");
     }
 
     let filePath = params.file_path;
@@ -981,7 +1019,10 @@ A good instruction should concisely answer:
     const workspaceContext = this.config.getWorkspaceContext();
     if (!workspaceContext.isPathWithinWorkspace(params.file_path)) {
       const directories = workspaceContext.getDirectories();
-      return `File path must be within one of the workspace directories: ${directories.join(', ')}`;
+      return t(
+        'File path must be within one of the workspace directories: {{dirs}}',
+        { dirs: directories.join(', ') },
+      );
     }
 
     return null;

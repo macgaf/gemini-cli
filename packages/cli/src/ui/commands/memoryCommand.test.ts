@@ -16,10 +16,8 @@ import {
   refreshServerHierarchicalMemory,
   SimpleExtensionLoader,
   type FileDiscoveryService,
-  showMemory,
-  addMemory,
-  listMemoryFiles,
 } from '@google/gemini-cli-core';
+import { t } from '../../i18n/index.js';
 
 vi.mock('@google/gemini-cli-core', async (importOriginal) => {
   const original =
@@ -47,9 +45,6 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
         content: 'Memory refreshed successfully.',
       };
     }),
-    showMemory: vi.fn(),
-    addMemory: vi.fn(),
-    listMemoryFiles: vi.fn(),
     refreshServerHierarchicalMemory: vi.fn(),
   };
 });
@@ -84,22 +79,6 @@ describe('memoryCommand', () => {
       mockGetUserMemory = vi.fn();
       mockGetGeminiMdFileCount = vi.fn();
 
-      vi.mocked(showMemory).mockImplementation((config) => {
-        const memoryContent = config.getUserMemory() || '';
-        const fileCount = config.getGeminiMdFileCount() || 0;
-        let content;
-        if (memoryContent.length > 0) {
-          content = `Current memory content from ${fileCount} file(s):\n\n---\n${memoryContent}\n---`;
-        } else {
-          content = 'Memory is currently empty.';
-        }
-        return {
-          type: 'message',
-          messageType: 'info',
-          content,
-        };
-      });
-
       mockContext = createMockCommandContext({
         services: {
           config: {
@@ -122,7 +101,7 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Memory is currently empty.',
+          text: t('commands:memory.show.noneLoaded'),
         },
         expect.any(Number),
       );
@@ -141,7 +120,10 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: `Current memory content from 1 file(s):\n\n---\n${memoryContent}\n---`,
+          text: t('commands:memory.show.currentContentWithCount', {
+            count: 1,
+            content: memoryContent,
+          }),
         },
         expect.any(Number),
       );
@@ -153,20 +135,6 @@ describe('memoryCommand', () => {
 
     beforeEach(() => {
       addCommand = getSubCommand('add');
-      vi.mocked(addMemory).mockImplementation((args) => {
-        if (!args || args.trim() === '') {
-          return {
-            type: 'message',
-            messageType: 'error',
-            content: 'Usage: /memory add <text to remember>',
-          };
-        }
-        return {
-          type: 'tool',
-          toolName: 'save_memory',
-          toolArgs: { fact: args.trim() },
-        };
-      });
       mockContext = createMockCommandContext();
     });
 
@@ -177,7 +145,7 @@ describe('memoryCommand', () => {
       expect(result).toEqual({
         type: 'message',
         messageType: 'error',
-        content: 'Usage: /memory add <text to remember>',
+        content: t('commands:memory.add.usage'),
       });
 
       expect(mockContext.ui.addItem).not.toHaveBeenCalled();
@@ -192,7 +160,7 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: `Attempting to save to memory: "${fact}"`,
+          text: t('commands:memory.add.saving', { content: fact }),
         },
         expect.any(Number),
       );
@@ -283,7 +251,10 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Memory refreshed successfully. Loaded 18 characters from 3 file(s).',
+          text: t('commands:memory.refresh.successWithCount', {
+            chars: 'JIT Memory Content'.length,
+            count: 3,
+          }),
         },
         expect.any(Number),
       );
@@ -292,20 +263,18 @@ describe('memoryCommand', () => {
     it('should display success message when memory is refreshed with content (Legacy)', async () => {
       if (!refreshCommand.action) throw new Error('Command has no action');
 
-      const successMessage = {
-        type: 'message',
-        messageType: MessageType.INFO,
-        content:
-          'Memory refreshed successfully. Loaded 18 characters from 2 file(s).',
-      };
-      mockRefreshMemory.mockResolvedValue(successMessage);
+      const memoryContent = 'Memory from refresh';
+      const config = mockContext.services.config;
+      if (!config) throw new Error('Config is undefined');
+      vi.mocked(config.getUserMemory).mockReturnValue(memoryContent);
+      vi.mocked(config.getGeminiMdFileCount).mockReturnValue(2);
 
       await refreshCommand.action(mockContext, '');
 
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Refreshing memory from source files...',
+          text: t('commands:memory.refresh.refreshing'),
         },
         expect.any(Number),
       );
@@ -315,7 +284,10 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Memory refreshed successfully. Loaded 18 characters from 2 file(s).',
+          text: t('commands:memory.refresh.successWithCount', {
+            chars: memoryContent.length,
+            count: 2,
+          }),
         },
         expect.any(Number),
       );
@@ -324,12 +296,10 @@ describe('memoryCommand', () => {
     it('should display success message when memory is refreshed with no content', async () => {
       if (!refreshCommand.action) throw new Error('Command has no action');
 
-      const successMessage = {
-        type: 'message',
-        messageType: MessageType.INFO,
-        content: 'Memory refreshed successfully. No memory content found.',
-      };
-      mockRefreshMemory.mockResolvedValue(successMessage);
+      const config = mockContext.services.config;
+      if (!config) throw new Error('Config is undefined');
+      vi.mocked(config.getUserMemory).mockReturnValue('');
+      vi.mocked(config.getGeminiMdFileCount).mockReturnValue(0);
 
       await refreshCommand.action(mockContext, '');
 
@@ -338,7 +308,7 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Memory refreshed successfully. No memory content found.',
+          text: t('commands:memory.refresh.successEmpty'),
         },
         expect.any(Number),
       );
@@ -360,7 +330,7 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.ERROR,
-          text: `Error refreshing memory: ${error.message}`,
+          text: t('commands:memory.refresh.error', { error: error.message }),
         },
         expect.any(Number),
       );
@@ -380,7 +350,7 @@ describe('memoryCommand', () => {
       expect(nullConfigContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'Refreshing memory from source files...',
+          text: t('commands:memory.refresh.refreshing'),
         },
         expect.any(Number),
       );
@@ -396,21 +366,6 @@ describe('memoryCommand', () => {
     beforeEach(() => {
       listCommand = getSubCommand('list');
       mockGetGeminiMdfilePaths = vi.fn();
-      vi.mocked(listMemoryFiles).mockImplementation((config) => {
-        const filePaths = config.getGeminiMdFilePaths() || [];
-        const fileCount = filePaths.length;
-        let content;
-        if (fileCount > 0) {
-          content = `There are ${fileCount} GEMINI.md file(s) in use:\n\n${filePaths.join('\n')}`;
-        } else {
-          content = 'No GEMINI.md files in use.';
-        }
-        return {
-          type: 'message',
-          messageType: 'info',
-          content,
-        };
-      });
       mockContext = createMockCommandContext({
         services: {
           config: {
@@ -430,7 +385,7 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: 'No GEMINI.md files in use.',
+          text: t('commands:memory.list.empty'),
         },
         expect.any(Number),
       );
@@ -447,7 +402,10 @@ describe('memoryCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: MessageType.INFO,
-          text: `There are 2 GEMINI.md file(s) in use:\n\n${filePaths.join('\n')}`,
+          text: t('commands:memory.list.withCount', {
+            count: 2,
+            list: filePaths.join('\n'),
+          }),
         },
         expect.any(Number),
       );

@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { useUIState } from '../contexts/UIStateContext.js';
 import { useSettings } from '../contexts/SettingsContext.js';
@@ -20,6 +21,7 @@ interface StatusDisplayProps {
 export const StatusDisplay: React.FC<StatusDisplayProps> = ({
   hideContextSummary,
 }) => {
+  const { t } = useTranslation('common');
   const uiState = useUIState();
   const settings = useSettings();
   const config = useConfig();
@@ -29,9 +31,7 @@ export const StatusDisplay: React.FC<StatusDisplayProps> = ({
   }
 
   if (uiState.ctrlCPressedOnce) {
-    return (
-      <Text color={theme.status.warning}>Press Ctrl+C again to exit.</Text>
-    );
+    return <Text color={theme.status.warning}>{t('exitWarning.ctrlC')}</Text>;
   }
 
   if (uiState.warningMessage) {
@@ -39,9 +39,7 @@ export const StatusDisplay: React.FC<StatusDisplayProps> = ({
   }
 
   if (uiState.ctrlDPressedOnce) {
-    return (
-      <Text color={theme.status.warning}>Press Ctrl+D again to exit.</Text>
-    );
+    return <Text color={theme.status.warning}>{t('exitWarning.ctrlD')}</Text>;
   }
 
   if (uiState.showEscapePrompt) {
@@ -54,7 +52,9 @@ export const StatusDisplay: React.FC<StatusDisplayProps> = ({
 
     return (
       <Text color={theme.text.secondary}>
-        Press Esc again to {isPromptEmpty ? 'rewind' : 'clear prompt'}.
+        {isPromptEmpty
+          ? t('escapePrompt.rewind')
+          : t('escapePrompt.clearPrompt')}
       </Text>
     );
   }

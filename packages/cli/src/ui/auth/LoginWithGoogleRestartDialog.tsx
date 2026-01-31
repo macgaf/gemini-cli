@@ -5,6 +5,7 @@
  */
 
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { useKeypress } from '../hooks/useKeypress.js';
 import { runExitCleanup } from '../../utils/cleanup.js';
@@ -17,6 +18,7 @@ interface LoginWithGoogleRestartDialogProps {
 export const LoginWithGoogleRestartDialog = ({
   onDismiss,
 }: LoginWithGoogleRestartDialogProps) => {
+  const { t } = useTranslation('auth');
   useKeypress(
     (key) => {
       if (key.name === 'escape') {
@@ -31,14 +33,12 @@ export const LoginWithGoogleRestartDialog = ({
     { isActive: true },
   );
 
-  const message =
-    'You have successfully logged in with Google. Gemini CLI needs to be restarted.';
+  const message = t('loginWithGoogleRestart.message');
 
   return (
     <Box borderStyle="round" borderColor={theme.status.warning} paddingX={1}>
       <Text color={theme.status.warning}>
-        {message} Press &apos;r&apos; to restart, or &apos;escape&apos; to
-        choose a different auth method.
+        {message} {t('loginWithGoogleRestart.helpText')}
       </Text>
     </Box>
   );

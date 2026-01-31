@@ -13,8 +13,8 @@ import {
   PHRASE_CHANGE_INTERVAL_MS,
   INTERACTIVE_SHELL_WAITING_PHRASE,
 } from './usePhraseCycler.js';
-import { WITTY_LOADING_PHRASES } from '../constants/wittyPhrases.js';
-import { INFORMATIVE_TIPS } from '../constants/tips.js';
+import { getWittyLoadingPhrases } from '../constants/wittyPhrases.js';
+import { getInformativeTips } from '../constants/tips.js';
 import type { RetryAttemptPayload } from '@google/gemini-cli-core';
 
 describe('useLoadingIndicator', () => {
@@ -83,7 +83,7 @@ describe('useLoadingIndicator', () => {
     vi.spyOn(Math, 'random').mockImplementation(() => 0.5); // Always witty
     const { result } = renderLoadingIndicatorHook(StreamingState.Idle);
     expect(result.current.elapsedTime).toBe(0);
-    expect(WITTY_LOADING_PHRASES).toContain(
+    expect(getWittyLoadingPhrases()).toContain(
       result.current.currentLoadingPhrase,
     );
   });
@@ -97,7 +97,7 @@ describe('useLoadingIndicator', () => {
     );
 
     // Initially should be witty phrase or tip
-    expect([...WITTY_LOADING_PHRASES, ...INFORMATIVE_TIPS]).toContain(
+    expect([...getWittyLoadingPhrases(), ...getInformativeTips()]).toContain(
       result.current.currentLoadingPhrase,
     );
 
@@ -116,14 +116,14 @@ describe('useLoadingIndicator', () => {
 
     // Initial phrase on first activation will be a tip, not necessarily from witty phrases
     expect(result.current.elapsedTime).toBe(0);
-    // On first activation, it may show a tip, so we can't guarantee it's in WITTY_LOADING_PHRASES
+    // On first activation, it may show a tip, so we can't guarantee it's in getWittyLoadingPhrases()
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS + 1);
     });
 
     // Phrase should cycle if PHRASE_CHANGE_INTERVAL_MS has passed, now it should be witty since first activation already happened
-    expect(WITTY_LOADING_PHRASES).toContain(
+    expect(getWittyLoadingPhrases()).toContain(
       result.current.currentLoadingPhrase,
     );
   });
@@ -177,7 +177,7 @@ describe('useLoadingIndicator', () => {
       rerender({ streamingState: StreamingState.Responding });
     });
     expect(result.current.elapsedTime).toBe(0); // Should reset
-    expect(WITTY_LOADING_PHRASES).toContain(
+    expect(getWittyLoadingPhrases()).toContain(
       result.current.currentLoadingPhrase,
     );
 
@@ -203,7 +203,7 @@ describe('useLoadingIndicator', () => {
     });
 
     expect(result.current.elapsedTime).toBe(0);
-    expect(WITTY_LOADING_PHRASES).toContain(
+    expect(getWittyLoadingPhrases()).toContain(
       result.current.currentLoadingPhrase,
     );
 

@@ -146,4 +146,17 @@ describe('readStdin', () => {
     onErrorHandler(error);
     await expect(promise).rejects.toThrow('stdin error');
   });
+
+  it('should ignore EIO errors and resolve with collected data', async () => {
+    mockStdin.read.mockReturnValueOnce('chunk').mockReturnValueOnce(null);
+    const promise = readStdin();
+
+    onReadableHandler();
+
+    const error = new Error('EIO') as NodeJS.ErrnoException;
+    error.code = 'EIO';
+    onErrorHandler(error);
+
+    await expect(promise).resolves.toBe('chunk');
+  });
 });

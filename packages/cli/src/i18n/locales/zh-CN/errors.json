@@ -1,0 +1,42 @@
+{
+  "generic": "发生错误",
+  "network": {
+    "connectionFailed": "连接失败",
+    "timeout": "请求超时",
+    "noInternet": "无网络连接"
+  },
+  "auth": {
+    "failed": "认证失败",
+    "expired": "会话已过期",
+    "invalidCredentials": "凭据无效",
+    "notLoggedIn": "未登录"
+  },
+  "api": {
+    "rateLimited": "超出速率限制，请稍后重试。",
+    "quotaExceeded": "API 配额已用尽",
+    "serverError": "服务器错误",
+    "invalidResponse": "服务器响应无效"
+  },
+  "file": {
+    "notFound": "文件未找到：{{path}}",
+    "readError": "读取文件错误：{{path}}",
+    "writeError": "写入文件错误：{{path}}",
+    "permissionDenied": "权限被拒绝：{{path}}"
+  },
+  "config": {
+    "invalidSettings": "设置配置无效",
+    "loadError": "加载配置错误",
+    "saveError": "保存配置错误"
+  },
+  "tool": {
+    "notFound": "工具未找到：{{name}}",
+    "executionFailed": "工具执行失败：{{name}}",
+    "timeout": "工具执行超时"
+  },
+  "validation": {
+    "required": "此字段为必填项",
+    "invalid": "值无效",
+    "tooLong": "值过长",
+    "tooShort": "值过短"
+  }
+}

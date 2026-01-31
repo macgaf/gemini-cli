@@ -8,6 +8,7 @@ import type { Message } from '../types.js';
 import { MessageType } from '../types.js';
 import { debugLogger, type Config } from '@google/gemini-cli-core';
 import type { LoadedSettings } from '../../config/settings.js';
+import { i18n } from '../../i18n/index.js';
 
 export function createShowMemoryAction(
   config: Config | null,
@@ -18,7 +19,7 @@ export function createShowMemoryAction(
     if (!config) {
       addMessage({
         type: MessageType.ERROR,
-        content: 'Configuration not available. Cannot show memory.',
+        content: i18n.t('commands:memory.show.configNotAvailable'),
         timestamp: new Date(),
       });
       return;
@@ -46,12 +47,16 @@ export function createShowMemoryAction(
 
     if (fileCount > 0) {
       const allNamesTheSame = new Set(contextFileNames).size < 2;
-      const name = allNamesTheSame ? contextFileNames[0] : 'context';
+      const name = allNamesTheSame
+        ? contextFileNames[0]
+        : i18n.t('commands:memory.show.contextLabel');
+      const loadedKey =
+        fileCount > 1
+          ? 'commands:memory.show.loadedFromPlural'
+          : 'commands:memory.show.loadedFromSingle';
       addMessage({
         type: MessageType.INFO,
-        content: `Loaded memory from ${fileCount} ${name} file${
-          fileCount > 1 ? 's' : ''
-        }.`,
+        content: i18n.t(loadedKey, { count: fileCount, name }),
         timestamp: new Date(),
       });
     }
@@ -59,7 +64,9 @@ export function createShowMemoryAction(
     if (currentMemory && currentMemory.trim().length > 0) {
       addMessage({
         type: MessageType.INFO,
-        content: `Current combined memory content:\n\`\`\`markdown\n${currentMemory}\n\`\`\``,
+        content: i18n.t('commands:memory.show.currentContent', {
+          content: currentMemory,
+        }),
         timestamp: new Date(),
       });
     } else {
@@ -67,8 +74,8 @@ export function createShowMemoryAction(
         type: MessageType.INFO,
         content:
           fileCount > 0
-            ? 'Hierarchical memory (GEMINI.md or other context files) is loaded but content is empty.'
-            : 'No hierarchical memory (GEMINI.md or other context files) is currently loaded.',
+            ? i18n.t('commands:memory.show.emptyContent')
+            : i18n.t('commands:memory.show.noneLoaded'),
         timestamp: new Date(),
       });
     }

@@ -14,6 +14,7 @@ import {
 } from './tools.js';
 import type { MessageBus } from '../confirmation-bus/message-bus.js';
 import { WRITE_TODOS_TOOL_NAME } from './tool-names.js';
+import { t } from '../i18n/index.js';
 
 const TODO_STATUSES = [
   'pending',
@@ -23,7 +24,8 @@ const TODO_STATUSES = [
 ] as const;
 
 // Inspired by langchain/deepagents.
-export const WRITE_TODOS_DESCRIPTION = `This tool can help you list out the current subtasks that are required to be completed for a given user request. The list of subtasks helps you keep track of the current task, organize complex queries and help ensure that you don't miss any steps. With this list, the user can also see the current progress you are making in executing a given task.
+export const WRITE_TODOS_DESCRIPTION = t('tools.writeTodos.description', {
+  defaultValue: `This tool can help you list out the current subtasks that are required to be completed for a given user request. The list of subtasks helps you keep track of the current task, organize complex queries and help ensure that you don't miss any steps. With this list, the user can also see the current progress you are making in executing a given task.
 
 Depending on the task complexity, you should first divide a given task into subtasks and then use this tool to list out the subtasks that are required to be completed for a given user request.
 Each of the subtasks should be clear and distinct. 
@@ -86,7 +88,8 @@ Agent:
 The agent did not use the todo list because this task could be completed by a tight loop of execute test->edit->execute test.
 </reasoning>
 </example>
-`;
+`,
+});
 
 export interface WriteTodosToolParams {
   /**
@@ -111,9 +114,9 @@ class WriteTodosToolInvocation extends BaseToolInvocation<
   getDescription(): string {
     const count = this.params.todos?.length ?? 0;
     if (count === 0) {
-      return 'Cleared todo list';
+      return t('Cleared todo list');
     }
-    return `Set ${count} todo(s)`;
+    return t('Set {{count}} todo(s)', { count });
   }
 
   async execute(
@@ -129,8 +132,11 @@ class WriteTodosToolInvocation extends BaseToolInvocation<
 
     const llmContent =
       todos.length > 0
-        ? `Successfully updated the todo list. The current list is now:\n${todoListString}`
-        : 'Successfully cleared the todo list.';
+        ? t(
+            'Successfully updated the todo list. The current list is now:\n{{list}}',
+            { list: todoListString },
+          )
+        : t('Successfully cleared the todo list.');
 
     return {
       llmContent,
@@ -148,7 +154,7 @@ export class WriteTodosTool extends BaseDeclarativeTool<
   constructor(messageBus: MessageBus) {
     super(
       WriteTodosTool.Name,
-      'WriteTodos',
+      t('tools.writeTodos.displayName', { defaultValue: 'WriteTodos' }),
       WRITE_TODOS_DESCRIPTION,
       Kind.Other,
       {
@@ -156,19 +162,27 @@ export class WriteTodosTool extends BaseDeclarativeTool<
         properties: {
           todos: {
             type: 'array',
-            description:
-              'The complete list of todo items. This will replace the existing list.',
+            description: t('tools.writeTodos.params.todos', {
+              defaultValue:
+                'The complete list of todo items. This will replace the existing list.',
+            }),
             items: {
               type: 'object',
-              description: 'A single todo item.',
+              description: t('tools.writeTodos.params.todoItem', {
+                defaultValue: 'A single todo item.',
+              }),
               properties: {
                 description: {
                   type: 'string',
-                  description: 'The description of the task.',
+                  description: t('tools.writeTodos.params.description', {
+                    defaultValue: 'The description of the task.',
+                  }),
                 },
                 status: {
                   type: 'string',
-                  description: 'The current status of the task.',
+                  description: t('tools.writeTodos.params.status', {
+                    defaultValue: 'The current status of the task.',
+                  }),
                   enum: TODO_STATUSES,
                 },
               },

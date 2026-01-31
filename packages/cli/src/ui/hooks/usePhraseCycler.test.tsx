@@ -13,8 +13,8 @@ import {
   PHRASE_CHANGE_INTERVAL_MS,
   INTERACTIVE_SHELL_WAITING_PHRASE,
 } from './usePhraseCycler.js';
-import { INFORMATIVE_TIPS } from '../constants/tips.js';
-import { WITTY_LOADING_PHRASES } from '../constants/wittyPhrases.js';
+import { getInformativeTips } from '../constants/tips.js';
+import { getWittyLoadingPhrases } from '../constants/wittyPhrases.js';
 
 // Test component to consume the hook
 const TestComponent = ({
@@ -54,7 +54,7 @@ describe('usePhraseCycler', () => {
     const { lastFrame } = render(
       <TestComponent isActive={false} isWaiting={false} />,
     );
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 
   it('should show "Waiting for user confirmation..." when isWaiting is true', async () => {
@@ -85,7 +85,7 @@ describe('usePhraseCycler', () => {
       await vi.advanceTimersByTimeAsync(0);
     });
     // Should still be showing a witty phrase or tip initially
-    expect([...WITTY_LOADING_PHRASES, ...INFORMATIVE_TIPS]).toContain(
+    expect([...getWittyLoadingPhrases(), ...getInformativeTips()]).toContain(
       lastFrame(),
     );
 
@@ -111,7 +111,7 @@ describe('usePhraseCycler', () => {
       await vi.advanceTimersByTimeAsync(3000);
     });
     // Should still be witty phrase or tip
-    expect([...WITTY_LOADING_PHRASES, ...INFORMATIVE_TIPS]).toContain(
+    expect([...getWittyLoadingPhrases(), ...getInformativeTips()]).toContain(
       lastFrame(),
     );
 
@@ -130,7 +130,7 @@ describe('usePhraseCycler', () => {
       await vi.advanceTimersByTimeAsync(3000);
     });
     // Should STILL be witty phrase or tip because timer reset
-    expect([...WITTY_LOADING_PHRASES, ...INFORMATIVE_TIPS]).toContain(
+    expect([...getWittyLoadingPhrases(), ...getInformativeTips()]).toContain(
       lastFrame(),
     );
 
@@ -185,13 +185,13 @@ describe('usePhraseCycler', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
-    expect(INFORMATIVE_TIPS).toContain(lastFrame());
+    expect(getInformativeTips()).toContain(lastFrame());
 
     // After the first interval, it should be a witty phrase
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS + 100);
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 
   it('should cycle through phrases when isActive is true and not waiting', async () => {
@@ -203,18 +203,18 @@ describe('usePhraseCycler', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
-    // First activation shows a tip, so we can't guarantee it's in WITTY_LOADING_PHRASES
+    // First activation shows a tip, so we can't guarantee it's in getWittyLoadingPhrases()
 
     // After the first interval, it should follow the random pattern (witty phrases due to mock)
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS + 100);
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS);
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 
   it('should reset to a phrase when isActive becomes true after being false', async () => {
@@ -340,7 +340,7 @@ describe('usePhraseCycler', () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS); // Wait for first cycle
     });
 
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 
   it('should fall back to witty phrases if custom phrases are an empty array', async () => {
@@ -351,12 +351,12 @@ describe('usePhraseCycler', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0); // First activation will be a tip
     });
-    // First activation shows a tip, so we can't guarantee it's in WITTY_LOADING_PHRASES
+    // First activation shows a tip, so we can't guarantee it's in getWittyLoadingPhrases()
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS); // Next phrase after tip
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 
   it('should reset phrase when transitioning from waiting to active', async () => {
@@ -367,13 +367,13 @@ describe('usePhraseCycler', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0); // First activation will be a tip
     });
-    // First activation shows a tip, so we can't guarantee it's in WITTY_LOADING_PHRASES
+    // First activation shows a tip, so we can't guarantee it's in getWittyLoadingPhrases()
 
     // Cycle to a different phrase (should be witty due to mock)
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS);
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
 
     // Go to waiting state
     rerender(<TestComponent isActive={false} isWaiting={true} />);
@@ -387,6 +387,6 @@ describe('usePhraseCycler', () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(PHRASE_CHANGE_INTERVAL_MS); // Skip the tip and get next phrase
     });
-    expect(WITTY_LOADING_PHRASES).toContain(lastFrame());
+    expect(getWittyLoadingPhrases()).toContain(lastFrame());
   });
 });

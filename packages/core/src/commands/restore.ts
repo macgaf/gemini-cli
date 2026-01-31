@@ -7,6 +7,7 @@
 import type { GitService } from '../services/gitService.js';
 import type { CommandActionReturn } from './types.js';
 import { type ToolCallData } from '../utils/checkpointUtils.js';
+import { t } from '../i18n/index.js';
 
 export async function* performRestore<
   HistoryType = unknown,
@@ -28,8 +29,9 @@ export async function* performRestore<
       yield {
         type: 'message',
         messageType: 'error',
-        content:
+        content: t(
           'Git service is not available, cannot restore checkpoint. Please ensure you are in a git repository.',
+        ),
       };
       return;
     }
@@ -39,7 +41,7 @@ export async function* performRestore<
       yield {
         type: 'message',
         messageType: 'info',
-        content: 'Restored project to the state before the tool call.',
+        content: t('Restored project to the state before the tool call.'),
       };
     } catch (e) {
       const error = e as Error;
@@ -47,7 +49,10 @@ export async function* performRestore<
         yield {
           type: 'message',
           messageType: 'error',
-          content: `The commit hash '${toolCallData.commitHash}' associated with this checkpoint could not be found in your Git repository. This can happen if the repository has been re-cloned, reset, or if old commits have been garbage collected. This checkpoint cannot be restored.`,
+          content: t(
+            "The commit hash '{{hash}}' associated with this checkpoint could not be found in your Git repository. This can happen if the repository has been re-cloned, reset, or if old commits have been garbage collected. This checkpoint cannot be restored.",
+            { hash: toolCallData.commitHash },
+          ),
         };
         return;
       }

@@ -14,6 +14,7 @@ import {
   enableBracketedPasteMode,
   disableBracketedPasteMode,
 } from '@google/gemini-cli-core';
+import { t } from '../../i18n/index.js';
 
 export type TerminalBackgroundColor = string | undefined;
 
@@ -136,7 +137,10 @@ export class TerminalCapabilityManager {
               match[3],
             );
             debugLogger.log(
-              `Detected terminal background color: ${this.terminalBackgroundColor}`,
+              t('common:debug.terminalBackgroundColorDetected', {
+                color: this.terminalBackgroundColor,
+                defaultValue: 'Detected terminal background color: {{color}}',
+              }),
             );
           }
         }
@@ -159,7 +163,12 @@ export class TerminalCapabilityManager {
             const level = parseInt(match[1], 10);
             this.modifyOtherKeysSupported = level >= 2;
             debugLogger.log(
-              `Detected modifyOtherKeys support: ${this.modifyOtherKeysSupported} (level ${level})`,
+              t('common:debug.modifyOtherKeysSupportDetected', {
+                supported: this.modifyOtherKeysSupported,
+                level,
+                defaultValue:
+                  'Detected modifyOtherKeys support: {{supported}} (level {{level}})',
+              }),
             );
           }
         }
@@ -173,7 +182,12 @@ export class TerminalCapabilityManager {
             terminalNameReceived = true;
             this.terminalName = match[1];
 
-            debugLogger.log(`Detected terminal name: ${this.terminalName}`);
+            debugLogger.log(
+              t('common:debug.terminalNameDetected', {
+                name: this.terminalName,
+                defaultValue: 'Detected terminal name: {{name}}',
+              }),
+            );
           }
         }
 
@@ -204,7 +218,12 @@ export class TerminalCapabilityManager {
             TerminalCapabilityManager.DEVICE_ATTRIBUTES_QUERY,
         );
       } catch (e) {
-        debugLogger.warn('Failed to write terminal capability queries:', e);
+        debugLogger.warn(
+          t('common:debug.terminalCapabilityQueryWriteFailed', {
+            defaultValue: 'Failed to write terminal capability queries:',
+          }),
+          e,
+        );
         cleanup();
       }
     });
@@ -227,7 +246,12 @@ export class TerminalCapabilityManager {
       // Always enable bracketed paste since it'll be ignored if unsupported.
       enableBracketedPasteMode();
     } catch (e) {
-      debugLogger.warn('Failed to enable keyboard protocols:', e);
+      debugLogger.warn(
+        t('common:debug.enableKeyboardProtocolsFailed', {
+          defaultValue: 'Failed to enable keyboard protocols:',
+        }),
+        e,
+      );
     }
   }
 

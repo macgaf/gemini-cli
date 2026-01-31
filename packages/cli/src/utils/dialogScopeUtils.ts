@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { t } from '../i18n/index.js';
 import type {
   LoadableSettingScope,
   LoadedSettings,
@@ -12,13 +13,26 @@ import { isLoadableSettingScope, SettingScope } from '../config/settings.js';
 import { settingExistsInScope } from './settingsUtils.js';
 
 /**
- * Shared scope labels for dialog components that need to display setting scopes
+ * Get translated scope label
  */
-export const SCOPE_LABELS = {
-  [SettingScope.User]: 'User Settings',
-  [SettingScope.Workspace]: 'Workspace Settings',
-  [SettingScope.System]: 'System Settings',
-} as const;
+function getScopeLabel(scope: SettingScope): string {
+  switch (scope) {
+    case SettingScope.User:
+      return t('dialogs:settings.scope.user', {
+        defaultValue: 'User Settings',
+      });
+    case SettingScope.Workspace:
+      return t('dialogs:settings.scope.workspace', {
+        defaultValue: 'Workspace Settings',
+      });
+    case SettingScope.System:
+      return t('dialogs:settings.scope.system', {
+        defaultValue: 'System Settings',
+      });
+    default:
+      return String(scope);
+  }
+}
 
 /**
  * Helper function to get scope items for radio button selects
@@ -28,12 +42,12 @@ export function getScopeItems(): Array<{
   value: LoadableSettingScope;
 }> {
   return [
-    { label: SCOPE_LABELS[SettingScope.User], value: SettingScope.User },
+    { label: getScopeLabel(SettingScope.User), value: SettingScope.User },
     {
-      label: SCOPE_LABELS[SettingScope.Workspace],
+      label: getScopeLabel(SettingScope.Workspace),
       value: SettingScope.Workspace,
     },
-    { label: SCOPE_LABELS[SettingScope.System], value: SettingScope.System },
+    { label: getScopeLabel(SettingScope.System), value: SettingScope.System },
   ];
 }
 
@@ -66,6 +80,12 @@ export function getScopeMessageForSetting(
   );
 
   return existsInCurrentScope
-    ? `(Also modified in ${modifiedScopesStr})`
-    : `(Modified in ${modifiedScopesStr})`;
+    ? t('dialogs:settings.scope.alsoModifiedIn', {
+        scopes: modifiedScopesStr,
+        defaultValue: `(Also modified in ${modifiedScopesStr})`,
+      })
+    : t('dialogs:settings.scope.modifiedIn', {
+        scopes: modifiedScopesStr,
+        defaultValue: `(Modified in ${modifiedScopesStr})`,
+      });
 }

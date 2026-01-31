@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { Box, useIsScreenReaderEnabled } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { LoadingIndicator } from './LoadingIndicator.js';
 import { StatusDisplay } from './StatusDisplay.js';
 import { AutoAcceptIndicator } from './AutoAcceptIndicator.js';
@@ -30,6 +31,7 @@ import { ConfigInitDisplay } from '../components/ConfigInitDisplay.js';
 import { TodoTray } from './messages/Todo.js';
 
 export const Composer = () => {
+  const { t } = useTranslation('common');
   const config = useConfig();
   const settings = useSettings();
   const isScreenReaderEnabled = useIsScreenReaderEnabled();
@@ -139,10 +141,10 @@ export const Composer = () => {
           popAllMessages={uiActions.popAllMessages}
           placeholder={
             vimEnabled
-              ? "  Press 'i' for INSERT mode and 'Esc' for NORMAL mode."
+              ? t('input.placeholderVim')
               : uiState.shellModeActive
-                ? '  Type your shell command'
-                : '  Type your message or @path/to/file'
+                ? t('input.placeholderShell')
+                : t('input.placeholder')
           }
           setQueueErrorMessage={uiActions.setQueueErrorMessage}
           streamingState={uiState.streamingState}

@@ -7,6 +7,7 @@
 import { useRef, useCallback } from 'react';
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import type { ConsoleMessageItem } from '../types.js';
 import {
@@ -26,6 +27,7 @@ const iconBoxWidth = 3;
 export const DetailedMessagesDisplay: React.FC<
   DetailedMessagesDisplayProps
 > = ({ messages, maxHeight, width, hasFocus }) => {
+  const { t } = useTranslation('common');
   const scrollableListRef = useRef<ScrollableListRef<ConsoleMessageItem>>(null);
 
   const borderAndPadding = 3;
@@ -65,7 +67,10 @@ export const DetailedMessagesDisplay: React.FC<
     >
       <Box marginBottom={1}>
         <Text bold color={theme.text.primary}>
-          Debug Console <Text color={theme.text.secondary}>(F12 to close)</Text>
+          {t('debugConsole.title')}{' '}
+          <Text color={theme.text.secondary}>
+            {t('debugConsole.closeHint')}
+          </Text>
         </Text>
       </Box>
       <Box height={maxHeight} width={width - borderAndPadding}>
@@ -103,7 +108,9 @@ export const DetailedMessagesDisplay: React.FC<
                 <Text color={textColor} wrap="wrap">
                   {msg.content}
                   {msg.count && msg.count > 1 && (
-                    <Text color={theme.text.secondary}> (x{msg.count})</Text>
+                    <Text color={theme.text.secondary}>
+                      {t('debugConsole.repeatCount', { count: msg.count })}
+                    </Text>
                   )}
                 </Text>
               </Box>

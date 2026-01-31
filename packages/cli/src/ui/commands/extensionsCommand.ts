@@ -31,6 +31,7 @@ import {
 import { SettingScope } from '../../config/settings.js';
 import { theme } from '../semantic-colors.js';
 import { stat } from 'node:fs/promises';
+import { t } from '../../i18n/index.js';
 
 function showMessageIfNoExtensions(
   context: CommandContext,
@@ -39,7 +40,7 @@ function showMessageIfNoExtensions(
   if (extensions.length === 0) {
     context.ui.addItem({
       type: MessageType.INFO,
-      text: 'No extensions installed. Run `/extensions explore` to check out the gallery.',
+      text: t('commands:extensions.list.empty'),
     });
     return true;
   }
@@ -71,7 +72,7 @@ function updateAction(context: CommandContext, args: string): Promise<void> {
   if (!all && names?.length === 0) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Usage: /extensions update <extension-names>|--all',
+      text: t('commands:extensions.update.usage'),
     });
     return Promise.resolve();
   }
@@ -99,7 +100,7 @@ function updateAction(context: CommandContext, args: string): Promise<void> {
     if (updateInfos.length === 0) {
       context.ui.addItem({
         type: MessageType.INFO,
-        text: 'No extensions to update.',
+        text: t('commands:extensions.update.none'),
       });
     }
 
@@ -129,7 +130,7 @@ function updateAction(context: CommandContext, args: string): Promise<void> {
         if (!extension) {
           context.ui.addItem({
             type: MessageType.ERROR,
-            text: `Extension ${name} not found.`,
+            text: t('commands:extensions.update.notFound', { name }),
           });
           continue;
         }
@@ -153,7 +154,7 @@ async function restartAction(
   if (!extensionLoader) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: "Extensions are not yet loaded, can't restart yet",
+      text: t('commands:extensions.restart.notLoaded'),
     });
     return;
   }
@@ -169,7 +170,7 @@ async function restartAction(
   if (!all && names?.length === 0) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Usage: /extensions restart <extension-names>|--all',
+      text: t('commands:extensions.restart.usage'),
     });
     return Promise.resolve();
   }
@@ -189,7 +190,9 @@ async function restartAction(
       if (notFound.length > 0) {
         context.ui.addItem({
           type: MessageType.WARNING,
-          text: `Extension(s) not found or not active: ${notFound.join(', ')}`,
+          text: t('commands:extensions.restart.notFoundOrInactive', {
+            names: notFound.join(', '),
+          }),
         });
       }
     }
@@ -199,11 +202,14 @@ async function restartAction(
     return;
   }
 
-  const s = extensionsToRestart.length > 1 ? 's' : '';
-
   const restartingMessage = {
     type: MessageType.INFO,
-    text: `Restarting ${extensionsToRestart.length} extension${s}...`,
+    text:
+      extensionsToRestart.length === 1
+        ? t('commands:extensions.restart.restartingSingle')
+        : t('commands:extensions.restart.restartingMultiple', {
+            count: extensionsToRestart.length,
+          }),
     color: theme.text.primary,
   };
   context.ui.addItem(restartingMessage);
@@ -235,12 +241,19 @@ async function restartAction(
       .join('\n  ');
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Failed to restart some extensions:\n  ${errorMessages}`,
+      text: t('commands:extensions.restart.failedSome', {
+        errors: errorMessages,
+      }),
     });
   } else {
     const infoItem: HistoryItemInfo = {
       type: MessageType.INFO,
-      text: `${extensionsToRestart.length} extension${s} restarted successfully.`,
+      text:
+        extensionsToRestart.length === 1
+          ? t('commands:extensions.restart.successSingle')
+          : t('commands:extensions.restart.successMultiple', {
+              count: extensionsToRestart.length,
+            }),
       icon: emptyIcon,
       color: theme.text.primary,
     };
@@ -255,7 +268,9 @@ async function exploreAction(context: CommandContext) {
   if (process.env['NODE_ENV'] === 'test') {
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Would open extensions page in your browser: ${extensionsUrl} (skipped in test environment)`,
+      text: t('commands:extensions.explore.skippedTest', {
+        url: extensionsUrl,
+      }),
     });
   } else if (
     process.env['SANDBOX'] &&
@@ -263,19 +278,25 @@ async function exploreAction(context: CommandContext) {
   ) {
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `View available extensions at ${extensionsUrl}`,
+      text: t('commands:extensions.explore.viewAvailable', {
+        url: extensionsUrl,
+      }),
     });
   } else {
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Opening extensions page in your browser: ${extensionsUrl}`,
+      text: t('commands:extensions.explore.opening', {
+        url: extensionsUrl,
+      }),
     });
     try {
       await open(extensionsUrl);
     } catch (_error) {
       context.ui.addItem({
         type: MessageType.ERROR,
-        text: `Failed to open browser. Check out the extensions gallery at ${extensionsUrl}`,
+        text: t('commands:extensions.explore.openFailed', {
+          url: extensionsUrl,
+        }),
       });
     }
   }
@@ -307,7 +328,9 @@ function getEnableDisableContext(
   ) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Usage: /extensions ${context.invocation?.name} <extension> [--scope=<user|workspace|session>]`,
+      text: t('commands:extensions.enableDisable.usage', {
+        action: context.invocation?.name,
+      }),
     });
     return null;
   }
@@ -330,7 +353,9 @@ function getEnableDisableContext(
     default:
       context.ui.addItem({
         type: MessageType.ERROR,
-        text: `Unsupported scope ${parts[2]}, should be one of "user", "workspace", or "session"`,
+        text: t('commands:extensions.scopeUnsupported', {
+          scope: parts[2],
+        }),
       });
       debugLogger.error();
       return null;
@@ -365,7 +390,10 @@ async function disableAction(context: CommandContext, args: string) {
     await extensionManager.disableExtension(name, scope);
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Extension "${name}" disabled for the scope "${scope}"`,
+      text: t('commands:extensions.disable.success', {
+        name,
+        scope,
+      }),
     });
   }
 }
@@ -379,7 +407,10 @@ async function enableAction(context: CommandContext, args: string) {
     await extensionManager.enableExtension(name, scope);
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Extension "${name}" enabled for the scope "${scope}"`,
+      text: t('commands:extensions.enable.success', {
+        name,
+        scope,
+      }),
     });
   }
 }
@@ -397,7 +428,7 @@ async function installAction(context: CommandContext, args: string) {
   if (!source) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Usage: /extensions install <source>`,
+      text: t('commands:extensions.install.usage'),
     });
     return;
   }
@@ -419,14 +450,14 @@ async function installAction(context: CommandContext, args: string) {
   if (!isValid) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Invalid source: ${source}`,
+      text: t('commands:extensions.install.invalidSource', { source }),
     });
     return;
   }
 
   context.ui.addItem({
     type: MessageType.INFO,
-    text: `Installing extension from "${source}"...`,
+    text: t('commands:extensions.install.installing', { source }),
   });
 
   try {
@@ -435,14 +466,17 @@ async function installAction(context: CommandContext, args: string) {
       await extensionLoader.installOrUpdateExtension(installMetadata);
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Extension "${extension.name}" installed successfully.`,
+      text: t('commands:extensions.install.success', {
+        name: extension.name,
+      }),
     });
   } catch (error) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Failed to install extension from "${source}": ${getErrorMessage(
-        error,
-      )}`,
+      text: t('commands:extensions.install.failed', {
+        source,
+        error: getErrorMessage(error),
+      }),
     });
   }
 }
@@ -460,14 +494,16 @@ async function linkAction(context: CommandContext, args: string) {
   if (!sourceFilepath) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Usage: /extensions link <source>`,
+      text: t('commands:extensions.link.usage'),
     });
     return;
   }
   if (/[;&|`'"]/.test(sourceFilepath)) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Source file path contains disallowed characters: ${sourceFilepath}`,
+      text: t('commands:extensions.link.disallowedPath', {
+        path: sourceFilepath,
+      }),
     });
     return;
   }
@@ -477,7 +513,9 @@ async function linkAction(context: CommandContext, args: string) {
   } catch (error) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Invalid source: ${sourceFilepath}`,
+      text: t('commands:extensions.link.invalidSource', {
+        source: sourceFilepath,
+      }),
     });
     debugLogger.error(
       `Failed to stat path "${sourceFilepath}": ${getErrorMessage(error)}`,
@@ -487,7 +525,9 @@ async function linkAction(context: CommandContext, args: string) {
 
   context.ui.addItem({
     type: MessageType.INFO,
-    text: `Linking extension from "${sourceFilepath}"...`,
+    text: t('commands:extensions.link.linking', {
+      source: sourceFilepath,
+    }),
   });
 
   try {
@@ -499,14 +539,17 @@ async function linkAction(context: CommandContext, args: string) {
       await extensionLoader.installOrUpdateExtension(installMetadata);
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Extension "${extension.name}" linked successfully.`,
+      text: t('commands:extensions.link.success', {
+        name: extension.name,
+      }),
     });
   } catch (error) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Failed to link extension from "${sourceFilepath}": ${getErrorMessage(
-        error,
-      )}`,
+      text: t('commands:extensions.link.failed', {
+        source: sourceFilepath,
+        error: getErrorMessage(error),
+      }),
     });
   }
 }
@@ -524,28 +567,29 @@ async function uninstallAction(context: CommandContext, args: string) {
   if (!name) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Usage: /extensions uninstall <extension-name>`,
+      text: t('commands:extensions.uninstall.usage'),
     });
     return;
   }
 
   context.ui.addItem({
     type: MessageType.INFO,
-    text: `Uninstalling extension "${name}"...`,
+    text: t('commands:extensions.uninstall.uninstalling', { name }),
   });
 
   try {
     await extensionLoader.uninstallExtension(name, false);
     context.ui.addItem({
       type: MessageType.INFO,
-      text: `Extension "${name}" uninstalled successfully.`,
+      text: t('commands:extensions.uninstall.success', { name }),
     });
   } catch (error) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Failed to uninstall extension "${name}": ${getErrorMessage(
-        error,
-      )}`,
+      text: t('commands:extensions.uninstall.failed', {
+        name,
+        error: getErrorMessage(error),
+      }),
     });
   }
 }
@@ -593,7 +637,9 @@ export function completeExtensionsAndScopes(
 
 const listExtensionsCommand: SlashCommand = {
   name: 'list',
-  description: 'List active extensions',
+  get description() {
+    return t('commands:extensions.list.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: listAction,
@@ -601,7 +647,9 @@ const listExtensionsCommand: SlashCommand = {
 
 const updateExtensionsCommand: SlashCommand = {
   name: 'update',
-  description: 'Update extensions. Usage: update <extension-names>|--all',
+  get description() {
+    return t('commands:extensions.update.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: updateAction,
@@ -610,7 +658,9 @@ const updateExtensionsCommand: SlashCommand = {
 
 const disableCommand: SlashCommand = {
   name: 'disable',
-  description: 'Disable an extension',
+  get description() {
+    return t('commands:extensions.disable.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: disableAction,
@@ -619,7 +669,9 @@ const disableCommand: SlashCommand = {
 
 const enableCommand: SlashCommand = {
   name: 'enable',
-  description: 'Enable an extension',
+  get description() {
+    return t('commands:extensions.enable.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: enableAction,
@@ -628,7 +680,9 @@ const enableCommand: SlashCommand = {
 
 const installCommand: SlashCommand = {
   name: 'install',
-  description: 'Install an extension from a git repo or local path',
+  get description() {
+    return t('commands:extensions.install.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: installAction,
@@ -636,7 +690,9 @@ const installCommand: SlashCommand = {
 
 const linkCommand: SlashCommand = {
   name: 'link',
-  description: 'Link an extension from a local path',
+  get description() {
+    return t('commands:extensions.link.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: linkAction,
@@ -644,7 +700,9 @@ const linkCommand: SlashCommand = {
 
 const uninstallCommand: SlashCommand = {
   name: 'uninstall',
-  description: 'Uninstall an extension',
+  get description() {
+    return t('commands:extensions.uninstall.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: uninstallAction,
@@ -653,7 +711,9 @@ const uninstallCommand: SlashCommand = {
 
 const exploreExtensionsCommand: SlashCommand = {
   name: 'explore',
-  description: 'Open extensions page in your browser',
+  get description() {
+    return t('commands:extensions.explore.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: exploreAction,
@@ -661,7 +721,9 @@ const exploreExtensionsCommand: SlashCommand = {
 
 const restartCommand: SlashCommand = {
   name: 'restart',
-  description: 'Restart all extensions',
+  get description() {
+    return t('commands:extensions.restart.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: restartAction,
@@ -682,7 +744,9 @@ export function extensionsCommand(
     : [];
   return {
     name: 'extensions',
-    description: 'Manage extensions',
+    get description() {
+      return t('commands:extensions.description');
+    },
     kind: CommandKind.BUILT_IN,
     autoExecute: false,
     subCommands: [

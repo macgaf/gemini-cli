@@ -19,6 +19,8 @@ import {
 import type { UseHistoryManagerReturn } from './useHistoryManager.js';
 
 import { SettingPaths } from '../../config/settingPaths.js';
+import { t } from '../../i18n/index.js';
+import { SettingScope } from '../../config/settings.js';
 
 interface UseEditorSettingsReturn {
   isEditorDialogOpen: boolean;
@@ -57,17 +59,34 @@ export const useEditorSettings = (
           SettingPaths.General.PreferredEditor,
           editorType,
         );
+        const scopeLabel =
+          scope === SettingScope.User
+            ? t('dialogs:scope.user')
+            : scope === SettingScope.Workspace
+              ? t('dialogs:scope.workspace')
+              : t('dialogs:scope.system');
         addItem(
           {
             type: MessageType.INFO,
-            text: `Editor preference ${editorType ? `set to "${getEditorDisplayName(editorType)}"` : 'cleared'} in ${scope} settings.`,
+            text: editorType
+              ? t('dialogs:editor.preferenceSet', {
+                  editor: getEditorDisplayName(editorType),
+                  scope: scopeLabel,
+                })
+              : t('dialogs:editor.preferenceCleared', {
+                  scope: scopeLabel,
+                }),
           },
           Date.now(),
         );
         setEditorError(null);
         setIsEditorDialogOpen(false);
       } catch (error) {
-        setEditorError(`Failed to set editor preference: ${error}`);
+        setEditorError(
+          t('dialogs:editor.preferenceSetFailed', {
+            error: String(error),
+          }),
+        );
       }
     },
     [loadedSettings, setEditorError, addItem],

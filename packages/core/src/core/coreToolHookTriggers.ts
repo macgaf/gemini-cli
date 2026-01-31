@@ -29,6 +29,7 @@ import type { AnsiOutput, ShellExecutionConfig } from '../index.js';
 import type { AnyToolInvocation } from '../tools/tools.js';
 import { ShellToolInvocation } from '../tools/shell.js';
 import { DiscoveredMCPToolInvocation } from '../tools/mcp-tool.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Serializable representation of tool confirmation details for hooks.
@@ -329,8 +330,12 @@ export async function executeToolWithHooks(
     if (beforeOutput?.shouldStopExecution()) {
       const reason = beforeOutput.getEffectiveReason();
       return {
-        llmContent: `Agent execution stopped by hook: ${reason}`,
-        returnDisplay: `Agent execution stopped by hook: ${reason}`,
+        llmContent: t('Agent execution stopped by hook: {{reason}}', {
+          reason,
+        }),
+        returnDisplay: t('Agent execution stopped by hook: {{reason}}', {
+          reason,
+        }),
         error: {
           type: ToolErrorType.STOP_EXECUTION,
           message: reason,
@@ -342,8 +347,12 @@ export async function executeToolWithHooks(
     const blockingError = beforeOutput?.getBlockingError();
     if (blockingError?.blocked) {
       return {
-        llmContent: `Tool execution blocked: ${blockingError.reason}`,
-        returnDisplay: `Tool execution blocked: ${blockingError.reason}`,
+        llmContent: t('Tool execution blocked: {{reason}}', {
+          reason: blockingError.reason,
+        }),
+        returnDisplay: t('Tool execution blocked: {{reason}}', {
+          reason: blockingError.reason,
+        }),
         error: {
           type: ToolErrorType.EXECUTION_FAILED,
           message: blockingError.reason,
@@ -370,10 +379,13 @@ export async function executeToolWithHooks(
           invocation = tool.build(invocation.params);
         } catch (error) {
           return {
-            llmContent: `Tool parameter modification by hook failed validation: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-            returnDisplay: `Tool parameter modification by hook failed validation.`,
+            llmContent: t(
+              'Tool parameter modification by hook failed validation: {{error}}',
+              { error: error instanceof Error ? error.message : String(error) },
+            ),
+            returnDisplay: t(
+              'Tool parameter modification by hook failed validation.',
+            ),
             error: {
               type: ToolErrorType.INVALID_TOOL_PARAMS,
               message: String(error),
@@ -403,9 +415,10 @@ export async function executeToolWithHooks(
 
   // Append notification if parameters were modified
   if (inputWasModified) {
-    const modificationMsg = `\n\n[System] Tool input parameters (${modifiedKeys.join(
-      ', ',
-    )}) were modified by a hook before execution.`;
+    const modificationMsg = t(
+      '\n\n[System] Tool input parameters ({{keys}}) were modified by a hook before execution.',
+      { keys: modifiedKeys.join(', ') },
+    );
     if (typeof toolResult.llmContent === 'string') {
       toolResult.llmContent += modificationMsg;
     } else if (Array.isArray(toolResult.llmContent)) {
@@ -437,8 +450,12 @@ export async function executeToolWithHooks(
     if (afterOutput?.shouldStopExecution()) {
       const reason = afterOutput.getEffectiveReason();
       return {
-        llmContent: `Agent execution stopped by hook: ${reason}`,
-        returnDisplay: `Agent execution stopped by hook: ${reason}`,
+        llmContent: t('Agent execution stopped by hook: {{reason}}', {
+          reason,
+        }),
+        returnDisplay: t('Agent execution stopped by hook: {{reason}}', {
+          reason,
+        }),
         error: {
           type: ToolErrorType.STOP_EXECUTION,
           message: reason,
@@ -450,8 +467,12 @@ export async function executeToolWithHooks(
     const blockingError = afterOutput?.getBlockingError();
     if (blockingError?.blocked) {
       return {
-        llmContent: `Tool result blocked: ${blockingError.reason}`,
-        returnDisplay: `Tool result blocked: ${blockingError.reason}`,
+        llmContent: t('Tool result blocked: {{reason}}', {
+          reason: blockingError.reason,
+        }),
+        returnDisplay: t('Tool result blocked: {{reason}}', {
+          reason: blockingError.reason,
+        }),
         error: {
           type: ToolErrorType.EXECUTION_FAILED,
           message: blockingError.reason,

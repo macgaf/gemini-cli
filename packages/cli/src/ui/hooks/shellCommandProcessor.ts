@@ -26,6 +26,7 @@ import path from 'node:path';
 import os from 'node:os';
 import fs from 'node:fs';
 import { themeManager } from '../../ui/themes/theme-manager.js';
+import { i18n } from '../../i18n/index.js';
 
 export const OUTPUT_UPDATE_INTERVAL_MS = 1000;
 const MAX_OUTPUT_LENGTH = 10000;
@@ -134,12 +135,19 @@ export const useShellCommandProcessor = (
 
         const abortHandler = () => {
           onDebugMessage(
-            `Aborting shell command (PID: ${executionPid ?? 'unknown'})`,
+            i18n.t('common:shell.aborting', {
+              pid: executionPid ?? i18n.t('common:unknown'),
+            }),
           );
         };
         abortSignal.addEventListener('abort', abortHandler, { once: true });
 
-        onDebugMessage(`Executing in ${targetDir}: ${commandToExecute}`);
+        onDebugMessage(
+          i18n.t('common:shell.executing', {
+            dir: targetDir,
+            command: commandToExecute,
+          }),
+        );
 
         try {
           const activeTheme = themeManager.getActiveTheme();
@@ -192,12 +200,14 @@ export const useShellCommandProcessor = (
               let currentDisplayOutput: string | AnsiOutput;
               if (isBinaryStream) {
                 if (binaryBytesReceived > 0) {
-                  currentDisplayOutput = `[Receiving binary output... ${formatMemoryUsage(
-                    binaryBytesReceived,
-                  )} received]`;
+                  currentDisplayOutput = i18n.t(
+                    'common:shell.binaryReceiving',
+                    {
+                      size: formatMemoryUsage(binaryBytesReceived),
+                    },
+                  );
                 } else {
-                  currentDisplayOutput =
-                    '[Binary output detected. Halting stream...]';
+                  currentDisplayOutput = i18n.t('common:shell.binaryDetected');
                 }
               } else {
                 currentDisplayOutput = cumulativeStdout;
@@ -249,11 +259,10 @@ export const useShellCommandProcessor = (
               let mainContent: string;
 
               if (isBinary(result.rawOutput)) {
-                mainContent =
-                  '[Command produced binary output, which is not shown.]';
+                mainContent = i18n.t('common:shell.binaryOutputHidden');
               } else {
                 mainContent =
-                  result.output.trim() || '(Command produced no output)';
+                  result.output.trim() || i18n.t('common:shell.noOutput');
               }
 
               let finalOutput = mainContent;
@@ -264,19 +273,25 @@ export const useShellCommandProcessor = (
                 finalOutput = `${result.error.message}\n${finalOutput}`;
               } else if (result.aborted) {
                 finalStatus = ToolCallStatus.Canceled;
-                finalOutput = `Command was cancelled.\n${finalOutput}`;
+                finalOutput = `${i18n.t('common:shell.commandCancelled')}\n${finalOutput}`;
               } else if (result.signal) {
                 finalStatus = ToolCallStatus.Error;
-                finalOutput = `Command terminated by signal: ${result.signal}.\n${finalOutput}`;
+                finalOutput = `${i18n.t('common:shell.commandSignal', {
+                  signal: result.signal,
+                })}\n${finalOutput}`;
               } else if (result.exitCode !== 0) {
                 finalStatus = ToolCallStatus.Error;
-                finalOutput = `Command exited with code ${result.exitCode}.\n${finalOutput}`;
+                finalOutput = `${i18n.t('common:shell.commandExitCode', {
+                  code: result.exitCode,
+                })}\n${finalOutput}`;
               }
 
               if (pwdFilePath && fs.existsSync(pwdFilePath)) {
                 const finalPwd = fs.readFileSync(pwdFilePath, 'utf8').trim();
                 if (finalPwd && finalPwd !== targetDir) {
-                  const warning = `WARNING: shell mode is stateless; the directory change to '${finalPwd}' will not persist.`;
+                  const warning = i18n.t('common:shell.statelessWarning', {
+                    path: finalPwd,
+                  });
                   finalOutput = `${warning}\n\n${finalOutput}`;
                 }
               }
@@ -314,7 +329,9 @@ export const useShellCommandProcessor = (
               addItemToHistory(
                 {
                   type: 'error',
-                  text: `An unexpected error occurred: ${errorMessage}`,
+                  text: i18n.t('common:shell.unexpectedError', {
+                    error: errorMessage,
+                  }),
                 },
                 userMessageTimestamp,
               );
@@ -335,7 +352,9 @@ export const useShellCommandProcessor = (
           addItemToHistory(
             {
               type: 'error',
-              text: `An unexpected error occurred: ${errorMessage}`,
+              text: i18n.t('common:shell.unexpectedError', {
+                error: errorMessage,
+              }),
             },
             userMessageTimestamp,
           );

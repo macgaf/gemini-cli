@@ -10,6 +10,7 @@ import { HookEventName, ConfigSource, HOOKS_CONFIG_FIELDS } from './types.js';
 import { debugLogger } from '../utils/debugLogger.js';
 import { TrustedHooksManager } from './trustedHooks.js';
 import { coreEvents } from '../utils/events.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Hook registry entry with source information
@@ -42,7 +43,10 @@ export class HookRegistry {
     this.processHooksFromConfig();
 
     debugLogger.log(
-      `Hook registry initialized with ${this.entries.length} hook entries`,
+      t('debug.hookRegistryInitialized', {
+        count: this.entries.length,
+        defaultValue: 'Hook registry initialized with {{count}} hook entries',
+      }),
     );
   }
 
@@ -80,10 +84,25 @@ export class HookRegistry {
 
     if (updated.length > 0) {
       debugLogger.log(
-        `${enabled ? 'Enabled' : 'Disabled'} ${updated.length} hook(s) matching "${hookName}"`,
+        enabled
+          ? t('debug.hookRegistryEnabled', {
+              count: updated.length,
+              name: hookName,
+              defaultValue: 'Enabled {{count}} hook(s) matching "{{name}}"',
+            })
+          : t('debug.hookRegistryDisabled', {
+              count: updated.length,
+              name: hookName,
+              defaultValue: 'Disabled {{count}} hook(s) matching "{{name}}"',
+            }),
       );
     } else {
-      debugLogger.warn(`No hooks found matching "${hookName}"`);
+      debugLogger.warn(
+        t('debug.hookRegistryNoMatch', {
+          name: hookName,
+          defaultValue: 'No hooks found matching "{{name}}"',
+        }),
+      );
     }
   }
 

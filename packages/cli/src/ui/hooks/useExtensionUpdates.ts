@@ -21,6 +21,7 @@ import {
 import { type ExtensionUpdateInfo } from '../../config/extension.js';
 import { checkExhaustive } from '../../utils/checks.js';
 import type { ExtensionManager } from '../../config/extension-manager.js';
+import { i18n } from '../../i18n/index.js';
 
 type ConfirmationRequestWrapper = {
   prompt: React.ReactNode;
@@ -172,7 +173,11 @@ export const useExtensionUpdates = (
             addItem(
               {
                 type: MessageType.INFO,
-                text: `Extension "${extension.name}" successfully updated: ${result.originalVersion} → ${result.updatedVersion}.`,
+                text: i18n.t('commands:extensions.update.log.success', {
+                  name: extension.name,
+                  v1: result.originalVersion,
+                  v2: result.updatedVersion,
+                }),
               },
               Date.now(),
             );
@@ -189,11 +194,15 @@ export const useExtensionUpdates = (
       }
     }
     if (pendingUpdates.length > 0) {
-      const s = pendingUpdates.length > 1 ? 's' : '';
+      const suffix = pendingUpdates.length > 1 ? 's' : '';
       addItem(
         {
           type: MessageType.INFO,
-          text: `You have ${pendingUpdates.length} extension${s} with an update available. Run "/extensions update ${pendingUpdates.join(' ')}".`,
+          text: i18n.t('commands:extensions.update.available', {
+            count: pendingUpdates.length,
+            suffix,
+            names: pendingUpdates.join(' '),
+          }),
         },
         Date.now(),
       );

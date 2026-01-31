@@ -21,10 +21,17 @@ interface ValidateArgs {
   path: string;
 }
 
+import { t } from '../../i18n/index.js';
+
 export async function handleValidate(args: ValidateArgs) {
   try {
     await validateExtension(args);
-    debugLogger.log(`Extension ${args.path} has been successfully validated.`);
+    debugLogger.log(
+      t('commands:extensions.validate.log.success', {
+        path: args.path,
+        defaultValue: `Extension ${args.path} has been successfully validated.`,
+      }),
+    );
   } catch (error) {
     debugLogger.error(getErrorMessage(error));
     process.exit(1);
@@ -32,6 +39,7 @@ export async function handleValidate(args: ValidateArgs) {
 }
 
 async function validateExtension(args: ValidateArgs) {
+  // ... (keep logic)
   const workspaceDir = process.cwd();
   const extensionManager = new ExtensionManager({
     workspaceDir,
@@ -74,27 +82,43 @@ async function validateExtension(args: ValidateArgs) {
   }
 
   if (warnings.length > 0) {
-    debugLogger.warn('Validation warnings:');
+    debugLogger.warn(
+      t('commands:extensions.validate.log.warnings', {
+        defaultValue: 'Validation warnings:',
+      }),
+    );
     for (const warning of warnings) {
       debugLogger.warn(`  - ${warning}`);
     }
   }
 
   if (errors.length > 0) {
-    debugLogger.error('Validation failed with the following errors:');
+    debugLogger.error(
+      t('commands:extensions.validate.log.errors', {
+        defaultValue: 'Validation failed with the following errors:',
+      }),
+    );
     for (const error of errors) {
       debugLogger.error(`  - ${error}`);
     }
-    throw new Error('Extension validation failed.');
+    throw new Error(
+      t('commands:extensions.validate.error.failed', {
+        defaultValue: 'Extension validation failed.',
+      }),
+    );
   }
 }
 
 export const validateCommand: CommandModule = {
   command: 'validate <path>',
-  describe: 'Validates an extension from a local path.',
+  describe: t('commands:extensions.validate.description', {
+    defaultValue: 'Validates an extension from a local path.',
+  }),
   builder: (yargs) =>
     yargs.positional('path', {
-      describe: 'The path of the extension to validate.',
+      describe: t('commands:extensions.validate.path', {
+        defaultValue: 'The path of the extension to validate.',
+      }),
       type: 'string',
       demandOption: true,
     }),

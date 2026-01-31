@@ -6,16 +6,16 @@ exports[`<StatsDisplay /> > Code Changes Display > displays Code Changes when li
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 1 ( ✓ 1 x 0 )                                                       │
-│  Success Rate:               100.0%                                                              │
-│  Code Changes:               +42 -18                                                             │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  1 ( ✓ 1 x 0 )                                                       │
+│  Success Rate                100.0%                                                              │
+│  Code Changes                +42 -18                                                             │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               100ms                                                               │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              100ms (100.0%)                                                      │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                100ms                                                               │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     100ms (100.0%)                                                      │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -27,15 +27,15 @@ exports[`<StatsDisplay /> > Code Changes Display > hides Code Changes when no li
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 1 ( ✓ 1 x 0 )                                                       │
-│  Success Rate:               100.0%                                                              │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  1 ( ✓ 1 x 0 )                                                       │
+│  Success Rate                100.0%                                                              │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               100ms                                                               │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              100ms (100.0%)                                                      │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                100ms                                                               │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     100ms (100.0%)                                                      │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -47,15 +47,15 @@ exports[`<StatsDisplay /> > Conditional Color Tests > renders success rate in gr
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 10 ( ✓ 10 x 0 )                                                     │
-│  Success Rate:               100.0%                                                              │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  10 ( ✓ 10 x 0 )                                                     │
+│  Success Rate                100.0%                                                              │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -67,15 +67,15 @@ exports[`<StatsDisplay /> > Conditional Color Tests > renders success rate in re
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 10 ( ✓ 5 x 5 )                                                      │
-│  Success Rate:               50.0%                                                               │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  10 ( ✓ 5 x 5 )                                                      │
+│  Success Rate                50.0%                                                               │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -87,15 +87,15 @@ exports[`<StatsDisplay /> > Conditional Color Tests > renders success rate in ye
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 10 ( ✓ 9 x 1 )                                                      │
-│  Success Rate:               90.0%                                                               │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  10 ( ✓ 9 x 1 )                                                      │
+│  Success Rate                90.0%                                                               │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -107,18 +107,19 @@ exports[`<StatsDisplay /> > Conditional Rendering Tests > hides Efficiency secti
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               100ms                                                               │
-│    » API Time:               100ms (100.0%)                                                      │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                100ms                                                               │
+│    » API Time                100ms (100.0%)                                                      │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
-│  Model Usage                 Reqs   Input Tokens   Cache Reads  Output Tokens                    │
+│                           Request                                                                │
+│  Model                    s         Input Tokens   Cache Reads  Output Tokens                    │
 │  ────────────────────────────────────────────────────────────────────────────                    │
 │  gemini-2.5-pro                 1            100             0            100                    │
 │                                                                                                  │
@@ -131,15 +132,15 @@ exports[`<StatsDisplay /> > Conditional Rendering Tests > hides User Agreement w
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 2 ( ✓ 1 x 1 )                                                       │
-│  Success Rate:               50.0%                                                               │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  2 ( ✓ 1 x 1 )                                                       │
+│  Success Rate                50.0%                                                               │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               123ms                                                               │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              123ms (100.0%)                                                      │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                123ms                                                               │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     123ms (100.0%)                                                      │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -151,26 +152,26 @@ exports[`<StatsDisplay /> > Quota Display > renders quota information for unused
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
-│  Model Usage                 Reqs                  Usage left                                    │
+│                           Request                                                                │
+│  Model                    s                        Usage Left                                    │
 │  ────────────────────────────────────────────────────────────                                    │
-│  gemini-2.5-flash               -        50.0% (Resets in 2h)                                    │
+│  gemini-2.5-flash               -          50.0% Resets in 2h                                    │
 │                                                                                                  │
-│  Usage limits span all sessions and reset daily.                                                 │
-│  /auth to upgrade or switch to API key.                                                          │
+│  Usage Limits                                                                                    │
 │                                                                                                  │
 │                                                                                                  │
-│  » Tip: For a full token breakdown, run \`/stats model\`.                                          │
+│  Note: Quotas are approximate.                                                                   │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -181,26 +182,26 @@ exports[`<StatsDisplay /> > Quota Display > renders quota information when quota
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               100ms                                                               │
-│    » API Time:               100ms (100.0%)                                                      │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                100ms                                                               │
+│    » API Time                100ms (100.0%)                                                      │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
-│  Model Usage                 Reqs                  Usage left                                    │
+│                           Request                                                                │
+│  Model                    s                        Usage Left                                    │
 │  ────────────────────────────────────────────────────────────                                    │
-│  gemini-2.5-pro                 1    75.0% (Resets in 1h 30m)                                    │
+│  gemini-2.5-pro                 1      75.0% Resets in 1h 30m                                    │
 │                                                                                                  │
-│  Usage limits span all sessions and reset daily.                                                 │
-│  /auth to upgrade or switch to API key.                                                          │
+│  Usage Limits                                                                                    │
 │                                                                                                  │
 │                                                                                                  │
-│  » Tip: For a full token breakdown, run \`/stats model\`.                                          │
+│  Note: Quotas are approximate.                                                                   │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -211,15 +212,15 @@ exports[`<StatsDisplay /> > Title Rendering > renders the custom title when a ti
 │  Agent powering down. Goodbye!                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -231,15 +232,15 @@ exports[`<StatsDisplay /> > Title Rendering > renders the default title when no 
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
@@ -251,23 +252,24 @@ exports[`<StatsDisplay /> > renders a table with two models correctly 1`] = `
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               19.5s                                                               │
-│    » API Time:               19.5s (100.0%)                                                      │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                19.5s                                                               │
+│    » API Time                19.5s (100.0%)                                                      │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
-│  Model Usage                 Reqs   Input Tokens   Cache Reads  Output Tokens                    │
+│                           Request                                                                │
+│  Model                    s         Input Tokens   Cache Reads  Output Tokens                    │
 │  ────────────────────────────────────────────────────────────────────────────                    │
 │  gemini-2.5-pro                 3            500           500          2,000                    │
 │  gemini-2.5-flash               5         15,000        10,000         15,000                    │
 │                                                                                                  │
-│  Savings Highlight: 10,500 (40.4%) of input tokens were served from the cache, reducing costs.   │
+│  Cache Savings: 10,500 tokens cached (40.4% efficiency)                                          │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -278,23 +280,24 @@ exports[`<StatsDisplay /> > renders all sections when all data is present 1`] = 
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 2 ( ✓ 1 x 1 )                                                       │
-│  Success Rate:               50.0%                                                               │
-│  User Agreement:             100.0% (1 reviewed)                                                 │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  2 ( ✓ 1 x 1 )                                                       │
+│  Success Rate                50.0%                                                               │
+│  User Agreement              100.0% (1 reviewed)                                                 │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               223ms                                                               │
-│    » API Time:               100ms (44.8%)                                                       │
-│    » Tool Time:              123ms (55.2%)                                                       │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                223ms                                                               │
+│    » API Time                100ms (44.8%)                                                       │
+│    » Tool Execution Time     123ms (55.2%)                                                       │
 │                                                                                                  │
 │                                                                                                  │
-│  Model Usage                 Reqs   Input Tokens   Cache Reads  Output Tokens                    │
+│                           Request                                                                │
+│  Model                    s         Input Tokens   Cache Reads  Output Tokens                    │
 │  ────────────────────────────────────────────────────────────────────────────                    │
 │  gemini-2.5-pro                 1             50            50            100                    │
 │                                                                                                  │
-│  Savings Highlight: 50 (50.0%) of input tokens were served from the cache, reducing costs.       │
+│  Cache Savings: 50 tokens cached (50.0% efficiency)                                              │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -305,15 +308,15 @@ exports[`<StatsDisplay /> > renders only the Performance section in its zero sta
 │  Session Stats                                                                                   │
 │                                                                                                  │
 │  Interaction Summary                                                                             │
-│  Session ID:                 test-session-id                                                     │
-│  Tool Calls:                 0 ( ✓ 0 x 0 )                                                       │
-│  Success Rate:               0.0%                                                                │
+│  Session ID                  test-session-id                                                     │
+│  Tool Calls                  0 ( ✓ 0 x 0 )                                                       │
+│  Success Rate                0.0%                                                                │
 │                                                                                                  │
 │  Performance                                                                                     │
-│  Wall Time:                  1s                                                                  │
-│  Agent Active:               0s                                                                  │
-│    » API Time:               0s (0.0%)                                                           │
-│    » Tool Time:              0s (0.0%)                                                           │
+│  Wall Time                   1s                                                                  │
+│  Agent Active                0s                                                                  │
+│    » API Time                0s (0.0%)                                                           │
+│    » Tool Execution Time     0s (0.0%)                                                           │
 │                                                                                                  │
 │                                                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"

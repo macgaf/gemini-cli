@@ -14,10 +14,13 @@ import type { SlashCommand } from './types.js';
 import { CommandKind } from './types.js';
 import { MessageType } from '../types.js';
 import { randomUUID } from 'node:crypto';
+import { t } from '../../i18n/index.js';
 
 export const clearCommand: SlashCommand = {
   name: 'clear',
-  description: 'Clear the screen and conversation history',
+  get description() {
+    return t('commands:clear.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context, _args) => {
@@ -35,12 +38,14 @@ export const clearCommand: SlashCommand = {
     }
 
     if (geminiClient) {
-      context.ui.setDebugMessage('Clearing terminal and resetting chat.');
+      context.ui.setDebugMessage(
+        t('commands:clear.clearingTerminalAndResettingChat'),
+      );
       // If resetChat fails, the exception will propagate and halt the command,
       // which is the correct behavior to signal a failure to the user.
       await geminiClient.resetChat();
     } else {
-      context.ui.setDebugMessage('Clearing terminal.');
+      context.ui.setDebugMessage(t('commands:clear.clearingTerminal'));
     }
 
     // Start a new conversation recording with a new session ID

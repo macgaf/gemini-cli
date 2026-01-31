@@ -16,6 +16,9 @@ exports[`SettingsDialog > Initial Rendering > should render settings list with v
 │    Vim Mode                                                                               false  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -30,9 +33,6 @@ exports[`SettingsDialog > Initial Rendering > should render settings list with v
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -62,6 +62,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'accessibility settings
 │    Vim Mode                                                                               true*  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -76,9 +79,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'accessibility settings
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -108,6 +108,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'all boolean settings d
 │    Vim Mode                                                                              false*  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                     true*  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -122,9 +125,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'all boolean settings d
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                     false*  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -154,6 +154,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'default state' correct
 │    Vim Mode                                                                               false  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -168,9 +171,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'default state' correct
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -200,6 +200,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'file filtering setting
 │    Vim Mode                                                                               false  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -214,9 +217,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'file filtering setting
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -246,6 +246,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'focused on scope selec
 │    Vim Mode                                                                               false  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -260,9 +263,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'focused on scope selec
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -292,6 +292,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'mixed boolean and numb
 │    Vim Mode                                                                              false*  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                    false*  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -306,9 +309,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'mixed boolean and numb
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                     false*  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -338,6 +338,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'tools and security set
 │    Vim Mode                                                                               false  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -352,9 +355,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'tools and security set
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      false  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │
@@ -384,6 +384,9 @@ exports[`SettingsDialog > Snapshot Tests > should render 'various boolean settin
 │    Vim Mode                                                                               true*  │
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
+│    Language                                                                             English  │
+│    Interface language (en, zh-CN)                                                                │
+│                                                                                                  │
 │    Enable Auto Update                                                                    false*  │
 │    Enable automatic updates.                                                                     │
 │                                                                                                  │
@@ -398,9 +401,6 @@ exports[`SettingsDialog > Snapshot Tests > should render 'various boolean settin
 │                                                                                                  │
 │    Output Format                                                                           Text  │
 │    The format of the CLI output. Can be \`text\` or \`json\`.                                        │
-│                                                                                                  │
-│    Hide Window Title                                                                      true*  │
-│    Hide the window title bar                                                                     │
 │                                                                                                  │
 │  ▼                                                                                               │
 │                                                                                                  │

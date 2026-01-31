@@ -15,6 +15,7 @@ import type {
   SubagentActivityEvent,
 } from './types.js';
 import type { MessageBus } from '../confirmation-bus/message-bus.js';
+import { t } from '../i18n/index.js';
 
 const INPUT_PREVIEW_MAX_LENGTH = 50;
 const DESCRIPTION_MAX_LENGTH = 200;
@@ -109,19 +110,28 @@ export class LocalSubagentInvocation extends BaseToolInvocation<
 
       const output = await executor.run(this.params, signal);
 
-      const resultContent = `Subagent '${this.definition.name}' finished.
-Termination Reason: ${output.terminate_reason}
-Result:
-${output.result}`;
+      const resultContent = t(
+        "Subagent '{{name}}' finished.\nTermination Reason: {{reason}}\nResult:\n{{result}}",
+        {
+          name: this.definition.name,
+          reason: output.terminate_reason,
+          result: output.result,
+        },
+      );
 
-      const displayContent = `
+      const displayContent = t('agents.localInvocation.display', {
+        defaultValue: `
 Subagent ${this.definition.name} Finished
 
 Termination Reason:\n ${output.terminate_reason}
 
 Result:
 ${output.result}
-`;
+`,
+        name: this.definition.name,
+        reason: output.terminate_reason,
+        result: output.result,
+      });
 
       return {
         llmContent: [{ text: resultContent }],
@@ -132,8 +142,14 @@ ${output.result}
         error instanceof Error ? error.message : String(error);
 
       return {
-        llmContent: `Subagent '${this.definition.name}' failed. Error: ${errorMessage}`,
-        returnDisplay: `Subagent Failed: ${this.definition.name}\nError: ${errorMessage}`,
+        llmContent: t("Subagent '{{name}}' failed. Error: {{error}}", {
+          name: this.definition.name,
+          error: errorMessage,
+        }),
+        returnDisplay: t('Subagent Failed: {{name}}\nError: {{error}}', {
+          name: this.definition.name,
+          error: errorMessage,
+        }),
         error: {
           message: errorMessage,
           type: ToolErrorType.EXECUTION_FAILED,

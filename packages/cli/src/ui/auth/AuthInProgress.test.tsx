@@ -56,8 +56,8 @@ describe('AuthInProgress', () => {
 
   it('renders initial state with spinner', () => {
     const { lastFrame } = render(<AuthInProgress onTimeout={onTimeout} />);
-    expect(lastFrame()).toContain('[Spinner] Waiting for auth...');
-    expect(lastFrame()).toContain('Press ESC or CTRL+C to cancel');
+    expect(lastFrame()).toContain('[Spinner] Waiting for authentication...');
+    expect(lastFrame()).toContain('Press ESC/CTRL+C to cancel');
   });
 
   it('calls onTimeout when ESC is pressed', () => {
@@ -85,7 +85,7 @@ describe('AuthInProgress', () => {
 
     expect(onTimeout).toHaveBeenCalled();
     await vi.waitUntil(
-      () => lastFrame()?.includes('Authentication timed out'),
+      () => lastFrame()?.includes('Your session has expired'),
       { timeout: 1000 },
     );
   });

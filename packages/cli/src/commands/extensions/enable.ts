@@ -21,6 +21,8 @@ interface EnableArgs {
   scope?: string;
 }
 
+import { t } from '../../i18n/index.js';
+
 export async function handleEnable(args: EnableArgs) {
   const workingDir = process.cwd();
   const extensionManager = new ExtensionManager({
@@ -39,11 +41,18 @@ export async function handleEnable(args: EnableArgs) {
     }
     if (args.scope) {
       debugLogger.log(
-        `Extension "${args.name}" successfully enabled for scope "${args.scope}".`,
+        t('commands:extensions.enable.log.success', {
+          name: args.name,
+          scope: args.scope,
+          defaultValue: `Extension "${args.name}" successfully enabled for scope "${args.scope}".`,
+        }),
       );
     } else {
       debugLogger.log(
-        `Extension "${args.name}" successfully enabled in all scopes.`,
+        t('commands:extensions.enable.log.successAll', {
+          name: args.name,
+          defaultValue: `Extension "${args.name}" successfully enabled in all scopes.`,
+        }),
       );
     }
   } catch (error) {
@@ -53,16 +62,22 @@ export async function handleEnable(args: EnableArgs) {
 
 export const enableCommand: CommandModule = {
   command: 'enable [--scope] <name>',
-  describe: 'Enables an extension.',
+  describe: t('commands:extensions.enable.description', {
+    defaultValue: 'Enables an extension.',
+  }),
   builder: (yargs) =>
     yargs
       .positional('name', {
-        describe: 'The name of the extension to enable.',
+        describe: t('commands:extensions.enable.name', {
+          defaultValue: 'The name of the extension to enable.',
+        }),
         type: 'string',
       })
       .option('scope', {
-        describe:
-          'The scope to enable the extension in. If not set, will be enabled in all scopes.',
+        describe: t('commands:extensions.enable.scope', {
+          defaultValue:
+            'The scope to enable the extension in. If not set, will be enabled in all scopes.',
+        }),
         type: 'string',
       })
       .check((argv) => {
@@ -73,11 +88,17 @@ export const enableCommand: CommandModule = {
             .includes(argv.scope.toLowerCase())
         ) {
           throw new Error(
-            `Invalid scope: ${argv.scope}. Please use one of ${Object.values(
-              SettingScope,
-            )
-              .map((s) => s.toLowerCase())
-              .join(', ')}.`,
+            t('commands:extensions.enable.error.invalidScope', {
+              scope: argv.scope,
+              allowed: Object.values(SettingScope)
+                .map((s) => s.toLowerCase())
+                .join(', '),
+              defaultValue: `Invalid scope: ${argv.scope}. Please use one of ${Object.values(
+                SettingScope,
+              )
+                .map((s) => s.toLowerCase())
+                .join(', ')}.`,
+            }),
           );
         }
         return true;

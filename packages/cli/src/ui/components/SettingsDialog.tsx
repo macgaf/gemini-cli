@@ -7,6 +7,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Box, Text } from 'ink';
 import { AsyncFzf } from 'fzf';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import type {
   LoadableSettingScope,
@@ -79,6 +80,7 @@ export function SettingsDialog({
   availableTerminalHeight,
   config,
 }: SettingsDialogProps): React.JSX.Element {
+  const { t } = useTranslation('dialogs');
   // Get vim mode context to sync vim mode changes
   const { vimEnabled, toggleVimEnabled } = useVimMode();
 
@@ -186,7 +188,8 @@ export function SettingsDialog({
         updated = setPendingSettingValue(key, value, updated);
       } else if (
         (def?.type === 'number' && typeof value === 'number') ||
-        (def?.type === 'string' && typeof value === 'string')
+        (def?.type === 'string' && typeof value === 'string') ||
+        (def?.type === 'enum' && typeof value === 'string')
       ) {
         updated = setPendingSettingValueAny(key, value, updated);
       }
@@ -229,10 +232,18 @@ export function SettingsDialog({
 
     return settingKeys.map((key: string) => {
       const definition = getSettingDefinition(key);
+      // Use i18n translation with fallback to original label/description
+      const translationKey = key.replace(/\./g, '_');
+      const label = t(`settings.items.${translationKey}.label`, {
+        defaultValue: definition?.label || key,
+      });
+      const description = t(`settings.items.${translationKey}.description`, {
+        defaultValue: definition?.description || '',
+      });
 
       return {
-        label: definition?.label || key,
-        description: definition?.description,
+        label,
+        description,
         value: key,
         type: definition?.type,
         toggle: () => {
@@ -895,7 +906,8 @@ export function SettingsDialog({
             bold={focusSection === 'settings' && !editingKey}
             wrap="truncate"
           >
-            {focusSection === 'settings' ? '> ' : '  '}Settings{' '}
+            {focusSection === 'settings' ? '> ' : '  '}
+            {t('settings.title')}{' '}
           </Text>
         </Box>
         <Box
@@ -914,13 +926,15 @@ export function SettingsDialog({
           <TextInput
             focus={focusSection === 'settings' && !editingKey}
             buffer={buffer}
-            placeholder="Search to filter"
+            placeholder={t('settings.searchPlaceholder')}
           />
         </Box>
         <Box height={1} />
         {visibleItems.length === 0 ? (
           <Box marginX={1} height={1} flexDirection="column">
-            <Text color={theme.text.secondary}>No matches found.</Text>
+            <Text color={theme.text.secondary}>
+              {t('settings.noMatchesFound')}
+            </Text>
           </Box>
         ) : (
           <>
@@ -1088,7 +1102,8 @@ export function SettingsDialog({
         {showScopeSelection && (
           <Box marginX={1} flexDirection="column">
             <Text bold={focusSection === 'scope'} wrap="truncate">
-              {focusSection === 'scope' ? '> ' : '  '}Apply To
+              {focusSection === 'scope' ? '> ' : '  '}
+              {t('settings.applyTo')}
             </Text>
             <RadioButtonSelect
               items={scopeItems}
@@ -1106,15 +1121,15 @@ export function SettingsDialog({
         <Box height={1} />
         <Box marginX={1}>
           <Text color={theme.text.secondary}>
-            (Use Enter to select
-            {showScopeSelection ? ', Tab to change focus' : ''}, Esc to close)
+            {showScopeSelection
+              ? t('settings.helpText')
+              : t('settings.helpTextNoScope')}
           </Text>
         </Box>
         {showRestartPrompt && (
           <Box marginX={1}>
             <Text color={theme.status.warning}>
-              To see changes, Gemini CLI must be restarted. Press r to exit and
-              apply changes now.
+              {t('settings.restartRequired')}
             </Text>
           </Box>
         )}

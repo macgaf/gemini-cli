@@ -12,10 +12,13 @@ import type {
 import { CommandKind } from './types.js';
 import { clearCachedCredentialFile } from '@google/gemini-cli-core';
 import { SettingScope } from '../../config/settings.js';
+import { t } from '../../i18n/index.js';
 
 const authLoginCommand: SlashCommand = {
   name: 'login',
-  description: 'Login or change the auth method',
+  get description() {
+    return t('commands:auth.login.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: (_context, _args): OpenDialogActionReturn => ({
@@ -26,7 +29,9 @@ const authLoginCommand: SlashCommand = {
 
 const authLogoutCommand: SlashCommand = {
   name: 'logout',
-  description: 'Log out and clear all cached credentials',
+  get description() {
+    return t('commands:auth.logout.description');
+  },
   kind: CommandKind.BUILT_IN,
   action: async (context, _args): Promise<LogoutActionReturn> => {
     await clearCachedCredentialFile();
@@ -47,7 +52,9 @@ const authLogoutCommand: SlashCommand = {
 
 export const authCommand: SlashCommand = {
   name: 'auth',
-  description: 'Manage authentication',
+  get description() {
+    return t('commands:auth.description');
+  },
   kind: CommandKind.BUILT_IN,
   subCommands: [authLoginCommand, authLogoutCommand],
   action: (context, args) =>

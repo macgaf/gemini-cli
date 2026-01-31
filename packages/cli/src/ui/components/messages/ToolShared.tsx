@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { ToolCallStatus } from '../../types.js';
 import { GeminiRespondingSpinner } from '../GeminiRespondingSpinner.js';
 import {
@@ -29,6 +30,7 @@ export const ToolStatusIndicator: React.FC<ToolStatusIndicatorProps> = ({
   status,
   name,
 }) => {
+  const { t } = useTranslation('common');
   const isShell =
     name === SHELL_COMMAND_NAME ||
     name === SHELL_NAME ||
@@ -47,22 +49,26 @@ export const ToolStatusIndicator: React.FC<ToolStatusIndicatorProps> = ({
         />
       )}
       {status === ToolCallStatus.Success && (
-        <Text color={theme.status.success} aria-label={'Success:'}>
+        <Text color={theme.status.success} aria-label={t('toolStatus.success')}>
           {TOOL_STATUS.SUCCESS}
         </Text>
       )}
       {status === ToolCallStatus.Confirming && (
-        <Text color={statusColor} aria-label={'Confirming:'}>
+        <Text color={statusColor} aria-label={t('toolStatus.confirming')}>
           {TOOL_STATUS.CONFIRMING}
         </Text>
       )}
       {status === ToolCallStatus.Canceled && (
-        <Text color={statusColor} aria-label={'Canceled:'} bold>
+        <Text color={statusColor} aria-label={t('toolStatus.canceled')} bold>
           {TOOL_STATUS.CANCELED}
         </Text>
       )}
       {status === ToolCallStatus.Error && (
-        <Text color={theme.status.error} aria-label={'Error:'} bold>
+        <Text
+          color={theme.status.error}
+          aria-label={t('toolStatus.error')}
+          bold
+        >
           {TOOL_STATUS.ERROR}
         </Text>
       )}

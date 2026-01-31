@@ -10,6 +10,7 @@ import { useKeypress } from './useKeypress.js';
 import { keyMatchers, Command } from '../keyMatchers.js';
 import type { HistoryItemWithoutId } from '../types.js';
 import { MessageType } from '../types.js';
+import { i18n } from '../../i18n/index.js';
 
 export interface UseAutoAcceptIndicatorArgs {
   config: Config;
@@ -45,7 +46,7 @@ export function useAutoAcceptIndicator({
             addItem(
               {
                 type: MessageType.WARNING,
-                text: 'You cannot enter YOLO mode since it is disabled in your settings.',
+                text: i18n.t('common:autoAccept.yoloDisabled'),
               },
               Date.now(),
             );

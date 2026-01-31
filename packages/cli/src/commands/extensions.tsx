@@ -18,10 +18,14 @@ import { configureCommand } from './extensions/configure.js';
 import { initializeOutputListenersAndFlush } from '../gemini.js';
 import { defer } from '../deferred.js';
 
+import { t } from '../i18n/index.js';
+
 export const extensionsCommand: CommandModule = {
   command: 'extensions <command>',
   aliases: ['extension'],
-  describe: 'Manage Gemini CLI extensions.',
+  describe: t('commands:extensions.describe', {
+    defaultValue: 'Manage Gemini CLI extensions.',
+  }),
   builder: (yargs) =>
     yargs
       .middleware(() => initializeOutputListenersAndFlush())
@@ -35,7 +39,12 @@ export const extensionsCommand: CommandModule = {
       .command(defer(newCommand, 'extensions'))
       .command(defer(validateCommand, 'extensions'))
       .command(defer(configureCommand, 'extensions'))
-      .demandCommand(1, 'You need at least one command before continuing.')
+      .demandCommand(
+        1,
+        t('commands:extensions.demandClient', {
+          defaultValue: 'You need at least one command before continuing.',
+        }),
+      )
       .version(false),
   handler: () => {
     // This handler is not called when a subcommand is provided.

@@ -5,6 +5,7 @@
  */
 
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { ExpandableText, MAX_WIDTH } from './shared/ExpandableText.js';
 import { CommandKind } from '../commands/types.js';
@@ -40,10 +41,11 @@ export function SuggestionsDisplay({
   mode,
   expandedIndex,
 }: SuggestionsDisplayProps) {
+  const { t } = useTranslation('common');
   if (isLoading) {
     return (
       <Box paddingX={1} width={width}>
-        <Text color="gray">Loading suggestions...</Text>
+        <Text color="gray">{t('suggestions.loading')}</Text>
       </Box>
     );
   }
@@ -61,8 +63,8 @@ export function SuggestionsDisplay({
   const visibleSuggestions = suggestions.slice(startIndex, endIndex);
 
   const COMMAND_KIND_SUFFIX: Partial<Record<CommandKind, string>> = {
-    [CommandKind.MCP_PROMPT]: ' [MCP]',
-    [CommandKind.AGENT]: ' [Agent]',
+    [CommandKind.MCP_PROMPT]: t('suggestions.mcpSuffix'),
+    [CommandKind.AGENT]: t('suggestions.agentSuffix'),
   };
 
   const getFullLabel = (s: Suggestion) =>

@@ -32,6 +32,7 @@ import { Storage } from '../config/storage.js';
 import { OAuthCredentialStorage } from './oauth-credential-storage.js';
 import { FORCE_ENCRYPTED_FILE_ENV_VAR } from '../mcp/token-storage/index.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 import {
   writeToStdout,
   createWorkingStdio,
@@ -181,7 +182,11 @@ async function initOauthClient(
             );
           }
         }
-        debugLogger.log('Loaded cached credentials.');
+        debugLogger.log(
+          t('debug.loadedCachedCredentials', {
+            defaultValue: 'Loaded cached credentials.',
+          }),
+        );
         await triggerPostAuthCallbacks(credentials as Credentials);
 
         return client;

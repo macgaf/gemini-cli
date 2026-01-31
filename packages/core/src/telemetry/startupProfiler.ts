@@ -10,6 +10,7 @@ import * as fs from 'node:fs';
 import type { Config } from '../config/config.js';
 import { recordStartupPerformance } from './metrics.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 import { StartupStatsEvent, type StartupPhaseStats } from './types.js';
 import { logStartupStats } from './loggers.js';
 
@@ -78,7 +79,11 @@ export class StartupProfiler {
     // Error if starting a phase that's already active.
     if (existingPhase && !existingPhase.ended) {
       debugLogger.warn(
-        `[STARTUP] Cannot start phase '${phaseName}': phase is already active. Call end() before starting again.`,
+        t('debug.startupPhaseAlreadyActive', {
+          phase: phaseName,
+          defaultValue:
+            "[STARTUP] Cannot start phase '{{phase}}': phase is already active. Call end() before starting again.",
+        }),
       );
       return undefined;
     }
@@ -114,7 +119,11 @@ export class StartupProfiler {
     // Error if ending a phase that's already ended.
     if (phase.ended) {
       debugLogger.warn(
-        `[STARTUP] Cannot end phase '${phase.name}': phase was already ended.`,
+        t('debug.startupPhaseAlreadyEnded', {
+          phase: phase.name,
+          defaultValue:
+            "[STARTUP] Cannot end phase '{{phase}}': phase was already ended.",
+        }),
       );
       return;
     }

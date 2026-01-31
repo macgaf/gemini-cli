@@ -57,6 +57,7 @@ import type {
 } from '../utils/workspaceContext.js';
 import type { ToolRegistry } from './tool-registry.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 import { type MessageBus } from '../confirmation-bus/message-bus.js';
 import { coreEvents } from '../utils/events.js';
 import type { ResourceRegistry } from '../resources/resource-registry.js';
@@ -286,14 +287,22 @@ export class McpClient {
 
     if (capabilities?.tools?.listChanged) {
       debugLogger.log(
-        `Server '${this.serverName}' supports tool updates. Listening for changes...`,
+        t('debug.mcpServerSupportsToolUpdates', {
+          name: this.serverName,
+          defaultValue:
+            "Server '{{name}}' supports tool updates. Listening for changes...",
+        }),
       );
 
       this.client.setNotificationHandler(
         ToolListChangedNotificationSchema,
         async () => {
           debugLogger.log(
-            `🔔 Received tool update notification from '${this.serverName}'`,
+            t('debug.mcpToolUpdateNotification', {
+              name: this.serverName,
+              defaultValue:
+                "🔔 Received tool update notification from '{{name}}'",
+            }),
           );
           await this.refreshTools();
         },
@@ -302,14 +311,22 @@ export class McpClient {
 
     if (capabilities?.resources?.listChanged) {
       debugLogger.log(
-        `Server '${this.serverName}' supports resource updates. Listening for changes...`,
+        t('debug.mcpServerSupportsResourceUpdates', {
+          name: this.serverName,
+          defaultValue:
+            "Server '{{name}}' supports resource updates. Listening for changes...",
+        }),
       );
 
       this.client.setNotificationHandler(
         ResourceListChangedNotificationSchema,
         async () => {
           debugLogger.log(
-            `🔔 Received resource update notification from '${this.serverName}'`,
+            t('debug.mcpResourceUpdateNotification', {
+              name: this.serverName,
+              defaultValue:
+                "🔔 Received resource update notification from '{{name}}'",
+            }),
           );
           await this.refreshResources();
         },
@@ -327,7 +344,11 @@ export class McpClient {
   private async refreshResources(): Promise<void> {
     if (this.isRefreshingResources) {
       debugLogger.log(
-        `Resource refresh for '${this.serverName}' is already in progress. Pending update.`,
+        t('debug.mcpResourceRefreshInProgress', {
+          name: this.serverName,
+          defaultValue:
+            "Resource refresh for '{{name}}' is already in progress. Pending update.",
+        }),
       );
       this.pendingResourceRefresh = true;
       return;

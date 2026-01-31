@@ -6,9 +6,9 @@
 
 import type React from 'react';
 import { Text, Box } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { MarkdownDisplay } from '../../utils/MarkdownDisplay.js';
 import { theme } from '../../semantic-colors.js';
-import { SCREEN_READER_MODEL_PREFIX } from '../../textConstants.js';
 import { useUIState } from '../../contexts/UIStateContext.js';
 import { useAlternateBuffer } from '../../hooks/useAlternateBuffer.js';
 
@@ -25,6 +25,7 @@ export const GeminiMessage: React.FC<GeminiMessageProps> = ({
   availableTerminalHeight,
   terminalWidth,
 }) => {
+  const { t } = useTranslation('common');
   const { renderMarkdown } = useUIState();
   const prefix = '✦ ';
   const prefixWidth = prefix.length;
@@ -33,7 +34,10 @@ export const GeminiMessage: React.FC<GeminiMessageProps> = ({
   return (
     <Box flexDirection="row">
       <Box width={prefixWidth}>
-        <Text color={theme.text.accent} aria-label={SCREEN_READER_MODEL_PREFIX}>
+        <Text
+          color={theme.text.accent}
+          aria-label={t('screenReader.modelPrefix')}
+        >
           {prefix}
         </Text>
       </Box>

@@ -43,6 +43,7 @@ import {
 } from '../utils/shell-utils.js';
 import { SHELL_TOOL_NAME } from './tool-names.js';
 import type { MessageBus } from '../confirmation-bus/message-bus.js';
+import { t } from '../i18n/index.js';
 
 export const OUTPUT_UPDATE_INTERVAL_MS = 1000;
 
@@ -71,13 +72,17 @@ export class ShellToolInvocation extends BaseToolInvocation<
     // append optional [in directory]
     // note description is needed even if validation fails due to absolute path
     if (this.params.dir_path) {
-      description += ` [in ${this.params.dir_path}]`;
+      description += t(' [in {{dir}}]', { dir: this.params.dir_path });
     } else {
-      description += ` [current working directory ${process.cwd()}]`;
+      description += t(' [current working directory {{cwd}}]', {
+        cwd: process.cwd(),
+      });
     }
     // append optional (description), replacing any line breaks with spaces
     if (this.params.description) {
-      description += ` (${this.params.description.replace(/\n/g, ' ')})`;
+      description += t(' ({{description}})', {
+        description: this.params.description.replace(/\n/g, ' '),
+      });
     }
     return description;
   }
@@ -110,9 +115,9 @@ export class ShellToolInvocation extends BaseToolInvocation<
     if (!parsed || parsed.hasError || parsed.details.length === 0) {
       // Fallback if parser fails
       const fallback = command.trim().split(/\s+/)[0];
-      rootCommandDisplay = fallback || 'shell command';
+      rootCommandDisplay = fallback || t('shell command');
       if (hasRedirection(command)) {
-        rootCommandDisplay += ', redirection';
+        rootCommandDisplay += t(', redirection');
       }
     } else {
       rootCommandDisplay = parsed.details
@@ -127,7 +132,7 @@ export class ShellToolInvocation extends BaseToolInvocation<
     // so we must provide confirmation details.
     const confirmationDetails: ToolExecuteConfirmationDetails = {
       type: 'exec',
-      title: 'Confirm Shell Command',
+      title: t('Confirm Shell Command'),
       command: this.params.command,
       rootCommand: rootCommandDisplay,
       rootCommands,
@@ -148,8 +153,8 @@ export class ShellToolInvocation extends BaseToolInvocation<
 
     if (signal.aborted) {
       return {
-        llmContent: 'Command was cancelled by user before it could start.',
-        returnDisplay: 'Command cancelled by user.',
+        llmContent: t('Command was cancelled by user before it could start.'),
+        returnDisplay: t('Command cancelled by user.'),
       };
     }
 
@@ -225,21 +230,23 @@ export class ShellToolInvocation extends BaseToolInvocation<
                 break;
               case 'binary_detected':
                 isBinaryStream = true;
-                cumulativeOutput =
-                  '[Binary output detected. Halting stream...]';
+                cumulativeOutput = t(
+                  '[Binary output detected. Halting stream...]',
+                );
                 shouldUpdate = true;
                 break;
               case 'binary_progress':
                 isBinaryStream = true;
-                cumulativeOutput = `[Receiving binary output... ${formatMemoryUsage(
-                  event.bytesReceived,
-                )} received]`;
+                cumulativeOutput = t(
+                  '[Receiving binary output... {{size}} received]',
+                  { size: formatMemoryUsage(event.bytesReceived) },
+                );
                 if (Date.now() - lastUpdateTime > OUTPUT_UPDATE_INTERVAL_MS) {
                   shouldUpdate = true;
                 }
                 break;
               default: {
-                throw new Error('An unhandled ShellOutputEvent was found.');
+                throw new Error(t('An unhandled ShellOutputEvent was found.'));
               }
             }
 
@@ -292,37 +299,51 @@ export class ShellToolInvocation extends BaseToolInvocation<
       let timeoutMessage = '';
       if (result.aborted) {
         if (timeoutController.signal.aborted) {
-          timeoutMessage = `Command was automatically cancelled because it exceeded the timeout of ${(
-            timeoutMs / 60000
-          ).toFixed(1)} minutes without output.`;
+          timeoutMessage = t(
+            'Command was automatically cancelled because it exceeded the timeout of {{minutes}} minutes without output.',
+            { minutes: (timeoutMs / 60000).toFixed(1) },
+          );
           llmContent = timeoutMessage;
         } else {
-          llmContent =
-            'Command was cancelled by user before it could complete.';
+          llmContent = t(
+            'Command was cancelled by user before it could complete.',
+          );
         }
         if (result.output.trim()) {
-          llmContent += ` Below is the output before it was cancelled:\n${result.output}`;
+          llmContent += t(
+            ' Below is the output before it was cancelled:\n{{output}}',
+            { output: result.output },
+          );
         } else {
-          llmContent += ' There was no output before it was cancelled.';
+          llmContent += t(' There was no output before it was cancelled.');
         }
       } else {
         // Create a formatted error string for display, replacing the wrapper command
         // with the user-facing command.
         const finalError = result.error
           ? result.error.message.replace(commandToExecute, this.params.command)
-          : '(none)';
+          : t('(none)');
+        const rootLabel = t('(root)');
+        const emptyLabel = t('(empty)');
+        const noneLabel = t('(none)');
+        const directory = this.params.dir_path || rootLabel;
+        const output = result.output || emptyLabel;
+        const exitCode = result.exitCode ?? noneLabel;
+        const signalDisplay = result.signal ?? noneLabel;
+        const backgroundDisplay = backgroundPIDs.length
+          ? backgroundPIDs.join(', ')
+          : noneLabel;
+        const processGroupDisplay = result.pid ?? noneLabel;
 
         llmContent = [
-          `Command: ${this.params.command}`,
-          `Directory: ${this.params.dir_path || '(root)'}`,
-          `Output: ${result.output || '(empty)'}`,
-          `Error: ${finalError}`,
-          `Exit Code: ${result.exitCode ?? '(none)'}`,
-          `Signal: ${result.signal ?? '(none)'}`,
-          `Background PIDs: ${
-            backgroundPIDs.length ? backgroundPIDs.join(', ') : '(none)'
-          }`,
-          `Process Group PGID: ${result.pid ?? '(none)'}`,
+          t('Command: {{command}}', { command: this.params.command }),
+          t('Directory: {{dir}}', { dir: directory }),
+          t('Output: {{output}}', { output }),
+          t('Error: {{error}}', { error: finalError }),
+          t('Exit Code: {{code}}', { code: exitCode }),
+          t('Signal: {{signal}}', { signal: signalDisplay }),
+          t('Background PIDs: {{pids}}', { pids: backgroundDisplay }),
+          t('Process Group PGID: {{pgid}}', { pgid: processGroupDisplay }),
         ].join('\n');
       }
 
@@ -337,16 +358,21 @@ export class ShellToolInvocation extends BaseToolInvocation<
             if (timeoutMessage) {
               returnDisplayMessage = timeoutMessage;
             } else {
-              returnDisplayMessage = 'Command cancelled by user.';
+              returnDisplayMessage = t('Command cancelled by user.');
             }
           } else if (result.signal) {
-            returnDisplayMessage = `Command terminated by signal: ${result.signal}`;
+            returnDisplayMessage = t(
+              'Command terminated by signal: {{signal}}',
+              { signal: result.signal },
+            );
           } else if (result.error) {
-            returnDisplayMessage = `Command failed: ${getErrorMessage(
-              result.error,
-            )}`;
+            returnDisplayMessage = t('Command failed: {{error}}', {
+              error: getErrorMessage(result.error),
+            });
           } else if (result.exitCode !== null && result.exitCode !== 0) {
-            returnDisplayMessage = `Command exited with code: ${result.exitCode}`;
+            returnDisplayMessage = t('Command exited with code: {{code}}', {
+              code: result.exitCode,
+            });
           }
           // If output is empty and command succeeded (code 0, no error/signal/abort),
           // returnDisplayMessage will remain empty, which is fine.
@@ -394,7 +420,9 @@ export class ShellToolInvocation extends BaseToolInvocation<
 }
 
 function getShellToolDescription(): string {
-  const returnedInfo = `
+  if (os.platform() === 'win32') {
+    return t('tools.shell.description.win32', {
+      defaultValue: `This tool executes a given shell command as \`powershell.exe -NoProfile -Command <command>\`. Command can start background processes using PowerShell constructs such as \`Start-Process -NoNewWindow\` or \`Start-Job\`.
 
       The following information is returned:
 
@@ -406,20 +434,37 @@ function getShellToolDescription(): string {
       Exit Code: Exit code or \`(none)\` if terminated by signal.
       Signal: Signal number or \`(none)\` if no signal was received.
       Background PIDs: List of background processes started or \`(none)\`.
-      Process Group PGID: Process group started or \`(none)\``;
-
-  if (os.platform() === 'win32') {
-    return `This tool executes a given shell command as \`powershell.exe -NoProfile -Command <command>\`. Command can start background processes using PowerShell constructs such as \`Start-Process -NoNewWindow\` or \`Start-Job\`.${returnedInfo}`;
+      Process Group PGID: Process group started or \`(none)\``,
+    });
   } else {
-    return `This tool executes a given shell command as \`bash -c <command>\`. Command can start background processes using \`&\`. Command is executed as a subprocess that leads its own process group. Command process group can be terminated as \`kill -- -PGID\` or signaled as \`kill -s SIGNAL -- -PGID\`.${returnedInfo}`;
+    return t('tools.shell.description.posix', {
+      defaultValue: `This tool executes a given shell command as \`bash -c <command>\`. Command can start background processes using \`&\`. Command is executed as a subprocess that leads its own process group. Command process group can be terminated as \`kill -- -PGID\` or signaled as \`kill -s SIGNAL -- -PGID\`.
+
+      The following information is returned:
+
+      Command: Executed command.
+      Directory: Directory where command was executed, or \`(root)\`.
+      Stdout: Output on stdout stream. Can be \`(empty)\` or partial on error and for any unwaited background processes.
+      Stderr: Output on stderr stream. Can be \`(empty)\` or partial on error and for any unwaited background processes.
+      Error: Error or \`(none)\` if no error was reported for the subprocess.
+      Exit Code: Exit code or \`(none)\` if terminated by signal.
+      Signal: Signal number or \`(none)\` if no signal was received.
+      Background PIDs: List of background processes started or \`(none)\`.
+      Process Group PGID: Process group started or \`(none)\``,
+    });
   }
 }
 
 function getCommandDescription(): string {
   if (os.platform() === 'win32') {
-    return 'Exact command to execute as `powershell.exe -NoProfile -Command <command>`';
+    return t('tools.shell.params.command.win32', {
+      defaultValue:
+        'Exact command to execute as `powershell.exe -NoProfile -Command <command>`',
+    });
   } else {
-    return 'Exact bash command to execute as `bash -c <command>`';
+    return t('tools.shell.params.command.posix', {
+      defaultValue: 'Exact bash command to execute as `bash -c <command>`',
+    });
   }
 }
 
@@ -438,7 +483,7 @@ export class ShellTool extends BaseDeclarativeTool<
     });
     super(
       ShellTool.Name,
-      'Shell',
+      t('tools.shell.displayName', { defaultValue: 'Shell' }),
       getShellToolDescription(),
       Kind.Execute,
       {
@@ -450,13 +495,17 @@ export class ShellTool extends BaseDeclarativeTool<
           },
           description: {
             type: 'string',
-            description:
-              'Brief description of the command for the user. Be specific and concise. Ideally a single sentence. Can be up to 3 sentences for clarity. No line breaks.',
+            description: t('tools.shell.params.description', {
+              defaultValue:
+                'Brief description of the command for the user. Be specific and concise. Ideally a single sentence. Can be up to 3 sentences for clarity. No line breaks.',
+            }),
           },
           dir_path: {
             type: 'string',
-            description:
-              '(OPTIONAL) The path of the directory to run the command in. If not provided, the project root directory is used. Must be a directory within the workspace and must already exist.',
+            description: t('tools.shell.params.dir_path', {
+              defaultValue:
+                '(OPTIONAL) The path of the directory to run the command in. If not provided, the project root directory is used. Must be a directory within the workspace and must already exist.',
+            }),
           },
         },
         required: ['command'],
@@ -471,7 +520,7 @@ export class ShellTool extends BaseDeclarativeTool<
     params: ShellToolParams,
   ): string | null {
     if (!params.command.trim()) {
-      return 'Command cannot be empty.';
+      return t('Command cannot be empty.');
     }
 
     if (params.dir_path) {
@@ -481,7 +530,10 @@ export class ShellTool extends BaseDeclarativeTool<
       );
       const workspaceContext = this.config.getWorkspaceContext();
       if (!workspaceContext.isPathWithinWorkspace(resolvedPath)) {
-        return `Directory '${resolvedPath}' is not within any of the registered workspace directories.`;
+        return t(
+          "Directory '{{path}}' is not within any of the registered workspace directories.",
+          { path: resolvedPath },
+        );
       }
     }
     return null;

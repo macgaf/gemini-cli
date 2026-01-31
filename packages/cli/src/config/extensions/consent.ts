@@ -12,13 +12,20 @@ import chalk from 'chalk';
 import type { ConfirmationRequest } from '../../ui/types.js';
 import { escapeAnsiCtrlCodes } from '../../ui/utils/textUtils.js';
 import type { ExtensionConfig } from '../extension.js';
+import { t } from '../../i18n/index.js';
 
 export const INSTALL_WARNING_MESSAGE = chalk.yellow(
-  'The extension you are about to install may have been created by a third-party developer and sourced from a public repository. Google does not vet, endorse, or guarantee the functionality or security of extensions. Please carefully inspect any extension and its source code before installing to understand the permissions it requires and the actions it may perform.',
+  t('commands:extensions.consent.installWarning', {
+    defaultValue:
+      'The extension you are about to install may have been created by a third-party developer and sourced from a public repository. Google does not vet, endorse, or guarantee the functionality or security of extensions. Please carefully inspect any extension and its source code before installing to understand the permissions it requires and the actions it may perform.',
+  }),
 );
 
 export const SKILLS_WARNING_MESSAGE = chalk.yellow(
-  "Agent skills inject specialized instructions and domain-specific knowledge into the agent's system prompt. This can change how the agent interprets your requests and interacts with your environment. Review the skill definitions at the location(s) provided below to ensure they meet your security standards.",
+  t('commands:extensions.consent.skillsWarning', {
+    defaultValue:
+      "Agent skills inject specialized instructions and domain-specific knowledge into the agent's system prompt. This can change how the agent interprets your requests and interacts with your environment. Review the skill definitions at the location(s) provided below to ensure they meet your security standards.",
+  }),
 );
 
 /**
@@ -30,12 +37,28 @@ export async function skillsConsentString(
   targetDir?: string,
 ): Promise<string> {
   const output: string[] = [];
-  output.push(`Installing agent skill(s) from "${source}".`);
-  output.push('\nThe following agent skill(s) will be installed:\n');
+  output.push(
+    t('commands:skills.consent.installingSkillsFrom', {
+      source,
+      defaultValue: 'Installing agent skill(s) from "{{source}}".',
+    }),
+  );
+  output.push(
+    '\n' +
+      t('commands:skills.consent.skillsWillBeInstalled', {
+        defaultValue: 'The following agent skill(s) will be installed:',
+      }) +
+      '\n',
+  );
   output.push(...(await renderSkillsList(skills)));
 
   if (targetDir) {
-    output.push(`Install Destination: ${targetDir}`);
+    output.push(
+      t('commands:skills.consent.installDestination', {
+        path: targetDir,
+        defaultValue: 'Install Destination: {{path}}',
+      }),
+    );
   }
   output.push('\n' + SKILLS_WARNING_MESSAGE);
 
@@ -56,7 +79,9 @@ export async function requestConsentNonInteractive(
 ): Promise<boolean> {
   debugLogger.log(consentDescription);
   const result = await promptForConsentNonInteractive(
-    'Do you want to continue? [Y/n]: ',
+    t('commands:extensions.consent.continuePromptWithDefault', {
+      defaultValue: 'Do you want to continue? [Y/n]: ',
+    }),
   );
   return result;
 }
@@ -75,7 +100,11 @@ export async function requestConsentInteractive(
   addExtensionUpdateConfirmationRequest: (value: ConfirmationRequest) => void,
 ): Promise<boolean> {
   return promptForConsentInteractive(
-    consentDescription + '\n\nDo you want to continue?',
+    consentDescription +
+      '\n\n' +
+      t('commands:extensions.consent.continuePrompt', {
+        defaultValue: 'Do you want to continue?',
+      }),
     addExtensionUpdateConfirmationRequest,
   );
 }
@@ -140,36 +169,83 @@ async function extensionConsentString(
   const sanitizedConfig = escapeAnsiCtrlCodes(extensionConfig);
   const output: string[] = [];
   const mcpServerEntries = Object.entries(sanitizedConfig.mcpServers || {});
-  output.push(`Installing extension "${sanitizedConfig.name}".`);
+  output.push(
+    t('commands:extensions.consent.installingExtension', {
+      name: sanitizedConfig.name,
+      defaultValue: 'Installing extension "{{name}}".',
+    }),
+  );
 
   if (mcpServerEntries.length) {
-    output.push('This extension will run the following MCP servers:');
+    output.push(
+      t('commands:extensions.consent.mcpServersTitle', {
+        defaultValue: 'This extension will run the following MCP servers:',
+      }),
+    );
     for (const [key, mcpServer] of mcpServerEntries) {
       const isLocal = !!mcpServer.command;
       const source =
         mcpServer.httpUrl ??
         `${mcpServer.command || ''}${mcpServer.args ? ' ' + mcpServer.args.join(' ') : ''}`;
-      output.push(`  * ${key} (${isLocal ? 'local' : 'remote'}): ${source}`);
+      const location = isLocal
+        ? t('commands:extensions.consent.mcpServerLocal', {
+            defaultValue: 'local',
+          })
+        : t('commands:extensions.consent.mcpServerRemote', {
+            defaultValue: 'remote',
+          });
+      output.push(
+        t('commands:extensions.consent.mcpServerEntry', {
+          name: key,
+          location,
+          source,
+          defaultValue: '  * {{name}} ({{location}}): {{source}}',
+        }),
+      );
     }
   }
   if (sanitizedConfig.contextFileName) {
     output.push(
-      `This extension will append info to your gemini.md context using ${sanitizedConfig.contextFileName}`,
+      t('commands:extensions.consent.contextFile', {
+        name: sanitizedConfig.contextFileName,
+        defaultValue:
+          'This extension will append info to your gemini.md context using {{name}}',
+      }),
     );
   }
   if (sanitizedConfig.excludeTools) {
     output.push(
-      `This extension will exclude the following core tools: ${sanitizedConfig.excludeTools}`,
+      t('commands:extensions.consent.excludeTools', {
+        tools: sanitizedConfig.excludeTools.join(','),
+        defaultValue:
+          'This extension will exclude the following core tools: {{tools}}',
+      }),
     );
   }
   if (hasHooks) {
     output.push(
-      '⚠️  This extension contains Hooks which can automatically execute commands.',
+      t('commands:extensions.consent.hooksWarning', {
+        defaultValue:
+          '⚠️  This extension contains Hooks which can automatically execute commands.',
+      }),
     );
   }
   if (skills.length > 0) {
-    output.push(`\n${chalk.bold('Agent Skills:')}`);
-    output.push('\nThis extension will install the following agent skills:\n');
+    output.push(
+      `\n${chalk.bold(
+        t('commands:extensions.consent.agentSkillsTitle', {
+          defaultValue: 'Agent Skills:',
+        }),
+      )}`,
+    );
+    output.push(
+      '\n' +
+        t('commands:extensions.consent.agentSkillsIntro', {
+          defaultValue:
+            'This extension will install the following agent skills:',
+        }) +
+        '\n',
+    );
     output.push(...(await renderSkillsList(skills)));
   }
 
@@ -192,11 +268,28 @@ async function renderSkillsList(skills: SkillDefinition[]): Promise<string[]> {
     let fileCountStr = '';
     try {
       const skillDirItems = await fs.readdir(skillDir);
-      fileCountStr = ` (${skillDirItems.length} items in directory)`;
+      fileCountStr =
+        ' ' +
+        t('commands:extensions.consent.skillItemsCount', {
+          count: skillDirItems.length,
+          defaultValue: '({{count}} items in directory)',
+        });
     } catch {
-      fileCountStr = ` ${chalk.red('⚠️ (Could not count items in directory)')}`;
+      fileCountStr =
+        ' ' +
+        chalk.red(
+          t('commands:extensions.consent.skillItemsCountFailed', {
+            defaultValue: '⚠️ (Could not count items in directory)',
+          }),
+        );
     }
-    output.push(chalk.dim(`    (Source: ${skill.location})${fileCountStr}`));
+    output.push(
+      chalk.dim(
+        `    (${t('commands:extensions.consent.skillSourceLabel', {
+          defaultValue: 'Source',
+        })}: ${skill.location})${fileCountStr}`,
+      ),
+    );
     output.push('');
   }
   return output;

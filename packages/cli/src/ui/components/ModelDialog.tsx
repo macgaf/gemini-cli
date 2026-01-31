@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import {
   PREVIEW_GEMINI_MODEL,
   PREVIEW_GEMINI_FLASH_MODEL,
@@ -30,6 +31,7 @@ interface ModelDialogProps {
 }
 
 export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
+  const { t } = useTranslation('dialogs');
   const config = useContext(ConfigContext);
   const [view, setView] = useState<'main' | 'manual'>('main');
   const [persistMode, setPersistMode] = useState(false);
@@ -76,15 +78,15 @@ export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
         value: DEFAULT_GEMINI_MODEL_AUTO,
         title: getDisplayString(DEFAULT_GEMINI_MODEL_AUTO),
         description:
-          'Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash',
+          t('model.autoDescription') + ': gemini-2.5-pro, gemini-2.5-flash',
         key: DEFAULT_GEMINI_MODEL_AUTO,
       },
       {
         value: 'Manual',
         title: manualModelSelected
-          ? `Manual (${manualModelSelected})`
-          : 'Manual',
-        description: 'Manually select a model',
+          ? `${t('model.manual')} (${manualModelSelected})`
+          : t('model.manual'),
+        description: t('model.manualDescription'),
         key: 'Manual',
       },
     ];
@@ -94,12 +96,12 @@ export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
         value: PREVIEW_GEMINI_MODEL_AUTO,
         title: getDisplayString(PREVIEW_GEMINI_MODEL_AUTO),
         description:
-          'Let Gemini CLI decide the best model for the task: gemini-3-pro, gemini-3-flash',
+          t('model.autoDescription') + ': gemini-3-pro, gemini-3-flash',
         key: PREVIEW_GEMINI_MODEL_AUTO,
       });
     }
     return list;
-  }, [shouldShowPreviewModels, manualModelSelected]);
+  }, [shouldShowPreviewModels, manualModelSelected, t]);
 
   const manualOptions = useMemo(() => {
     const list = [
@@ -180,11 +182,10 @@ export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
     subheader = undefined;
     // When a user has the access but has not enabled the preview features.
   } else if (config?.getHasAccessToPreviewModel()) {
-    header = 'Gemini 3 is now available.';
-    subheader =
-      'Enable "Preview features" in /settings.\nLearn more at https://goo.gle/enable-preview-features';
+    header = t('model.gemini3Available');
+    subheader = t('model.enablePreviewFeatures');
   } else {
-    header = 'Gemini 3 is coming soon.';
+    header = t('model.gemini3ComingSoon');
     subheader = undefined;
   }
 
@@ -196,7 +197,7 @@ export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
       padding={1}
       width="100%"
     >
-      <Text bold>Select Model</Text>
+      <Text bold>{t('model.title')}</Text>
 
       <Box flexDirection="column">
         {header && (
@@ -219,21 +220,19 @@ export function ModelDialog({ onClose }: ModelDialogProps): React.JSX.Element {
       <Box marginTop={1} flexDirection="column">
         <Box>
           <Text color={theme.text.primary}>
-            Remember model for future sessions:{' '}
+            {t('model.rememberForFuture')}{' '}
           </Text>
           <Text color={theme.status.success}>
-            {persistMode ? 'true' : 'false'}
+            {persistMode ? t('common.true') : t('common.false')}
           </Text>
         </Box>
-        <Text color={theme.text.secondary}>(Press Tab to toggle)</Text>
+        <Text color={theme.text.secondary}>{t('model.pressTabToToggle')}</Text>
       </Box>
       <Box marginTop={1} flexDirection="column">
-        <Text color={theme.text.secondary}>
-          {'> To use a specific Gemini model on startup, use the --model flag.'}
-        </Text>
+        <Text color={theme.text.secondary}>{t('model.startupModelHint')}</Text>
       </Box>
       <Box marginTop={1} flexDirection="column">
-        <Text color={theme.text.secondary}>(Press Esc to close)</Text>
+        <Text color={theme.text.secondary}>{t('model.pressEscToClose')}</Text>
       </Box>
     </Box>
   );

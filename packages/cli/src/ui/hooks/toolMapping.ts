@@ -10,12 +10,14 @@ import {
   type ToolCallConfirmationDetails,
   type ToolResultDisplay,
   debugLogger,
+  SHELL_TOOL_NAME,
 } from '@google/gemini-cli-core';
 import {
   ToolCallStatus,
   type HistoryItemToolGroup,
   type IndividualToolCallDisplay,
 } from '../types.js';
+import { t } from '../../i18n/index.js';
 
 export function mapCoreStatusToDisplayStatus(
   coreStatus: CoreStatus,
@@ -56,11 +58,37 @@ export function mapToDisplay(
     let renderOutputAsMarkdown = false;
 
     const displayName = call.tool?.displayName ?? call.request.name;
+    const isShellTool = call.request.name === SHELL_TOOL_NAME;
 
     if (call.status === 'error') {
       description = JSON.stringify(call.request.args);
     } else {
       description = call.invocation.getDescription();
+      if (isShellTool) {
+        const args = call.request.args;
+        const command =
+          typeof args['command'] === 'string' ? args['command'] : '';
+        const dirPath =
+          typeof args['dir_path'] === 'string' ? args['dir_path'] : '';
+        const extraDescription =
+          typeof args['description'] === 'string' ? args['description'] : '';
+        if (command) {
+          description = dirPath
+            ? t('toolDisplay.shell.inDir', {
+                command,
+                dir: dirPath,
+              })
+            : t('toolDisplay.shell.currentDir', {
+                command,
+                dir: process.cwd(),
+              });
+          if (extraDescription.trim().length > 0) {
+            description += ` ${t('toolDisplay.shell.descriptionSuffix', {
+              description: extraDescription.replace(/\n/g, ' '),
+            })}`;
+          }
+        }
+      }
       renderOutputAsMarkdown = call.tool.isOutputMarkdown;
     }
 

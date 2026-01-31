@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { StatsDisplay } from './StatsDisplay.js';
+import { useTranslation } from 'react-i18next';
 
 interface SessionSummaryDisplayProps {
   duration: string;
@@ -13,6 +14,9 @@ interface SessionSummaryDisplayProps {
 
 export const SessionSummaryDisplay: React.FC<SessionSummaryDisplayProps> = ({
   duration,
-}) => (
-  <StatsDisplay title="Agent powering down. Goodbye!" duration={duration} />
-);
+}) => {
+  const { t } = useTranslation('common');
+  return (
+    <StatsDisplay title={t('sessionSummary.goodbye')} duration={duration} />
+  );
+};

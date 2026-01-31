@@ -8,6 +8,7 @@ import type React from 'react';
 import clipboardy from 'clipboardy';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { Box, Text, useStdout, type DOMElement } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { SuggestionsDisplay, MAX_WIDTH } from './SuggestionsDisplay.js';
 import { theme } from '../semantic-colors.js';
 import { useInputHistory } from '../hooks/useInputHistory.js';
@@ -43,7 +44,6 @@ import {
   isSlashCommand,
 } from '../utils/commandUtils.js';
 import * as path from 'node:path';
-import { SCREEN_READER_USER_PREFIX } from '../textConstants.js';
 import { useShellFocusState } from '../contexts/ShellFocusContext.js';
 import { useUIState } from '../contexts/UIStateContext.js';
 import { useSettings } from '../contexts/SettingsContext.js';
@@ -116,7 +116,7 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
   config,
   slashCommands,
   commandContext,
-  placeholder = '  Type your message or @path/to/file',
+  placeholder,
   focus = true,
   inputWidth,
   suggestionsWidth,
@@ -133,8 +133,11 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
   suggestionsPosition = 'below',
   setBannerVisible,
 }) => {
+  const { t } = useTranslation('common');
   const { stdout } = useStdout();
   const { merged: settings } = useSettings();
+  const placeholderText = placeholder ?? t('input.placeholder');
+  const reverseSearchIndicator = t('input.reverseSearchIndicator');
   const kittyProtocol = useKittyKeyboardProtocol();
   const isShellFocused = useShellFocusState();
   const { setEmbeddedShellFocused } = useUIActions();
@@ -252,7 +255,9 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
         streamingState === StreamingState.Responding
       ) {
         setQueueErrorMessage(
-          `${isShell ? 'Shell' : 'Slash'} commands cannot be queued`,
+          isShell
+            ? t('queue.shellCommandsCannotBeQueued')
+            : t('queue.slashCommandsCannotBeQueued'),
         );
         return;
       }
@@ -263,6 +268,7 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
       shellModeActive,
       streamingState,
       setQueueErrorMessage,
+      t,
     ],
   );
 
@@ -1036,13 +1042,13 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
   let statusText = '';
   if (shellModeActive) {
     statusColor = theme.ui.symbol;
-    statusText = 'Shell mode';
+    statusText = t('input.status.shellMode');
   } else if (showYoloStyling) {
     statusColor = theme.status.error;
-    statusText = 'YOLO mode';
+    statusText = t('input.status.yoloMode');
   } else if (showAutoAcceptStyling) {
     statusColor = theme.status.warning;
-    statusText = 'Accepting edits';
+    statusText = t('input.status.acceptingEdits');
   }
 
   const suggestionsNode = shouldShowSuggestions ? (
@@ -1092,15 +1098,15 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
             reverseSearchActive ? (
               <Text
                 color={theme.text.link}
-                aria-label={SCREEN_READER_USER_PREFIX}
+                aria-label={t('screenReader.userPrefix')}
               >
-                (r:){' '}
+                {reverseSearchIndicator}{' '}
               </Text>
             ) : (
               '!'
             )
           ) : commandSearchActive ? (
-            <Text color={theme.text.accent}>(r:) </Text>
+            <Text color={theme.text.accent}>{reverseSearchIndicator} </Text>
           ) : showYoloStyling ? (
             '*'
           ) : (
@@ -1108,14 +1114,16 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
           )}{' '}
         </Text>
         <Box flexGrow={1} flexDirection="column" ref={innerBoxRef}>
-          {buffer.text.length === 0 && placeholder ? (
+          {buffer.text.length === 0 && placeholderText ? (
             showCursor ? (
               <Text>
-                {chalk.inverse(placeholder.slice(0, 1))}
-                <Text color={theme.text.secondary}>{placeholder.slice(1)}</Text>
+                {chalk.inverse(placeholderText.slice(0, 1))}
+                <Text color={theme.text.secondary}>
+                  {placeholderText.slice(1)}
+                </Text>
               </Text>
             ) : (
-              <Text color={theme.text.secondary}>{placeholder}</Text>
+              <Text color={theme.text.secondary}>{placeholderText}</Text>
             )
           ) : (
             linesToRender

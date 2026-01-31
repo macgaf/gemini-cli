@@ -18,7 +18,7 @@ exports[`<ToolsList /> > renders correctly with descriptions 1`] = `
 exports[`<ToolsList /> > renders correctly with no tools 1`] = `
 "Available Gemini CLI tools:
 
- No tools available
+No tools available
 "
 `;
 

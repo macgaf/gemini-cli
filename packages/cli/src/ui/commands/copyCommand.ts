@@ -8,10 +8,13 @@ import { debugLogger } from '@google/gemini-cli-core';
 import { copyToClipboard } from '../utils/commandUtils.js';
 import type { SlashCommand, SlashCommandActionReturn } from './types.js';
 import { CommandKind } from './types.js';
+import { t } from '../../i18n/index.js';
 
 export const copyCommand: SlashCommand = {
   name: 'copy',
-  description: 'Copy the last result or code snippet to clipboard',
+  get description() {
+    return t('commands:copy.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context, _args): Promise<SlashCommandActionReturn | void> => {
@@ -27,7 +30,7 @@ export const copyCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'info',
-        content: 'No output in history',
+        content: t('commands:copy.noOutput'),
       };
     }
     // Extract text from the parts
@@ -43,7 +46,7 @@ export const copyCommand: SlashCommand = {
         return {
           type: 'message',
           messageType: 'info',
-          content: 'Last output copied to the clipboard',
+          content: t('commands:copy.copied'),
         };
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
@@ -52,14 +55,14 @@ export const copyCommand: SlashCommand = {
         return {
           type: 'message',
           messageType: 'error',
-          content: `Failed to copy to the clipboard. ${message}`,
+          content: t('commands:copy.failed', { error: message }),
         };
       }
     } else {
       return {
         type: 'message',
         messageType: 'info',
-        content: 'Last AI output contains no text to copy.',
+        content: t('commands:copy.noText'),
       };
     }
   },

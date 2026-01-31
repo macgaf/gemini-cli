@@ -60,6 +60,7 @@ import {
   LogoutChoice,
 } from '../components/LogoutConfirmationDialog.js';
 import { runExitCleanup } from '../../utils/cleanup.js';
+import { i18n } from '../../i18n/index.js';
 
 interface SlashCommandProcessorActions {
   openAuthDialog: () => void;
@@ -492,7 +493,7 @@ export const useSlashCommandProcessor = (
                   }>((resolve) => {
                     const confirmationDetails: ToolCallConfirmationDetails = {
                       type: 'exec',
-                      title: `Confirm Shell Expansion`,
+                      title: i18n.t('common:slashCommand.shellExpansion.title'),
                       command: result.commandsToConfirm[0] || '',
                       rootCommand: result.commandsToConfirm[0] || '',
                       rootCommands: result.commandsToConfirm,
@@ -511,8 +512,10 @@ export const useSlashCommandProcessor = (
 
                     const toolDisplay: IndividualToolCallDisplay = {
                       callId,
-                      name: 'Expansion',
-                      description: 'Command expansion needs shell access',
+                      name: i18n.t('common:slashCommand.shellExpansion.name'),
+                      description: i18n.t(
+                        'common:slashCommand.shellExpansion.description',
+                      ),
                       status: ToolCallStatus.Confirming,
                       resultDisplay: undefined,
                       confirmationDetails,
@@ -534,7 +537,9 @@ export const useSlashCommandProcessor = (
                     addItem(
                       {
                         type: MessageType.INFO,
-                        text: 'Slash command shell execution declined.',
+                        text: i18n.t(
+                          'common:slashCommand.shellExpansionDeclined',
+                        ),
                       },
                       Date.now(),
                     );
@@ -572,7 +577,7 @@ export const useSlashCommandProcessor = (
                     addItem(
                       {
                         type: MessageType.INFO,
-                        text: 'Operation cancelled.',
+                        text: i18n.t('common:slashCommand.operationCancelled'),
                       },
                       Date.now(),
                     );
@@ -600,7 +605,7 @@ export const useSlashCommandProcessor = (
 
             return { type: 'handled' };
           } else if (commandToExecute.subCommands) {
-            const helpText = `Command '/${commandToExecute.name}' requires a subcommand. Available:\n${commandToExecute.subCommands
+            const helpText = `${i18n.t('common:slashCommand.requiresSubcommand', { name: commandToExecute.name })}\n${commandToExecute.subCommands
               .map((sc) => `  - ${sc.name}: ${sc.description || ''}`)
               .join('\n')}`;
             addMessage({
@@ -616,8 +621,10 @@ export const useSlashCommandProcessor = (
           config?.getMcpClientManager()?.getDiscoveryState() ===
           MCPDiscoveryState.IN_PROGRESS;
         const errorMessage = isMcpLoading
-          ? `Unknown command: ${trimmed}. Command might have been from an MCP server but MCP servers are not done loading.`
-          : `Unknown command: ${trimmed}`;
+          ? i18n.t('common:slashCommand.unknownCommandMcpLoading', {
+              command: trimmed,
+            })
+          : i18n.t('common:slashCommand.unknownCommand', { command: trimmed });
 
         addMessage({
           type: MessageType.ERROR,

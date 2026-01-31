@@ -10,10 +10,13 @@ import {
   CommandKind,
 } from './types.js';
 import { MessageType, type HistoryItemToolsList } from '../types.js';
+import { t } from '../../i18n/index.js';
 
 export const toolsCommand: SlashCommand = {
   name: 'tools',
-  description: 'List available Gemini CLI tools. Usage: /tools [desc]',
+  get description() {
+    return t('commands:tools.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: async (context: CommandContext, args?: string): Promise<void> => {
@@ -29,7 +32,7 @@ export const toolsCommand: SlashCommand = {
     if (!toolRegistry) {
       context.ui.addItem({
         type: MessageType.ERROR,
-        text: 'Could not retrieve tool registry.',
+        text: t('commands:tools.noRegistry'),
       });
       return;
     }

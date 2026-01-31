@@ -9,30 +9,65 @@ import { Box, Text } from 'ink';
 import { useUIState } from '../../contexts/UIStateContext.js';
 import { ExtensionUpdateState } from '../../state/extensions.js';
 import { debugLogger, type GeminiCLIExtension } from '@google/gemini-cli-core';
+import { useTranslation } from 'react-i18next';
 
 interface ExtensionsList {
   extensions: readonly GeminiCLIExtension[];
 }
 
 export const ExtensionsList: React.FC<ExtensionsList> = ({ extensions }) => {
+  const { t } = useTranslation('commands');
   const { extensionsUpdateState } = useUIState();
 
   if (extensions.length === 0) {
-    return <Text>No extensions installed.</Text>;
+    return <Text>{t('extensions.list.empty')}</Text>;
   }
 
   return (
     <Box flexDirection="column" marginTop={1} marginBottom={1}>
-      <Text>Installed extensions: </Text>
+      <Text>{t('extensions.list.installedTitle')}</Text>
       <Box flexDirection="column" paddingLeft={2}>
         {extensions.map((ext) => {
           const state = extensionsUpdateState.get(ext.name);
           const isActive = ext.isActive;
-          const activeString = isActive ? 'active' : 'disabled';
+          const activeString = isActive
+            ? t('extensions.list.status.active')
+            : t('extensions.list.status.disabled');
           const activeColor = isActive ? 'green' : 'grey';
 
           let stateColor = 'gray';
-          const stateText = state || 'unknown state';
+          const stateLabelMap: Partial<Record<ExtensionUpdateState, string>> = {
+            [ExtensionUpdateState.CHECKING_FOR_UPDATES]: t(
+              'extensions.list.updateState.checkingForUpdates',
+            ),
+            [ExtensionUpdateState.UPDATING]: t(
+              'extensions.list.updateState.updating',
+            ),
+            [ExtensionUpdateState.UPDATE_AVAILABLE]: t(
+              'extensions.list.updateState.updateAvailable',
+            ),
+            [ExtensionUpdateState.UPDATED_NEEDS_RESTART]: t(
+              'extensions.list.updateState.updatedNeedsRestart',
+            ),
+            [ExtensionUpdateState.UP_TO_DATE]: t(
+              'extensions.list.updateState.upToDate',
+            ),
+            [ExtensionUpdateState.NOT_UPDATABLE]: t(
+              'extensions.list.updateState.notUpdatable',
+            ),
+            [ExtensionUpdateState.UPDATED]: t(
+              'extensions.list.updateState.updated',
+            ),
+            [ExtensionUpdateState.ERROR]: t(
+              'extensions.list.updateState.error',
+            ),
+            [ExtensionUpdateState.UNKNOWN]: t(
+              'extensions.list.updateState.unknown',
+            ),
+          };
+          const stateText =
+            stateLabelMap[state as ExtensionUpdateState] ??
+            t('extensions.list.updateState.unknown');
 
           switch (state) {
             case ExtensionUpdateState.CHECKING_FOR_UPDATES:
@@ -67,7 +102,7 @@ export const ExtensionsList: React.FC<ExtensionsList> = ({ extensions }) => {
               </Text>
               {ext.resolvedSettings && ext.resolvedSettings.length > 0 && (
                 <Box flexDirection="column" paddingLeft={2}>
-                  <Text>settings:</Text>
+                  <Text>{t('extensions.list.settingsLabel')}</Text>
                   {ext.resolvedSettings.map((setting) => (
                     <Text key={setting.name}>
                       - {setting.name}: {setting.value}

@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { RadioButtonSelect } from './shared/RadioButtonSelect.js';
 import { theme } from '../semantic-colors.js';
 
@@ -28,17 +29,18 @@ export function ProQuotaDialog({
   isModelNotFoundError,
   onChoice,
 }: ProQuotaDialogProps): React.JSX.Element {
+  const { t } = useTranslation('dialogs');
   let items;
   // Do not provide a fallback option if failed model and fallbackmodel are same.
   if (failedModel === fallbackModel) {
     items = [
       {
-        label: 'Keep trying',
+        label: t('proQuota.keepTrying'),
         value: 'retry_once' as const,
         key: 'retry_once',
       },
       {
-        label: 'Stop',
+        label: t('proQuota.stop'),
         value: 'retry_later' as const,
         key: 'retry_later',
       },
@@ -47,17 +49,17 @@ export function ProQuotaDialog({
     // free users and out of quota users on G1 pro and Cloud Console gets an option to upgrade
     items = [
       {
-        label: `Switch to ${fallbackModel}`,
+        label: t('proQuota.switchTo', { model: fallbackModel }),
         value: 'retry_always' as const,
         key: 'retry_always',
       },
       {
-        label: 'Upgrade for higher limits',
+        label: t('proQuota.upgrade'),
         value: 'upgrade' as const,
         key: 'upgrade',
       },
       {
-        label: `Stop`,
+        label: t('proQuota.stop'),
         value: 'retry_later' as const,
         key: 'retry_later',
       },
@@ -66,17 +68,17 @@ export function ProQuotaDialog({
     // capacity error
     items = [
       {
-        label: 'Keep trying',
+        label: t('proQuota.keepTrying'),
         value: 'retry_once' as const,
         key: 'retry_once',
       },
       {
-        label: `Switch to ${fallbackModel}`,
+        label: t('proQuota.switchTo', { model: fallbackModel }),
         value: 'retry_always' as const,
         key: 'retry_always',
       },
       {
-        label: 'Stop',
+        label: t('proQuota.stop'),
         value: 'retry_later' as const,
         key: 'retry_later',
       },

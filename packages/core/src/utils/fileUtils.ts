@@ -15,6 +15,7 @@ import { ToolErrorType } from '../tools/tool-error.js';
 import { BINARY_EXTENSIONS } from './ignorePatterns.js';
 import { createRequire as createModuleRequire } from 'node:module';
 import { debugLogger } from './debugLogger.js';
+import { t } from '../i18n/index.js';
 
 const requireModule = createModuleRequire(import.meta.url);
 
@@ -361,20 +362,24 @@ export async function processSingleFileContent(
     if (!fs.existsSync(filePath)) {
       // Sync check is acceptable before async read
       return {
-        llmContent:
+        llmContent: t(
           'Could not read file because no file was found at the specified path.',
-        returnDisplay: 'File not found.',
-        error: `File not found: ${filePath}`,
+        ),
+        returnDisplay: t('File not found.'),
+        error: t('File not found: {{path}}', { path: filePath }),
         errorType: ToolErrorType.FILE_NOT_FOUND,
       };
     }
     const stats = await fs.promises.stat(filePath);
     if (stats.isDirectory()) {
       return {
-        llmContent:
+        llmContent: t(
           'Could not read file because the provided path is a directory, not a file.',
-        returnDisplay: 'Path is a directory.',
-        error: `Path is a directory, not a file: ${filePath}`,
+        ),
+        returnDisplay: t('Path is a directory.'),
+        error: t('Path is a directory, not a file: {{path}}', {
+          path: filePath,
+        }),
         errorType: ToolErrorType.TARGET_IS_DIRECTORY,
       };
     }
@@ -382,9 +387,12 @@ export async function processSingleFileContent(
     const fileSizeInMB = stats.size / (1024 * 1024);
     if (fileSizeInMB > 20) {
       return {
-        llmContent: 'File size exceeds the 20MB limit.',
-        returnDisplay: 'File size exceeds the 20MB limit.',
-        error: `File size exceeds the 20MB limit: ${filePath} (${fileSizeInMB.toFixed(2)}MB)`,
+        llmContent: t('File size exceeds the 20MB limit.'),
+        returnDisplay: t('File size exceeds the 20MB limit.'),
+        error: t('File size exceeds the 20MB limit: {{path}} ({{size}}MB)', {
+          path: filePath,
+          size: fileSizeInMB.toFixed(2),
+        }),
         errorType: ToolErrorType.FILE_TOO_LARGE,
       };
     }
@@ -397,22 +405,33 @@ export async function processSingleFileContent(
     switch (fileType) {
       case 'binary': {
         return {
-          llmContent: `Cannot display content of binary file: ${relativePathForDisplay}`,
-          returnDisplay: `Skipped binary file: ${relativePathForDisplay}`,
+          llmContent: t('Cannot display content of binary file: {{path}}', {
+            path: relativePathForDisplay,
+          }),
+          returnDisplay: t('Skipped binary file: {{path}}', {
+            path: relativePathForDisplay,
+          }),
         };
       }
       case 'svg': {
         const SVG_MAX_SIZE_BYTES = 1 * 1024 * 1024;
         if (stats.size > SVG_MAX_SIZE_BYTES) {
           return {
-            llmContent: `Cannot display content of SVG file larger than 1MB: ${relativePathForDisplay}`,
-            returnDisplay: `Skipped large SVG file (>1MB): ${relativePathForDisplay}`,
+            llmContent: t(
+              'Cannot display content of SVG file larger than 1MB: {{path}}',
+              { path: relativePathForDisplay },
+            ),
+            returnDisplay: t('Skipped large SVG file (>1MB): {{path}}', {
+              path: relativePathForDisplay,
+            }),
           };
         }
         const content = await readFileWithEncoding(filePath);
         return {
           llmContent: content,
-          returnDisplay: `Read SVG as text: ${relativePathForDisplay}`,
+          returnDisplay: t('Read SVG as text: {{path}}', {
+            path: relativePathForDisplay,
+          }),
         };
       }
       case 'text': {
@@ -449,14 +468,26 @@ export async function processSingleFileContent(
         // By default, return nothing to streamline the common case of a successful read_file.
         let returnDisplay = '';
         if (contentRangeTruncated) {
-          returnDisplay = `Read lines ${
-            actualStartLine + 1
-          }-${endLine} of ${originalLineCount} from ${relativePathForDisplay}`;
+          returnDisplay = t(
+            'Read lines {{start}}-{{end}} of {{total}} from {{path}}',
+            {
+              start: actualStartLine + 1,
+              end: endLine,
+              total: originalLineCount,
+              path: relativePathForDisplay,
+            },
+          );
           if (linesWereTruncatedInLength) {
-            returnDisplay += ' (some lines were shortened)';
+            returnDisplay += t(' (some lines were shortened)');
           }
         } else if (linesWereTruncatedInLength) {
-          returnDisplay = `Read all ${originalLineCount} lines from ${relativePathForDisplay} (some lines were shortened)`;
+          returnDisplay = t(
+            'Read all {{total}} lines from {{path}} (some lines were shortened)',
+            {
+              total: originalLineCount,
+              path: relativePathForDisplay,
+            },
+          );
         }
 
         return {
@@ -480,16 +511,23 @@ export async function processSingleFileContent(
               mimeType: mime.getType(filePath) || 'application/octet-stream',
             },
           },
-          returnDisplay: `Read ${fileType} file: ${relativePathForDisplay}`,
+          returnDisplay: t('Read {{type}} file: {{path}}', {
+            type: fileType,
+            path: relativePathForDisplay,
+          }),
         };
       }
       default: {
         // Should not happen with current detectFileType logic
         const exhaustiveCheck: never = fileType;
         return {
-          llmContent: `Unhandled file type: ${exhaustiveCheck}`,
-          returnDisplay: `Skipped unhandled file type: ${relativePathForDisplay}`,
-          error: `Unhandled file type for ${filePath}`,
+          llmContent: t('Unhandled file type: {{type}}', {
+            type: exhaustiveCheck,
+          }),
+          returnDisplay: t('Skipped unhandled file type: {{path}}', {
+            path: relativePathForDisplay,
+          }),
+          error: t('Unhandled file type for {{path}}', { path: filePath }),
         };
       }
     }
@@ -499,9 +537,18 @@ export async function processSingleFileContent(
       .relative(rootDirectory, filePath)
       .replace(/\\/g, '/');
     return {
-      llmContent: `Error reading file ${displayPath}: ${errorMessage}`,
-      returnDisplay: `Error reading file ${displayPath}: ${errorMessage}`,
-      error: `Error reading file ${filePath}: ${errorMessage}`,
+      llmContent: t('Error reading file {{path}}: {{error}}', {
+        path: displayPath,
+        error: errorMessage,
+      }),
+      returnDisplay: t('Error reading file {{path}}: {{error}}', {
+        path: displayPath,
+        error: errorMessage,
+      }),
+      error: t('Error reading file {{path}}: {{error}}', {
+        path: filePath,
+        error: errorMessage,
+      }),
       errorType: ToolErrorType.READ_CONTENT_FAILURE,
     };
   }

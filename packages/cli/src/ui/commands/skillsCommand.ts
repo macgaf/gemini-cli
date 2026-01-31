@@ -18,6 +18,7 @@ import {
 import { SettingScope } from '../../config/settings.js';
 import { enableSkill, disableSkill } from '../../utils/skillSettings.js';
 import { renderSkillActionFeedback } from '../../utils/skillUtils.js';
+import { t } from '../../i18n/index.js';
 
 async function listAction(
   context: CommandContext,
@@ -41,7 +42,7 @@ async function listAction(
   if (!skillManager) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Could not retrieve skill manager.',
+      text: t('commands:skills.noSkillManager'),
     });
     return;
   }
@@ -74,7 +75,7 @@ async function disableAction(
   if (!skillName) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Please provide a skill name to disable.',
+      text: t('commands:skills.noSkillNameDisable'),
     });
     return;
   }
@@ -83,7 +84,7 @@ async function disableAction(
     context.ui.addItem(
       {
         type: MessageType.ERROR,
-        text: 'Agent skills are disabled by your admin.',
+        text: t('commands:skills.disabledByAdmin'),
       },
       Date.now(),
     );
@@ -95,7 +96,7 @@ async function disableAction(
     context.ui.addItem(
       {
         type: MessageType.ERROR,
-        text: `Skill "${skillName}" not found.`,
+        text: t('commands:skills.notFound', { name: skillName }),
       },
       Date.now(),
     );
@@ -113,7 +114,7 @@ async function disableAction(
     (label, path) => `${label} (${path})`,
   );
   if (result.status === 'success') {
-    feedback += ' Use "/skills reload" for it to take effect.';
+    feedback += ' ' + t('commands:skills.reloadHint');
   }
 
   context.ui.addItem({
@@ -130,7 +131,7 @@ async function enableAction(
   if (!skillName) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Please provide a skill name to enable.',
+      text: t('commands:skills.noSkillNameEnable'),
     });
     return;
   }
@@ -140,7 +141,7 @@ async function enableAction(
     context.ui.addItem(
       {
         type: MessageType.ERROR,
-        text: 'Agent skills are disabled by your admin.',
+        text: t('commands:skills.disabledByAdmin'),
       },
       Date.now(),
     );
@@ -154,7 +155,7 @@ async function enableAction(
     (label, path) => `${label} (${path})`,
   );
   if (result.status === 'success') {
-    feedback += ' Use "/skills reload" for it to take effect.';
+    feedback += ' ' + t('commands:skills.reloadHint');
   }
 
   context.ui.addItem({
@@ -170,7 +171,7 @@ async function reloadAction(
   if (!config) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Could not retrieve configuration.',
+      text: t('commands:skills.noConfig'),
     });
     return;
   }
@@ -183,7 +184,7 @@ async function reloadAction(
   const pendingTimeout = setTimeout(() => {
     context.ui.setPendingItem({
       type: MessageType.INFO,
-      text: 'Reloading agent skills...',
+      text: t('commands:skills.reloading'),
     });
     pendingItemSet = true;
   }, 100);
@@ -213,17 +214,19 @@ async function reloadAction(
       (name) => !afterNames.has(name),
     ).length;
 
-    let successText = 'Agent skills reloaded successfully.';
+    let successText = t('commands:skills.reloadSuccess');
     const details: string[] = [];
 
     if (added.length > 0) {
+      const suffix = added.length === 1 ? '' : 's';
       details.push(
-        `${added.length} newly available skill${added.length > 1 ? 's' : ''}`,
+        t('commands:skills.newlyAvailable', { count: added.length, suffix }),
       );
     }
     if (removedCount > 0) {
+      const suffix = removedCount === 1 ? '' : 's';
       details.push(
-        `${removedCount} skill${removedCount > 1 ? 's' : ''} no longer available`,
+        t('commands:skills.noLongerAvailable', { count: removedCount, suffix }),
       );
     }
 
@@ -244,7 +247,9 @@ async function reloadAction(
     }
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: `Failed to reload skills: ${error instanceof Error ? error.message : String(error)}`,
+      text: t('commands:skills.reloadFailed', {
+        error: error instanceof Error ? error.message : String(error),
+      }),
     });
   }
 }
@@ -279,37 +284,43 @@ function enableCompletion(
 
 export const skillsCommand: SlashCommand = {
   name: 'skills',
-  description:
-    'List, enable, disable, or reload Gemini CLI agent skills. Usage: /skills [list | disable <name> | enable <name> | reload]',
+  get description() {
+    return t('commands:skills.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   subCommands: [
     {
       name: 'list',
-      description:
-        'List available agent skills. Usage: /skills list [nodesc] [all]',
+      get description() {
+        return t('commands:skills.list.description');
+      },
       kind: CommandKind.BUILT_IN,
       action: listAction,
     },
     {
       name: 'disable',
-      description: 'Disable a skill by name. Usage: /skills disable <name>',
+      get description() {
+        return t('commands:skills.disable.description');
+      },
       kind: CommandKind.BUILT_IN,
       action: disableAction,
       completion: disableCompletion,
     },
     {
       name: 'enable',
-      description:
-        'Enable a disabled skill by name. Usage: /skills enable <name>',
+      get description() {
+        return t('commands:skills.enable.description');
+      },
       kind: CommandKind.BUILT_IN,
       action: enableAction,
       completion: enableCompletion,
     },
     {
       name: 'reload',
-      description:
-        'Reload the list of discovered skills. Usage: /skills reload',
+      get description() {
+        return t('commands:skills.reload.description');
+      },
       kind: CommandKind.BUILT_IN,
       action: reloadAction,
     },

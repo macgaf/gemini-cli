@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { RadioButtonSelect } from './shared/RadioButtonSelect.js';
 import { theme } from '../semantic-colors.js';
 import { CliSpinner } from './CliSpinner.js';
@@ -32,17 +33,18 @@ export function ValidationDialog({
   learnMoreUrl,
   onChoice,
 }: ValidationDialogProps): React.JSX.Element {
+  const { t } = useTranslation('auth');
   const [state, setState] = useState<DialogState>('choosing');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const items = [
     {
-      label: 'Verify your account',
+      label: t('validation.options.verify'),
       value: 'verify' as const,
       key: 'verify',
     },
     {
-      label: 'Change authentication',
+      label: t('validation.options.changeAuth'),
       value: 'change_auth' as const,
       key: 'change_auth',
     },
@@ -80,7 +82,7 @@ export function ValidationDialog({
           if (!shouldLaunchBrowser()) {
             // In headless mode, show the link and wait for user to manually verify
             setErrorMessage(
-              `Please open this URL in a browser: ${validationLink}`,
+              t('validation.openBrowserPrompt', { url: validationLink }),
             );
             setState('waiting');
             return;
@@ -91,7 +93,9 @@ export function ValidationDialog({
             setState('waiting');
           } catch (error) {
             setErrorMessage(
-              error instanceof Error ? error.message : 'Failed to open browser',
+              error instanceof Error
+                ? error.message
+                : t('validation.openBrowserFailed'),
             );
             setState('error');
           }
@@ -104,15 +108,14 @@ export function ValidationDialog({
         onChoice(choice);
       }
     },
-    [validationLink, onChoice],
+    [validationLink, onChoice, t],
   );
 
   if (state === 'error') {
     return (
       <Box borderStyle="round" flexDirection="column" padding={1}>
         <Text color={theme.status.error}>
-          {errorMessage ||
-            'Failed to open verification link. Please try again or change authentication.'}
+          {errorMessage || t('validation.openLinkFailed')}
         </Text>
         <Box marginTop={1}>
           <RadioButtonSelect
@@ -129,10 +132,7 @@ export function ValidationDialog({
       <Box borderStyle="round" flexDirection="column" padding={1}>
         <Box>
           <CliSpinner />
-          <Text>
-            {' '}
-            Waiting for verification... (Press ESC or CTRL+C to cancel)
-          </Text>
+          <Text> {t('validation.waiting')}</Text>
         </Box>
         {errorMessage && (
           <Box marginTop={1}>
@@ -140,7 +140,7 @@ export function ValidationDialog({
           </Box>
         )}
         <Box marginTop={1}>
-          <Text dimColor>Press Enter when verification is complete.</Text>
+          <Text dimColor>{t('validation.pressEnterWhenComplete')}</Text>
         </Box>
       </Box>
     );
@@ -149,7 +149,7 @@ export function ValidationDialog({
   if (state === 'complete') {
     return (
       <Box borderStyle="round" flexDirection="column" padding={1}>
-        <Text color={theme.status.success}>Verification complete</Text>
+        <Text color={theme.status.success}>{t('validation.complete')}</Text>
       </Box>
     );
   }
@@ -157,7 +157,7 @@ export function ValidationDialog({
   return (
     <Box borderStyle="round" flexDirection="column" padding={1}>
       <Box marginBottom={1}>
-        <Text>Further action is required to use this service.</Text>
+        <Text>{t('validation.actionRequired')}</Text>
       </Box>
       <Box marginTop={1} marginBottom={1}>
         <RadioButtonSelect
@@ -168,7 +168,8 @@ export function ValidationDialog({
       {learnMoreUrl && (
         <Box marginTop={1}>
           <Text dimColor>
-            Learn more: <Text color={theme.text.accent}>{learnMoreUrl}</Text>
+            {t('validation.learnMore')}{' '}
+            <Text color={theme.text.accent}>{learnMoreUrl}</Text>
           </Text>
         </Box>
       )}

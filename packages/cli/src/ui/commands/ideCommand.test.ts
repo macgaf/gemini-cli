@@ -21,6 +21,25 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
       getInstance: vi.fn(),
     },
   };
+  return {
+    ...original,
+    getOauthClient: vi.fn(original.getOauthClient),
+    getIdeInstaller: vi.fn(original.getIdeInstaller),
+    IdeClient: {
+      getInstance: vi.fn(),
+    },
+  };
+});
+
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string, args?: Record<string, unknown>) => {
+    if (args) return `${key}:${JSON.stringify(args)}`;
+    return key;
+  };
+  return {
+    i18n: { t },
+    t,
+  };
 });
 
 describe('ideCommand', () => {
@@ -117,7 +136,7 @@ describe('ideCommand', () => {
       expect(result).toEqual({
         type: 'message',
         messageType: 'info',
-        content: '🟢 Connected to VS Code',
+        content: 'commands:ide.status.connected:{"ide":"VS Code"}',
       });
     });
 
@@ -133,7 +152,7 @@ describe('ideCommand', () => {
       expect(result).toEqual({
         type: 'message',
         messageType: 'info',
-        content: `🟡 Connecting...`,
+        content: 'commands:ide.status.connecting',
       });
     });
     it('should show disconnected status', async () => {
@@ -148,7 +167,7 @@ describe('ideCommand', () => {
       expect(result).toEqual({
         type: 'message',
         messageType: 'error',
-        content: `🔴 Disconnected`,
+        content: 'commands:ide.status.disconnected',
       });
     });
 
@@ -166,7 +185,8 @@ describe('ideCommand', () => {
       expect(result).toEqual({
         type: 'message',
         messageType: 'error',
-        content: `🔴 Disconnected: ${details}`,
+        content:
+          'commands:ide.status.disconnectedWithDetails:{"details":"Something went wrong"}',
       });
     });
   });
@@ -211,7 +231,7 @@ describe('ideCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'info',
-          text: `Installing IDE companion...`,
+          text: 'commands:ide.install.installing',
         }),
         expect.any(Number),
       );
@@ -225,7 +245,7 @@ describe('ideCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'info',
-          text: '🟢 Connected to VS Code',
+          text: 'commands:ide.status.connected:{"ide":"VS Code"}',
         }),
         expect.any(Number),
       );
@@ -249,7 +269,7 @@ describe('ideCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         expect.objectContaining({
           type: 'info',
-          text: `Installing IDE companion...`,
+          text: 'commands:ide.install.installing',
         }),
         expect.any(Number),
       );

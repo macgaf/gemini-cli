@@ -1,0 +1,42 @@
+{
+  "generic": "An error occurred",
+  "network": {
+    "connectionFailed": "Connection failed",
+    "timeout": "Request timed out",
+    "noInternet": "No internet connection"
+  },
+  "auth": {
+    "failed": "Authentication failed",
+    "expired": "Session expired",
+    "invalidCredentials": "Invalid credentials",
+    "notLoggedIn": "Not logged in"
+  },
+  "api": {
+    "rateLimited": "Rate limit exceeded. Please try again later.",
+    "quotaExceeded": "API quota exceeded",
+    "serverError": "Server error occurred",
+    "invalidResponse": "Invalid response from server"
+  },
+  "file": {
+    "notFound": "File not found: {{path}}",
+    "readError": "Error reading file: {{path}}",
+    "writeError": "Error writing file: {{path}}",
+    "permissionDenied": "Permission denied: {{path}}"
+  },
+  "config": {
+    "invalidSettings": "Invalid settings configuration",
+    "loadError": "Error loading configuration",
+    "saveError": "Error saving configuration"
+  },
+  "tool": {
+    "notFound": "Tool not found: {{name}}",
+    "executionFailed": "Tool execution failed: {{name}}",
+    "timeout": "Tool execution timed out"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalid": "Invalid value",
+    "tooLong": "Value is too long",
+    "tooShort": "Value is too short"
+  }
+}

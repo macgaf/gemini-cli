@@ -18,6 +18,14 @@ vi.mock('fs', () => ({
   writeFileSync: vi.fn(),
 }));
 
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string) => key;
+  return {
+    i18n: { t },
+    t,
+  };
+});
+
 describe('initCommand', () => {
   let mockContext: CommandContext;
   const targetDir = '/test/dir';
@@ -50,8 +58,7 @@ describe('initCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'info',
-      content:
-        'A GEMINI.md file already exists in this directory. No changes were made.',
+      content: 'commands:init.alreadyExists',
     });
     // Assert: Ensure no file was written
     expect(fs.writeFileSync).not.toHaveBeenCalled();
@@ -74,7 +81,7 @@ describe('initCommand', () => {
     expect(mockContext.ui.addItem).toHaveBeenCalledWith(
       {
         type: 'info',
-        text: 'Empty GEMINI.md created. Now analyzing the project to populate it.',
+        text: 'commands:init.emptyCreated',
       },
       expect.any(Number),
     );
@@ -100,7 +107,7 @@ describe('initCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Configuration not available.',
+      content: 'commands:init.configNotAvailable',
     });
   });
 });

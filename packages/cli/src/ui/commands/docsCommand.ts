@@ -12,10 +12,13 @@ import {
   CommandKind,
 } from './types.js';
 import { MessageType } from '../types.js';
+import { t } from '../../i18n/index.js';
 
 export const docsCommand: SlashCommand = {
   name: 'docs',
-  description: 'Open full Gemini CLI documentation in your browser',
+  get description() {
+    return t('commands:docs.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context: CommandContext): Promise<void> => {
@@ -25,7 +28,7 @@ export const docsCommand: SlashCommand = {
       context.ui.addItem(
         {
           type: MessageType.INFO,
-          text: `Please open the following URL in your browser to view the documentation:\n${docsUrl}`,
+          text: `${t('commands:docs.openInBrowser')}\n${docsUrl}`,
         },
         Date.now(),
       );
@@ -33,7 +36,7 @@ export const docsCommand: SlashCommand = {
       context.ui.addItem(
         {
           type: MessageType.INFO,
-          text: `Opening documentation in your browser: ${docsUrl}`,
+          text: `${t('commands:docs.opening')} ${docsUrl}`,
         },
         Date.now(),
       );

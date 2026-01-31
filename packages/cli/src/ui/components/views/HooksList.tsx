@@ -7,6 +7,7 @@
 import type React from 'react';
 import { Box, Text } from 'ink';
 import { theme } from '../../semantic-colors.js';
+import { useTranslation } from 'react-i18next';
 
 interface HooksListProps {
   hooks: ReadonlyArray<{
@@ -26,11 +27,22 @@ interface HooksListProps {
 }
 
 export const HooksList: React.FC<HooksListProps> = ({ hooks }) => {
+  const { t } = useTranslation('commands');
+  const docsUrl = t('hooks.panel.learnMoreUrl');
+  const hookNamePlaceholder = t('hooks.panel.hookNamePlaceholder');
+  const enableCommand = t('hooks.panel.commands.enable', {
+    hookName: hookNamePlaceholder,
+  });
+  const disableCommand = t('hooks.panel.commands.disable', {
+    hookName: hookNamePlaceholder,
+  });
+  const enableAllCommand = t('hooks.panel.commands.enableAll');
+  const disableAllCommand = t('hooks.panel.commands.disableAll');
   if (hooks.length === 0) {
     return (
       <Box flexDirection="column" marginTop={1} marginBottom={1}>
         <Box marginTop={1}>
-          <Text>No hooks configured.</Text>
+          <Text>{t('hooks.noHooksConfigured')}</Text>
         </Box>
       </Box>
     );
@@ -52,23 +64,22 @@ export const HooksList: React.FC<HooksListProps> = ({ hooks }) => {
     <Box flexDirection="column" marginTop={1} marginBottom={1}>
       <Box marginTop={1} flexDirection="column">
         <Text color={theme.status.warning} bold underline>
-          ⚠️ Security Warning:
+          {t('hooks.panel.securityWarningTitle')}
         </Text>
         <Text color={theme.status.warning}>
-          Hooks can execute arbitrary commands on your system. Only use hooks
-          from sources you trust. Review hook scripts carefully.
+          {t('hooks.panel.securityWarningBody')}
         </Text>
       </Box>
 
       <Box marginTop={1}>
         <Text>
-          Learn more:{' '}
-          <Text color={theme.text.link}>https://geminicli.com/docs/hooks</Text>
+          {t('hooks.panel.learnMoreLabel')}{' '}
+          <Text color={theme.text.link}>{docsUrl}</Text>
         </Text>
       </Box>
 
       <Box marginTop={1}>
-        <Text bold>Configured Hooks:</Text>
+        <Text bold>{t('hooks.panel.configuredTitle')}</Text>
       </Box>
       <Box flexDirection="column" paddingLeft={2} marginTop={1}>
         {Object.entries(hooksByEvent).map(([eventName, eventHooks]) => (
@@ -79,11 +90,15 @@ export const HooksList: React.FC<HooksListProps> = ({ hooks }) => {
             <Box flexDirection="column" paddingLeft={2}>
               {eventHooks.map((hook, index) => {
                 const hookName =
-                  hook.config.name || hook.config.command || 'unknown';
+                  hook.config.name ||
+                  hook.config.command ||
+                  t('hooks.panel.unknown');
                 const statusColor = hook.enabled
                   ? theme.status.success
                   : theme.text.secondary;
-                const statusText = hook.enabled ? 'enabled' : 'disabled';
+                const statusText = hook.enabled
+                  ? t('hooks.panel.status.enabled')
+                  : t('hooks.panel.status.disabled');
 
                 return (
                   <Box key={`${eventName}-${index}`} flexDirection="column">
@@ -98,14 +113,24 @@ export const HooksList: React.FC<HooksListProps> = ({ hooks }) => {
                         <Text italic>{hook.config.description}</Text>
                       )}
                       <Text dimColor>
-                        Source: {hook.source}
+                        {t('hooks.panel.sourceLabel', {
+                          source: hook.source,
+                        })}
                         {hook.config.name &&
                           hook.config.command &&
-                          ` | Command: ${hook.config.command}`}
-                        {hook.matcher && ` | Matcher: ${hook.matcher}`}
-                        {hook.sequential && ` | Sequential`}
+                          ` | ${t('hooks.panel.commandLabel', {
+                            command: hook.config.command,
+                          })}`}
+                        {hook.matcher &&
+                          ` | ${t('hooks.panel.matcherLabel', {
+                            matcher: hook.matcher,
+                          })}`}
+                        {hook.sequential &&
+                          ` | ${t('hooks.panel.sequentialLabel')}`}
                         {hook.config.timeout &&
-                          ` | Timeout: ${hook.config.timeout}s`}
+                          ` | ${t('hooks.panel.timeoutLabel', {
+                            seconds: hook.config.timeout,
+                          })}`}
                       </Text>
                     </Box>
                   </Box>
@@ -117,10 +142,15 @@ export const HooksList: React.FC<HooksListProps> = ({ hooks }) => {
       </Box>
       <Box marginTop={1}>
         <Text dimColor>
-          Tip: Use <Text bold>/hooks enable {'<hook-name>'}</Text> or{' '}
-          <Text bold>/hooks disable {'<hook-name>'}</Text> to toggle individual
-          hooks. Use <Text bold>/hooks enable-all</Text> or{' '}
-          <Text bold>/hooks disable-all</Text> to toggle all hooks at once.
+          {t('hooks.panel.tip.prefix')}
+          <Text bold>{enableCommand}</Text>
+          {t('hooks.panel.tip.or')}
+          <Text bold>{disableCommand}</Text>
+          {t('hooks.panel.tip.middle')}
+          <Text bold>{enableAllCommand}</Text>
+          {t('hooks.panel.tip.or')}
+          <Text bold>{disableAllCommand}</Text>
+          {t('hooks.panel.tip.suffix')}
         </Text>
       </Box>
     </Box>

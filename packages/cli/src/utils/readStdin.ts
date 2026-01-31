@@ -50,6 +50,15 @@ export async function readStdin(): Promise<string> {
     };
 
     const onError = (err: Error) => {
+      const errorWithCode = err as NodeJS.ErrnoException;
+      const isEio =
+        errorWithCode.code === 'EIO' || err.message.toUpperCase() === 'EIO';
+      // 遇到 EIO 时当作无输入继续，避免在某些终端环境中中断启动。
+      if (isEio) {
+        cleanup();
+        resolve(data);
+        return;
+      }
       cleanup();
       reject(err);
     };

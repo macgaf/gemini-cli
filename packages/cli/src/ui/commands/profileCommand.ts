@@ -6,19 +6,20 @@
 
 import { isDevelopment } from '../../utils/installationInfo.js';
 import { CommandKind, type SlashCommand } from './types.js';
+import { t } from '../../i18n/index.js';
 
 export const profileCommand: SlashCommand | null = isDevelopment
   ? {
       name: 'profile',
       kind: CommandKind.BUILT_IN,
-      description: 'Toggle the debug profile display',
+      description: t('commands:profile.description'),
       autoExecute: true,
       action: async (context) => {
         context.ui.toggleDebugProfiler();
         return {
           type: 'message',
           messageType: 'info',
-          content: 'Toggled profile display.',
+          content: t('commands:profile.toggled'),
         };
       },
     }

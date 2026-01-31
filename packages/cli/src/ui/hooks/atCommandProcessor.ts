@@ -25,6 +25,7 @@ import { Buffer } from 'node:buffer';
 import type { HistoryItem, IndividualToolCallDisplay } from '../types.js';
 import { ToolCallStatus } from '../types.js';
 import type { UseHistoryManagerReturn } from './useHistoryManager.js';
+import { i18n } from '../../i18n/index.js';
 
 const REF_CONTENT_HEADER = `\n${REFERENCE_CONTENT_START}`;
 const REF_CONTENT_FOOTER = `\n${REFERENCE_CONTENT_END}`;
@@ -178,12 +179,12 @@ export async function handleAtCommand({
 
   if (!readManyFilesTool) {
     addItem(
-      { type: 'error', text: 'Error: read_many_files tool not found.' },
+      { type: 'error', text: i18n.t('common:atCommand.toolNotFound') },
       userMessageTimestamp,
     );
     return {
       processedQuery: null,
-      error: 'Error: read_many_files tool not found.',
+      error: i18n.t('common:atCommand.toolNotFound'),
     };
   }
 
@@ -191,9 +192,7 @@ export async function handleAtCommand({
     const originalAtPath = atPathPart.content; // e.g., "@file.txt" or "@"
 
     if (originalAtPath === '@') {
-      onDebugMessage(
-        'Lone @ detected, will be treated as text in the modified query.',
-      );
+      onDebugMessage(i18n.t('common:atCommand.loneAtDetected'));
       continue;
     }
 
@@ -201,7 +200,9 @@ export async function handleAtCommand({
     if (!pathName) {
       // This case should ideally not be hit if parseAllAtCommands ensures content after @
       // but as a safeguard:
-      const errMsg = `Error: Invalid @ command '${originalAtPath}'. No path specified.`;
+      const errMsg = i18n.t('common:atCommand.invalidCommandNoPath', {
+        command: originalAtPath,
+      });
       addItem(
         {
           type: 'error',
@@ -233,7 +234,7 @@ export async function handleAtCommand({
     const workspaceContext = config.getWorkspaceContext();
     if (!workspaceContext.isPathWithinWorkspace(pathName)) {
       onDebugMessage(
-        `Path ${pathName} is not in the workspace and will be skipped.`,
+        i18n.t('common:atCommand.pathOutsideWorkspace', { path: pathName }),
       );
       continue;
     }
@@ -257,11 +258,16 @@ export async function handleAtCommand({
       ignoredByReason[reason].push(pathName);
       const reasonText =
         reason === 'both'
-          ? 'ignored by both git and gemini'
+          ? i18n.t('common:atCommand.reasonBoth')
           : reason === 'git'
-            ? 'git-ignored'
-            : 'gemini-ignored';
-      onDebugMessage(`Path ${pathName} is ${reasonText} and will be skipped.`);
+            ? i18n.t('common:atCommand.reasonGit')
+            : i18n.t('common:atCommand.reasonGemini');
+      onDebugMessage(
+        i18n.t('common:atCommand.pathIgnored', {
+          path: pathName,
+          reason: reasonText,
+        }),
+      );
       continue;
     }
 
@@ -283,13 +289,20 @@ export async function handleAtCommand({
         if (stats.isDirectory()) {
           currentPathSpec = path.join(relativePath, '**');
           onDebugMessage(
-            `Path ${pathName} resolved to directory, using glob: ${currentPathSpec}`,
+            i18n.t('common:atCommand.resolvedDirectoryGlob', {
+              path: pathName,
+              glob: currentPathSpec,
+            }),
           );
         } else {
           currentPathSpec = relativePath;
           absoluteToRelativePathMap.set(absolutePath, relativePath);
           onDebugMessage(
-            `Path ${pathName} resolved to file: ${absolutePath}, using relative path: ${relativePath}`,
+            i18n.t('common:atCommand.resolvedPath', {
+              path: pathName,
+              absolute: absolutePath,
+              relative: relativePath,
+            }),
           );
         }
         resolvedSuccessfully = true;
@@ -297,7 +310,7 @@ export async function handleAtCommand({
         if (isNodeError(error) && error.code === 'ENOENT') {
           if (config.getEnableRecursiveFileSearch() && globTool) {
             onDebugMessage(
-              `Path ${pathName} not found directly, attempting glob search.`,
+              i18n.t('common:atCommand.notFoundTryGlob', { path: pathName }),
             );
             try {
               const globResult = await globTool.buildAndExecute(
@@ -322,17 +335,21 @@ export async function handleAtCommand({
                     currentPathSpec,
                   );
                   onDebugMessage(
-                    `Glob search for ${pathName} found ${firstMatchAbsolute}, using relative path: ${currentPathSpec}`,
+                    i18n.t('common:atCommand.globFound', {
+                      path: pathName,
+                      match: firstMatchAbsolute,
+                      relative: currentPathSpec,
+                    }),
                   );
                   resolvedSuccessfully = true;
                 } else {
                   onDebugMessage(
-                    `Glob search for '**/*${pathName}*' did not return a usable path. Path ${pathName} will be skipped.`,
+                    i18n.t('common:atCommand.globNoUsable', { path: pathName }),
                   );
                 }
               } else {
                 onDebugMessage(
-                  `Glob search for '**/*${pathName}*' found no files or an error. Path ${pathName} will be skipped.`,
+                  i18n.t('common:atCommand.globNoFiles', { path: pathName }),
                 );
               }
             } catch (globError) {
@@ -340,12 +357,12 @@ export async function handleAtCommand({
                 `Error during glob search for ${pathName}: ${getErrorMessage(globError)}`,
               );
               onDebugMessage(
-                `Error during glob search for ${pathName}. Path ${pathName} will be skipped.`,
+                i18n.t('common:atCommand.globError', { path: pathName }),
               );
             }
           } else {
             onDebugMessage(
-              `Glob tool not found. Path ${pathName} will be skipped.`,
+              i18n.t('common:atCommand.globToolNotFound', { path: pathName }),
             );
           }
         } else {
@@ -353,7 +370,7 @@ export async function handleAtCommand({
             `Error stating path ${pathName}: ${getErrorMessage(error)}`,
           );
           onDebugMessage(
-            `Error stating path ${pathName}. Path ${pathName} will be skipped.`,
+            i18n.t('common:atCommand.statError', { path: pathName }),
           );
         }
       }
@@ -419,16 +436,31 @@ export async function handleAtCommand({
   if (totalIgnored > 0) {
     const messages = [];
     if (ignoredByReason['git'].length) {
-      messages.push(`Git-ignored: ${ignoredByReason['git'].join(', ')}`);
+      messages.push(
+        i18n.t('common:atCommand.ignoredGit', {
+          paths: ignoredByReason['git'].join(', '),
+        }),
+      );
     }
     if (ignoredByReason['gemini'].length) {
-      messages.push(`Gemini-ignored: ${ignoredByReason['gemini'].join(', ')}`);
+      messages.push(
+        i18n.t('common:atCommand.ignoredGemini', {
+          paths: ignoredByReason['gemini'].join(', '),
+        }),
+      );
     }
     if (ignoredByReason['both'].length) {
-      messages.push(`Ignored by both: ${ignoredByReason['both'].join(', ')}`);
+      messages.push(
+        i18n.t('common:atCommand.ignoredBoth', {
+          paths: ignoredByReason['both'].join(', '),
+        }),
+      );
     }
 
-    const message = `Ignored ${totalIgnored} files:\n${messages.join('\n')}`;
+    const message = i18n.t('common:atCommand.ignoredFiles', {
+      count: totalIgnored,
+      details: messages.join('\n'),
+    });
     debugLogger.log(message);
     onDebugMessage(message);
   }
@@ -439,7 +471,7 @@ export async function handleAtCommand({
     resourceAttachments.length === 0 &&
     agentsFound.length === 0
   ) {
-    onDebugMessage('No valid file paths found in @ commands to read.');
+    onDebugMessage(i18n.t('common:atCommand.noValidPaths'));
     if (initialQueryText === '@' && query.trim() === '@') {
       // If the only thing was a lone @, pass original query (which might have spaces)
       return { processedQuery: [{ text: query }] };
@@ -466,7 +498,9 @@ export async function handleAtCommand({
     try {
       if (!client) {
         throw new Error(
-          `MCP client for server '${resource.serverName}' is not available or not connected.`,
+          i18n.t('common:atCommand.resourceClientUnavailable', {
+            server: resource.serverName,
+          }),
         );
       }
       const response = await client.readResource(uri);
@@ -480,7 +514,9 @@ export async function handleAtCommand({
           name: `resources/read (${resource.serverName})`,
           description: uri,
           status: ToolCallStatus.Success,
-          resultDisplay: `Successfully read resource ${uri}`,
+          resultDisplay: i18n.t('common:atCommand.resourceReadSuccess', {
+            uri,
+          }),
           confirmationDetails: undefined,
         } as IndividualToolCallDisplay,
       };
@@ -494,7 +530,10 @@ export async function handleAtCommand({
           name: `resources/read (${resource.serverName})`,
           description: uri,
           status: ToolCallStatus.Error,
-          resultDisplay: `Error reading resource ${uri}: ${getErrorMessage(error)}`,
+          resultDisplay: i18n.t('common:atCommand.resourceReadError', {
+            uri,
+            error: getErrorMessage(error),
+          }),
           confirmationDetails: undefined,
         } as IndividualToolCallDisplay,
       };
@@ -538,7 +577,9 @@ export async function handleAtCommand({
       .filter((d) => d.status === ToolCallStatus.Error)
       .map((d) => d.resultDisplay);
     debugLogger.error(errorMessages);
-    const errorMsg = `Exiting due to an error processing the @ command: ${firstError.resultDisplay}`;
+    const errorMsg = i18n.t('common:atCommand.exitingProcessingError', {
+      error: firstError.resultDisplay,
+    });
     return { processedQuery: null, error: errorMsg };
   }
 
@@ -579,7 +620,9 @@ export async function handleAtCommand({
       status: ToolCallStatus.Success,
       resultDisplay:
         result.returnDisplay ||
-        `Successfully read: ${fileLabelsForDisplay.join(', ')}`,
+        i18n.t('common:atCommand.readManySuccess', {
+          files: fileLabelsForDisplay.join(', '),
+        }),
       confirmationDetails: undefined,
     };
 
@@ -627,9 +670,7 @@ export async function handleAtCommand({
         }
       }
     } else {
-      onDebugMessage(
-        'read_many_files tool returned no content or empty content.',
-      );
+      onDebugMessage(i18n.t('common:atCommand.readManyNoContent'));
     }
 
     if (resourceReadDisplays.length > 0 || readManyFilesDisplay) {
@@ -651,9 +692,12 @@ export async function handleAtCommand({
       name: readManyFilesTool.displayName,
       description:
         invocation?.getDescription() ??
-        'Error attempting to execute tool to read files',
+        i18n.t('common:atCommand.readManyErrorDescription'),
       status: ToolCallStatus.Error,
-      resultDisplay: `Error reading files (${fileLabelsForDisplay.join(', ')}): ${getErrorMessage(error)}`,
+      resultDisplay: i18n.t('common:atCommand.readManyError', {
+        files: fileLabelsForDisplay.join(', '),
+        error: getErrorMessage(error),
+      }),
       confirmationDetails: undefined,
     };
     addItem(
@@ -665,7 +709,9 @@ export async function handleAtCommand({
     );
     return {
       processedQuery: null,
-      error: `Exiting due to an error processing the @ command: ${readManyFilesDisplay.resultDisplay}`,
+      error: i18n.t('common:atCommand.exitingProcessingError', {
+        error: readManyFilesDisplay.resultDisplay,
+      }),
     };
   }
 }

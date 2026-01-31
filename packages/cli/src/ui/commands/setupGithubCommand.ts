@@ -21,6 +21,7 @@ import type { SlashCommand, SlashCommandActionReturn } from './types.js';
 import { CommandKind } from './types.js';
 import { getUrlOpenCommand } from '../../ui/utils/commandUtils.js';
 import { debugLogger } from '@google/gemini-cli-core';
+import { t } from '../../i18n/index.js';
 
 export const GITHUB_WORKFLOW_PATHS = [
   'gemini-dispatch/gemini-dispatch.yml',
@@ -201,16 +202,14 @@ async function downloadSetupFiles({
 
 export const setupGithubCommand: SlashCommand = {
   name: 'setup-github',
-  description: 'Set up GitHub Actions',
+  description: t('commands:setupGithub.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (
     context: CommandContext,
   ): Promise<SlashCommandActionReturn> => {
     if (!isGitHubRepository()) {
-      throw new Error(
-        'Unable to determine the GitHub repository. /setup-github must be run from a git repository.',
-      );
+      throw new Error(t('commands:setupGithub.notGitRepo'));
     }
 
     // Find the root directory of the repo
@@ -219,9 +218,7 @@ export const setupGithubCommand: SlashCommand = {
       gitRepoRoot = getGitRepoRoot();
     } catch (_error) {
       debugLogger.debug(`Failed to get git repo root:`, _error);
-      throw new Error(
-        'Unable to determine the GitHub repository. /setup-github must be run from a git repository.',
-      );
+      throw new Error(t('commands:setupGithub.notGitRepo'));
     }
 
     // Get the latest release tag from GitHub
@@ -255,7 +252,11 @@ export const setupGithubCommand: SlashCommand = {
       commands.push('set -eEuo pipefail');
     }
     commands.push(
-      `echo "Successfully downloaded ${GITHUB_WORKFLOW_PATHS.length} workflows , ${GITHUB_COMMANDS_PATHS.length} commands and updated .gitignore. Follow the steps in ${readmeUrl} (skipping the /setup-github step) to complete setup."`,
+      `echo "${t('commands:setupGithub.downloadSuccess', {
+        workflows: GITHUB_WORKFLOW_PATHS.length,
+        commands: GITHUB_COMMANDS_PATHS.length,
+        url: readmeUrl,
+      })}"`,
     );
     commands.push(...getOpenUrlsCommands(readmeUrl));
 
@@ -264,8 +265,7 @@ export const setupGithubCommand: SlashCommand = {
       type: 'tool',
       toolName: 'run_shell_command',
       toolArgs: {
-        description:
-          'Setting up GitHub Actions to triage issues and review PRs with Gemini.',
+        description: t('commands:setupGithub.toolDescription'),
         command,
       },
     };

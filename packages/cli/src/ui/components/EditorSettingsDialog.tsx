@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useState } from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import {
   editorSettingsManager,
@@ -40,6 +41,7 @@ export function EditorSettingsDialog({
   settings,
   onExit,
 }: EditorDialogProps): React.JSX.Element {
+  const { t } = useTranslation('dialogs');
   const [selectedScope, setSelectedScope] = useState<LoadableSettingScope>(
     SettingScope.User,
   );
@@ -71,7 +73,7 @@ export function EditorSettingsDialog({
   if (editorIndex === -1) {
     coreEvents.emitFeedback(
       'error',
-      `Editor is not supported: ${currentPreference}`,
+      t('editor.unsupported', { editor: currentPreference }),
     );
     editorIndex = 0;
   }
@@ -82,12 +84,12 @@ export function EditorSettingsDialog({
     key: string;
   }> = [
     {
-      label: 'User Settings',
+      label: t('scope.user'),
       value: SettingScope.User,
       key: SettingScope.User,
     },
     {
-      label: 'Workspace Settings',
+      label: t('scope.workspace'),
       value: SettingScope.Workspace,
       key: SettingScope.Workspace,
     },
@@ -111,6 +113,8 @@ export function EditorSettingsDialog({
     selectedScope === SettingScope.User
       ? SettingScope.Workspace
       : SettingScope.User;
+  const otherScopeLabel =
+    otherScope === SettingScope.User ? t('scope.user') : t('scope.workspace');
   if (
     settings.forScope(otherScope).settings.general?.preferredEditor !==
     undefined
@@ -118,11 +122,11 @@ export function EditorSettingsDialog({
     otherScopeModifiedMessage =
       settings.forScope(selectedScope).settings.general?.preferredEditor !==
       undefined
-        ? `(Also modified in ${otherScope})`
-        : `(Modified in ${otherScope})`;
+        ? t('editor.alsoModifiedIn', { scope: otherScopeLabel })
+        : t('editor.modifiedIn', { scope: otherScopeLabel });
   }
 
-  let mergedEditorName = 'None';
+  let mergedEditorName = t('editor.none');
   if (
     settings.merged.general.preferredEditor &&
     isEditorAvailable(settings.merged.general.preferredEditor)
@@ -143,7 +147,8 @@ export function EditorSettingsDialog({
     >
       <Box flexDirection="column" width="45%" paddingRight={2}>
         <Text bold={focusedSection === 'editor'}>
-          {focusedSection === 'editor' ? '> ' : '  '}Select Editor{' '}
+          {focusedSection === 'editor' ? '> ' : '  '}
+          {t('editor.selectEditor')}{' '}
           <Text color={theme.text.secondary}>{otherScopeModifiedMessage}</Text>
         </Text>
         <RadioButtonSelect
@@ -161,7 +166,8 @@ export function EditorSettingsDialog({
 
         <Box marginTop={1} flexDirection="column">
           <Text bold={focusedSection === 'scope'}>
-            {focusedSection === 'scope' ? '> ' : '  '}Apply To
+            {focusedSection === 'scope' ? '> ' : '  '}
+            {t('settings.applyTo')}
           </Text>
           <RadioButtonSelect
             items={scopeItems}
@@ -172,26 +178,21 @@ export function EditorSettingsDialog({
         </Box>
 
         <Box marginTop={1}>
-          <Text color={theme.text.secondary}>
-            (Use Enter to select, Tab to change focus, Esc to close)
-          </Text>
+          <Text color={theme.text.secondary}>{t('settings.helpText')}</Text>
         </Box>
       </Box>
 
       <Box flexDirection="column" width="55%" paddingLeft={2}>
         <Text bold color={theme.text.primary}>
-          Editor Preference
+          {t('editor.preferenceTitle')}
         </Text>
         <Box flexDirection="column" gap={1} marginTop={1}>
+          <Text color={theme.text.secondary}>{t('editor.supportedNote')}</Text>
           <Text color={theme.text.secondary}>
-            These editors are currently supported. Please note that some editors
-            cannot be used in sandbox mode.
-          </Text>
-          <Text color={theme.text.secondary}>
-            Your preferred editor is:{' '}
+            {t('editor.preferredPrefix')}{' '}
             <Text
               color={
-                mergedEditorName === 'None'
+                mergedEditorName === t('editor.none')
                   ? theme.status.error
                   : theme.text.link
               }
@@ -199,7 +200,7 @@ export function EditorSettingsDialog({
             >
               {mergedEditorName}
             </Text>
-            .
+            {t('editor.preferredSuffix')}
           </Text>
         </Box>
       </Box>

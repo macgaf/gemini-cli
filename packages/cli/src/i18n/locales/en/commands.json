@@ -26,7 +26,9 @@
   "clear": {
     "name": "clear",
     "description": "Clear the conversation",
-    "usage": "Clear the current conversation history"
+    "usage": "Clear the current conversation history",
+    "clearingTerminal": "Clearing terminal.",
+    "clearingTerminalAndResettingChat": "Clearing terminal and resetting chat."
   },
   "quit": {
     "name": "quit",
@@ -35,12 +37,12 @@
   },
   "model": {
     "name": "model",
-    "description": "Change or view the current model",
+    "description": "Opens a dialog to configure the model",
     "usage": "View or switch the AI model"
   },
   "theme": {
     "name": "theme",
-    "description": "Change the color theme",
+    "description": "Change the theme",
     "usage": "Switch between available color themes"
   },
   "stats": {
@@ -61,7 +63,11 @@
   "copy": {
     "name": "copy",
     "description": "Copy the last response",
-    "usage": "Copy the last AI response to clipboard"
+    "usage": "Copy the last AI response to clipboard",
+    "noOutput": "No output in history",
+    "copied": "Last output copied to the clipboard",
+    "failed": "Failed to copy to the clipboard. {{error}}",
+    "noText": "Last AI output contains no text to copy."
   },
   "save": {
     "name": "save",
@@ -77,6 +83,9 @@
     "availableList": "Available checkpoints:\n{{list}}",
     "fileNotFound": "File not found: {{file}}",
     "invalidCheckpoint": "Invalid checkpoint file: {{error}}",
+    "gitServiceUnavailable": "Git service is not available, cannot restore checkpoint. Please ensure you are in a git repository.",
+    "restored": "Restored project to the state before the tool call.",
+    "commitNotFound": "The commit hash '{{commitHash}}' associated with this checkpoint could not be found in your Git repository. This can happen if the repository has been re-cloned, reset, or if old commits have been garbage collected. This checkpoint cannot be restored.",
     "errorReading": "Could not read restorable tool calls. This is the error: {{error}}"
   },
   "memory": {
@@ -84,26 +93,43 @@
     "description": "Commands for interacting with memory",
     "usage": "View or manage conversation memory",
     "show": {
-      "description": "Show the current memory contents"
+      "description": "Show the current memory contents",
+      "configNotAvailable": "Configuration not available. Cannot show memory.",
+      "contextLabel": "context files",
+      "loadedFromSingle": "Loaded memory from {{count}} {{name}} file.",
+      "loadedFromPlural": "Loaded memory from {{count}} {{name}} files.",
+      "currentContentWithCount": "Current memory content from {{count}} file(s):\n\n---\n{{content}}\n---",
+      "currentContent": "Current memory content:\n\n---\n{{content}}\n---",
+      "emptyContent": "Hierarchical memory (GEMINI.md or other context files) is loaded but content is empty.",
+      "noneLoaded": "Memory is currently empty."
     },
     "add": {
       "description": "Add content to the memory",
+      "usage": "Usage: /memory add <text to remember>",
       "saving": "Attempting to save to memory: \"{{content}}\""
     },
     "refresh": {
       "description": "Refresh the memory from the source",
       "refreshing": "Refreshing memory from source files...",
+      "successWithCount": "Memory refreshed successfully. Loaded {{chars}} characters from {{count}} file(s).",
+      "successEmpty": "Memory refreshed successfully. No memory content found.",
       "error": "Error refreshing memory: {{error}}"
     },
     "list": {
-      "description": "Lists the paths of the GEMINI.md files in use"
+      "description": "Lists the paths of the GEMINI.md files in use",
+      "withCount": "There are {{count}} GEMINI.md file(s) in use:\n\n{{list}}",
+      "empty": "No GEMINI.md files in use."
     }
   },
   "tools": {
     "name": "tools",
     "description": "List available Gemini CLI tools. Usage: /tools [desc]",
     "usage": "Display all available tools",
-    "noRegistry": "Could not retrieve tool registry."
+    "noRegistry": "Could not retrieve tool registry.",
+    "list": {
+      "title": "Available Gemini CLI tools:",
+      "empty": "No tools available"
+    }
   },
   "mcp": {
     "name": "mcp",
@@ -139,35 +165,69 @@
   },
   "chat": {
     "name": "chat",
-    "description": "Manage chat sessions",
+    "description": "Manage conversation history",
     "usage": "Start a fresh conversation",
     "list": {
       "description": "List saved chat checkpoints"
     },
     "save": {
-      "description": "Save the current conversation to a checkpoint"
+      "description": "Save the current conversation to a checkpoint",
+      "missingTag": "Missing tag. Usage: /chat save <tag>",
+      "noClient": "No chat client available to save conversation.",
+      "noConversation": "No conversation found to save.",
+      "saved": "Conversation checkpoint saved with tag: {{tag}}.",
+      "overwritePromptPrefix": "Conversation checkpoint already exists for tag ",
+      "overwritePromptSuffix": ". Overwrite?"
     },
     "resume": {
-      "description": "Resume a saved conversation checkpoint"
+      "description": "Resume a saved conversation checkpoint",
+      "missingTag": "Missing tag. Usage: /chat resume <tag>",
+      "noCheckpoint": "No saved checkpoint found with tag: {{tag}}.",
+      "authMismatch": "Cannot resume chat. It was saved with a different authentication method ({{saved}}) than the current one ({{current}})."
     },
     "delete": {
-      "description": "Delete a saved conversation checkpoint"
+      "description": "Delete a saved conversation checkpoint",
+      "missingTag": "Missing tag. Usage: /chat delete <tag>",
+      "deleted": "Conversation checkpoint '{{tag}}' has been deleted.",
+      "notFound": "Error: No checkpoint found with tag '{{tag}}'."
     },
     "share": {
-      "description": "Export the conversation to a file (.md or .json)"
+      "description": "Export the conversation to a file (.md or .json)",
+      "noClient": "No chat client available to share conversation.",
+      "noConversation": "No conversation found to share.",
+      "shared": "Conversation shared to {{path}}",
+      "shareFailed": "Error sharing conversation: {{error}}"
     },
     "debug": {
-      "description": "Export the latest API request for debugging"
+      "description": "Export the latest API request for debugging",
+      "noRecentRequest": "No recent API request found to export.",
+      "saved": "Debug API request saved to {{filename}}",
+      "saveFailed": "Error saving debug request: {{error}}"
     },
     "noCheckpoints": "No saved conversation checkpoints found.",
     "listTitle": "List of saved conversations:",
     "invalidDate": "Invalid Date",
-    "newestLast": "Note: Newest last, oldest first"
+    "newestLast": "Note: Newest last, oldest first",
+    "export": {
+      "invalidFormat": "Invalid file format. Only .md and .json are supported."
+    }
   },
   "compress": {
     "name": "compress",
     "description": "Compress conversation history",
-    "usage": "Compress the conversation to save context space"
+    "usage": "Compress the conversation to save context space",
+    "alreadyCompressing": "Already compressing, wait for previous request to complete",
+    "failed": "Failed to compress chat history.",
+    "failedWithError": "Failed to compress chat history: {{error}}",
+    "status": {
+      "pending": "Compressing chat history",
+      "compressed": "Chat history compressed from {{original}} to {{new}} tokens.",
+      "notBeneficial": "Compression was not beneficial for this history size.",
+      "noReduction": "Chat history compression did not reduce size.",
+      "tokenCountError": "Could not compress chat history due to a token counting error.",
+      "emptySummary": "Chat history compression failed: the model returned an empty summary.",
+      "noop": "No compression needed."
+    }
   },
   "about": {
     "description": "Show version info",
@@ -181,7 +241,8 @@
     "authMethod": "Auth Method",
     "userEmail": "User Email",
     "gcpProject": "GCP Project",
-    "ideClient": "IDE Client"
+    "ideClient": "IDE Client",
+    "sandboxExec": "sandbox-exec ({{profile}})"
   },
   "bug": {
     "description": "Submit a bug report",
@@ -190,7 +251,22 @@
     "attachPrompt": "Please consider attaching this file to your GitHub issue if you feel comfortable doing so.",
     "privacyDisclaimer": "**Privacy Disclaimer:** Please do not upload any logs containing sensitive or private information that you are not comfortable sharing publicly.",
     "actionRequired": "[ACTION REQUIRED] 📎 PLEASE ATTACH THE EXPORTED CHAT HISTORY JSON FILE TO THIS ISSUE IF YOU FEEL COMFORTABLE SHARING IT.",
-    "openError": "Could not open URL in browser: {{error}}"
+    "openError": "Could not open URL in browser: {{error}}",
+    "kittySupported": "Supported",
+    "kittyUnsupported": "Unsupported",
+    "info": {
+      "cliVersion": "CLI Version",
+      "gitCommit": "Git Commit",
+      "sessionId": "Session ID",
+      "operatingSystem": "Operating System",
+      "sandboxEnv": "Sandbox Environment",
+      "modelVersion": "Model Version",
+      "memoryUsage": "Memory Usage",
+      "terminalName": "Terminal Name",
+      "terminalBackground": "Terminal Background",
+      "kittyKeyboard": "Kitty Keyboard Protocol",
+      "ideClient": "IDE Client"
+    }
   },
   "docs": {
     "description": "Open the full Gemini CLI documentation in your browser",
@@ -234,13 +310,38 @@
       "log": {
         "consent": "You have consented to the following:",
         "success": "Extension \"{{name}}\" installed successfully and enabled."
-      }
+      },
+      "describe": "Installs an extension from a git repository URL or a local path.",
+      "usage": "Usage: /extensions install <source>",
+      "invalidSource": "Invalid source: {{source}}",
+      "installing": "Installing extension from \"{{source}}\"...",
+      "success": "Extension \"{{name}}\" installed successfully.",
+      "failed": "Failed to install extension from \"{{source}}\": {{error}}"
     },
     "list": {
       "description": "Lists installed extensions.",
       "log": {
         "empty": "No extensions installed."
-      }
+      },
+      "describe": "Lists installed extensions.",
+      "empty": "No extensions installed. Run `/extensions explore` to check out the gallery.",
+      "installedTitle": "Installed extensions:",
+      "status": {
+        "active": "active",
+        "disabled": "disabled"
+      },
+      "updateState": {
+        "unknown": "unknown state",
+        "checkingForUpdates": "checking for updates",
+        "updating": "updating",
+        "updateAvailable": "update available",
+        "updatedNeedsRestart": "updated, needs restart",
+        "updated": "updated",
+        "error": "error",
+        "upToDate": "up to date",
+        "notUpdatable": "not updatable"
+      },
+      "settingsLabel": "settings:"
     },
     "update": {
       "description": "Updates all extensions or a named extension to the latest version.",
@@ -255,7 +356,11 @@
         "missingMetadata": "Unable to install extension \"{{name}}\" due to missing install metadata",
         "upToDate": "Extension \"{{name}}\" is already up to date.",
         "noneToUpdate": "No extensions to update."
-      }
+      },
+      "usage": "Usage: /extensions update <extension-names>|--all",
+      "none": "No extensions to update.",
+      "notFound": "Extension \"{{name}}\" not found.",
+      "available": "You have {{count}} extension{{suffix}} with an update available. Run \"/extensions update {{names}}\"."
     },
     "disable": {
       "description": "Disables an extension.",
@@ -266,7 +371,8 @@
       },
       "log": {
         "success": "Extension \"{{name}}\" successfully disabled for scope \"{{scope}}\"."
-      }
+      },
+      "success": "Extension \"{{name}}\" disabled for {{scope}} scope."
     },
     "enable": {
       "description": "Enables an extension.",
@@ -278,7 +384,8 @@
       "log": {
         "success": "Extension \"{{name}}\" successfully enabled for scope \"{{scope}}\".",
         "successAll": "Extension \"{{name}}\" successfully enabled in all scopes."
-      }
+      },
+      "success": "Extension \"{{name}}\" enabled for {{scope}} scope."
     },
     "link": {
       "description": "Links an extension from a local path. Updates made to the local path will always be reflected.",
@@ -286,7 +393,13 @@
       "consent": "Acknowledge the security risks of installing an extension and skip the confirmation prompt.",
       "log": {
         "success": "Extension \"{{name}}\" linked successfully and enabled."
-      }
+      },
+      "usage": "Usage: /extensions link <source>",
+      "disallowedPath": "Invalid source: {{path}}",
+      "invalidSource": "Invalid source: {{source}}",
+      "linking": "Linking extension from \"{{source}}\"...",
+      "success": "Extension \"{{name}}\" linked successfully.",
+      "failed": "Failed to link extension from \"{{source}}\": {{error}}"
     },
     "new": {
       "description": "Create a new extension from a boilerplate example.",
@@ -330,17 +443,57 @@
       "description": "Go to extension home"
     },
     "uninstall": {
-      "description": "Uninstall an extension"
+      "description": "Uninstall an extension",
+      "usage": "Usage: /extensions uninstall <extension-name>",
+      "uninstalling": "Uninstalling extension \"{{name}}\"...",
+      "success": "Extension \"{{name}}\" uninstalled successfully.",
+      "failed": "Failed to uninstall extension \"{{name}}\": {{error}}"
     },
     "explore": {
-      "description": "Browse the extensions gallery"
+      "description": "Browse the extensions gallery",
+      "opening": "Opening extensions page in your browser: {{url}}",
+      "viewAvailable": "View available extensions at {{url}}",
+      "skippedTest": "Would open extensions page in your browser: {{url}} (skipped in test environment)",
+      "openFailed": "Failed to open browser. Check out the extensions gallery at {{url}}"
     },
     "restart": {
-      "description": "Restart active extensions"
-    }
+      "description": "Restart active extensions",
+      "notLoaded": "Extensions are not yet loaded, can't restart yet",
+      "usage": "Usage: /extensions restart <extension-names>|--all",
+      "restartingSingle": "Restarting extension...",
+      "restartingMultiple": "Restarting {{count}} extensions...",
+      "failedSome": "Failed to restart some extensions:\n  {{errors}}",
+      "notFoundOrInactive": "Extension(s) not found or not active: {{names}}",
+      "successSingle": "Extension restarted successfully.",
+      "successMultiple": "{{count}} extensions restarted successfully."
+    },
+    "consent": {
+      "installingExtension": "Installing extension \"{{name}}\".",
+      "mcpServersTitle": "This extension will run the following MCP servers:",
+      "mcpServerLocal": "local",
+      "mcpServerRemote": "remote",
+      "mcpServerEntry": "  * {{name}} ({{location}}): {{source}}",
+      "contextFile": "This extension will append info to your gemini.md context using {{name}}",
+      "excludeTools": "This extension will exclude the following core tools: {{tools}}",
+      "hooksWarning": "⚠️  This extension contains Hooks which can automatically execute commands.",
+      "agentSkillsTitle": "Agent Skills:",
+      "agentSkillsIntro": "This extension will install the following agent skills:",
+      "installWarning": "The extension you are about to install may have been created by a third-party developer and sourced from a public repository. Google does not vet, endorse, or guarantee the functionality or security of extensions. Please carefully inspect any extension and its source code before installing to understand the permissions it requires and the actions it may perform.",
+      "skillsWarning": "Agent skills inject specialized instructions and domain-specific knowledge into the agent's system prompt. This can change how the agent interprets your requests and interacts with your environment. Review the skill definitions at the location(s) provided below to ensure they meet your security standards.",
+      "continuePrompt": "Do you want to continue?",
+      "continuePromptWithDefault": "Do you want to continue? [Y/n]: ",
+      "skillSourceLabel": "Source",
+      "skillItemsCount": "({{count}} items in directory)",
+      "skillItemsCountFailed": "⚠️ (Could not count items in directory)"
+    },
+    "enableDisable": {
+      "usage": "Usage: /extensions {{action}} <extension> [--scope=<user|workspace|session>]"
+    },
+    "scopeUnsupported": "Unsupported scope: {{scope}}",
+    "describe": "Manage Gemini CLI extensions."
   },
   "settings": {
-    "description": "Open settings"
+    "description": "View and edit Gemini CLI settings"
   },
   "auth": {
     "description": "Manage authentication",
@@ -352,10 +505,13 @@
     }
   },
   "privacy": {
-    "description": "View privacy settings"
+    "description": "Display the privacy notice"
   },
   "permissions": {
-    "description": "Manage permissions"
+    "description": "Manage folder trust settings and other permissions",
+    "trust": {
+      "description": "Manage folder trust settings. Usage: /permissions trust [<directory-path>]"
+    }
   },
   "skills": {
     "description": "List, enable, disable, or reload Gemini CLI agent skills. Usage: /skills [list | disable <name> | enable <name> | reload]",
@@ -363,16 +519,25 @@
     "noConfig": "Could not retrieve configuration.",
     "reloading": "Reloading agent skills...",
     "reloadSuccess": "Agent skills reloaded successfully.",
-    "newlyAvailable": "{{count}} newly available skill(s)",
-    "noLongerAvailable": "{{count}} skill(s) no longer available",
+    "newlyAvailable": "{{count}} newly available skill{{suffix}}",
+    "noLongerAvailable": "{{count}} skill{{suffix}} no longer available",
     "reloadHint": "Use \"/skills reload\" for it to take effect.",
     "reloadFailed": "Failed to reload skills: {{error}}",
     "disabledByAdmin": "Agent skills are disabled by your admin.",
     "notFound": "Skill \"{{name}}\" not found.",
     "noSkillNameDisable": "Please provide a skill name to disable.",
     "noSkillNameEnable": "Please provide a skill name to enable.",
+    "consent": {
+      "installingSkillsFrom": "Installing agent skill(s) from \"{{source}}\".",
+      "skillsWillBeInstalled": "The following agent skill(s) will be installed:",
+      "installDestination": "Install Destination: {{path}}"
+    },
     "list": {
-      "description": "List available agent skills. Usage: /skills list [nodesc] [all]"
+      "description": "List available agent skills. Usage: /skills list [nodesc] [all]",
+      "availableTitle": "Available Agent Skills:",
+      "disabledTitle": "Disabled Skills:",
+      "empty": "No skills available",
+      "builtinBadge": " [Built-in]"
     },
     "disable": {
       "description": "Disable a skill by name. Usage: /skills disable <name>"
@@ -393,7 +558,13 @@
     "nothingToRewind": "Nothing to rewind to.",
     "fetchFailed": "Could not fetch conversation file",
     "unknownError": "Unknown error during rewind",
-    "filesReverted": "File changes reverted."
+    "filesReverted": "File changes reverted.",
+    "revert": {
+      "readError": "Error reading {{fileName}} during revert: {{error}}",
+      "smartFailed": "Smart revert for {{fileName}} failed",
+      "missingFile": "Missing file {{fileName}} during revert.",
+      "unexpectedError": "Unexpected error while reverting {{fileName}}."
+    }
   },
   "hooks": {
     "description": "Manage hooks",
@@ -401,7 +572,35 @@
       "description": "List all hooks"
     },
     "panel": {
-      "description": "Display all registered hooks with their status"
+      "description": "Display all registered hooks with their status",
+      "securityWarningTitle": "Security warning",
+      "securityWarningBody": "Hooks can run commands on your machine. Only enable hooks from sources you trust.",
+      "learnMoreLabel": "Learn more:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "Configured Hooks:",
+      "unknown": "Unknown",
+      "status": {
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "sourceLabel": "Source: {{source}}",
+      "commandLabel": "Command: {{command}}",
+      "matcherLabel": "Matcher: {{matcher}}",
+      "sequentialLabel": "Sequential",
+      "timeoutLabel": "Timeout: {{seconds}}s",
+      "tip": {
+        "prefix": "Tip: ",
+        "or": " or ",
+        "middle": ". You can also use ",
+        "suffix": "."
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<hook-name>"
     },
     "enable": {
       "description": "Enable a hook by name"
@@ -432,18 +631,31 @@
     "failedToDisableAll": "Failed to disable hooks: {{error}}"
   },
   "policies": {
-    "description": "View policies"
+    "description": "Manage policies",
+    "errorConfigNotAvailable": "Error: Config not available.",
+    "noActive": "No active policies.",
+    "list": {
+      "description": "List all active policies",
+      "title": "Active Policies",
+      "tool": "tool",
+      "allTools": "all tools",
+      "argsMatch": "args match",
+      "priority": "Priority",
+      "source": "Source"
+    }
   },
   "profile": {
-    "description": "Manage profiles"
+    "description": "Manage profiles",
+    "toggled": "Toggled profile display."
   },
   "init": {
     "description": "Initialize a new project",
     "configNotAvailable": "Configuration is not available.",
+    "alreadyExists": "A GEMINI.md file already exists in this directory. No changes were made.",
     "emptyCreated": "Created empty GEMINI.md file."
   },
   "editor": {
-    "description": "Open in editor"
+    "description": "Set external editor preference"
   },
   "ide": {
     "description": "IDE integration commands",
@@ -482,7 +694,7 @@
     "failed": "Terminal setup failed: {{error}}",
     "windowsConfigPathMissing": "Could not find {{terminal}} config directory. Is it installed?",
     "keybindingsNotArray": "{{terminal}} keybindings file ({{file}}) is not a JSON array.",
-    "keybindingsParseFailed": "Failed to parse {{terminal}} keybindings file ({{file}}): {{error}}",
+    "keybindingsParseFailed": "Failed to parse {{terminal}} keybindings file ({{file}}): invalid JSON ({{error}})",
     "alreadyConfigured": "{{terminal}} is already configured for Shift+Enter support.",
     "existingBindingsShift": "- Existing 'shift+enter' binding found",
     "existingBindingsCtrl": "- Existing 'ctrl+enter' binding found",
@@ -495,7 +707,10 @@
     "notSupported": "Automatic configuration is not currently supported for {{terminal}}. Please check documentation for manual configuration."
   },
   "setupGithub": {
-    "description": "Set up GitHub integration"
+    "description": "Set up GitHub integration",
+    "notGitRepo": "Not a GitHub repository.",
+    "downloadSuccess": "Downloaded {{workflows}} workflow(s) and {{commands}} command file(s). See {{url}} to finish setup.",
+    "toolDescription": "Set up GitHub Actions"
   },
   "resume": {
     "description": "Resume a previous session"
@@ -505,7 +720,10 @@
     "list": {
       "description": "List available local and remote agents",
       "configNotLoaded": "Config not loaded.",
-      "registryNotFound": "Agent registry not found."
+      "registryNotFound": "Agent registry not found.",
+      "empty": "No agents available.",
+      "localTitle": "Local Agents",
+      "remoteTitle": "Remote Agents"
     },
     "enable": {
       "description": "Enable a disabled agent",
@@ -539,5 +757,8 @@
       "scopeProject": "project",
       "scopeUser": "user"
     }
+  },
+  "corgi": {
+    "description": "Toggles corgi mode"
   }
 }

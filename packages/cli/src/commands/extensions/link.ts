@@ -25,6 +25,8 @@ interface InstallArgs {
   consent?: boolean;
 }
 
+import { t } from '../../i18n/index.js';
+
 export async function handleLink(args: InstallArgs) {
   try {
     const installMetadata: ExtensionInstallMetadata = {
@@ -35,7 +37,11 @@ export async function handleLink(args: InstallArgs) {
       ? () => Promise.resolve(true)
       : requestConsentNonInteractive;
     if (args.consent) {
-      debugLogger.log('You have consented to the following:');
+      debugLogger.log(
+        t('commands:extensions.install.log.consent', {
+          defaultValue: 'You have consented to the following:',
+        }),
+      );
       debugLogger.log(INSTALL_WARNING_MESSAGE);
     }
     const workspaceDir = process.cwd();
@@ -49,7 +55,10 @@ export async function handleLink(args: InstallArgs) {
     const extension =
       await extensionManager.installOrUpdateExtension(installMetadata);
     debugLogger.log(
-      `Extension "${extension.name}" linked successfully and enabled.`,
+      t('commands:extensions.link.log.success', {
+        name: extension.name,
+        defaultValue: `Extension "${extension.name}" linked successfully and enabled.`,
+      }),
     );
   } catch (error) {
     debugLogger.error(getErrorMessage(error));
@@ -59,17 +68,23 @@ export async function handleLink(args: InstallArgs) {
 
 export const linkCommand: CommandModule = {
   command: 'link <path>',
-  describe:
-    'Links an extension from a local path. Updates made to the local path will always be reflected.',
+  describe: t('commands:extensions.link.description', {
+    defaultValue:
+      'Links an extension from a local path. Updates made to the local path will always be reflected.',
+  }),
   builder: (yargs) =>
     yargs
       .positional('path', {
-        describe: 'The name of the extension to link.',
+        describe: t('commands:extensions.link.path', {
+          defaultValue: 'The name of the extension to link.',
+        }),
         type: 'string',
       })
       .option('consent', {
-        describe:
-          'Acknowledge the security risks of installing an extension and skip the confirmation prompt.',
+        describe: t('commands:extensions.link.consent', {
+          defaultValue:
+            'Acknowledge the security risks of installing an extension and skip the confirmation prompt.',
+        }),
         type: 'boolean',
         default: false,
       })

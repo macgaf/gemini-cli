@@ -15,6 +15,7 @@ import { DEFAULT_FILE_FILTERING_OPTIONS } from '../config/constants.js';
 import { ToolErrorType } from './tool-error.js';
 import { LS_TOOL_NAME } from './tool-names.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the LS tool
@@ -125,7 +126,7 @@ class LSToolInvocation extends BaseToolInvocation<LSToolParams, ToolResult> {
     return {
       llmContent,
       // Keep returnDisplay simpler in core logic
-      returnDisplay: `Error: ${returnDisplay}`,
+      returnDisplay: t('Error: {{message}}', { message: returnDisplay }),
       error: {
         message: llmContent,
         type,
@@ -148,15 +149,19 @@ class LSToolInvocation extends BaseToolInvocation<LSToolParams, ToolResult> {
         // fs.statSync throws on non-existence, so this check might be redundant
         // but keeping for clarity. Error message adjusted.
         return this.errorResult(
-          `Error: Directory not found or inaccessible: ${resolvedDirPath}`,
-          `Directory not found or inaccessible.`,
+          t('Error: Directory not found or inaccessible: {{path}}', {
+            path: resolvedDirPath,
+          }),
+          t('Directory not found or inaccessible.'),
           ToolErrorType.FILE_NOT_FOUND,
         );
       }
       if (!stats.isDirectory()) {
         return this.errorResult(
-          `Error: Path is not a directory: ${resolvedDirPath}`,
-          `Path is not a directory.`,
+          t('Error: Path is not a directory: {{path}}', {
+            path: resolvedDirPath,
+          }),
+          t('Path is not a directory.'),
           ToolErrorType.PATH_IS_NOT_A_DIRECTORY,
         );
       }
@@ -165,8 +170,10 @@ class LSToolInvocation extends BaseToolInvocation<LSToolParams, ToolResult> {
       if (files.length === 0) {
         // Changed error message to be more neutral for LLM
         return {
-          llmContent: `Directory ${resolvedDirPath} is empty.`,
-          returnDisplay: `Directory is empty.`,
+          llmContent: t('Directory {{path}} is empty.', {
+            path: resolvedDirPath,
+          }),
+          returnDisplay: t('Directory is empty.'),
         };
       }
 
@@ -226,14 +233,21 @@ class LSToolInvocation extends BaseToolInvocation<LSToolParams, ToolResult> {
         .map((entry) => `${entry.isDirectory ? '[DIR] ' : ''}${entry.name}`)
         .join('\n');
 
-      let resultMessage = `Directory listing for ${resolvedDirPath}:\n${directoryContent}`;
+      let resultMessage = t('Directory listing for {{path}}:\n{{content}}', {
+        path: resolvedDirPath,
+        content: directoryContent,
+      });
       if (ignoredCount > 0) {
-        resultMessage += `\n\n(${ignoredCount} ignored)`;
+        resultMessage += t('\n\n({{count}} ignored)', {
+          count: ignoredCount,
+        });
       }
 
-      let displayMessage = `Listed ${entries.length} item(s).`;
+      let displayMessage = t('Listed {{count}} item(s).', {
+        count: entries.length,
+      });
       if (ignoredCount > 0) {
-        displayMessage += ` (${ignoredCount} ignored)`;
+        displayMessage += t(' ({{count}} ignored)', { count: ignoredCount });
       }
 
       return {
@@ -241,10 +255,12 @@ class LSToolInvocation extends BaseToolInvocation<LSToolParams, ToolResult> {
         returnDisplay: displayMessage,
       };
     } catch (error) {
-      const errorMsg = `Error listing directory: ${error instanceof Error ? error.message : String(error)}`;
+      const errorMsg = t('Error listing directory: {{error}}', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return this.errorResult(
         errorMsg,
-        'Failed to list directory.',
+        t('Failed to list directory.'),
         ToolErrorType.LS_EXECUTION_ERROR,
       );
     }
@@ -263,35 +279,48 @@ export class LSTool extends BaseDeclarativeTool<LSToolParams, ToolResult> {
   ) {
     super(
       LSTool.Name,
-      'ReadFolder',
-      'Lists the names of files and subdirectories directly within a specified directory path. Can optionally ignore entries matching provided glob patterns.',
+      t('tools.ls.displayName', { defaultValue: 'ReadFolder' }),
+      t('tools.ls.description', {
+        defaultValue:
+          'Lists the names of files and subdirectories directly within a specified directory path. Can optionally ignore entries matching provided glob patterns.',
+      }),
       Kind.Search,
       {
         properties: {
           dir_path: {
-            description: 'The path to the directory to list',
+            description: t('tools.ls.params.dir_path', {
+              defaultValue: 'The path to the directory to list',
+            }),
             type: 'string',
           },
           ignore: {
-            description: 'List of glob patterns to ignore',
+            description: t('tools.ls.params.ignore', {
+              defaultValue: 'List of glob patterns to ignore',
+            }),
             items: {
               type: 'string',
             },
             type: 'array',
           },
           file_filtering_options: {
-            description:
-              'Optional: Whether to respect ignore patterns from .gitignore or .geminiignore',
+            description: t('tools.ls.params.file_filtering_options', {
+              defaultValue:
+                'Optional: Whether to respect ignore patterns from .gitignore or .geminiignore',
+            }),
             type: 'object',
             properties: {
               respect_git_ignore: {
-                description:
-                  'Optional: Whether to respect .gitignore patterns when listing files. Only available in git repositories. Defaults to true.',
+                description: t('tools.ls.params.respect_git_ignore', {
+                  defaultValue:
+                    'Optional: Whether to respect .gitignore patterns when listing files. Only available in git repositories. Defaults to true.',
+                }),
                 type: 'boolean',
               },
               respect_gemini_ignore: {
-                description:
-                  'Optional: Whether to respect .geminiignore patterns when listing files. Defaults to true.',
+                description: t('tools.ls.params.respect_gemini_ignore', {
+                  defaultValue:
+                    'Optional: Whether to respect .geminiignore patterns when listing files. Defaults to true.',
+                }),
                 type: 'boolean',
               },
             },
@@ -321,9 +350,10 @@ export class LSTool extends BaseDeclarativeTool<LSToolParams, ToolResult> {
     const workspaceContext = this.config.getWorkspaceContext();
     if (!workspaceContext.isPathWithinWorkspace(resolvedPath)) {
       const directories = workspaceContext.getDirectories();
-      return `Path must be within one of the workspace directories: ${directories.join(
-        ', ',
-      )}`;
+      return t(
+        'Path must be within one of the workspace directories: {{dirs}}',
+        { dirs: directories.join(', ') },
+      );
     }
     return null;
   }

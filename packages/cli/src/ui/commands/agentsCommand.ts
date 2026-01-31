@@ -14,10 +14,11 @@ import { MessageType, type HistoryItemAgentsList } from '../types.js';
 import { SettingScope } from '../../config/settings.js';
 import { disableAgent, enableAgent } from '../../utils/agentSettings.js';
 import { renderAgentActionFeedback } from '../../utils/agentUtils.js';
+import { t } from '../../i18n/index.js';
 
 const agentsListCommand: SlashCommand = {
   name: 'list',
-  description: 'List available local and remote agents',
+  description: t('commands:agents.list.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context: CommandContext) => {
@@ -26,7 +27,7 @@ const agentsListCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Config not loaded.',
+        content: t('commands:agents.list.configNotLoaded'),
       };
     }
 
@@ -35,7 +36,7 @@ const agentsListCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Agent registry not found.',
+        content: t('commands:agents.list.registryNotFound'),
       };
     }
 
@@ -69,7 +70,7 @@ async function enableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Usage: /agents enable <agent-name>',
+      content: t('commands:agents.enable.usage'),
     };
   }
 
@@ -78,7 +79,7 @@ async function enableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Agent registry not found.',
+      content: t('commands:agents.enable.registryNotFound'),
     };
   }
 
@@ -92,7 +93,9 @@ async function enableAction(
     return {
       type: 'message',
       messageType: 'info',
-      content: `Agent '${agentName}' is already enabled.`,
+      content: t('commands:agents.enable.alreadyEnabled', {
+        name: agentName,
+      }),
     };
   }
 
@@ -100,7 +103,7 @@ async function enableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: `Agent '${agentName}' not found.`,
+      content: t('commands:agents.enable.notFound', { name: agentName }),
     };
   }
 
@@ -116,7 +119,7 @@ async function enableAction(
 
   context.ui.addItem({
     type: MessageType.INFO,
-    text: `Enabling ${agentName}...`,
+    text: t('commands:agents.enable.enabling', { name: agentName }),
   });
   await agentRegistry.reload();
 
@@ -139,7 +142,7 @@ async function disableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Usage: /agents disable <agent-name>',
+      content: t('commands:agents.disable.usage'),
     };
   }
 
@@ -148,7 +151,7 @@ async function disableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Agent registry not found.',
+      content: t('commands:agents.disable.registryNotFound'),
     };
   }
 
@@ -162,7 +165,9 @@ async function disableAction(
     return {
       type: 'message',
       messageType: 'info',
-      content: `Agent '${agentName}' is already disabled.`,
+      content: t('commands:agents.disable.alreadyDisabled', {
+        name: agentName,
+      }),
     };
   }
 
@@ -170,7 +175,7 @@ async function disableAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: `Agent '${agentName}' not found.`,
+      content: t('commands:agents.disable.notFound', { name: agentName }),
     };
   }
 
@@ -189,7 +194,7 @@ async function disableAction(
 
   context.ui.addItem({
     type: MessageType.INFO,
-    text: `Disabling ${agentName}...`,
+    text: t('commands:agents.disable.disabling', { name: agentName }),
   });
   await agentRegistry.reload();
 
@@ -223,7 +228,7 @@ function completeAgentsToDisable(context: CommandContext, partialArg: string) {
 
 const enableCommand: SlashCommand = {
   name: 'enable',
-  description: 'Enable a disabled agent',
+  description: t('commands:agents.enable.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: enableAction,
@@ -232,7 +237,7 @@ const enableCommand: SlashCommand = {
 
 const disableCommand: SlashCommand = {
   name: 'disable',
-  description: 'Disable an enabled agent',
+  description: t('commands:agents.disable.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: disableAction,
@@ -241,7 +246,7 @@ const disableCommand: SlashCommand = {
 
 const agentsRefreshCommand: SlashCommand = {
   name: 'refresh',
-  description: 'Reload the agent registry',
+  description: t('commands:agents.refresh.description'),
   kind: CommandKind.BUILT_IN,
   action: async (context: CommandContext) => {
     const { config } = context.services;
@@ -250,13 +255,13 @@ const agentsRefreshCommand: SlashCommand = {
       return {
         type: 'message',
         messageType: 'error',
-        content: 'Agent registry not found.',
+        content: t('commands:agents.refresh.registryNotFound'),
       };
     }
 
     context.ui.addItem({
       type: MessageType.INFO,
-      text: 'Refreshing agent registry...',
+      text: t('commands:agents.refresh.refreshing'),
     });
 
     await agentRegistry.reload();
@@ -264,14 +269,16 @@ const agentsRefreshCommand: SlashCommand = {
     return {
       type: 'message',
       messageType: 'info',
-      content: 'Agents refreshed successfully.',
+      content: t('commands:agents.refresh.success'),
     };
   },
 };
 
 export const agentsCommand: SlashCommand = {
   name: 'agents',
-  description: 'Manage agents',
+  get description() {
+    return t('commands:agents.description');
+  },
   kind: CommandKind.BUILT_IN,
   subCommands: [
     agentsListCommand,

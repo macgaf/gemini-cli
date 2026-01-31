@@ -2,12 +2,11 @@
 
 exports[`LoopDetectionConfirmation > renders correctly 1`] = `
 " ╭──────────────────────────────────────────────────────────────────────────────────────────────────╮
- │ ?  A potential loop was detected                                                                 │
+ │ ?  Loop Detection                                                                                │
  │                                                                                                  │
- │ This can happen due to repetitive tool calls or other model behavior. Do you want to keep loop   │
- │ detection enabled or disable it for this session?                                                │
+ │ It looks like the agent might be in a loop.                                                      │
  │                                                                                                  │
- │ ● 1. Keep loop detection enabled (esc)                                                           │
+ │ ● 1. Keep loop detection enabled                                                                 │
  │   2. Disable loop detection for this session                                                     │
  ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;

@@ -19,6 +19,7 @@ import { getErrorMessage, isAuthenticationError } from '../utils/errors.js';
 import type { EventEmitter } from 'node:events';
 import { coreEvents } from '../utils/events.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Manages the lifecycle of multiple MCP clients, including local child processes.
@@ -68,7 +69,12 @@ export class McpClientManager {
    *    - Updates the Gemini chat configuration to load the new tools.
    */
   async stopExtension(extension: GeminiCLIExtension) {
-    debugLogger.log(`Unloading extension: ${extension.name}`);
+    debugLogger.log(
+      t('debug.mcpUnloadingExtension', {
+        name: extension.name,
+        defaultValue: 'Unloading extension: {{name}}',
+      }),
+    );
     await Promise.all(
       Object.keys(extension.mcpServers ?? {}).map((name) =>
         this.disconnectClient(name, true),
@@ -85,7 +91,12 @@ export class McpClientManager {
    *    - Updates the Gemini chat configuration to load the new tools.
    */
   async startExtension(extension: GeminiCLIExtension) {
-    debugLogger.log(`Loading extension: ${extension.name}`);
+    debugLogger.log(
+      t('debug.mcpLoadingExtension', {
+        name: extension.name,
+        defaultValue: 'Loading extension: {{name}}',
+      }),
+    );
     await Promise.all(
       Object.entries(extension.mcpServers ?? {}).map(([name, config]) =>
         this.maybeDiscoverMcpServer(name, {

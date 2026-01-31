@@ -49,11 +49,19 @@ async function copyDirectory(template: string, path: string) {
   }
 }
 
+import { t } from '../../i18n/index.js';
+
+// ... (keep surrounding code)
+
 async function handleNew(args: NewArgs) {
   if (args.template) {
     await copyDirectory(args.template, args.path);
     debugLogger.log(
-      `Successfully created new extension from template "${args.template}" at ${args.path}.`,
+      t('commands:extensions.new.log.successTemplate', {
+        template: args.template,
+        path: args.path,
+        defaultValue: `Successfully created new extension from template "${args.template}" at ${args.path}.`,
+      }),
     );
   } else {
     await createDirectory(args.path);
@@ -66,10 +74,18 @@ async function handleNew(args: NewArgs) {
       join(args.path, 'gemini-extension.json'),
       JSON.stringify(manifest, null, 2),
     );
-    debugLogger.log(`Successfully created new extension at ${args.path}.`);
+    debugLogger.log(
+      t('commands:extensions.new.log.success', {
+        path: args.path,
+        defaultValue: `Successfully created new extension at ${args.path}.`,
+      }),
+    );
   }
   debugLogger.log(
-    `You can install this using "gemini extensions link ${args.path}" to test it out.`,
+    t('commands:extensions.new.log.hint', {
+      path: args.path,
+      defaultValue: `You can install this using "gemini extensions link ${args.path}" to test it out.`,
+    }),
   );
 }
 
@@ -82,16 +98,22 @@ async function getBoilerplateChoices() {
 
 export const newCommand: CommandModule = {
   command: 'new <path> [template]',
-  describe: 'Create a new extension from a boilerplate example.',
+  describe: t('commands:extensions.new.description', {
+    defaultValue: 'Create a new extension from a boilerplate example.',
+  }),
   builder: async (yargs) => {
     const choices = await getBoilerplateChoices();
     return yargs
       .positional('path', {
-        describe: 'The path to create the extension in.',
+        describe: t('commands:extensions.new.path', {
+          defaultValue: 'The path to create the extension in.',
+        }),
         type: 'string',
       })
       .positional('template', {
-        describe: 'The boilerplate template to use.',
+        describe: t('commands:extensions.new.template', {
+          defaultValue: 'The boilerplate template to use.',
+        }),
         type: 'string',
         choices,
       });

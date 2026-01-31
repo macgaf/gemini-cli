@@ -54,20 +54,27 @@ describe('extension reloading', () => {
       rig.setup('extension reload test', {
         settings: {
           experimental: { extensionReloading: true },
+          security: {
+            auth: {
+              selectedType: '',
+            },
+          },
         },
       });
       const testServerPath = join(rig.testDir!, 'gemini-extension.json');
       writeFileSync(testServerPath, safeJsonStringify(extension, 2));
       // defensive cleanup from previous tests.
       try {
-        await rig.runCommand(['extensions', 'uninstall', 'test-extension']);
+        await rig.runCommand(['extensions', 'uninstall', 'test-extension'], {
+          env: { GEMINI_API_KEY: 'dummy' },
+        });
       } catch {
         /* empty */
       }
 
       const result = await rig.runCommand(
         ['extensions', 'install', `${rig.testDir!}`],
-        { stdin: 'y\n' },
+        { stdin: 'y\n', env: { GEMINI_API_KEY: 'dummy' } },
       );
       expect(result).toContain('test-extension');
 
@@ -82,7 +89,10 @@ describe('extension reloading', () => {
       writeFileSync(testServerPath, safeJsonStringify(extension, 2));
 
       // Start the CLI.
-      const run = await rig.runInteractive({ args: '--debug' });
+      const run = await rig.runInteractive({
+        args: '--debug',
+        env: { GEMINI_API_KEY: 'dummy' },
+      });
       await run.expectText('You have 1 extension with an update available');
       // See the outdated extension
       await run.sendText('/extensions list');
@@ -160,7 +170,9 @@ describe('extension reloading', () => {
       // Clean things up.
       await serverA.stop();
       await serverB.stop();
-      await rig.runCommand(['extensions', 'uninstall', 'test-extension']);
+      await rig.runCommand(['extensions', 'uninstall', 'test-extension'], {
+        env: { GEMINI_API_KEY: 'dummy' },
+      });
     },
   );
 });

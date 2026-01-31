@@ -7,6 +7,7 @@
 import type { ThoughtSummary } from '@google/gemini-cli-core';
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { useStreamingContext } from '../contexts/StreamingContext.js';
 import { StreamingState } from '../types.js';
@@ -29,9 +30,13 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   rightContent,
   thought,
 }) => {
+  const { t } = useTranslation('common');
   const streamingState = useStreamingContext();
   const { columns: terminalWidth } = useTerminalSize();
   const isNarrow = isNarrowWidth(terminalWidth);
+  const interactiveShellWaitingPhrase = t('loading.interactiveShellWaiting', {
+    defaultValue: INTERACTIVE_SHELL_WAITING_PHRASE,
+  });
 
   if (streamingState === StreamingState.Idle) {
     return null;
@@ -40,13 +45,15 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   // Prioritize the interactive shell waiting phrase over the thought subject
   // because it conveys an actionable state for the user (waiting for input).
   const primaryText =
-    currentLoadingPhrase === INTERACTIVE_SHELL_WAITING_PHRASE
+    currentLoadingPhrase === interactiveShellWaitingPhrase
       ? currentLoadingPhrase
       : thought?.subject || currentLoadingPhrase;
 
+  const timeDisplay =
+    elapsedTime < 60 ? `${elapsedTime}s` : formatDuration(elapsedTime * 1000);
   const cancelAndTimerContent =
     streamingState !== StreamingState.WaitingForConfirmation
-      ? `(esc to cancel, ${elapsedTime < 60 ? `${elapsedTime}s` : formatDuration(elapsedTime * 1000)})`
+      ? t('loading.escToCancel', { time: timeDisplay })
       : null;
 
   return (

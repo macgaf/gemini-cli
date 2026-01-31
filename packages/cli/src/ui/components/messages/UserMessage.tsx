@@ -6,9 +6,11 @@
 
 import type React from 'react';
 import { Text, Box } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../../semantic-colors.js';
-import { SCREEN_READER_USER_PREFIX } from '../../textConstants.js';
 import { isSlashCommand as checkIsSlashCommand } from '../../utils/commandUtils.js';
+import { useSettings } from '../../contexts/SettingsContext.js';
+import { resolveColor } from '../../themes/color-utils.js';
 
 interface UserMessageProps {
   text: string;
@@ -16,11 +18,18 @@ interface UserMessageProps {
 }
 
 export const UserMessage: React.FC<UserMessageProps> = ({ text, width }) => {
+  const { t } = useTranslation('common');
+  const { merged: settings } = useSettings();
   const prefix = '> ';
   const prefixWidth = prefix.length;
   const isSlashCommand = checkIsSlashCommand(text);
 
-  const textColor = isSlashCommand ? theme.text.accent : theme.text.secondary;
+  const configuredColor = settings.ui.userMessageColor
+    ? resolveColor(settings.ui.userMessageColor)
+    : undefined;
+  const textColor =
+    configuredColor ??
+    (isSlashCommand ? theme.text.accent : theme.text.secondary);
 
   return (
     <Box
@@ -31,7 +40,10 @@ export const UserMessage: React.FC<UserMessageProps> = ({ text, width }) => {
       width={width}
     >
       <Box width={prefixWidth} flexShrink={0}>
-        <Text color={theme.text.accent} aria-label={SCREEN_READER_USER_PREFIX}>
+        <Text
+          color={theme.text.accent}
+          aria-label={t('screenReader.userPrefix')}
+        >
           {prefix}
         </Text>
       </Box>

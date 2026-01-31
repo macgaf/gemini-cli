@@ -30,6 +30,7 @@ import {
 import { WEB_FETCH_TOOL_NAME } from './tool-names.js';
 import { debugLogger } from '../utils/debugLogger.js';
 import { retryWithBackoff } from '../utils/retry.js';
+import { t } from '../i18n/index.js';
 
 const URL_FETCH_TIMEOUT_MS = 10000;
 const MAX_CONTENT_LENGTH = 100000;
@@ -59,12 +60,15 @@ export function parsePrompt(text: string): {
           validUrls.push(url.href);
         } else {
           errors.push(
-            `Unsupported protocol in URL: "${token}". Only http and https are supported.`,
+            t(
+              'Unsupported protocol in URL: "{{url}}". Only http and https are supported.',
+              { url: token },
+            ),
           );
         }
       } catch (_) {
         // new URL() threw, so it's malformed according to WHATWG standard
-        errors.push(`Malformed URL detected: "${token}".`);
+        errors.push(t('Malformed URL detected: "{{url}}".', { url: token }));
       }
     }
   }
@@ -175,14 +179,18 @@ class WebFetchToolInvocation extends BaseToolInvocation<
       textContent = textContent.substring(0, MAX_CONTENT_LENGTH);
 
       const geminiClient = this.config.getGeminiClient();
-      const fallbackPrompt = `The user requested the following: "${this.params.prompt}".
+      const fallbackPrompt = t('tools.webFetch.fallbackPrompt', {
+        defaultValue: `The user requested the following: "{{prompt}}".
 
 I was unable to access the URL directly. Instead, I have fetched the raw content of the page. Please use the following content to answer the request. Do not attempt to access the URL again.
 
 ---
-${textContent}
+{{content}}
 ---
-`;
+`,
+        prompt: this.params.prompt,
+        content: textContent,
+      });
       const result = await geminiClient.generateContent(
         { model: 'web-fetch-fallback' },
         [{ role: 'user', parts: [{ text: fallbackPrompt }] }],
@@ -191,14 +199,20 @@ ${textContent}
       const resultText = getResponseText(result) || '';
       return {
         llmContent: resultText,
-        returnDisplay: `Content for ${url} processed using fallback fetch.`,
+        returnDisplay: t(
+          'Content for {{url}} processed using fallback fetch.',
+          { url },
+        ),
       };
     } catch (e) {
       const error = e as Error;
-      const errorMessage = `Error during fallback fetch for ${url}: ${error.message}`;
+      const errorMessage = t(
+        'Error during fallback fetch for {{url}}: {{error}}',
+        { url, error: error.message },
+      );
       return {
-        llmContent: `Error: ${errorMessage}`,
-        returnDisplay: `Error: ${errorMessage}`,
+        llmContent: t('Error: {{message}}', { message: errorMessage }),
+        returnDisplay: t('Error: {{message}}', { message: errorMessage }),
         error: {
           message: errorMessage,
           type: ToolErrorType.WEB_FETCH_FALLBACK_FAILED,
@@ -212,7 +226,9 @@ ${textContent}
       this.params.prompt.length > 100
         ? this.params.prompt.substring(0, 97) + '...'
         : this.params.prompt;
-    return `Processing URLs and instructions from prompt: "${displayPrompt}"`;
+    return t('Processing URLs and instructions from prompt: "{{prompt}}"', {
+      prompt: displayPrompt,
+    });
   }
 
   protected override async getConfirmationDetails(
@@ -238,7 +254,7 @@ ${textContent}
 
     const confirmationDetails: ToolCallConfirmationDetails = {
       type: 'info',
-      title: `Confirm Web Fetch`,
+      title: t('Confirm Web Fetch'),
       prompt: this.params.prompt,
       urls,
       onConfirm: async (outcome: ToolConfirmationOutcome) => {
@@ -333,8 +349,8 @@ ${textContent}
       const sourceListFormatted: string[] = [];
       if (sources && sources.length > 0) {
         sources.forEach((source: GroundingChunkItem, index: number) => {
-          const title = source.web?.title || 'Untitled';
-          const uri = source.web?.uri || 'Unknown URI'; // Fallback if URI is missing
+          const title = source.web?.title || t('Untitled');
+          const uri = source.web?.uri || t('Unknown URI'); // Fallback if URI is missing
           sourceListFormatted.push(`[${index + 1}] ${title} (${uri})`);
         });
 
@@ -361,10 +377,9 @@ ${textContent}
         }
 
         if (sourceListFormatted.length > 0) {
-          responseText += `
-
-Sources:
-${sourceListFormatted.join('\n')}`;
+          responseText += `${t('\n\nSources:\n')}${sourceListFormatted.join(
+            '\n',
+          )}`;
         }
       }
 
@@ -377,16 +392,19 @@ ${sourceListFormatted.join('\n')}`;
 
       return {
         llmContent,
-        returnDisplay: `Content processed from prompt.`,
+        returnDisplay: t('Content processed from prompt.'),
       };
     } catch (error: unknown) {
-      const errorMessage = `Error processing web content for prompt "${userPrompt.substring(
-        0,
-        50,
-      )}...": ${getErrorMessage(error)}`;
+      const errorMessage = t(
+        'Error processing web content for prompt "{{prompt}}...": {{error}}',
+        {
+          prompt: userPrompt.substring(0, 50),
+          error: getErrorMessage(error),
+        },
+      );
       return {
-        llmContent: `Error: ${errorMessage}`,
-        returnDisplay: `Error: ${errorMessage}`,
+        llmContent: t('Error: {{message}}', { message: errorMessage }),
+        returnDisplay: t('Error: {{message}}', { message: errorMessage }),
         error: {
           message: errorMessage,
           type: ToolErrorType.WEB_FETCH_PROCESSING_ERROR,
@@ -411,14 +429,19 @@ export class WebFetchTool extends BaseDeclarativeTool<
   ) {
     super(
       WebFetchTool.Name,
-      'WebFetch',
-      "Processes content from URL(s), including local and private network addresses (e.g., localhost), embedded in a prompt. Include up to 20 URLs and instructions (e.g., summarize, extract specific data) directly in the 'prompt' parameter.",
+      t('tools.webFetch.displayName', { defaultValue: 'WebFetch' }),
+      t('tools.webFetch.description', {
+        defaultValue:
+          "Processes content from URL(s), including local and private network addresses (e.g., localhost), embedded in a prompt. Include up to 20 URLs and instructions (e.g., summarize, extract specific data) directly in the 'prompt' parameter.",
+      }),
       Kind.Fetch,
       {
         properties: {
           prompt: {
-            description:
-              'A comprehensive prompt that includes the URL(s) (up to 20) to fetch and specific instructions on how to process their content (e.g., "Summarize https://example.com/article and extract key points from https://another.com/data"). All URLs to be fetched must be valid and complete, starting with "http://" or "https://", and be fully-formed with a valid hostname (e.g., a domain name like "example.com" or an IP address). For example, "https://example.com" is valid, but "example.com" is not.',
+            description: t('tools.webFetch.params.prompt', {
+              defaultValue:
+                'A comprehensive prompt that includes the URL(s) (up to 20) to fetch and specific instructions on how to process their content (e.g., "Summarize https://example.com/article and extract key points from https://another.com/data"). All URLs to be fetched must be valid and complete, starting with "http://" or "https://", and be fully-formed with a valid hostname (e.g., a domain name like "example.com" or an IP address). For example, "https://example.com" is valid, but "example.com" is not.',
+            }),
             type: 'string',
           },
         },
@@ -435,17 +458,23 @@ export class WebFetchTool extends BaseDeclarativeTool<
     params: WebFetchToolParams,
   ): string | null {
     if (!params.prompt || params.prompt.trim() === '') {
-      return "The 'prompt' parameter cannot be empty and must contain URL(s) and instructions.";
+      return t(
+        "The 'prompt' parameter cannot be empty and must contain URL(s) and instructions.",
+      );
     }
 
     const { validUrls, errors } = parsePrompt(params.prompt);
 
     if (errors.length > 0) {
-      return `Error(s) in prompt URLs:\n- ${errors.join('\n- ')}`;
+      return t('Error(s) in prompt URLs:\n- {{errors}}', {
+        errors: errors.join('\n- '),
+      });
     }
 
     if (validUrls.length === 0) {
-      return "The 'prompt' must contain at least one valid URL (starting with http:// or https://).";
+      return t(
+        "The 'prompt' must contain at least one valid URL (starting with http:// or https://).",
+      );
     }
 
     return null;

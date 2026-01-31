@@ -25,6 +25,7 @@ import {
   type ProQuotaDialogRequest,
   type ValidationDialogRequest,
 } from '../contexts/UIStateContext.js';
+import { i18n } from '../../i18n/index.js';
 
 interface UseQuotaAndFallbackArgs {
   config: Config;
@@ -68,17 +69,19 @@ export function useQuotaAndFallback({
       const usageLimitReachedModel =
         failedModel === DEFAULT_GEMINI_MODEL ||
         failedModel === PREVIEW_GEMINI_MODEL
-          ? 'all Pro models'
+          ? i18n.t('dialogs:proQuota.allProModels')
           : failedModel;
       if (error instanceof TerminalQuotaError) {
         isTerminalQuotaError = true;
         // Common part of the message for both tiers
         const messageLines = [
-          `Usage limit reached for ${usageLimitReachedModel}.`,
+          i18n.t('dialogs:proQuota.usageLimitReached', {
+            model: usageLimitReachedModel,
+          }),
           error.retryDelayMs ? getResetTimeMessage(error.retryDelayMs) : null,
-          `/stats for usage details`,
-          `/model to switch models.`,
-          `/auth to switch to API key.`,
+          i18n.t('dialogs:proQuota.statsHint'),
+          i18n.t('dialogs:proQuota.modelHint'),
+          i18n.t('dialogs:proQuota.authHint'),
         ].filter(Boolean);
         message = messageLines.join('\n');
       } else if (
@@ -87,16 +90,16 @@ export function useQuotaAndFallback({
       ) {
         isModelNotFoundError = true;
         const messageLines = [
-          `It seems like you don't have access to ${failedModel}.`,
-          `Learn more at https://goo.gle/enable-preview-features`,
-          `To disable ${failedModel}, disable "Preview features" in /settings.`,
+          i18n.t('dialogs:proQuota.noAccess', { model: failedModel }),
+          i18n.t('dialogs:proQuota.previewLearnMore'),
+          i18n.t('dialogs:proQuota.disablePreview', { model: failedModel }),
         ];
         message = messageLines.join('\n');
       } else {
         const messageLines = [
-          `We are currently experiencing high demand.`,
-          'We apologize and appreciate your patience.',
-          '/model to switch models.',
+          i18n.t('dialogs:proQuota.highDemand'),
+          i18n.t('dialogs:proQuota.highDemandApology'),
+          i18n.t('dialogs:proQuota.modelHint'),
         ];
         message = messageLines.join('\n');
       }
@@ -176,7 +179,9 @@ export function useQuotaAndFallback({
           historyManager.addItem(
             {
               type: MessageType.INFO,
-              text: `Switched to fallback model ${proQuotaRequest.fallbackModel}`,
+              text: i18n.t('dialogs:proQuota.switchedToFallback', {
+                model: proQuotaRequest.fallbackModel,
+              }),
             },
             Date.now(),
           );
@@ -201,7 +206,7 @@ export function useQuotaAndFallback({
         historyManager.addItem(
           {
             type: MessageType.INFO,
-            text: 'Use /auth to change authentication method.',
+            text: i18n.t('auth:validation.changeAuthHint'),
           },
           Date.now(),
         );
@@ -221,11 +226,14 @@ export function useQuotaAndFallback({
 function getResetTimeMessage(delayMs: number): string {
   const resetDate = new Date(Date.now() + delayMs);
 
-  const timeFormatter = new Intl.DateTimeFormat('en-US', {
+  const locale = i18n.language || 'en';
+  const timeFormatter = new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
     minute: '2-digit',
     timeZoneName: 'short',
   });
 
-  return `Access resets at ${timeFormatter.format(resetDate)}.`;
+  return i18n.t('dialogs:proQuota.resetTime', {
+    time: timeFormatter.format(resetDate),
+  });
 }

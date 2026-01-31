@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "Press Esc to exit."
+  },
+  "gemini": {
+    "title": "Gemini API Key Notice",
+    "description1": "By using the Gemini API",
+    "description2": ", Google AI Studio",
+    "description3": ", and the other Google developer services that reference these terms (collectively, the \"APIs\" or \"Services\"), you are agreeing to Google APIs Terms of Service (the \"API Terms\")",
+    "description4": ", and the Gemini API Additional Terms of Service (the \"Additional Terms\")"
+  },
+  "vertexAI": {
+    "title": "Vertex AI Notice",
+    "description1": "Service Specific Terms",
+    "description2": " are incorporated into the agreement under which Google has agreed to provide Google Cloud Platform",
+    "description3": " to Customer (the \"Agreement\"). If the Agreement authorizes the resale or supply of Google Cloud Platform under a Google Cloud partner or reseller program, then except for in the section entitled \"Partner-Specific Terms\", all references to Customer in the Service Specific Terms mean Partner or Reseller (as applicable), and all references to Customer Data in the Service Specific Terms mean Partner Data. Capitalized terms used but not defined in the Service Specific Terms have the meaning given to them in the Agreement."
+  },
+  "codeAssist": {
+    "title": "Gemini Code Assist Privacy Notice"
+  },
+  "cloudFree": {
+    "title": "Gemini Code Assist for Individuals Privacy Notice",
+    "description1": "This notice and our Privacy Policy",
+    "description2": " describe how Gemini Code Assist handles your data. Please read them carefully.",
+    "dataCollection": "When you use Gemini Code Assist for individuals with Gemini CLI, Google collects your prompts, related code, generated output, code edits, related feature usage information, and your feedback to provide, improve, and develop Google products and services and machine learning technologies.",
+    "humanReviewers": "To help with quality and improve our products (such as generative machine-learning models), human reviewers may read, annotate, and process the data collected above. We take steps to protect your privacy as part of this process. This includes disconnecting the data from your Google Account before reviewers see or annotate it, and storing those disconnected copies for up to 18 months. Please don't submit confidential information or any data you wouldn't want a reviewer to see or Google to use to improve our products, services and machine-learning technologies.",
+    "allowDataUse": "Allow Google to use this data to develop and improve our products?",
+    "pressEnterToChoose": "Press Enter to choose an option and exit.",
+    "errorLoading": "Error loading Opt-in settings: {{error}}"
+  }
+}

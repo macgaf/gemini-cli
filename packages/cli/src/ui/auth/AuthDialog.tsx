@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useCallback, useState } from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { RadioButtonSelect } from '../components/shared/RadioButtonSelect.js';
 import type {
@@ -42,17 +43,18 @@ export function AuthDialog({
   onAuthError,
   setAuthContext,
 }: AuthDialogProps): React.JSX.Element {
+  const { t } = useTranslation('auth');
   const [exiting, setExiting] = useState(false);
   let items = [
     {
-      label: 'Login with Google',
+      label: t('authDialog.options.loginWithGoogle'),
       value: AuthType.LOGIN_WITH_GOOGLE,
       key: AuthType.LOGIN_WITH_GOOGLE,
     },
     ...(process.env['CLOUD_SHELL'] === 'true'
       ? [
           {
-            label: 'Use Cloud Shell user credentials',
+            label: t('authDialog.options.useCloudShellCredentials'),
             value: AuthType.COMPUTE_ADC,
             key: AuthType.COMPUTE_ADC,
           },
@@ -60,19 +62,19 @@ export function AuthDialog({
       : process.env['GEMINI_CLI_USE_COMPUTE_ADC'] === 'true'
         ? [
             {
-              label: 'Use metadata server application default credentials',
+              label: t('authDialog.options.useComputeAdc'),
               value: AuthType.COMPUTE_ADC,
               key: AuthType.COMPUTE_ADC,
             },
           ]
         : []),
     {
-      label: 'Use Gemini API Key',
+      label: t('authDialog.options.useGeminiApiKey'),
       value: AuthType.USE_GEMINI,
       key: AuthType.USE_GEMINI,
     },
     {
-      label: 'Vertex AI',
+      label: t('authDialog.options.vertexAi'),
       value: AuthType.USE_VERTEX_AI,
       key: AuthType.USE_VERTEX_AI,
     },
@@ -173,9 +175,7 @@ export function AuthDialog({
         }
         if (settings.merged.security.auth.selectedType === undefined) {
           // Prevent exiting if no auth method is set
-          onAuthError(
-            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
-          );
+          onAuthError(t('authDialog.errorMustSelectAuthMethod'));
           return;
         }
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -196,7 +196,7 @@ export function AuthDialog({
         alignItems="flex-start"
       >
         <Text color={theme.text.primary}>
-          Logging in with Google... Restarting Gemini CLI to continue.
+          {t('authDialog.loginRestarting')}
         </Text>
       </Box>
     );
@@ -214,12 +214,10 @@ export function AuthDialog({
       <Text color={theme.text.accent}>? </Text>
       <Box flexDirection="column" flexGrow={1}>
         <Text bold color={theme.text.primary}>
-          Get started
+          {t('authDialog.title')}
         </Text>
         <Box marginTop={1}>
-          <Text color={theme.text.primary}>
-            How would you like to authenticate for this project?
-          </Text>
+          <Text color={theme.text.primary}>{t('authDialog.prompt')}</Text>
         </Box>
         <Box marginTop={1}>
           <RadioButtonSelect
@@ -237,12 +235,10 @@ export function AuthDialog({
           </Box>
         )}
         <Box marginTop={1}>
-          <Text color={theme.text.secondary}>(Use Enter to select)</Text>
+          <Text color={theme.text.secondary}>{t('authDialog.helpText')}</Text>
         </Box>
         <Box marginTop={1}>
-          <Text color={theme.text.primary}>
-            Terms of Services and Privacy Notice for Gemini CLI
-          </Text>
+          <Text color={theme.text.primary}>{t('authDialog.tosTitle')}</Text>
         </Box>
         <Box marginTop={1}>
           <Text color={theme.text.link}>

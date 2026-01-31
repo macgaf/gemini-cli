@@ -9,6 +9,17 @@ import * as fs from 'node:fs/promises';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { restoreCommand } from './restoreCommand.js';
+
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string, args?: Record<string, unknown>) => {
+    if (args) return `${key}:${JSON.stringify(args)}`;
+    return key;
+  };
+  return {
+    i18n: { t },
+    t,
+  };
+});
 import { type CommandContext } from './types.js';
 import { createMockCommandContext } from '../../test-utils/mockCommandContext.js';
 import {
@@ -93,7 +104,7 @@ describe('restoreCommand', () => {
       ).toEqual({
         type: 'message',
         messageType: 'error',
-        content: 'Could not determine the .gemini directory path.',
+        content: 'commands:restore.geminiDirNotFound',
       });
     });
 
@@ -105,7 +116,7 @@ describe('restoreCommand', () => {
       expect(await command?.action?.(mockContext, '')).toEqual({
         type: 'message',
         messageType: 'info',
-        content: 'No restorable tool calls found.',
+        content: 'commands:restore.noRestorable',
       });
       // Verify the directory was created by the command.
       await expect(fs.stat(checkpointsDir)).resolves.toBeDefined();
@@ -119,7 +130,7 @@ describe('restoreCommand', () => {
       expect(await command?.action?.(mockContext, '')).toEqual({
         type: 'message',
         messageType: 'info',
-        content: 'Available tool calls to restore:\n\ntest1\ntest2',
+        content: 'commands:restore.availableList:{"list":"test1\\ntest2"}',
       });
     });
 
@@ -130,7 +141,7 @@ describe('restoreCommand', () => {
       expect(await command?.action?.(mockContext, 'test2')).toEqual({
         type: 'message',
         messageType: 'error',
-        content: 'File not found: test2.json',
+        content: 'commands:restore.fileNotFound:{"file":"test2.json"}',
       });
     });
 
@@ -147,9 +158,7 @@ describe('restoreCommand', () => {
       expect(await command?.action?.(mockContext, checkpointName)).toEqual({
         type: 'message',
         messageType: 'error',
-        content: expect.stringContaining(
-          'Could not read restorable tool calls.',
-        ),
+        content: expect.stringContaining('commands:restore.errorReading'),
       });
     });
 
@@ -181,7 +190,7 @@ describe('restoreCommand', () => {
       expect(mockContext.ui.addItem).toHaveBeenCalledWith(
         {
           type: 'info',
-          text: 'Restored project to the state before the tool call.',
+          text: 'commands:restore.restored',
         },
         expect.any(Number),
       );
@@ -222,7 +231,7 @@ describe('restoreCommand', () => {
       type: 'message',
       messageType: 'error',
       // A more specific error message would be ideal, but for now, we can assert the current behavior.
-      content: expect.stringContaining('Checkpoint file is invalid'),
+      content: expect.stringContaining('commands:restore.invalidCheckpoint'),
     });
   });
 

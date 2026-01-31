@@ -12,6 +12,7 @@ import {
   getDisplayString,
   type RetryAttemptPayload,
 } from '@google/gemini-cli-core';
+import { i18n } from '../../i18n/index.js';
 
 export const useLoadingIndicator = (
   streamingState: StreamingState,
@@ -61,7 +62,11 @@ export const useLoadingIndicator = (
   }, [streamingState, elapsedTimeFromTimer]);
 
   const retryPhrase = retryStatus
-    ? `Trying to reach ${getDisplayString(retryStatus.model)} (Attempt ${retryStatus.attempt}/${retryStatus.maxAttempts})`
+    ? i18n.t('common:loading.retrying', {
+        model: getDisplayString(retryStatus.model),
+        attempt: retryStatus.attempt,
+        maxAttempts: retryStatus.maxAttempts,
+      })
     : null;
 
   return {

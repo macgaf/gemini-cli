@@ -3,7 +3,7 @@
 exports[`RewindViewer > Content Filtering > 'removes reference markers' 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   some command @file                                                                                                 │
 │   No files have been changed                                                                                         │
@@ -20,7 +20,7 @@ exports[`RewindViewer > Content Filtering > 'removes reference markers' 1`] = `
 exports[`RewindViewer > Content Filtering > 'strips expanded MCP resource content' 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   read @server3:mcp://demo-resource hello                                                                            │
 │   No files have been changed                                                                                         │
@@ -39,12 +39,12 @@ exports[`RewindViewer > Interaction Selection > 'cancels on Escape' > confirmati
 │                                                                                                                      │
 │ Confirm Rewind                                                                                                       │
 │                                                                                                                      │
-│ No code changes to revert. (some time ago)                                                                           │
+│ No files have been changed. (some time ago)                                                                          │
 │                                                                                                                      │
 │ Select an action:                                                                                                    │
 │                                                                                                                      │
-│ ● 1. Rewind conversation                                                                                             │
-│   2. Do nothing (esc)                                                                                                │
+│ ● 1. Rewind conversation only                                                                                        │
+│   2. Cancel                                                                                                          │
 │                                                                                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -54,12 +54,12 @@ exports[`RewindViewer > Interaction Selection > 'confirms on Enter' > confirmati
 │                                                                                                                      │
 │ Confirm Rewind                                                                                                       │
 │                                                                                                                      │
-│ No code changes to revert. (some time ago)                                                                           │
+│ No files have been changed. (some time ago)                                                                          │
 │                                                                                                                      │
 │ Select an action:                                                                                                    │
 │                                                                                                                      │
-│ ● 1. Rewind conversation                                                                                             │
-│   2. Do nothing (esc)                                                                                                │
+│ ● 1. Rewind conversation only                                                                                        │
+│   2. Cancel                                                                                                          │
 │                                                                                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
@@ -67,7 +67,7 @@ exports[`RewindViewer > Interaction Selection > 'confirms on Enter' > confirmati
 exports[`RewindViewer > Navigation > handles 'down' navigation > after-down 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Q1                                                                                                                 │
 │   No files have been changed                                                                                         │
@@ -90,7 +90,7 @@ exports[`RewindViewer > Navigation > handles 'down' navigation > after-down 1`] 
 exports[`RewindViewer > Navigation > handles 'up' navigation > after-up 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Q1                                                                                                                 │
 │   No files have been changed                                                                                         │
@@ -113,7 +113,7 @@ exports[`RewindViewer > Navigation > handles 'up' navigation > after-up 1`] = `
 exports[`RewindViewer > Navigation > handles cyclic navigation > cyclic-down 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Q1                                                                                                                 │
 │   No files have been changed                                                                                         │
@@ -136,7 +136,7 @@ exports[`RewindViewer > Navigation > handles cyclic navigation > cyclic-down 1`]
 exports[`RewindViewer > Navigation > handles cyclic navigation > cyclic-up 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Q1                                                                                                                 │
 │   No files have been changed                                                                                         │
@@ -159,7 +159,7 @@ exports[`RewindViewer > Navigation > handles cyclic navigation > cyclic-up 1`] =
 exports[`RewindViewer > Rendering > renders 'a single interaction' 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Hello                                                                                                              │
 │   No files have been changed                                                                                         │
@@ -176,7 +176,7 @@ exports[`RewindViewer > Rendering > renders 'a single interaction' 1`] = `
 exports[`RewindViewer > Rendering > renders 'full text for selected item' 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   1                                                                                                                  │
 │   2...                                                                                                               │
@@ -194,7 +194,7 @@ exports[`RewindViewer > Rendering > renders 'full text for selected item' 1`] = 
 exports[`RewindViewer > Rendering > renders 'nothing interesting for empty convers…' 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │ ● Stay at current position                                                                                           │
 │   Cancel rewind and stay here                                                                                        │
@@ -208,7 +208,7 @@ exports[`RewindViewer > Rendering > renders 'nothing interesting for empty conve
 exports[`RewindViewer > updates content when conversation changes (background update) > after-update 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Message 1                                                                                                          │
 │   No files have been changed                                                                                         │
@@ -228,7 +228,7 @@ exports[`RewindViewer > updates content when conversation changes (background up
 exports[`RewindViewer > updates content when conversation changes (background update) > initial 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Message 1                                                                                                          │
 │   No files have been changed                                                                                         │
@@ -245,7 +245,7 @@ exports[`RewindViewer > updates content when conversation changes (background up
 exports[`RewindViewer > updates selection and expansion on navigation > after-down 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Line A                                                                                                             │
 │   Line B...                                                                                                          │
@@ -267,7 +267,7 @@ exports[`RewindViewer > updates selection and expansion on navigation > after-do
 exports[`RewindViewer > updates selection and expansion on navigation > initial-state 1`] = `
 "╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                      │
-│ > Rewind                                                                                                             │
+│ > Rewind Conversation                                                                                                │
 │                                                                                                                      │
 │   Line A                                                                                                             │
 │   Line B...                                                                                                          │

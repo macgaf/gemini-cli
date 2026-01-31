@@ -11,6 +11,17 @@ import type { CommandContext } from './types.js';
 
 vi.mock('../utils/terminalSetup.js');
 
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string, args?: Record<string, unknown>) => {
+    if (args) return `${key}:${JSON.stringify(args)}`;
+    return key;
+  };
+  return {
+    i18n: { t },
+    t,
+  };
+});
+
 describe('terminalSetupCommand', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -18,7 +29,9 @@ describe('terminalSetupCommand', () => {
 
   it('should have correct metadata', () => {
     expect(terminalSetupCommand.name).toBe('terminal-setup');
-    expect(terminalSetupCommand.description).toContain('multiline input');
+    expect(terminalSetupCommand.description).toBe(
+      'commands:terminalSetup.description',
+    );
     expect(terminalSetupCommand.kind).toBe('built-in');
   });
 
@@ -49,7 +62,7 @@ describe('terminalSetupCommand', () => {
     expect(result).toEqual({
       type: 'message',
       content:
-        'Terminal configured successfully\n\nPlease restart your terminal for the changes to take effect.',
+        'Terminal configured successfully\n\ncommands:terminalSetup.restartRequired',
       messageType: 'info',
     });
   });
@@ -78,7 +91,8 @@ describe('terminalSetupCommand', () => {
 
     expect(result).toEqual({
       type: 'message',
-      content: 'Failed to configure terminal: Error: Unexpected error',
+      content:
+        'commands:terminalSetup.failed:{"error":"Error: Unexpected error"}',
       messageType: 'error',
     });
   });

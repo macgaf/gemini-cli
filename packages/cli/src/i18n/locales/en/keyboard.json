@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "submit": "Submit message",
+    "newline": "New line",
+    "newlineLinux": "New line (Alt+Enter works for certain linux distros)",
+    "cancel": "Cancel/Interrupt",
+    "clear": "Clear screen",
+    "exit": "Exit",
+    "copy": "Copy last response",
+    "paste": "Paste from clipboard",
+    "jumpWords": "Jump through words in the input",
+    "quit": "Quit application",
+    "clearScreen": "Clear the screen",
+    "selectionMode": "Enter selection mode to copy text",
+    "externalEditor": "Open input in external editor",
+    "yoloMode": "Toggle YOLO mode",
+    "sendMessage": "Send message",
+    "cancelOrClear": "Cancel operation / Clear input (double press)",
+    "scrollPage": "Scroll page up/down",
+    "autoAcceptEdits": "Toggle auto-accepting edits",
+    "promptHistory": "Cycle through your prompt history",
+    "fullListSee": "For a full list of shortcuts, see",
+    "history": {
+      "title": "History",
+      "previous": "Previous message",
+      "next": "Next message"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "scrollUp": "Scroll up",
+      "scrollDown": "Scroll down",
+      "top": "Go to top",
+      "bottom": "Go to bottom"
+    }
+  },
+  "keys": {
+    "enter": "Enter",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Space",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "Normal mode",
+    "insert": "Insert mode",
+    "visual": "Visual mode"
+  }
+}

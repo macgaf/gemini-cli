@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "按 Esc 退出。"
+  },
+  "gemini": {
+    "title": "Gemini API 密钥声明",
+    "description1": "使用 Gemini API",
+    "description2": "、Google AI Studio",
+    "description3": " 以及引用这些条款的其他 Google 开发者服务（统称为「API」或「服务」），即表示您同意 Google API 服务条款（「API 条款」）",
+    "description4": " 以及 Gemini API 附加服务条款（「附加条款」）"
+  },
+  "vertexAI": {
+    "title": "Vertex AI 声明",
+    "description1": "特定服务条款",
+    "description2": " 已纳入 Google 同意向客户提供 Google Cloud Platform",
+    "description3": " 的协议（「协议」）。如果协议授权在 Google Cloud 合作伙伴或经销商计划下转售或提供 Google Cloud Platform，则除「合作伙伴特定条款」部分外，特定服务条款中所有对客户的引用均指合作伙伴或经销商（视情况而定），特定服务条款中所有对客户数据的引用均指合作伙伴数据。特定服务条款中使用但未定义的大写术语具有协议中赋予的含义。"
+  },
+  "codeAssist": {
+    "title": "Gemini Code Assist 隐私声明"
+  },
+  "cloudFree": {
+    "title": "Gemini Code Assist 个人版隐私声明",
+    "description1": "本声明和我们的隐私政策",
+    "description2": " 描述了 Gemini Code Assist 如何处理您的数据。请仔细阅读。",
+    "dataCollection": "当您在 Gemini CLI 中使用 Gemini Code Assist 个人版时，Google 会收集您的提示、相关代码、生成的输出、代码编辑、相关功能使用信息和您的反馈，以提供、改进和开发 Google 产品和服务以及机器学习技术。",
+    "humanReviewers": "为了帮助提高质量和改进我们的产品（例如生成式机器学习模型），人工审核员可能会阅读、注释和处理上述收集的数据。我们在此过程中采取措施保护您的隐私。这包括在审核员查看或注释数据之前将数据与您的 Google 账户断开连接，并将这些断开连接的副本存储长达 18 个月。请不要提交机密信息或任何您不希望审核员看到或不希望 Google 用于改进我们产品、服务和机器学习技术的数据。",
+    "allowDataUse": "允许 Google 使用这些数据来开发和改进我们的产品？",
+    "pressEnterToChoose": "按 Enter 选择选项并退出。",
+    "errorLoading": "加载 Opt-in 设置时出错：{{error}}"
+  }
+}

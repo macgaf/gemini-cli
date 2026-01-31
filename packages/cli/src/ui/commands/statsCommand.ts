@@ -12,14 +12,16 @@ import {
   type SlashCommand,
   CommandKind,
 } from './types.js';
+import { i18n, t } from '../../i18n/index.js';
 
 async function defaultSessionView(context: CommandContext) {
+  const t = i18n.t.bind(i18n);
   const now = new Date();
   const { sessionStartTime } = context.session.stats;
   if (!sessionStartTime) {
     context.ui.addItem({
       type: MessageType.ERROR,
-      text: 'Session start time is unavailable, cannot calculate stats.',
+      text: t('commands:stats.sessionStartUnavailable'),
     });
     return;
   }
@@ -43,7 +45,9 @@ async function defaultSessionView(context: CommandContext) {
 export const statsCommand: SlashCommand = {
   name: 'stats',
   altNames: ['usage'],
-  description: 'Check session stats. Usage: /stats [session|model|tools]',
+  get description() {
+    return t('commands:stats.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: async (context: CommandContext) => {
@@ -52,7 +56,9 @@ export const statsCommand: SlashCommand = {
   subCommands: [
     {
       name: 'session',
-      description: 'Show session-specific usage statistics',
+      get description() {
+        return t('commands:stats.session.description');
+      },
       kind: CommandKind.BUILT_IN,
       autoExecute: true,
       action: async (context: CommandContext) => {
@@ -61,7 +67,9 @@ export const statsCommand: SlashCommand = {
     },
     {
       name: 'model',
-      description: 'Show model-specific usage statistics',
+      get description() {
+        return t('commands:stats.model.description');
+      },
       kind: CommandKind.BUILT_IN,
       autoExecute: true,
       action: (context: CommandContext) => {
@@ -72,7 +80,9 @@ export const statsCommand: SlashCommand = {
     },
     {
       name: 'tools',
-      description: 'Show tool-specific usage statistics',
+      get description() {
+        return t('commands:stats.tools.description');
+      },
       kind: CommandKind.BUILT_IN,
       autoExecute: true,
       action: (context: CommandContext) => {

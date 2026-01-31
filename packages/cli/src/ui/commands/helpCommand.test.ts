@@ -11,6 +11,13 @@ import { createMockCommandContext } from '../../test-utils/mockCommandContext.js
 import { MessageType } from '../types.js';
 import { CommandKind } from './types.js';
 
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string) => key;
+  return {
+    i18n: { t },
+    t,
+  };
+});
 describe('helpCommand', () => {
   let mockContext: CommandContext;
   const originalEnv = { ...process.env };
@@ -46,6 +53,6 @@ describe('helpCommand', () => {
   it('should have the correct command properties', () => {
     expect(helpCommand.name).toBe('help');
     expect(helpCommand.kind).toBe(CommandKind.BUILT_IN);
-    expect(helpCommand.description).toBe('For help on gemini-cli');
+    expect(helpCommand.description).toBe('commands:help.description');
   });
 });

@@ -4,15 +4,37 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SHELL_FOCUS_HINT_DELAY_MS } from '../constants.js';
-import { INFORMATIVE_TIPS } from '../constants/tips.js';
-import { WITTY_LOADING_PHRASES } from '../constants/wittyPhrases.js';
+import { getInformativeTips } from '../constants/tips.js';
+import { getWittyLoadingPhrases } from '../constants/wittyPhrases.js';
 import { useInactivityTimer } from './useInactivityTimer.js';
+import { getFallbackString, t } from '../../i18n/index.js';
 
 export const PHRASE_CHANGE_INTERVAL_MS = 15000;
-export const INTERACTIVE_SHELL_WAITING_PHRASE =
-  'Interactive shell awaiting input... press tab to focus shell';
+
+// Function to get translated phrase
+const WAITING_FOR_CONFIRMATION_FALLBACK = getFallbackString(
+  'common:loading.waitingForConfirmation',
+);
+
+// Export for external use
+export const INTERACTIVE_SHELL_WAITING_PHRASE = getFallbackString(
+  'common:loading.interactiveShellWaiting',
+);
+
+function getInteractiveShellWaitingPhrase(): string {
+  return t('common:loading.interactiveShellWaiting', {
+    defaultValue: INTERACTIVE_SHELL_WAITING_PHRASE,
+  });
+}
+
+function getWaitingForConfirmationPhrase(): string {
+  return t('common:loading.waitingForConfirmation', {
+    defaultValue: WAITING_FOR_CONFIRMATION_FALLBACK,
+  });
+}
 
 /**
  * Custom hook to manage cycling through loading phrases.
@@ -29,10 +51,24 @@ export const usePhraseCycler = (
   lastOutputTime: number = 0,
   customPhrases?: string[],
 ) => {
-  const loadingPhrases =
-    customPhrases && customPhrases.length > 0
-      ? customPhrases
-      : WITTY_LOADING_PHRASES;
+  const { i18n } = useTranslation();
+  // Get translated phrases from i18n
+  const translatedWittyPhrases = useMemo(
+    () => getWittyLoadingPhrases(i18n.language),
+    [i18n.language],
+  );
+  const translatedTips = useMemo(
+    () => getInformativeTips(i18n.language),
+    [i18n.language],
+  );
+
+  const loadingPhrases = useMemo(
+    () =>
+      customPhrases && customPhrases.length > 0
+        ? customPhrases
+        : translatedWittyPhrases,
+    [customPhrases, translatedWittyPhrases],
+  );
 
   const [currentLoadingPhrase, setCurrentLoadingPhrase] = useState(
     loadingPhrases[0],
@@ -53,12 +89,12 @@ export const usePhraseCycler = (
     }
 
     if (isInteractiveShellWaiting && showShellFocusHint) {
-      setCurrentLoadingPhrase(INTERACTIVE_SHELL_WAITING_PHRASE);
+      setCurrentLoadingPhrase(getInteractiveShellWaitingPhrase());
       return;
     }
 
     if (isWaiting) {
-      setCurrentLoadingPhrase('Waiting for user confirmation...');
+      setCurrentLoadingPhrase(getWaitingForConfirmationPhrase());
       return;
     }
 
@@ -76,12 +112,12 @@ export const usePhraseCycler = (
         // Show a tip on the first request after startup, then continue with 1/6 chance
         if (!hasShownFirstRequestTipRef.current) {
           // Show a tip during the first request
-          phraseList = INFORMATIVE_TIPS;
+          phraseList = translatedTips;
           hasShownFirstRequestTipRef.current = true;
         } else {
           // Roughly 1 in 6 chance to show a tip after the first request
           const showTip = Math.random() < 1 / 6;
-          phraseList = showTip ? INFORMATIVE_TIPS : WITTY_LOADING_PHRASES;
+          phraseList = showTip ? translatedTips : translatedWittyPhrases;
         }
         const randomIndex = Math.floor(Math.random() * phraseList.length);
         setCurrentLoadingPhrase(phraseList[randomIndex]);
@@ -109,6 +145,8 @@ export const usePhraseCycler = (
     customPhrases,
     loadingPhrases,
     showShellFocusHint,
+    translatedTips,
+    translatedWittyPhrases,
   ]);
 
   return currentLoadingPhrase;

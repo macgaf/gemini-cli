@@ -45,6 +45,7 @@ import { getSpecificMimeType } from '../utils/fileUtils.js';
 import { getLanguageFromFilePath } from '../utils/language-detection.js';
 import type { MessageBus } from '../confirmation-bus/message-bus.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the WriteFile tool
@@ -217,7 +218,9 @@ class WriteFileToolInvocation extends BaseToolInvocation<
 
     const confirmationDetails: ToolEditConfirmationDetails = {
       type: 'edit',
-      title: `Confirm Write: ${shortenPath(relativePath)}`,
+      title: t('Confirm Write: {{path}}', {
+        path: shortenPath(relativePath),
+      }),
       fileName,
       filePath: this.resolvedPath,
       fileDiff,
@@ -256,8 +259,14 @@ class WriteFileToolInvocation extends BaseToolInvocation<
     if (correctedContentResult.error) {
       const errDetails = correctedContentResult.error;
       const errorMsg = errDetails.code
-        ? `Error checking existing file '${this.resolvedPath}': ${errDetails.message} (${errDetails.code})`
-        : `Error checking existing file: ${errDetails.message}`;
+        ? t("Error checking existing file '{{path}}': {{message}} ({{code}})", {
+            path: this.resolvedPath,
+            message: errDetails.message,
+            code: errDetails.code,
+          })
+        : t('Error checking existing file: {{message}}', {
+            message: errDetails.message,
+          });
       return {
         llmContent: errorMsg,
         returnDisplay: errorMsg,
@@ -318,12 +327,18 @@ class WriteFileToolInvocation extends BaseToolInvocation<
 
       const llmSuccessMessageParts = [
         isNewFile
-          ? `Successfully created and wrote to new file: ${this.resolvedPath}.`
-          : `Successfully overwrote file: ${this.resolvedPath}.`,
+          ? t('Successfully created and wrote to new file: {{path}}.', {
+              path: this.resolvedPath,
+            })
+          : t('Successfully overwrote file: {{path}}.', {
+              path: this.resolvedPath,
+            }),
       ];
       if (modified_by_user) {
         llmSuccessMessageParts.push(
-          `User modified the \`content\` to be: ${content}`,
+          t('User modified the `content` to be: {{content}}', {
+            content,
+          }),
         );
       }
 
@@ -366,17 +381,33 @@ class WriteFileToolInvocation extends BaseToolInvocation<
 
       if (isNodeError(error)) {
         // Handle specific Node.js errors with their error codes
-        errorMsg = `Error writing to file '${this.resolvedPath}': ${error.message} (${error.code})`;
+        errorMsg = t(
+          "Error writing to file '{{path}}': {{message}} ({{code}})",
+          {
+            path: this.resolvedPath,
+            message: error.message,
+            code: error.code,
+          },
+        );
 
         // Log specific error types for better debugging
         if (error.code === 'EACCES') {
-          errorMsg = `Permission denied writing to file: ${this.resolvedPath} (${error.code})`;
+          errorMsg = t(
+            'Permission denied writing to file: {{path}} ({{code}})',
+            { path: this.resolvedPath, code: error.code },
+          );
           errorType = ToolErrorType.PERMISSION_DENIED;
         } else if (error.code === 'ENOSPC') {
-          errorMsg = `No space left on device: ${this.resolvedPath} (${error.code})`;
+          errorMsg = t('No space left on device: {{path}} ({{code}})', {
+            path: this.resolvedPath,
+            code: error.code,
+          });
           errorType = ToolErrorType.NO_SPACE_LEFT;
         } else if (error.code === 'EISDIR') {
-          errorMsg = `Target is a directory, not a file: ${this.resolvedPath} (${error.code})`;
+          errorMsg = t(
+            'Target is a directory, not a file: {{path}} ({{code}})',
+            { path: this.resolvedPath, code: error.code },
+          );
           errorType = ToolErrorType.TARGET_IS_DIRECTORY;
         }
 
@@ -385,9 +416,13 @@ class WriteFileToolInvocation extends BaseToolInvocation<
           debugLogger.error('Write file error stack:', error.stack);
         }
       } else if (error instanceof Error) {
-        errorMsg = `Error writing to file: ${error.message}`;
+        errorMsg = t('Error writing to file: {{error}}', {
+          error: error.message,
+        });
       } else {
-        errorMsg = `Error writing to file: ${String(error)}`;
+        errorMsg = t('Error writing to file: {{error}}', {
+          error: String(error),
+        });
       }
 
       return {
@@ -417,19 +452,25 @@ export class WriteFileTool
   ) {
     super(
       WriteFileTool.Name,
-      'WriteFile',
-      `Writes content to a specified file in the local filesystem.
+      t('tools.writeFile.displayName', { defaultValue: 'WriteFile' }),
+      t('tools.writeFile.description', {
+        defaultValue: `Writes content to a specified file in the local filesystem.
 
       The user has the ability to modify \`content\`. If modified, this will be stated in the response.`,
+      }),
       Kind.Edit,
       {
         properties: {
           file_path: {
-            description: 'The path to the file to write to.',
+            description: t('tools.writeFile.params.file_path', {
+              defaultValue: 'The path to the file to write to.',
+            }),
             type: 'string',
           },
           content: {
-            description: 'The content to write to the file.',
+            description: t('tools.writeFile.params.content', {
+              defaultValue: 'The content to write to the file.',
+            }),
             type: 'string',
           },
         },
@@ -448,7 +489,7 @@ export class WriteFileTool
     const filePath = params.file_path;
 
     if (!filePath) {
-      return `Missing or empty "file_path"`;
+      return t('Missing or empty "file_path"');
     }
 
     const resolvedPath = path.resolve(this.config.getTargetDir(), filePath);
@@ -456,22 +497,30 @@ export class WriteFileTool
     const workspaceContext = this.config.getWorkspaceContext();
     if (!workspaceContext.isPathWithinWorkspace(resolvedPath)) {
       const directories = workspaceContext.getDirectories();
-      return `File path must be within one of the workspace directories: ${directories.join(
-        ', ',
-      )}`;
+      return t(
+        'File path must be within one of the workspace directories: {{dirs}}',
+        { dirs: directories.join(', ') },
+      );
     }
 
     try {
       if (fs.existsSync(resolvedPath)) {
         const stats = fs.lstatSync(resolvedPath);
         if (stats.isDirectory()) {
-          return `Path is a directory, not a file: ${resolvedPath}`;
+          return t('Path is a directory, not a file: {{path}}', {
+            path: resolvedPath,
+          });
         }
       }
     } catch (statError: unknown) {
-      return `Error accessing path properties for validation: ${resolvedPath}. Reason: ${
-        statError instanceof Error ? statError.message : String(statError)
-      }`;
+      return t(
+        'Error accessing path properties for validation: {{path}}. Reason: {{error}}',
+        {
+          path: resolvedPath,
+          error:
+            statError instanceof Error ? statError.message : String(statError),
+        },
+      );
     }
 
     return null;

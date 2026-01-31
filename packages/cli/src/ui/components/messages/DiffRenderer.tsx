@@ -13,6 +13,7 @@ import { MaxSizedBox } from '../shared/MaxSizedBox.js';
 import { theme as semanticTheme } from '../../semantic-colors.js';
 import type { Theme } from '../../themes/theme.js';
 import { useSettings } from '../../contexts/SettingsContext.js';
+import { i18n } from '../../../i18n/index.js';
 
 interface DiffLine {
   type: 'add' | 'del' | 'context' | 'hunk' | 'other';
@@ -125,7 +126,11 @@ export const DiffRenderer: React.FC<DiffRendererProps> = ({
 
   const renderedOutput = useMemo(() => {
     if (!diffContent || typeof diffContent !== 'string') {
-      return <Text color={semanticTheme.status.warning}>No diff content.</Text>;
+      return (
+        <Text color={semanticTheme.status.warning}>
+          {i18n.t('common:diff.noContent')}
+        </Text>
+      );
     }
 
     if (parsedLines.length === 0) {
@@ -135,16 +140,23 @@ export const DiffRenderer: React.FC<DiffRendererProps> = ({
           borderColor={semanticTheme.border.default}
           padding={1}
         >
-          <Text dimColor>No changes detected.</Text>
+          <Text dimColor>{i18n.t('common:diff.noChanges')}</Text>
         </Box>
       );
     }
     if (screenReaderEnabled) {
+      const lineTypeLabels: Record<DiffLine['type'], string> = {
+        add: i18n.t('common:diff.lineType.add'),
+        del: i18n.t('common:diff.lineType.del'),
+        context: i18n.t('common:diff.lineType.context'),
+        hunk: i18n.t('common:diff.lineType.hunk'),
+        other: i18n.t('common:diff.lineType.other'),
+      };
       return (
         <Box flexDirection="column">
           {parsedLines.map((line, index) => (
             <Text key={index}>
-              {line.type}: {line.content}
+              {lineTypeLabels[line.type]}: {line.content}
             </Text>
           ))}
         </Box>
@@ -220,7 +232,7 @@ const renderDiffContent = (
         borderColor={semanticTheme.border.default}
         padding={1}
       >
-        <Text dimColor>No changes detected.</Text>
+        <Text dimColor>{i18n.t('common:diff.noChanges')}</Text>
       </Box>
     );
   }

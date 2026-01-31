@@ -192,6 +192,19 @@ const SETTINGS_SCHEMA = {
         description: 'Enable Vim keybindings',
         showInDialog: true,
       },
+      language: {
+        type: 'enum',
+        label: 'Language',
+        category: 'General',
+        requiresRestart: true,
+        default: 'en',
+        description: 'Interface language (en, zh-CN)',
+        showInDialog: true,
+        options: [
+          { value: 'en', label: 'English' },
+          { value: 'zh-CN', label: '简体中文' },
+        ],
+      },
       enableAutoUpdate: {
         type: 'boolean',
         label: 'Enable Auto Update',
@@ -353,6 +366,16 @@ const SETTINGS_SCHEMA = {
         description:
           'The color theme for the UI. See the CLI themes guide for available options.',
         showInDialog: false,
+      },
+      userMessageColor: {
+        type: 'string',
+        label: 'User Message Color',
+        category: 'UI',
+        requiresRestart: false,
+        default: undefined as string | undefined,
+        description:
+          'Override the user message color in chat history. Accepts hex or named ANSI colors (e.g., "#B27CFF" or "magenta").',
+        showInDialog: true,
       },
       customThemes: {
         type: 'object',

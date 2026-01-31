@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 
 interface ConsoleSummaryDisplayProps {
@@ -16,6 +17,7 @@ interface ConsoleSummaryDisplayProps {
 export const ConsoleSummaryDisplay: React.FC<ConsoleSummaryDisplayProps> = ({
   errorCount,
 }) => {
+  const { t } = useTranslation('common');
   if (errorCount === 0) {
     return null;
   }
@@ -26,8 +28,13 @@ export const ConsoleSummaryDisplay: React.FC<ConsoleSummaryDisplayProps> = ({
     <Box>
       {errorCount > 0 && (
         <Text color={theme.status.error}>
-          {errorIcon} {errorCount} error{errorCount > 1 ? 's' : ''}{' '}
-          <Text color={theme.text.secondary}>(F12 for details)</Text>
+          {errorIcon}{' '}
+          {errorCount > 1
+            ? t('consoleSummary.errorCountPlural', { count: errorCount })
+            : t('consoleSummary.errorCount', { count: errorCount })}{' '}
+          <Text color={theme.text.secondary}>
+            {t('consoleSummary.details')}
+          </Text>
         </Text>
       )}
     </Box>

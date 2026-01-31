@@ -22,6 +22,17 @@ vi.mock('../../utils/agentUtils.js', () => ({
   renderAgentActionFeedback: vi.fn(),
 }));
 
+vi.mock('../../i18n/index.js', () => {
+  const t = (key: string, options?: { name?: string }) => {
+    if (options?.name) return `${key}:${options.name}`;
+    return key;
+  };
+  return {
+    i18n: { t },
+    t,
+  };
+});
+
 describe('agentsCommand', () => {
   let mockContext: ReturnType<typeof createMockCommandContext>;
   let mockConfig: {
@@ -62,7 +73,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Config not loaded.',
+      content: 'commands:agents.list.configNotLoaded',
     });
   });
 
@@ -74,7 +85,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Agent registry not found.',
+      content: 'commands:agents.list.registryNotFound',
     });
   });
 
@@ -122,7 +133,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'info',
-      content: 'Agents refreshed successfully.',
+      content: 'commands:agents.refresh.success',
     });
   });
 
@@ -137,7 +148,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Agent registry not found.',
+      content: 'commands:agents.refresh.registryNotFound',
     });
   });
 
@@ -176,7 +187,7 @@ describe('agentsCommand', () => {
     expect(mockContext.ui.addItem).toHaveBeenCalledWith(
       expect.objectContaining({
         type: MessageType.INFO,
-        text: 'Enabling test-agent...',
+        text: 'commands:agents.enable.enabling:test-agent',
       }),
     );
     expect(result).toEqual({
@@ -201,7 +212,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'info',
-      content: "Agent 'test-agent' is already enabled.",
+      content: 'commands:agents.enable.alreadyEnabled:test-agent',
     });
   });
 
@@ -214,7 +225,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Usage: /agents enable <agent-name>',
+      content: 'commands:agents.enable.usage',
     });
   });
 
@@ -251,7 +262,7 @@ describe('agentsCommand', () => {
     expect(mockContext.ui.addItem).toHaveBeenCalledWith(
       expect.objectContaining({
         type: MessageType.INFO,
-        text: 'Disabling test-agent...',
+        text: 'commands:agents.disable.disabling:test-agent',
       }),
     );
     expect(result).toEqual({
@@ -276,7 +287,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'info',
-      content: "Agent 'test-agent' is already disabled.",
+      content: 'commands:agents.disable.alreadyDisabled:test-agent',
     });
   });
 
@@ -292,7 +303,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: "Agent 'test-agent' not found.",
+      content: 'commands:agents.disable.notFound:test-agent',
     });
   });
 
@@ -305,7 +316,7 @@ describe('agentsCommand', () => {
     expect(result).toEqual({
       type: 'message',
       messageType: 'error',
-      content: 'Usage: /agents disable <agent-name>',
+      content: 'commands:agents.disable.usage',
     });
   });
 });

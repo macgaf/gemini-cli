@@ -13,6 +13,8 @@ import { loadSettings } from '../../config/settings.js';
 import { promptForSetting } from '../../config/extensions/extensionSettings.js';
 import { exitCli } from '../utils.js';
 
+import { t } from '../../i18n/index.js';
+
 export async function handleList() {
   try {
     const workspaceDir = process.cwd();
@@ -24,7 +26,11 @@ export async function handleList() {
     });
     const extensions = await extensionManager.loadExtensions();
     if (extensions.length === 0) {
-      debugLogger.log('No extensions installed.');
+      debugLogger.log(
+        t('commands:extensions.list.log.empty', {
+          defaultValue: 'No extensions installed.',
+        }),
+      );
       return;
     }
     debugLogger.log(
@@ -42,7 +48,9 @@ export async function handleList() {
 
 export const listCommand: CommandModule = {
   command: 'list',
-  describe: 'Lists installed extensions.',
+  describe: t('commands:extensions.list.describe', {
+    defaultValue: 'Lists installed extensions.',
+  }),
   builder: (yargs) => yargs,
   handler: async () => {
     await handleList();

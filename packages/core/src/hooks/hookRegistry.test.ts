@@ -16,6 +16,7 @@ import {
 } from './types.js';
 import type { Config } from '../config/config.js';
 import type { HookDefinition } from './types.js';
+import { t } from '../i18n/index.js';
 
 // Mock fs
 vi.mock('fs', () => ({
@@ -91,7 +92,10 @@ describe('HookRegistry', () => {
 
       expect(hookRegistry.getAllHooks()).toHaveLength(0);
       expect(mockDebugLogger.log).toHaveBeenCalledWith(
-        'Hook registry initialized with 0 hook entries',
+        t('debug.hookRegistryInitialized', {
+          count: 0,
+          defaultValue: 'Hook registry initialized with {{count}} hook entries',
+        }),
       );
     });
 

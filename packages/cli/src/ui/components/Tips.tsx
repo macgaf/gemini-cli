@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { type Config } from '@google/gemini-cli-core';
 
@@ -14,23 +15,20 @@ interface TipsProps {
 }
 
 export const Tips: React.FC<TipsProps> = ({ config }) => {
+  const { t } = useTranslation('tips');
   const geminiMdFileCount = config.getGeminiMdFileCount();
   return (
     <Box flexDirection="column">
-      <Text color={theme.text.primary}>Tips for getting started:</Text>
-      <Text color={theme.text.primary}>
-        1. Ask questions, edit files, or run commands.
-      </Text>
-      <Text color={theme.text.primary}>
-        2. Be specific for the best results.
-      </Text>
+      <Text color={theme.text.primary}>{t('gettingStarted.title')}</Text>
+      <Text color={theme.text.primary}>1. {t('gettingStarted.tip1')}</Text>
+      <Text color={theme.text.primary}>2. {t('gettingStarted.tip2')}</Text>
       {geminiMdFileCount === 0 && (
         <Text color={theme.text.primary}>
-          3. Create{' '}
+          3. {t('gettingStarted.tip3Prefix')}{' '}
           <Text bold color={theme.text.accent}>
             GEMINI.md
           </Text>{' '}
-          files to customize your interactions with Gemini.
+          {t('gettingStarted.tip3Suffix')}
         </Text>
       )}
       <Text color={theme.text.primary}>
@@ -38,7 +36,7 @@ export const Tips: React.FC<TipsProps> = ({ config }) => {
         <Text bold color={theme.text.accent}>
           /help
         </Text>{' '}
-        for more information.
+        {t('gettingStarted.tip4Suffix')}
       </Text>
     </Box>
   );

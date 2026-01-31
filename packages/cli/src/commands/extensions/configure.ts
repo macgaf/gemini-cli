@@ -23,21 +23,31 @@ interface ConfigureArgs {
   scope: string;
 }
 
+import { t } from '../../i18n/index.js';
+
 export const configureCommand: CommandModule<object, ConfigureArgs> = {
   command: 'config [name] [setting]',
-  describe: 'Configure extension settings.',
+  describe: t('commands:extensions.configure.description', {
+    defaultValue: 'Configure extension settings.',
+  }),
   builder: (yargs) =>
     yargs
       .positional('name', {
-        describe: 'Name of the extension to configure.',
+        describe: t('commands:extensions.configure.name', {
+          defaultValue: 'Name of the extension to configure.',
+        }),
         type: 'string',
       })
       .positional('setting', {
-        describe: 'The specific setting to configure (name or env var).',
+        describe: t('commands:extensions.configure.setting', {
+          defaultValue: 'The specific setting to configure (name or env var).',
+        }),
         type: 'string',
       })
       .option('scope', {
-        describe: 'The scope to set the setting in.',
+        describe: t('commands:extensions.configure.scope', {
+          defaultValue: 'The scope to set the setting in.',
+        }),
         type: 'string',
         choices: ['user', 'workspace'],
         default: 'user',
@@ -49,7 +59,10 @@ export const configureCommand: CommandModule<object, ConfigureArgs> = {
     if (!(settings.experimental?.extensionConfig ?? true)) {
       coreEvents.emitFeedback(
         'error',
-        'Extension configuration is currently disabled. Enable it by setting "experimental.extensionConfig" to true.',
+        t('commands:extensions.configure.log.disabled', {
+          defaultValue:
+            'Extension configuration is currently disabled. Enable it by setting "experimental.extensionConfig" to true.',
+        }),
       );
       await exitCli();
       return;
@@ -58,12 +71,15 @@ export const configureCommand: CommandModule<object, ConfigureArgs> = {
     if (name) {
       if (name.includes('/') || name.includes('\\') || name.includes('..')) {
         debugLogger.error(
-          'Invalid extension name. Names cannot contain path separators or "..".',
+          t('commands:extensions.configure.log.invalidName', {
+            defaultValue:
+              'Invalid extension name. Names cannot contain path separators or "..".',
+          }),
         );
         return;
       }
     }
-
+    // ... (rest logic)
     // Case 1: Configure specific setting for an extension
     if (name && setting) {
       await configureSpecificSetting(
@@ -100,11 +116,14 @@ async function configureSpecificSetting(
   );
   if (!extensionConfig) {
     debugLogger.error(
-      `Could not find configuration for extension "${extensionName}".`,
+      t('commands:extensions.configure.log.notFound', {
+        name: extensionName,
+        defaultValue: `Could not find configuration for extension "${extensionName}".`,
+      }),
     );
     return;
   }
-
+  // ...
   await updateSetting(
     extensionConfig,
     extension.id,
@@ -132,12 +151,20 @@ async function configureExtension(
     extensionConfig.settings.length === 0
   ) {
     debugLogger.log(
-      `Extension "${extensionName}" has no settings to configure.`,
+      t('commands:extensions.configure.log.noSettings', {
+        name: extensionName,
+        defaultValue: `Extension "${extensionName}" has no settings to configure.`,
+      }),
     );
     return;
   }
 
-  debugLogger.log(`Configuring settings for "${extensionName}"...`);
+  debugLogger.log(
+    t('commands:extensions.configure.log.configuring', {
+      name: extensionName,
+      defaultValue: `Configuring settings for "${extensionName}"...`,
+    }),
+  );
   await configureExtensionSettings(extensionConfig, extension.id, scope);
 }
 
@@ -146,7 +173,11 @@ async function configureAllExtensions(scope: ExtensionSettingScope) {
   const extensions = extensionManager.getExtensions();
 
   if (extensions.length === 0) {
-    debugLogger.log('No extensions installed.');
+    debugLogger.log(
+      t('commands:extensions.configure.log.noInstalled', {
+        defaultValue: 'No extensions installed.',
+      }),
+    );
     return;
   }
 
@@ -159,7 +190,13 @@ async function configureAllExtensions(scope: ExtensionSettingScope) {
       extensionConfig.settings &&
       extensionConfig.settings.length > 0
     ) {
-      debugLogger.log(`\nConfiguring settings for "${extension.name}"...`);
+      debugLogger.log(
+        '\n' +
+          t('commands:extensions.configure.log.configuring', {
+            name: extension.name,
+            defaultValue: `Configuring settings for "${extension.name}"...`,
+          }),
+      );
       await configureExtensionSettings(extensionConfig, extension.id, scope);
     }
   }
@@ -193,7 +230,10 @@ async function configureExtensionSettings(
 
     if (workspaceValue !== undefined) {
       debugLogger.log(
-        `Note: Setting "${setting.name}" is already configured in the workspace scope.`,
+        t('commands:extensions.configure.log.alreadyConfigured', {
+          name: setting.name,
+          defaultValue: `Note: Setting "${setting.name}" is already configured in the workspace scope.`,
+        }),
       );
     }
 
@@ -201,7 +241,11 @@ async function configureExtensionSettings(
       const response = await prompts({
         type: 'confirm',
         name: 'overwrite',
-        message: `Setting "${setting.name}" (${setting.envVar}) is already set. Overwrite?`,
+        message: t('commands:extensions.configure.log.promptOverwrite', {
+          name: setting.name,
+          env: setting.envVar,
+          defaultValue: `Setting "${setting.name}" (${setting.envVar}) is already set. Overwrite?`,
+        }),
         initial: false,
       });
 

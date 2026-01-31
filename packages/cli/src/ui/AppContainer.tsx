@@ -12,6 +12,7 @@ import {
   useRef,
   useLayoutEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { type DOMElement, measureElement } from 'ink';
 import { App } from './App.js';
 import { AppContext } from './contexts/AppContext.js';
@@ -164,6 +165,7 @@ const SHELL_WIDTH_FRACTION = 0.89;
 const SHELL_HEIGHT_PADDING = 10;
 
 export const AppContainer = (props: AppContainerProps) => {
+  const { t } = useTranslation(['common', 'auth', 'commands']);
   const { config, initializationResult, resumedSessionData } = props;
   const historyManager = useHistory({
     chatRecordingService: config.getGeminiClient()?.getChatRecordingService(),
@@ -557,7 +559,9 @@ export const AppContainer = (props: AppContainerProps) => {
           setAuthState(AuthState.Authenticated);
         } catch (e) {
           onAuthError(
-            `Failed to authenticate: ${e instanceof Error ? e.message : String(e)}`,
+            t('auth:errors.authenticateFailed', {
+              error: e instanceof Error ? e.message : String(e),
+            }),
           );
           return;
         }
@@ -569,7 +573,7 @@ export const AppContainer = (props: AppContainerProps) => {
           await runExitCleanup();
           writeToStdout(`
 ----------------------------------------------------------------
-Logging in with Google... Restarting Gemini CLI to continue.
+${t('auth:authDialog.loginRestarting')}
 ----------------------------------------------------------------
           `);
           process.exit(RELAUNCH_EXIT_CODE);
@@ -577,7 +581,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       }
       setAuthState(AuthState.Authenticated);
     },
-    [settings, config, setAuthState, onAuthError, setAuthContext],
+    [settings, config, setAuthState, onAuthError, setAuthContext, t],
   );
 
   const handleApiKeySubmit = useCallback(
@@ -585,9 +589,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       try {
         onAuthError(null);
         if (!apiKey.trim() && apiKey.length > 1) {
-          onAuthError(
-            'API key cannot be empty string with length greater than 1.',
-          );
+          onAuthError(t('auth:errors.apiKeyEmpty'));
           return;
         }
 
@@ -597,11 +599,13 @@ Logging in with Google... Restarting Gemini CLI to continue.
         setAuthState(AuthState.Authenticated);
       } catch (e) {
         onAuthError(
-          `Failed to save API key: ${e instanceof Error ? e.message : String(e)}`,
+          t('auth:errors.saveApiKeyFailed', {
+            error: e instanceof Error ? e.message : String(e),
+          }),
         );
       }
     },
-    [setAuthState, onAuthError, reloadApiKey, config],
+    [setAuthState, onAuthError, reloadApiKey, config, t],
   );
 
   const handleApiKeyCancel = useCallback(() => {
@@ -626,7 +630,10 @@ Logging in with Google... Restarting Gemini CLI to continue.
         settings.merged.security.auth.selectedType
     ) {
       onAuthError(
-        `Authentication is enforced to be ${settings.merged.security.auth.enforcedType}, but you are currently using ${settings.merged.security.auth.selectedType}.`,
+        t('auth:errors.enforcedMismatch', {
+          enforced: settings.merged.security.auth.enforcedType,
+          selected: settings.merged.security.auth.selectedType,
+        }),
       );
     } else if (
       settings.merged.security.auth.selectedType &&
@@ -651,6 +658,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
     settings.merged.security.auth.enforcedType,
     settings.merged.security.auth.useExternal,
     onAuthError,
+    t,
   ]);
 
   const [editorError, setEditorError] = useState<string | null>(null);
@@ -738,7 +746,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
     historyManager.addItem(
       {
         type: MessageType.INFO,
-        text: 'Refreshing hierarchical memory (GEMINI.md or other context files)...',
+        text: t('common:memory.refreshingHierarchical'),
       },
       Date.now(),
     );
@@ -749,10 +757,13 @@ Logging in with Google... Restarting Gemini CLI to continue.
       historyManager.addItem(
         {
           type: MessageType.INFO,
-          text: `Memory refreshed successfully. ${
+          text: `${t('common:memory.refreshSuccess')} ${
             memoryContent.length > 0
-              ? `Loaded ${memoryContent.length} characters from ${fileCount} file(s).`
-              : 'No memory content found.'
+              ? t('common:memory.refreshLoaded', {
+                  charCount: memoryContent.length,
+                  fileCount,
+                })
+              : t('common:memory.refreshNoContent')
           }`,
         },
         Date.now(),
@@ -770,13 +781,13 @@ Logging in with Google... Restarting Gemini CLI to continue.
       historyManager.addItem(
         {
           type: MessageType.ERROR,
-          text: `Error refreshing memory: ${errorMessage}`,
+          text: t('commands:memory.refresh.error', { error: errorMessage }),
         },
         Date.now(),
       );
       debugLogger.warn('Error refreshing memory:', error);
     }
-  }, [config, historyManager]);
+  }, [config, historyManager, t]);
 
   const cancelHandlerRef = useRef<(shouldRestorePrompt?: boolean) => void>(
     () => {},
@@ -924,10 +935,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       } else {
         // Check messageQueue.length === 0 to only notify on the first queued item
         if (isIdle && !isMcpReady && messageQueue.length === 0) {
-          coreEvents.emitFeedback(
-            'info',
-            'Waiting for MCP servers to initialize... Slash commands are still available and prompts will be queued.',
-          );
+          coreEvents.emitFeedback('info', t('common:mcp.waitingForInitQueue'));
         }
         addMessage(submittedValue);
       }
@@ -940,6 +948,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       isMcpReady,
       streamingState,
       messageQueue.length,
+      t,
     ],
   );
 
@@ -1127,10 +1136,10 @@ Logging in with Google... Restarting Gemini CLI to continue.
 
   useEffect(() => {
     const handleSelectionWarning = () => {
-      handleWarning('Press Ctrl-S to enter selection mode to copy text.');
+      handleWarning(t('common:alerts.selectionMode'));
     };
     const handlePasteTimeout = () => {
-      handleWarning('Paste Timed out. Possibly due to slow connection.');
+      handleWarning(t('common:alerts.pasteTimeout'));
     };
     appEvents.on(AppEvent.SelectionWarning, handleSelectionWarning);
     appEvents.on(AppEvent.PasteTimeout, handlePasteTimeout);
@@ -1144,7 +1153,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
         clearTimeout(tabFocusTimeoutRef.current);
       }
     };
-  }, [handleWarning]);
+  }, [handleWarning, t]);
 
   useEffect(() => {
     if (ideNeedsRestart) {
@@ -1356,14 +1365,14 @@ Logging in with Google... Restarting Gemini CLI to continue.
             // If the shell produced output since the tab press, we assume it handled the tab
             // (e.g. autocomplete) so we should not toggle focus.
             if (lastOutputTimeRef.current > now) {
-              handleWarning('Press Shift+Tab to focus out.');
+              handleWarning(t('common:alerts.shiftTabFocusOut'));
               return;
             }
             setEmbeddedShellFocused(false);
           }, 100);
           return;
         }
-        handleWarning('Press Shift+Tab to focus out.');
+        handleWarning(t('common:alerts.shiftTabFocusOut'));
       }
     },
     [
@@ -1385,6 +1394,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
       copyModeEnabled,
       isAlternateBuffer,
       handleWarning,
+      t,
     ],
   );
 
@@ -1545,9 +1555,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
           authType === AuthType.USE_GEMINI ||
           authType === AuthType.USE_VERTEX_AI
         ) {
-          setDefaultBannerText(
-            'Gemini 3 Flash and Pro are now available. \nEnable "Preview features" in /settings. \nLearn more at https://goo.gle/enable-preview-features',
-          );
+          setDefaultBannerText(t('common:banner.previewFeatures'));
         }
       }
     };
@@ -1557,7 +1565,7 @@ Logging in with Google... Restarting Gemini CLI to continue.
     return () => {
       isMounted = false;
     };
-  }, [config, refreshStatic]);
+  }, [config, refreshStatic, t]);
 
   const uiState: UIState = useMemo(
     () => ({

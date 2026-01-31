@@ -97,6 +97,9 @@ import { isAlternateBufferEnabled } from './ui/hooks/useAlternateBuffer.js';
 import { setupTerminalAndTheme } from './utils/terminalTheme.js';
 import { profiler } from './ui/components/DebugProfiler.js';
 import { runDeferredCommand } from './deferred.js';
+import { initI18n } from './i18n/index.js';
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
 
 const SLOW_RENDER_MS = 200;
 
@@ -212,33 +215,37 @@ export async function startInteractiveUI(
   const AppWrapper = () => {
     useKittyKeyboardProtocol();
     return (
-      <SettingsContext.Provider value={settings}>
-        <KeypressProvider
-          config={config}
-          debugKeystrokeLogging={settings.merged.general.debugKeystrokeLogging}
-        >
-          <MouseProvider
-            mouseEventsEnabled={mouseEventsEnabled}
+      <I18nextProvider i18n={i18next}>
+        <SettingsContext.Provider value={settings}>
+          <KeypressProvider
+            config={config}
             debugKeystrokeLogging={
               settings.merged.general.debugKeystrokeLogging
             }
           >
-            <ScrollProvider>
-              <SessionStatsProvider>
-                <VimModeProvider settings={settings}>
-                  <AppContainer
-                    config={config}
-                    startupWarnings={startupWarnings}
-                    version={version}
-                    resumedSessionData={resumedSessionData}
-                    initializationResult={initializationResult}
-                  />
-                </VimModeProvider>
-              </SessionStatsProvider>
-            </ScrollProvider>
-          </MouseProvider>
-        </KeypressProvider>
-      </SettingsContext.Provider>
+            <MouseProvider
+              mouseEventsEnabled={mouseEventsEnabled}
+              debugKeystrokeLogging={
+                settings.merged.general.debugKeystrokeLogging
+              }
+            >
+              <ScrollProvider>
+                <SessionStatsProvider>
+                  <VimModeProvider settings={settings}>
+                    <AppContainer
+                      config={config}
+                      startupWarnings={startupWarnings}
+                      version={version}
+                      resumedSessionData={resumedSessionData}
+                      initializationResult={initializationResult}
+                    />
+                  </VimModeProvider>
+                </SessionStatsProvider>
+              </ScrollProvider>
+            </MouseProvider>
+          </KeypressProvider>
+        </SettingsContext.Provider>
+      </I18nextProvider>
     );
   };
 
@@ -304,6 +311,11 @@ export async function main() {
   const loadSettingsHandle = startupProfiler.start('load_settings');
   const settings = loadSettings();
   loadSettingsHandle?.end();
+
+  // Initialize i18n with settings language
+  await initI18n({
+    settingsLang: settings.merged.general?.language,
+  });
 
   // Report settings errors once during startup
   settings.errors.forEach((error) => {

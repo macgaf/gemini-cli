@@ -15,6 +15,11 @@ vi.mock('../utils.js', () => ({
   exitCli: vi.fn(),
 }));
 
+vi.mock('../../i18n/index.js', () => ({
+  t: (key: string, options?: { defaultValue?: string }) =>
+    options?.defaultValue ?? key,
+}));
+
 const mockedFs = vi.mocked(fsPromises);
 
 describe('extensions new command', () => {

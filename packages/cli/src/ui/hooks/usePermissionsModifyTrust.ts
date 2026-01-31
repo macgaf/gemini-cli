@@ -18,6 +18,7 @@ import { MessageType } from '../types.js';
 import { type UseHistoryManagerReturn } from './useHistoryManager.js';
 import type { LoadedSettings } from '../../config/settings.js';
 import { coreEvents } from '@google/gemini-cli-core';
+import { i18n } from '../../i18n/index.js';
 
 interface TrustState {
   currentTrustLevel: TrustLevel | undefined;
@@ -111,11 +112,11 @@ export const usePermissionsModifyTrust = (
       );
 
       if (trustLevel === TrustLevel.DO_NOT_TRUST && isTrusted) {
-        let message =
-          'Note: This folder is still trusted because the connected IDE workspace is trusted.';
+        let message = i18n.t('dialogs:permissionsModifyTrust.noteTrustedByIde');
         if (source === 'file') {
-          message =
-            'Note: This folder is still trusted because a parent folder is trusted.';
+          message = i18n.t(
+            'dialogs:permissionsModifyTrust.noteTrustedByParent',
+          );
         }
         addItem(
           {
@@ -136,7 +137,7 @@ export const usePermissionsModifyTrust = (
         } catch (_e) {
           coreEvents.emitFeedback(
             'error',
-            'Failed to save trust settings. Your changes may not persist.',
+            i18n.t('dialogs:permissionsModifyTrust.saveFailed'),
           );
         }
         onExit();
@@ -154,7 +155,7 @@ export const usePermissionsModifyTrust = (
       } catch (_e) {
         coreEvents.emitFeedback(
           'error',
-          'Failed to save trust settings. Your changes may not persist.',
+          i18n.t('dialogs:permissionsModifyTrust.saveFailed'),
         );
         setNeedsRestart(false);
         setPendingTrustLevel(undefined);

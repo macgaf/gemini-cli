@@ -6,10 +6,11 @@
 
 import { CommandKind, type SlashCommand } from './types.js';
 import { MessageType } from '../types.js';
+import { t } from '../../i18n/index.js';
 
 const listPoliciesCommand: SlashCommand = {
   name: 'list',
-  description: 'List all active policies',
+  description: t('commands:policies.list.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context) => {
@@ -18,7 +19,7 @@ const listPoliciesCommand: SlashCommand = {
       context.ui.addItem(
         {
           type: MessageType.ERROR,
-          text: 'Error: Config not available.',
+          text: t('commands:policies.errorConfigNotAvailable'),
         },
         Date.now(),
       );
@@ -32,29 +33,29 @@ const listPoliciesCommand: SlashCommand = {
       context.ui.addItem(
         {
           type: MessageType.INFO,
-          text: 'No active policies.',
+          text: t('commands:policies.noActive'),
         },
         Date.now(),
       );
       return;
     }
 
-    let content = '**Active Policies**\n\n';
+    let content = `**${t('commands:policies.list.title')}**\n\n`;
     rules.forEach((rule, index) => {
       content += `${index + 1}. **${rule.decision.toUpperCase()}**`;
       if (rule.toolName) {
-        content += ` tool: \`${rule.toolName}\``;
+        content += ` ${t('commands:policies.list.tool')}: \`${rule.toolName}\``;
       } else {
-        content += ` all tools`;
+        content += ` ${t('commands:policies.list.allTools')}`;
       }
       if (rule.argsPattern) {
-        content += ` (args match: \`${rule.argsPattern.source}\`)`;
+        content += ` (${t('commands:policies.list.argsMatch')}: \`${rule.argsPattern.source}\`)`;
       }
       if (rule.priority !== undefined) {
-        content += ` [Priority: ${rule.priority}]`;
+        content += ` [${t('commands:policies.list.priority')}: ${rule.priority}]`;
       }
       if (rule.source) {
-        content += ` [Source: \`${rule.source}\`]`;
+        content += ` [${t('commands:policies.list.source')}: \`${rule.source}\`]`;
       }
       content += '\n';
     });
@@ -71,7 +72,7 @@ const listPoliciesCommand: SlashCommand = {
 
 export const policiesCommand: SlashCommand = {
   name: 'policies',
-  description: 'Manage policies',
+  description: t('commands:policies.description'),
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   subCommands: [listPoliciesCommand],

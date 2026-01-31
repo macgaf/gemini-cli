@@ -25,6 +25,11 @@ vi.mock('../utils.js', () => ({
   exitCli: vi.fn(),
 }));
 
+vi.mock('../../i18n/index.js', () => ({
+  t: (key: string, options?: { defaultValue?: string }) =>
+    options?.defaultValue ?? key,
+}));
+
 describe('extensions validate command', () => {
   it('should fail if no path is provided', () => {
     const validationParser = yargs([]).command(validateCommand).fail(false);

@@ -24,6 +24,7 @@ import {
   COMMON_DIRECTORY_EXCLUDES,
 } from '../utils/ignorePatterns.js';
 import { GeminiIgnoreParser } from '../utils/geminiIgnoreParser.js';
+import { t } from '../i18n/index.js';
 
 const DEFAULT_TOTAL_MAX_MATCHES = 20000;
 
@@ -77,7 +78,7 @@ export async function ensureRgPath(): Promise<string> {
   if (downloadedPath) {
     return downloadedPath;
   }
-  throw new Error('Cannot use ripgrep.');
+  throw new Error(t('Cannot use ripgrep.'));
 }
 
 /**
@@ -103,7 +104,10 @@ function resolveAndValidatePath(
   if (!workspaceContext.isPathWithinWorkspace(targetPath)) {
     const directories = workspaceContext.getDirectories();
     throw new Error(
-      `Path validation failed: Attempted path "${relativePath}" resolves outside the allowed workspace directories: ${directories.join(', ')}`,
+      t(
+        'Path validation failed: Attempted path "{{path}}" resolves outside the allowed workspace directories: {{dirs}}',
+        { path: relativePath, dirs: directories.join(', ') },
+      ),
     );
   }
 
@@ -112,14 +116,27 @@ function resolveAndValidatePath(
     const stats = fs.statSync(targetPath);
     if (!stats.isDirectory() && !stats.isFile()) {
       throw new Error(
-        `Path is not a valid directory or file: ${targetPath} (CWD: ${targetDir})`,
+        t('Path is not a valid directory or file: {{path}} (CWD: {{cwd}})', {
+          path: targetPath,
+          cwd: targetDir,
+        }),
       );
     }
   } catch (error: unknown) {
     if (isNodeError(error) && error.code === 'ENOENT') {
-      throw new Error(`Path does not exist: ${targetPath} (CWD: ${targetDir})`);
+      throw new Error(
+        t('Path does not exist: {{path}} (CWD: {{cwd}})', {
+          path: targetPath,
+          cwd: targetDir,
+        }),
+      );
     }
-    throw new Error(`Failed to access path stats for ${targetPath}: ${error}`);
+    throw new Error(
+      t('Failed to access path stats for {{path}}: {{error}}', {
+        path: targetPath,
+        error,
+      }),
+    );
   }
 
   return targetPath;
@@ -230,10 +247,24 @@ class GrepToolInvocation extends BaseToolInvocation<
         allMatches = allMatches.slice(0, totalMaxMatches);
       }
 
-      const searchLocationDescription = `in path "${searchDirDisplay}"`;
+      const searchLocationDescription = t('in path "{{path}}"', {
+        path: searchDirDisplay,
+      });
       if (allMatches.length === 0) {
-        const noMatchMsg = `No matches found for pattern "${this.params.pattern}" ${searchLocationDescription}${this.params.include ? ` (filter: "${this.params.include}")` : ''}.`;
-        return { llmContent: noMatchMsg, returnDisplay: `No matches found` };
+        const noMatchMsg = t(
+          'No matches found for pattern "{{pattern}}" {{location}}{{filter}}.',
+          {
+            pattern: this.params.pattern,
+            location: searchLocationDescription,
+            filter: this.params.include
+              ? t(' (filter: "{{filter}}")', { filter: this.params.include })
+              : '',
+          },
+        );
+        return {
+          llmContent: noMatchMsg,
+          returnDisplay: t('No matches found'),
+        };
       }
 
       const wasTruncated = allMatches.length >= totalMaxMatches;
@@ -252,18 +283,32 @@ class GrepToolInvocation extends BaseToolInvocation<
       );
 
       const matchCount = allMatches.length;
-      const matchTerm = matchCount === 1 ? 'match' : 'matches';
+      const matchTerm = matchCount === 1 ? t('match') : t('matches');
 
-      let llmContent = `Found ${matchCount} ${matchTerm} for pattern "${this.params.pattern}" ${searchLocationDescription}${this.params.include ? ` (filter: "${this.params.include}")` : ''}`;
+      let llmContent = t(
+        'Found {{count}} {{term}} for pattern "{{pattern}}" {{location}}{{filter}}',
+        {
+          count: matchCount,
+          term: matchTerm,
+          pattern: this.params.pattern,
+          location: searchLocationDescription,
+          filter: this.params.include
+            ? t(' (filter: "{{filter}}")', { filter: this.params.include })
+            : '',
+        },
+      );
 
       if (wasTruncated) {
-        llmContent += ` (results limited to ${totalMaxMatches} matches for performance)`;
+        llmContent += t(
+          ' (results limited to {{count}} matches for performance)',
+          { count: totalMaxMatches },
+        );
       }
 
-      llmContent += `:\n---\n`;
+      llmContent += ':\n---\n';
 
       for (const filePath in matchesByFile) {
-        llmContent += `File: ${filePath}\n`;
+        llmContent += t('File: {{file}}', { file: filePath }) + '\n';
         matchesByFile[filePath].forEach((match) => {
           const trimmedLine = match.line.trim();
           llmContent += `L${match.lineNumber}: ${trimmedLine}\n`;
@@ -271,9 +316,12 @@ class GrepToolInvocation extends BaseToolInvocation<
         llmContent += '---\n';
       }
 
-      let displayMessage = `Found ${matchCount} ${matchTerm}`;
+      let displayMessage = t('Found {{count}} {{term}}', {
+        count: matchCount,
+        term: matchTerm,
+      });
       if (wasTruncated) {
-        displayMessage += ` (limited)`;
+        displayMessage += t(' (limited)');
       }
 
       return {
@@ -284,8 +332,10 @@ class GrepToolInvocation extends BaseToolInvocation<
       debugLogger.warn(`Error during GrepLogic execution: ${error}`);
       const errorMessage = getErrorMessage(error);
       return {
-        llmContent: `Error during grep search operation: ${errorMessage}`,
-        returnDisplay: `Error: ${errorMessage}`,
+        llmContent: t('Error during grep search operation: {{error}}', {
+          error: errorMessage,
+        }),
+        returnDisplay: t('Error: {{error}}', { error: errorMessage }),
       };
     }
   }
@@ -427,7 +477,10 @@ class GrepToolInvocation extends BaseToolInvocation<
           options.signal.removeEventListener('abort', cleanup);
           reject(
             new Error(
-              `Failed to start ripgrep: ${err.message}. Please ensure @lvce-editor/ripgrep is properly installed.`,
+              t(
+                'Failed to start ripgrep: {{error}}. Please ensure @lvce-editor/ripgrep is properly installed.',
+                { error: err.message },
+              ),
             ),
           );
         });
@@ -443,7 +496,12 @@ class GrepToolInvocation extends BaseToolInvocation<
             resolve(''); // No matches found
           } else {
             reject(
-              new Error(`ripgrep exited with code ${code}: ${stderrData}`),
+              new Error(
+                t('ripgrep exited with code {{code}}: {{stderr}}', {
+                  code,
+                  stderr: stderrData,
+                }),
+              ),
             );
           }
         });
@@ -464,18 +522,20 @@ class GrepToolInvocation extends BaseToolInvocation<
   getDescription(): string {
     let description = `'${this.params.pattern}'`;
     if (this.params.include) {
-      description += ` in ${this.params.include}`;
+      description += t(' in {{pattern}}', { pattern: this.params.include });
     }
     const pathParam = this.params.dir_path || '.';
     const resolvedPath = path.resolve(this.config.getTargetDir(), pathParam);
     if (resolvedPath === this.config.getTargetDir() || pathParam === '.') {
-      description += ` within ./`;
+      description += t(' within ./');
     } else {
       const relativePath = makeRelative(
         resolvedPath,
         this.config.getTargetDir(),
       );
-      description += ` within ${shortenPath(relativePath)}`;
+      description += t(' within {{path}}', {
+        path: shortenPath(relativePath),
+      });
     }
     return description;
   }
@@ -497,54 +557,75 @@ export class RipGrepTool extends BaseDeclarativeTool<
   ) {
     super(
       RipGrepTool.Name,
-      'SearchText',
-      'FAST, optimized search powered by `ripgrep`. PREFERRED over standard `run_shell_command("grep ...")` due to better performance and automatic output limiting (max 20k matches).',
+      t('tools.ripgrep.displayName', { defaultValue: 'SearchText' }),
+      t('tools.ripgrep.description', {
+        defaultValue:
+          'FAST, optimized search powered by `ripgrep`. PREFERRED over standard `run_shell_command("grep ...")` due to better performance and automatic output limiting (max 20k matches).',
+      }),
       Kind.Search,
       {
         properties: {
           pattern: {
-            description:
-              "The pattern to search for. By default, treated as a Rust-flavored regular expression. Use '\\b' for precise symbol matching (e.g., '\\bMatchMe\\b').",
+            description: t('tools.ripgrep.params.pattern', {
+              defaultValue:
+                "The pattern to search for. By default, treated as a Rust-flavored regular expression. Use '\\b' for precise symbol matching (e.g., '\\bMatchMe\\b').",
+            }),
             type: 'string',
           },
           dir_path: {
-            description:
-              "Directory or file to search. Directories are searched recursively. Relative paths are resolved against current working directory. Defaults to current working directory ('.') if omitted.",
+            description: t('tools.ripgrep.params.dir_path', {
+              defaultValue:
+                "Directory or file to search. Directories are searched recursively. Relative paths are resolved against current working directory. Defaults to current working directory ('.') if omitted.",
+            }),
             type: 'string',
           },
           include: {
-            description:
-              "Glob pattern to filter files (e.g., '*.ts', 'src/**'). Recommended for large repositories to reduce noise. Defaults to all files if omitted.",
+            description: t('tools.ripgrep.params.include', {
+              defaultValue:
+                "Glob pattern to filter files (e.g., '*.ts', 'src/**'). Recommended for large repositories to reduce noise. Defaults to all files if omitted.",
+            }),
             type: 'string',
           },
           case_sensitive: {
-            description:
-              'If true, search is case-sensitive. Defaults to false (ignore case) if omitted.',
+            description: t('tools.ripgrep.params.case_sensitive', {
+              defaultValue:
+                'If true, search is case-sensitive. Defaults to false (ignore case) if omitted.',
+            }),
             type: 'boolean',
           },
           fixed_strings: {
-            description:
-              'If true, treats the `pattern` as a literal string instead of a regular expression. Defaults to false (basic regex) if omitted.',
+            description: t('tools.ripgrep.params.fixed_strings', {
+              defaultValue:
+                'If true, treats the `pattern` as a literal string instead of a regular expression. Defaults to false (basic regex) if omitted.',
+            }),
             type: 'boolean',
           },
           context: {
-            description:
-              'Show this many lines of context around each match (equivalent to grep -C). Defaults to 0 if omitted.',
+            description: t('tools.ripgrep.params.context', {
+              defaultValue:
+                'Show this many lines of context around each match (equivalent to grep -C). Defaults to 0 if omitted.',
+            }),
             type: 'integer',
           },
           after: {
-            description:
-              'Show this many lines after each match (equivalent to grep -A). Defaults to 0 if omitted.',
+            description: t('tools.ripgrep.params.after', {
+              defaultValue:
+                'Show this many lines after each match (equivalent to grep -A). Defaults to 0 if omitted.',
+            }),
             type: 'integer',
           },
           before: {
-            description:
-              'Show this many lines before each match (equivalent to grep -B). Defaults to 0 if omitted.',
+            description: t('tools.ripgrep.params.before', {
+              defaultValue:
+                'Show this many lines before each match (equivalent to grep -B). Defaults to 0 if omitted.',
+            }),
             type: 'integer',
           },
           no_ignore: {
-            description:
-              'If true, searches all files including those usually ignored (like in .gitignore, build/, dist/, etc). Defaults to false if omitted.',
+            description: t('tools.ripgrep.params.no_ignore', {
+              defaultValue:
+                'If true, searches all files including those usually ignored (like in .gitignore, build/, dist/, etc). Defaults to false if omitted.',
+            }),
             type: 'boolean',
           },
         },

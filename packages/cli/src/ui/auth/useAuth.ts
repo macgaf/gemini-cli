@@ -15,6 +15,7 @@ import {
 import { getErrorMessage } from '@google/gemini-cli-core';
 import { AuthState } from '../types.js';
 import { validateAuthMethod } from '../../config/auth.js';
+import { i18n } from '../../i18n/index.js';
 
 export function validateAuthMethodWithSettings(
   authType: AuthType,
@@ -22,7 +23,10 @@ export function validateAuthMethodWithSettings(
 ): string | null {
   const enforcedType = settings.merged.security.auth.enforcedType;
   if (enforcedType && enforcedType !== authType) {
-    return `Authentication is enforced to be ${enforcedType}, but you are currently using ${authType}.`;
+    return i18n.t('auth:errors.enforcedMismatch', {
+      enforced: enforcedType,
+      selected: authType,
+    });
   }
   if (settings.merged.security.auth.useExternal) {
     return null;
@@ -84,10 +88,13 @@ export const useAuthCommand = (settings: LoadedSettings, config: Config) => {
       if (!authType) {
         if (process.env['GEMINI_API_KEY']) {
           onAuthError(
-            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+            i18n.t('auth:errors.apiKeyDetected', {
+              envVar: 'GEMINI_API_KEY',
+              option: i18n.t('auth:authDialog.options.useGeminiApiKey'),
+            }),
           );
         } else {
-          onAuthError('No authentication method selected.');
+          onAuthError(i18n.t('auth:errors.noAuthMethodSelected'));
         }
         return;
       }
@@ -112,8 +119,10 @@ export const useAuthCommand = (settings: LoadedSettings, config: Config) => {
         !Object.values(AuthType).includes(defaultAuthType as AuthType)
       ) {
         onAuthError(
-          `Invalid value for GEMINI_DEFAULT_AUTH_TYPE: "${defaultAuthType}". ` +
-            `Valid values are: ${Object.values(AuthType).join(', ')}.`,
+          i18n.t('auth:errors.invalidDefaultAuthType', {
+            value: defaultAuthType,
+            allowed: Object.values(AuthType).join(', '),
+          }),
         );
         return;
       }
@@ -121,11 +130,20 @@ export const useAuthCommand = (settings: LoadedSettings, config: Config) => {
       try {
         await config.refreshAuth(authType);
 
-        debugLogger.log(`Authenticated via "${authType}".`);
+        debugLogger.log(
+          i18n.t('auth:debug.authenticatedVia', {
+            authType,
+            defaultValue: 'Authenticated via "{{authType}}".',
+          }),
+        );
         setAuthError(null);
         setAuthState(AuthState.Authenticated);
       } catch (e) {
-        onAuthError(`Failed to login. Message: ${getErrorMessage(e)}`);
+        onAuthError(
+          i18n.t('auth:errors.loginFailed', {
+            error: getErrorMessage(e),
+          }),
+        );
       }
     })();
   }, [

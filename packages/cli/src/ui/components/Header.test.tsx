@@ -104,7 +104,9 @@ describe('<Header />', () => {
   it('displays the version number when nightly is true', () => {
     render(<Header version="1.0.0" nightly={true} />);
     const textCalls = (Text as Mock).mock.calls;
-    expect(textCalls[1][0].children.join('')).toBe('v1.0.0');
+    const children = textCalls[1][0].children;
+    const versionText = Array.isArray(children) ? children.join('') : children;
+    expect(versionText).toBe('v1.0.0');
   });
 
   it('does not display the version number when nightly is false', () => {

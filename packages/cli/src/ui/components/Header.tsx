@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { ThemedGradient } from './ThemedGradient.js';
 import {
   shortAsciiLogo,
@@ -31,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
   version,
   nightly,
 }) => {
+  const { t } = useTranslation('common');
   const { columns: terminalWidth } = useTerminalSize();
   const isIde = getTerminalProgram();
   let displayTitle;
@@ -60,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
       <ThemedGradient>{title}</ThemedGradient>
       {nightly && (
         <Box width="100%" flexDirection="row" justifyContent="flex-end">
-          <ThemedGradient>v{version}</ThemedGradient>
+          <ThemedGradient>{t('versionDisplay', { version })}</ThemedGradient>
         </Box>
       )}
     </Box>

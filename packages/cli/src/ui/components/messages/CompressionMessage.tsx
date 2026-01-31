@@ -5,10 +5,10 @@
  */
 
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import type { CompressionProps } from '../../types.js';
 import { CliSpinner } from '../CliSpinner.js';
 import { theme } from '../../semantic-colors.js';
-import { SCREEN_READER_MODEL_PREFIX } from '../../textConstants.js';
 import { CompressionStatus } from '@google/gemini-cli-core';
 
 export interface CompressionDisplayProps {
@@ -22,6 +22,7 @@ export interface CompressionDisplayProps {
 export function CompressionMessage({
   compression,
 }: CompressionDisplayProps): React.JSX.Element {
+  const { t } = useTranslation(['commands', 'common']);
   const { isPending, originalTokenCount, newTokenCount, compressionStatus } =
     compression;
 
@@ -30,26 +31,29 @@ export function CompressionMessage({
 
   const getCompressionText = () => {
     if (isPending) {
-      return 'Compressing chat history';
+      return t('commands:compress.status.pending');
     }
 
     switch (compressionStatus) {
       case CompressionStatus.COMPRESSED:
-        return `Chat history compressed from ${originalTokens} to ${newTokens} tokens.`;
+        return t('commands:compress.status.compressed', {
+          original: originalTokens,
+          new: newTokens,
+        });
       case CompressionStatus.COMPRESSION_FAILED_INFLATED_TOKEN_COUNT:
         // For smaller histories (< 50k tokens), compression overhead likely exceeds benefits
         if (originalTokens < 50000) {
-          return 'Compression was not beneficial for this history size.';
+          return t('commands:compress.status.notBeneficial');
         }
         // For larger histories where compression should work but didn't,
         // this suggests an issue with the compression process itself
-        return 'Chat history compression did not reduce size. This may indicate issues with the compression prompt.';
+        return t('commands:compress.status.noReduction');
       case CompressionStatus.COMPRESSION_FAILED_TOKEN_COUNT_ERROR:
-        return 'Could not compress chat history due to a token counting error.';
+        return t('commands:compress.status.tokenCountError');
       case CompressionStatus.COMPRESSION_FAILED_EMPTY_SUMMARY:
-        return 'Chat history compression failed: the model returned an empty summary.';
+        return t('commands:compress.status.emptySummary');
       case CompressionStatus.NOOP:
-        return 'Nothing to compress.';
+        return t('commands:compress.status.noop');
       default:
         return '';
     }
@@ -71,7 +75,7 @@ export function CompressionMessage({
           color={
             compression.isPending ? theme.text.accent : theme.status.success
           }
-          aria-label={SCREEN_READER_MODEL_PREFIX}
+          aria-label={t('common:screenReader.modelPrefix')}
         >
           {text}
         </Text>

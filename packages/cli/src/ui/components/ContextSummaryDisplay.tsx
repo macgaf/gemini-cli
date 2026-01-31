@@ -6,6 +6,7 @@
 
 import type React from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { theme } from '../semantic-colors.js';
 import { type IdeContext, type MCPServerConfig } from '@google/gemini-cli-core';
 import { useTerminalSize } from '../hooks/useTerminalSize.js';
@@ -28,6 +29,7 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
   ideContext,
   skillCount,
 }) => {
+  const { t } = useTranslation('common');
   const { columns: terminalWidth } = useTerminalSize();
   const isNarrow = isNarrowWidth(terminalWidth);
   const mcpServerCount = Object.keys(mcpServers || {}).length;
@@ -48,9 +50,11 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
     if (openFileCount === 0) {
       return '';
     }
-    return `${openFileCount} open file${
-      openFileCount > 1 ? 's' : ''
-    } (ctrl+g to view)`;
+    const key =
+      openFileCount > 1
+        ? 'contextSummary.openFilesPlural'
+        : 'contextSummary.openFiles';
+    return `${t(key, { count: openFileCount })} ${t('contextSummary.openFilesHint')}`;
   })();
 
   const geminiMdText = (() => {
@@ -58,10 +62,14 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
       return '';
     }
     const allNamesTheSame = new Set(contextFileNames).size < 2;
-    const name = allNamesTheSame ? contextFileNames[0] : 'context';
-    return `${geminiMdFileCount} ${name} file${
-      geminiMdFileCount > 1 ? 's' : ''
-    }`;
+    const name = allNamesTheSame
+      ? contextFileNames[0]
+      : t('contextSummary.contextLabel');
+    const key =
+      geminiMdFileCount > 1
+        ? 'contextSummary.contextFilePlural'
+        : 'contextSummary.contextFile';
+    return t(key, { count: geminiMdFileCount, name });
   })();
 
   const mcpText = (() => {
@@ -71,17 +79,19 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
 
     const parts = [];
     if (mcpServerCount > 0) {
-      parts.push(
-        `${mcpServerCount} MCP server${mcpServerCount > 1 ? 's' : ''}`,
-      );
+      const key =
+        mcpServerCount > 1
+          ? 'contextSummary.mcpServerPlural'
+          : 'contextSummary.mcpServer';
+      parts.push(t(key, { count: mcpServerCount }));
     }
 
     if (blockedMcpServerCount > 0) {
-      let blockedText = `${blockedMcpServerCount} Blocked`;
-      if (mcpServerCount === 0) {
-        blockedText += ` MCP server${blockedMcpServerCount > 1 ? 's' : ''}`;
-      }
-      parts.push(blockedText);
+      const key =
+        mcpServerCount === 0
+          ? 'contextSummary.blockedMcpServerPlural'
+          : 'contextSummary.blockedMcpServer';
+      parts.push(t(key, { count: blockedMcpServerCount }));
     }
     return parts.join(', ');
   })();
@@ -90,7 +100,9 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
     if (skillCount === 0) {
       return '';
     }
-    return `${skillCount} skill${skillCount > 1 ? 's' : ''}`;
+    const key =
+      skillCount > 1 ? 'contextSummary.skillPlural' : 'contextSummary.skill';
+    return t(key, { count: skillCount });
   })();
 
   const summaryParts = [openFilesText, geminiMdText, mcpText, skillText].filter(

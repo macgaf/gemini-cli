@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useEffect, useState, useMemo } from 'react';
 import { Box, Text } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { DiffRenderer } from './DiffRenderer.js';
 import { RenderInline } from '../../utils/InlineMarkdownRenderer.js';
 import type {
@@ -24,12 +25,6 @@ import { MaxSizedBox, MINIMUM_MAX_HEIGHT } from '../shared/MaxSizedBox.js';
 import { useKeypress } from '../../hooks/useKeypress.js';
 import { theme } from '../../semantic-colors.js';
 import { useSettings } from '../../contexts/SettingsContext.js';
-import {
-  REDIRECTION_WARNING_NOTE_LABEL,
-  REDIRECTION_WARNING_NOTE_TEXT,
-  REDIRECTION_WARNING_TIP_LABEL,
-  REDIRECTION_WARNING_TIP_TEXT,
-} from '../../textConstants.js';
 
 export interface ToolConfirmationMessageProps {
   confirmationDetails: ToolCallConfirmationDetails;
@@ -48,6 +43,7 @@ export const ToolConfirmationMessage: React.FC<
   availableTerminalHeight,
   terminalWidth,
 }) => {
+  const { t } = useTranslation('dialogs');
   const { onConfirm } = confirmationDetails;
 
   const settings = useSettings();
@@ -112,130 +108,137 @@ export const ToolConfirmationMessage: React.FC<
 
     if (confirmationDetails.type === 'edit') {
       if (!confirmationDetails.isModifying) {
-        question = `Apply this change?`;
+        question = t('toolConfirmation.applyChange');
         options.push({
-          label: 'Allow once',
+          label: t('toolConfirmation.options.allowOnce'),
           value: ToolConfirmationOutcome.ProceedOnce,
-          key: 'Allow once',
+          key: 'allow-once',
         });
         if (isTrustedFolder) {
           options.push({
-            label: 'Allow for this session',
+            label: t('toolConfirmation.options.allowSession'),
             value: ToolConfirmationOutcome.ProceedAlways,
-            key: 'Allow for this session',
+            key: 'allow-session',
           });
           if (allowPermanentApproval) {
             options.push({
-              label: 'Allow for all future sessions',
+              label: t('toolConfirmation.options.allowAllFuture'),
               value: ToolConfirmationOutcome.ProceedAlwaysAndSave,
-              key: 'Allow for all future sessions',
+              key: 'allow-all-future',
             });
           }
         }
         if (!config.getIdeMode() || !isDiffingEnabled) {
           options.push({
-            label: 'Modify with external editor',
+            label: t('toolConfirmation.options.modifyExternalEditor'),
             value: ToolConfirmationOutcome.ModifyWithEditor,
-            key: 'Modify with external editor',
+            key: 'modify-external',
           });
         }
 
         options.push({
-          label: 'No, suggest changes (esc)',
+          label: t('toolConfirmation.options.suggestChangesEsc'),
           value: ToolConfirmationOutcome.Cancel,
-          key: 'No, suggest changes (esc)',
+          key: 'suggest-changes',
         });
       }
     } else if (confirmationDetails.type === 'exec') {
       const executionProps = confirmationDetails;
 
       if (executionProps.commands && executionProps.commands.length > 1) {
-        question = `Allow execution of ${executionProps.commands.length} commands?`;
+        question = t('toolConfirmation.execMultiple', {
+          count: executionProps.commands.length,
+        });
       } else {
-        question = `Allow execution of: '${executionProps.rootCommand}'?`;
+        question = t('toolConfirmation.execSingle', {
+          command: executionProps.rootCommand,
+        });
       }
       options.push({
-        label: 'Allow once',
+        label: t('toolConfirmation.options.allowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
-        key: 'Allow once',
+        key: 'allow-once',
       });
       if (isTrustedFolder) {
         options.push({
-          label: `Allow for this session`,
+          label: t('toolConfirmation.options.allowSession'),
           value: ToolConfirmationOutcome.ProceedAlways,
-          key: `Allow for this session`,
+          key: 'allow-session',
         });
         if (allowPermanentApproval) {
           options.push({
-            label: `Allow for all future sessions`,
+            label: t('toolConfirmation.options.allowAllFuture'),
             value: ToolConfirmationOutcome.ProceedAlwaysAndSave,
-            key: `Allow for all future sessions`,
+            key: 'allow-all-future',
           });
         }
       }
       options.push({
-        label: 'No, suggest changes (esc)',
+        label: t('toolConfirmation.options.suggestChangesEsc'),
         value: ToolConfirmationOutcome.Cancel,
-        key: 'No, suggest changes (esc)',
+        key: 'suggest-changes',
       });
     } else if (confirmationDetails.type === 'info') {
-      question = `Do you want to proceed?`;
+      question = t('toolConfirmation.proceedQuestion');
       options.push({
-        label: 'Allow once',
+        label: t('toolConfirmation.options.allowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
-        key: 'Allow once',
+        key: 'allow-once',
       });
       if (isTrustedFolder) {
         options.push({
-          label: 'Allow for this session',
+          label: t('toolConfirmation.options.allowSession'),
           value: ToolConfirmationOutcome.ProceedAlways,
-          key: 'Allow for this session',
+          key: 'allow-session',
         });
         if (allowPermanentApproval) {
           options.push({
-            label: 'Allow for all future sessions',
+            label: t('toolConfirmation.options.allowAllFuture'),
             value: ToolConfirmationOutcome.ProceedAlwaysAndSave,
-            key: 'Allow for all future sessions',
+            key: 'allow-all-future',
           });
         }
       }
       options.push({
-        label: 'No, suggest changes (esc)',
+        label: t('toolConfirmation.options.suggestChangesEsc'),
         value: ToolConfirmationOutcome.Cancel,
-        key: 'No, suggest changes (esc)',
+        key: 'suggest-changes',
       });
     } else {
       // mcp tool confirmation
       const mcpProps = confirmationDetails;
-      question = `Allow execution of MCP tool "${mcpProps.toolName}" from server "${mcpProps.serverName}"?`;
+      question = t('toolConfirmation.mcpQuestion', {
+        tool: mcpProps.toolName,
+        server: mcpProps.serverName,
+      });
       options.push({
-        label: 'Allow once',
+        label: t('toolConfirmation.options.allowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
-        key: 'Allow once',
+        key: 'allow-once',
       });
       if (isTrustedFolder) {
         options.push({
-          label: 'Allow tool for this session',
+          label: t('toolConfirmation.options.allowToolSession'),
           value: ToolConfirmationOutcome.ProceedAlwaysTool,
-          key: 'Allow tool for this session',
+          key: 'allow-tool-session',
         });
         options.push({
-          label: 'Allow all server tools for this session',
+          label: t('toolConfirmation.options.allowServerToolsSession'),
           value: ToolConfirmationOutcome.ProceedAlwaysServer,
-          key: 'Allow all server tools for this session',
+          key: 'allow-server-tools-session',
         });
         if (allowPermanentApproval) {
           options.push({
-            label: 'Allow tool for all future sessions',
+            label: t('toolConfirmation.options.allowToolAllFuture'),
             value: ToolConfirmationOutcome.ProceedAlwaysAndSave,
-            key: 'Allow tool for all future sessions',
+            key: 'allow-tool-all-future',
           });
         }
       }
       options.push({
-        label: 'No, suggest changes (esc)',
+        label: t('toolConfirmation.options.suggestChangesEsc'),
         value: ToolConfirmationOutcome.Cancel,
-        key: 'No, suggest changes (esc)',
+        key: 'suggest-changes',
       });
     }
 
@@ -297,14 +300,14 @@ export const ToolConfirmationMessage: React.FC<
       }
 
       if (containsRedirection) {
+        const noteLabel = t('toolConfirmation.redirection.noteLabel');
+        const noteText = t('toolConfirmation.redirection.noteText');
+        const tipLabel = t('toolConfirmation.redirection.tipLabel');
+        const tipText = t('toolConfirmation.redirection.tipText');
         // Calculate lines needed for Note and Tip
         const safeWidth = Math.max(terminalWidth, 1);
-        const noteLength =
-          REDIRECTION_WARNING_NOTE_LABEL.length +
-          REDIRECTION_WARNING_NOTE_TEXT.length;
-        const tipLength =
-          REDIRECTION_WARNING_TIP_LABEL.length +
-          REDIRECTION_WARNING_TIP_TEXT.length;
+        const noteLength = noteLabel.length + noteText.length;
+        const tipLength = tipLabel.length + tipText.length;
 
         const noteLines = Math.ceil(noteLength / safeWidth);
         const tipLines = Math.ceil(tipLength / safeWidth);
@@ -323,14 +326,14 @@ export const ToolConfirmationMessage: React.FC<
             <Box height={1} />
             <Box>
               <Text color={theme.text.primary}>
-                <Text bold>{REDIRECTION_WARNING_NOTE_LABEL}</Text>
-                {REDIRECTION_WARNING_NOTE_TEXT}
+                <Text bold>{noteLabel}</Text>
+                {noteText}
               </Text>
             </Box>
             <Box>
               <Text color={theme.border.default}>
-                <Text bold>{REDIRECTION_WARNING_TIP_LABEL}</Text>
-                {REDIRECTION_WARNING_TIP_TEXT}
+                <Text bold>{tipLabel}</Text>
+                {tipText}
               </Text>
             </Box>
           </>
@@ -372,7 +375,9 @@ export const ToolConfirmationMessage: React.FC<
           </Text>
           {displayUrls && infoProps.urls && infoProps.urls.length > 0 && (
             <Box flexDirection="column" marginTop={1}>
-              <Text color={theme.text.primary}>URLs to fetch:</Text>
+              <Text color={theme.text.primary}>
+                {t('toolConfirmation.urlsToFetch')}
+              </Text>
               {infoProps.urls.map((url) => (
                 <Text key={url}>
                   {' '}
@@ -389,8 +394,12 @@ export const ToolConfirmationMessage: React.FC<
 
       bodyContent = (
         <Box flexDirection="column">
-          <Text color={theme.text.link}>MCP Server: {mcpProps.serverName}</Text>
-          <Text color={theme.text.link}>Tool: {mcpProps.toolName}</Text>
+          <Text color={theme.text.link}>
+            {t('toolConfirmation.mcpServer', { server: mcpProps.serverName })}
+          </Text>
+          <Text color={theme.text.link}>
+            {t('toolConfirmation.mcpTool', { tool: mcpProps.toolName })}
+          </Text>
         </Box>
       );
     }
@@ -404,6 +413,7 @@ export const ToolConfirmationMessage: React.FC<
     availableTerminalHeight,
     terminalWidth,
     allowPermanentApproval,
+    t,
   ]);
 
   if (confirmationDetails.type === 'edit') {
@@ -418,9 +428,11 @@ export const ToolConfirmationMessage: React.FC<
           paddingBottom={1}
           overflow="hidden"
         >
-          <Text color={theme.text.primary}>Modify in progress: </Text>
+          <Text color={theme.text.primary}>
+            {t('toolConfirmation.modifyInProgress')}
+          </Text>
           <Text color={theme.status.success}>
-            Save and close external editor to continue
+            {t('toolConfirmation.modifyHint')}
           </Text>
         </Box>
       );

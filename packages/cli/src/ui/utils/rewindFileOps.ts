@@ -16,6 +16,7 @@ import {
   getFileDiffFromResultDisplay,
   computeAddedAndRemovedLines,
 } from '@google/gemini-cli-core';
+import { i18n } from '../../i18n/index.js';
 
 export interface FileChangeDetail {
   fileName: string;
@@ -184,7 +185,10 @@ export async function revertFileChanges(
                 // Other read errors are unexpected.
                 coreEvents.emitFeedback(
                   'error',
-                  `Error reading ${fileName} during revert: ${error.message}`,
+                  i18n.t('commands:rewind.revert.readError', {
+                    fileName,
+                    error: error.message,
+                  }),
                   e,
                 );
                 // Continue to next tool call
@@ -225,7 +229,7 @@ export async function revertFileChanges(
                 // Patch failed
                 coreEvents.emitFeedback(
                   'warning',
-                  `Smart revert for ${fileName} failed. The file may have been modified in a way that conflicts with the undo operation.`,
+                  i18n.t('commands:rewind.revert.smartFailed', { fileName }),
                 );
               }
             } else {
@@ -233,13 +237,13 @@ export async function revertFileChanges(
               // This can happen if a file created by the agent is deleted before rewind.
               coreEvents.emitFeedback(
                 'warning',
-                `Cannot revert changes for ${fileName} because it was not found on disk. This is expected if a file created by the agent was deleted before rewind`,
+                i18n.t('commands:rewind.revert.missingFile', { fileName }),
               );
             }
           } catch (e) {
             coreEvents.emitFeedback(
               'error',
-              `An unexpected error occurred while reverting ${fileName}.`,
+              i18n.t('commands:rewind.revert.unexpectedError', { fileName }),
               e,
             );
           }

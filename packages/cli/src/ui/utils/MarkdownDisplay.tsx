@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Text, Box } from 'ink';
 import { theme } from '../semantic-colors.js';
 import { colorizeCode } from './CodeColorizer.js';
@@ -331,6 +332,7 @@ const RenderCodeBlockInternal: React.FC<RenderCodeBlockProps> = ({
   availableTerminalHeight,
   terminalWidth,
 }) => {
+  const { t } = useTranslation('common');
   const settings = useSettings();
   const isAlternateBuffer = useAlternateBuffer();
   const MIN_LINES_FOR_MESSAGE = 1; // Minimum lines to show before the "generating more" message
@@ -354,7 +356,7 @@ const RenderCodeBlockInternal: React.FC<RenderCodeBlockProps> = ({
         return (
           <Box paddingLeft={CODE_BLOCK_PREFIX_PADDING}>
             <Text color={theme.text.secondary}>
-              ... code is being written ...
+              {t('markdown.codeWriting')}
             </Text>
           </Box>
         );
@@ -370,7 +372,9 @@ const RenderCodeBlockInternal: React.FC<RenderCodeBlockProps> = ({
       return (
         <Box paddingLeft={CODE_BLOCK_PREFIX_PADDING} flexDirection="column">
           {colorizedTruncatedCode}
-          <Text color={theme.text.secondary}>... generating more ...</Text>
+          <Text color={theme.text.secondary}>
+            {t('markdown.generatingMore')}
+          </Text>
         </Box>
       );
     }

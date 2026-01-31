@@ -12,6 +12,7 @@ import {
   type GeminiCLIExtension,
 } from '@google/gemini-cli-core';
 import { ExtensionUpdateState } from '../../ui/state/extensions.js';
+import { t } from '../../i18n/index.js';
 import * as os from 'node:os';
 import * as https from 'node:https';
 import * as fs from 'node:fs';
@@ -180,14 +181,25 @@ export async function checkForExtensionUpdate(
       );
     } catch (e) {
       debugLogger.warn(
-        `Failed to check for update for local extension "${extension.name}". Could not load extension from source path: ${installMetadata.source}. Error: ${getErrorMessage(e)}`,
+        t('common:debug.extensionUpdateCheckFailedWithError', {
+          name: extension.name,
+          path: installMetadata.source,
+          error: getErrorMessage(e),
+          defaultValue:
+            'Failed to check for update for local extension "{{name}}". Could not load extension from source path: {{path}}. Error: {{error}}',
+        }),
       );
       return ExtensionUpdateState.NOT_UPDATABLE;
     }
 
     if (!latestConfig) {
       debugLogger.warn(
-        `Failed to check for update for local extension "${extension.name}". Could not load extension from source path: ${installMetadata.source}`,
+        t('common:debug.extensionUpdateCheckFailed', {
+          name: extension.name,
+          path: installMetadata.source,
+          defaultValue:
+            'Failed to check for update for local extension "{{name}}". Could not load extension from source path: {{path}}',
+        }),
       );
       return ExtensionUpdateState.NOT_UPDATABLE;
     }

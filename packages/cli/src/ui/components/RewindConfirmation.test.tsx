@@ -33,7 +33,7 @@ describe('RewindConfirmation', () => {
     );
 
     expect(lastFrame()).toMatchSnapshot();
-    expect(lastFrame()).toContain('Revert code changes');
+    expect(lastFrame()).toContain('Revert file changes');
   });
 
   it('renders correctly without stats', () => {
@@ -48,7 +48,7 @@ describe('RewindConfirmation', () => {
     );
 
     expect(lastFrame()).toMatchSnapshot();
-    expect(lastFrame()).not.toContain('Revert code changes');
+    expect(lastFrame()).not.toContain('Revert file changes');
     expect(lastFrame()).toContain('Rewind conversation');
   });
 
@@ -86,6 +86,6 @@ describe('RewindConfirmation', () => {
     );
 
     expect(lastFrame()).toMatchSnapshot();
-    expect(lastFrame()).not.toContain('Revert code changes');
+    expect(lastFrame()).not.toContain('Revert file changes');
   });
 });

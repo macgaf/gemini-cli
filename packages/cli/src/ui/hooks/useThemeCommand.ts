@@ -13,6 +13,7 @@ import type {
 import { MessageType } from '../types.js';
 import process from 'node:process';
 import type { UseHistoryManagerReturn } from './useHistoryManager.js';
+import { i18n } from '../../i18n/index.js';
 
 interface UseThemeCommandReturn {
   isThemeDialogOpen: boolean;
@@ -36,7 +37,7 @@ export const useThemeCommand = (
       addItem(
         {
           type: MessageType.INFO,
-          text: 'Theme configuration unavailable due to NO_COLOR env variable.',
+          text: i18n.t('dialogs:theme.noColorUnsupported'),
         },
         Date.now(),
       );
@@ -50,7 +51,7 @@ export const useThemeCommand = (
       if (!themeManager.setActiveTheme(themeName)) {
         // If theme is not found, open the theme selection dialog and set error message
         setIsThemeDialogOpen(true);
-        setThemeError(`Theme "${themeName}" not found.`);
+        setThemeError(i18n.t('dialogs:theme.notFound', { name: themeName }));
       } else {
         setThemeError(null); // Clear any previous theme error on success
       }
@@ -83,7 +84,9 @@ export const useThemeCommand = (
         const isBuiltIn = themeManager.findThemeByName(themeName);
         const isCustom = themeName && mergedCustomThemes[themeName];
         if (!isBuiltIn && !isCustom) {
-          setThemeError(`Theme "${themeName}" not found in selected scope.`);
+          setThemeError(
+            i18n.t('dialogs:theme.notFoundInScope', { name: themeName }),
+          );
           setIsThemeDialogOpen(true);
           return;
         }

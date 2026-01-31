@@ -60,6 +60,11 @@ vi.mock('../utils.js', () => ({
   exitCli: vi.fn(),
 }));
 
+vi.mock('../../i18n/index.js', () => ({
+  t: (key: string, options?: { defaultValue?: string }) =>
+    options?.defaultValue ?? key,
+}));
+
 describe('extensions update command', () => {
   const mockLoadSettings = vi.mocked(loadSettings);
   const mockExtensionManager = vi.mocked(ExtensionManager);

@@ -14,23 +14,27 @@ import {
   debugLogger,
   getVersion,
 } from '@google/gemini-cli-core';
+import { t } from '../../i18n/index.js';
 
 export const aboutCommand: SlashCommand = {
   name: 'about',
-  description: 'Show version info',
+  get description() {
+    return t('commands:about.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: true,
   action: async (context) => {
     const osVersion = process.platform;
-    let sandboxEnv = 'no sandbox';
+    let sandboxEnv = t('commands:about.noSandbox');
     if (process.env['SANDBOX'] && process.env['SANDBOX'] !== 'sandbox-exec') {
       sandboxEnv = process.env['SANDBOX'];
     } else if (process.env['SANDBOX'] === 'sandbox-exec') {
-      sandboxEnv = `sandbox-exec (${
-        process.env['SEATBELT_PROFILE'] || 'unknown'
-      })`;
+      sandboxEnv = t('commands:about.sandboxExec', {
+        profile: process.env['SEATBELT_PROFILE'] || t('common:unknown'),
+      });
     }
-    const modelVersion = context.services.config?.getModel() || 'Unknown';
+    const modelVersion =
+      context.services.config?.getModel() || t('common:unknown');
     const cliVersion = await getVersion();
     const selectedAuthType =
       context.services.settings.merged.security.auth.selectedType || '';

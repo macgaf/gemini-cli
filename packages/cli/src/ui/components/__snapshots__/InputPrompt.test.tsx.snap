@@ -2,7 +2,7 @@
 
 exports[`InputPrompt > command search (Ctrl+R when not in shell) > expands and collapses long suggestion via Right/Left arrows > command-search-render-collapsed-match 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ (r:)    Type your message or @path/to/file                                                                          │
+│ (r:)  What would you like to do?                                                                                    │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
  lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll →
  lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
@@ -11,7 +11,7 @@ exports[`InputPrompt > command search (Ctrl+R when not in shell) > expands and c
 
 exports[`InputPrompt > command search (Ctrl+R when not in shell) > expands and collapses long suggestion via Right/Left arrows > command-search-render-expanded-match 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ (r:)    Type your message or @path/to/file                                                                          │
+│ (r:)  What would you like to do?                                                                                    │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
  lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll ←
  lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
@@ -46,24 +46,24 @@ exports[`InputPrompt > image path transformation snapshots > should snapshot exp
 
 exports[`InputPrompt > snapshots > should not show inverted cursor when shell is focused 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ >   Type your message or @path/to/file                                                                              │
+│ > What would you like to do?                                                                                        │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
 
 exports[`InputPrompt > snapshots > should render correctly in shell mode 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ !   Type your message or @path/to/file                                                                              │
+│ ! What would you like to do?                                                                                        │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
 
 exports[`InputPrompt > snapshots > should render correctly in yolo mode 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *   Type your message or @path/to/file                                                                              │
+│ * What would you like to do?                                                                                        │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;
 
 exports[`InputPrompt > snapshots > should render correctly when accepting edits 1`] = `
 "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ >   Type your message or @path/to/file                                                                              │
+│ > What would you like to do?                                                                                        │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯"
 `;

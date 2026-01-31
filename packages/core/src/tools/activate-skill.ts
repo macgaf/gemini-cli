@@ -19,6 +19,7 @@ import { BaseDeclarativeTool, BaseToolInvocation, Kind } from './tools.js';
 import type { Config } from '../config/config.js';
 import { ACTIVATE_SKILL_TOOL_NAME } from './tool-names.js';
 import { ToolErrorType } from './tool-error.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the ActivateSkill tool
@@ -52,7 +53,7 @@ class ActivateSkillToolInvocation extends BaseToolInvocation<
     if (skill) {
       return `"${skillName}": ${skill.description}`;
     }
-    return `"${skillName}" (?) unknown skill`;
+    return t('"{{name}}" (?) unknown skill', { name: skillName });
   }
 
   private async getOrFetchFolderStructure(
@@ -90,14 +91,19 @@ class ActivateSkillToolInvocation extends BaseToolInvocation<
 
     const confirmationDetails: ToolCallConfirmationDetails = {
       type: 'info',
-      title: `Activate Skill: ${skillName}`,
-      prompt: `You are about to enable the specialized agent skill **${skillName}**.
+      title: t('Activate Skill: {{name}}', { name: skillName }),
+      prompt: t('tools.activateSkill.confirmPrompt', {
+        defaultValue: `You are about to enable the specialized agent skill **${skillName}**.
 
 **Description:**
 ${skill.description}
 
 **Resources to be shared with the model:**
 ${folderStructure}`,
+        name: skillName,
+        description: skill.description,
+        resources: folderStructure,
+      }),
       onConfirm: async (outcome: ToolConfirmationOutcome) => {
         await this.publishPolicyUpdate(outcome);
       },
@@ -113,10 +119,13 @@ ${folderStructure}`,
     if (!skill) {
       const skills = skillManager.getSkills();
       const availableSkills = skills.map((s) => s.name).join(', ');
-      const errorMessage = `Skill "${skillName}" not found. Available skills are: ${availableSkills}`;
+      const errorMessage = t(
+        'Skill "{{name}}" not found. Available skills are: {{skills}}',
+        { name: skillName, skills: availableSkills },
+      );
       return {
-        llmContent: `Error: ${errorMessage}`,
-        returnDisplay: `Error: ${errorMessage}`,
+        llmContent: t('Error: {{message}}', { message: errorMessage }),
+        returnDisplay: t('Error: {{message}}', { message: errorMessage }),
         error: {
           message: errorMessage,
           type: ToolErrorType.INVALID_TOOL_PARAMS,
@@ -146,7 +155,14 @@ ${folderStructure}`,
     ${folderStructure}
   </available_resources>
 </activated_skill>`,
-      returnDisplay: `Skill **${skillName}** activated. Resources loaded from \`${path.dirname(skill.location)}\`:\n\n${folderStructure}`,
+      returnDisplay: t(
+        'Skill **{{name}}** activated. Resources loaded from `{{path}}`:\n\n{{resources}}',
+        {
+          name: skillName,
+          path: path.dirname(skill.location),
+          resources: folderStructure,
+        },
+      ),
     };
   }
 }
@@ -170,25 +186,31 @@ export class ActivateSkillTool extends BaseDeclarativeTool<
     let schema: z.ZodTypeAny;
     if (skillNames.length === 0) {
       schema = z.object({
-        name: z.string().describe('No skills are currently available.'),
+        name: z.string().describe(t('No skills are currently available.')),
       });
     } else {
       schema = z.object({
         name: z
           .enum(skillNames as [string, ...string[]])
-          .describe('The name of the skill to activate.'),
+          .describe(t('The name of the skill to activate.')),
       });
     }
 
     const availableSkillsHint =
       skillNames.length > 0
-        ? ` (Available: ${skillNames.map((n) => `'${n}'`).join(', ')})`
+        ? t(' (Available: {{skills}})', {
+            skills: skillNames.map((n) => `'${n}'`).join(', '),
+          })
         : '';
 
     super(
       ActivateSkillTool.Name,
-      'Activate Skill',
-      `Activates a specialized agent skill by name${availableSkillsHint}. Returns the skill's instructions wrapped in \`<activated_skill>\` tags. These provide specialized guidance for the current task. Use this when you identify a task that matches a skill's description. ONLY use names exactly as they appear in the \`<available_skills>\` section.`,
+      t('tools.activateSkill.displayName', {
+        defaultValue: 'Activate Skill',
+      }),
+      t('tools.activateSkill.description', {
+        defaultValue: `Activates a specialized agent skill by name${availableSkillsHint}. Returns the skill's instructions wrapped in \`<activated_skill>\` tags. These provide specialized guidance for the current task. Use this when you identify a task that matches a skill's description. ONLY use names exactly as they appear in the \`<available_skills>\` section.`,
+      }),
       Kind.Other,
       zodToJsonSchema(schema),
       messageBus,
@@ -208,7 +230,10 @@ export class ActivateSkillTool extends BaseDeclarativeTool<
       params,
       messageBus,
       _toolName,
-      _toolDisplayName ?? 'Activate Skill',
+      _toolDisplayName ??
+        t('tools.activateSkill.displayName', {
+          defaultValue: 'Activate Skill',
+        }),
     );
   }
 }

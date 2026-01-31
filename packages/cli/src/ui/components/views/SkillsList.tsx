@@ -8,6 +8,7 @@ import type React from 'react';
 import { Box, Text } from 'ink';
 import { theme } from '../../semantic-colors.js';
 import { type SkillDefinition } from '../../types.js';
+import { useTranslation } from 'react-i18next';
 
 interface SkillsListProps {
   skills: readonly SkillDefinition[];
@@ -18,6 +19,7 @@ export const SkillsList: React.FC<SkillsListProps> = ({
   skills,
   showDescriptions,
 }) => {
+  const { t } = useTranslation('commands');
   const sortSkills = (a: SkillDefinition, b: SkillDefinition) => {
     if (a.isBuiltin === b.isBuiltin) {
       return a.name.localeCompare(b.name);
@@ -41,7 +43,9 @@ export const SkillsList: React.FC<SkillsListProps> = ({
             {skill.name}
           </Text>
           {skill.isBuiltin && (
-            <Text color={theme.text.secondary}>{' [Built-in]'}</Text>
+            <Text color={theme.text.secondary}>
+              {t('skills.list.builtinBadge')}
+            </Text>
           )}
         </Box>
         {showDescriptions && skill.description && (
@@ -62,7 +66,7 @@ export const SkillsList: React.FC<SkillsListProps> = ({
       {enabledSkills.length > 0 && (
         <Box flexDirection="column">
           <Text bold color={theme.text.primary}>
-            Available Agent Skills:
+            {t('skills.list.availableTitle')}
           </Text>
           <Box height={1} />
           {enabledSkills.map(renderSkill)}
@@ -78,7 +82,7 @@ export const SkillsList: React.FC<SkillsListProps> = ({
       {disabledSkills.length > 0 && (
         <Box flexDirection="column">
           <Text bold color={theme.text.secondary}>
-            Disabled Skills:
+            {t('skills.list.disabledTitle')}
           </Text>
           <Box height={1} />
           {disabledSkills.map(renderSkill)}
@@ -86,7 +90,7 @@ export const SkillsList: React.FC<SkillsListProps> = ({
       )}
 
       {skills.length === 0 && (
-        <Text color={theme.text.primary}> No skills available</Text>
+        <Text color={theme.text.primary}>{t('skills.list.empty')}</Text>
       )}
     </Box>
   );

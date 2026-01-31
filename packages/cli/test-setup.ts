@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { vi, beforeEach, afterEach } from 'vitest';
+import { vi, beforeEach, afterEach, beforeAll } from 'vitest';
 import { format } from 'node:util';
+import { initI18n } from './src/i18n/index.js';
 
 global.IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -18,6 +19,10 @@ import './src/test-utils/customMatchers.js';
 
 let consoleErrorSpy: vi.SpyInstance;
 let actWarnings: Array<{ message: string; stack: string }> = [];
+
+beforeAll(async () => {
+  await initI18n({ cliLang: 'en' });
+});
 
 beforeEach(() => {
   actWarnings = [];

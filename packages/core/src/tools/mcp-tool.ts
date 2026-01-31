@@ -5,6 +5,7 @@
  */
 
 import { safeJsonStringify } from '../utils/safeJsonStringify.js';
+import { t } from '../i18n/index.js';
 import type {
   ToolCallConfirmationDetails,
   ToolInvocation,
@@ -171,14 +172,14 @@ export class DiscoveredMCPToolInvocation extends BaseToolInvocation<
     // Race MCP tool call with abort signal to respect cancellation
     const rawResponseParts = await new Promise<Part[]>((resolve, reject) => {
       if (signal.aborted) {
-        const error = new Error('Tool call aborted');
+        const error = new Error(t('Tool call aborted'));
         error.name = 'AbortError';
         reject(error);
         return;
       }
       const onAbort = () => {
         cleanup();
-        const error = new Error('Tool call aborted');
+        const error = new Error(t('Tool call aborted'));
         error.name = 'AbortError';
         reject(error);
       };
@@ -201,14 +202,19 @@ export class DiscoveredMCPToolInvocation extends BaseToolInvocation<
 
     // Ensure the response is not an error
     if (this.isMCPToolError(rawResponseParts)) {
-      const errorMessage = `MCP tool '${
-        this.serverToolName
-      }' reported tool error for function call: ${safeJsonStringify(
-        functionCalls[0],
-      )} with response: ${safeJsonStringify(rawResponseParts)}`;
+      const errorMessage = t(
+        "MCP tool '{{tool}}' reported tool error for function call: {{call}} with response: {{response}}",
+        {
+          tool: this.serverToolName,
+          call: safeJsonStringify(functionCalls[0]),
+          response: safeJsonStringify(rawResponseParts),
+        },
+      );
       return {
         llmContent: errorMessage,
-        returnDisplay: `Error: MCP tool '${this.serverToolName}' reported an error.`,
+        returnDisplay: t("Error: MCP tool '{{tool}}' reported an error.", {
+          tool: this.serverToolName,
+        }),
         error: {
           message: errorMessage,
           type: ToolErrorType.MCP_TOOL_ERROR,
@@ -248,7 +254,10 @@ export class DiscoveredMCPTool extends BaseDeclarativeTool<
   ) {
     super(
       nameOverride ?? generateValidName(serverToolName),
-      `${serverToolName} (${serverName} MCP Server)`,
+      t('{{tool}} ({{server}} MCP Server)', {
+        tool: serverToolName,
+        server: serverName,
+      }),
       description,
       Kind.Other,
       parameterSchema,

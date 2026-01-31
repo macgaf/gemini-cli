@@ -21,6 +21,7 @@ import { getProgrammingLanguage } from '../telemetry/telemetry-utils.js';
 import { logFileOperation } from '../telemetry/loggers.js';
 import { FileOperationEvent } from '../telemetry/types.js';
 import { READ_FILE_TOOL_NAME } from './tool-names.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the ReadFile tool
@@ -85,7 +86,7 @@ class ReadFileToolInvocation extends BaseToolInvocation<
     if (result.error) {
       return {
         llmContent: result.llmContent,
-        returnDisplay: result.returnDisplay || 'Error reading file',
+        returnDisplay: result.returnDisplay || t('Error reading file'),
         error: {
           message: result.error,
           type: result.errorType,
@@ -100,13 +101,20 @@ class ReadFileToolInvocation extends BaseToolInvocation<
       const nextOffset = this.params.offset
         ? this.params.offset + end - start + 1
         : end;
-      llmContent = `
+      llmContent = t('tools.readFile.truncatedNotice', {
+        defaultValue: `
 IMPORTANT: The file content has been truncated.
 Status: Showing lines ${start}-${end} of ${total} total lines.
 Action: To read more of the file, you can use the 'offset' and 'limit' parameters in a subsequent 'read_file' call. For example, to read the next section of the file, use offset: ${nextOffset}.
 
 --- FILE CONTENT (truncated) ---
-${result.llmContent}`;
+${result.llmContent}`,
+        start,
+        end,
+        total,
+        nextOffset,
+        content: result.llmContent,
+      });
     } else {
       llmContent = result.llmContent || '';
     }
@@ -153,23 +161,32 @@ export class ReadFileTool extends BaseDeclarativeTool<
   ) {
     super(
       ReadFileTool.Name,
-      'ReadFile',
-      `Reads and returns the content of a specified file. If the file is large, the content will be truncated. The tool's response will clearly indicate if truncation has occurred and will provide details on how to read more of the file using the 'offset' and 'limit' parameters. Handles text, images (PNG, JPG, GIF, WEBP, SVG, BMP), audio files (MP3, WAV, AIFF, AAC, OGG, FLAC), and PDF files. For text files, it can read specific line ranges.`,
+      t('tools.readFile.displayName', { defaultValue: 'ReadFile' }),
+      t('tools.readFile.description', {
+        defaultValue:
+          "Reads and returns the content of a specified file. If the file is large, the content will be truncated. The tool's response will clearly indicate if truncation has occurred and will provide details on how to read more of the file using the 'offset' and 'limit' parameters. Handles text, images (PNG, JPG, GIF, WEBP, SVG, BMP), audio files (MP3, WAV, AIFF, AAC, OGG, FLAC), and PDF files. For text files, it can read specific line ranges.",
+      }),
       Kind.Read,
       {
         properties: {
           file_path: {
-            description: 'The path to the file to read.',
+            description: t('tools.readFile.params.file_path', {
+              defaultValue: 'The path to the file to read.',
+            }),
             type: 'string',
           },
           offset: {
-            description:
-              "Optional: For text files, the 0-based line number to start reading from. Requires 'limit' to be set. Use for paginating through large files.",
+            description: t('tools.readFile.params.offset', {
+              defaultValue:
+                "Optional: For text files, the 0-based line number to start reading from. Requires 'limit' to be set. Use for paginating through large files.",
+            }),
             type: 'number',
           },
           limit: {
-            description:
-              "Optional: For text files, maximum number of lines to read. Use with 'offset' to paginate through large files. If omitted, reads the entire file (if feasible, up to a default limit).",
+            description: t('tools.readFile.params.limit', {
+              defaultValue:
+                "Optional: For text files, maximum number of lines to read. Use with 'offset' to paginate through large files. If omitted, reads the entire file (if feasible, up to a default limit).",
+            }),
             type: 'number',
           },
         },
@@ -186,7 +203,7 @@ export class ReadFileTool extends BaseDeclarativeTool<
     params: ReadFileToolParams,
   ): string | null {
     if (params.file_path.trim() === '') {
-      return "The 'file_path' parameter must be non-empty.";
+      return t("The 'file_path' parameter must be non-empty.");
     }
 
     const workspaceContext = this.config.getWorkspaceContext();
@@ -205,19 +222,28 @@ export class ReadFileTool extends BaseDeclarativeTool<
       !isWithinTempDir
     ) {
       const directories = workspaceContext.getDirectories();
-      return `File path must be within one of the workspace directories: ${directories.join(', ')} or within the project temp directory: ${projectTempDir}`;
+      return t(
+        'File path must be within one of the workspace directories: {{dirs}} or within the project temp directory: {{tempDir}}',
+        {
+          dirs: directories.join(', '),
+          tempDir: projectTempDir,
+        },
+      );
     }
     if (params.offset !== undefined && params.offset < 0) {
-      return 'Offset must be a non-negative number';
+      return t('Offset must be a non-negative number');
     }
     if (params.limit !== undefined && params.limit <= 0) {
-      return 'Limit must be a positive number';
+      return t('Limit must be a positive number');
     }
 
     const fileService = this.config.getFileService();
     const fileFilteringOptions = this.config.getFileFilteringOptions();
     if (fileService.shouldIgnoreFile(resolvedPath, fileFilteringOptions)) {
-      return `File path '${resolvedPath}' is ignored by configured ignore patterns.`;
+      return t(
+        "File path '{{path}}' is ignored by configured ignore patterns.",
+        { path: resolvedPath },
+      );
     }
 
     return null;

@@ -17,6 +17,7 @@ import { ToolErrorType } from './tool-error.js';
 import { GLOB_TOOL_NAME } from './tool-names.js';
 import { getErrorMessage } from '../utils/errors.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 
 // Subset of 'Path' interface provided by 'glob' that we can implement for testing
 export interface GlobPath {
@@ -106,7 +107,9 @@ class GlobToolInvocation extends BaseToolInvocation<
         this.params.dir_path || '.',
       );
       const relativePath = makeRelative(searchDir, this.config.getTargetDir());
-      description += ` within ${shortenPath(relativePath)}`;
+      description += t(' within {{path}}', {
+        path: shortenPath(relativePath),
+      });
     }
     return description;
   }
@@ -124,10 +127,13 @@ class GlobToolInvocation extends BaseToolInvocation<
           this.params.dir_path,
         );
         if (!workspaceContext.isPathWithinWorkspace(searchDirAbsolute)) {
-          const rawError = `Error: Path "${this.params.dir_path}" is not within any workspace directory`;
+          const rawError = t(
+            'Error: Path "{{path}}" is not within any workspace directory',
+            { path: this.params.dir_path },
+          );
           return {
             llmContent: rawError,
-            returnDisplay: `Path is not within workspace`,
+            returnDisplay: t('Path is not within workspace'),
             error: {
               message: rawError,
               type: ToolErrorType.PATH_NOT_IN_WORKSPACE,
@@ -192,18 +198,24 @@ class GlobToolInvocation extends BaseToolInvocation<
       );
 
       if (!filteredEntries || filteredEntries.length === 0) {
-        let message = `No files found matching pattern "${this.params.pattern}"`;
+        let message = t('No files found matching pattern "{{pattern}}"', {
+          pattern: this.params.pattern,
+        });
         if (searchDirectories.length === 1) {
-          message += ` within ${searchDirectories[0]}`;
+          message += t(' within {{path}}', { path: searchDirectories[0] });
         } else {
-          message += ` within ${searchDirectories.length} workspace directories`;
+          message += t(' within {{count}} workspace directories', {
+            count: searchDirectories.length,
+          });
         }
         if (ignoredCount > 0) {
-          message += ` (${ignoredCount} files were ignored)`;
+          message += t(' ({{count}} files were ignored)', {
+            count: ignoredCount,
+          });
         }
         return {
           llmContent: message,
-          returnDisplay: `No files found`,
+          returnDisplay: t('No files found'),
         };
       }
 
@@ -224,28 +236,44 @@ class GlobToolInvocation extends BaseToolInvocation<
       const fileListDescription = sortedAbsolutePaths.join('\n');
       const fileCount = sortedAbsolutePaths.length;
 
-      let resultMessage = `Found ${fileCount} file(s) matching "${this.params.pattern}"`;
+      let resultMessage = t('Found {{count}} file(s) matching "{{pattern}}"', {
+        count: fileCount,
+        pattern: this.params.pattern,
+      });
       if (searchDirectories.length === 1) {
-        resultMessage += ` within ${searchDirectories[0]}`;
+        resultMessage += t(' within {{path}}', {
+          path: searchDirectories[0],
+        });
       } else {
-        resultMessage += ` across ${searchDirectories.length} workspace directories`;
+        resultMessage += t(' across {{count}} workspace directories', {
+          count: searchDirectories.length,
+        });
       }
       if (ignoredCount > 0) {
-        resultMessage += ` (${ignoredCount} additional files were ignored)`;
+        resultMessage += t(' ({{count}} additional files were ignored)', {
+          count: ignoredCount,
+        });
       }
-      resultMessage += `, sorted by modification time (newest first):\n${fileListDescription}`;
+      resultMessage += t(
+        ', sorted by modification time (newest first):\n{{list}}',
+        { list: fileListDescription },
+      );
 
       return {
         llmContent: resultMessage,
-        returnDisplay: `Found ${fileCount} matching file(s)`,
+        returnDisplay: t('Found {{count}} matching file(s)', {
+          count: fileCount,
+        }),
       };
     } catch (error) {
       debugLogger.warn(`GlobLogic execute Error`, error);
       const errorMessage = getErrorMessage(error);
-      const rawError = `Error during glob search operation: ${errorMessage}`;
+      const rawError = t('Error during glob search operation: {{error}}', {
+        error: errorMessage,
+      });
       return {
         llmContent: rawError,
-        returnDisplay: `Error: An unexpected error occurred.`,
+        returnDisplay: t('Error: An unexpected error occurred.'),
         error: {
           message: rawError,
           type: ToolErrorType.GLOB_EXECUTION_ERROR,
@@ -266,34 +294,47 @@ export class GlobTool extends BaseDeclarativeTool<GlobToolParams, ToolResult> {
   ) {
     super(
       GlobTool.Name,
-      'FindFiles',
-      'Efficiently finds files matching specific glob patterns (e.g., `src/**/*.ts`, `**/*.md`), returning absolute paths sorted by modification time (newest first). Ideal for quickly locating files based on their name or path structure, especially in large codebases.',
+      t('tools.glob.displayName', { defaultValue: 'FindFiles' }),
+      t('tools.glob.description', {
+        defaultValue:
+          'Efficiently finds files matching specific glob patterns (e.g., `src/**/*.ts`, `**/*.md`), returning absolute paths sorted by modification time (newest first). Ideal for quickly locating files based on their name or path structure, especially in large codebases.',
+      }),
       Kind.Search,
       {
         properties: {
           pattern: {
-            description:
-              "The glob pattern to match against (e.g., '**/*.py', 'docs/*.md').",
+            description: t('tools.glob.params.pattern', {
+              defaultValue:
+                "The glob pattern to match against (e.g., '**/*.py', 'docs/*.md').",
+            }),
             type: 'string',
           },
           dir_path: {
-            description:
-              'Optional: The absolute path to the directory to search within. If omitted, searches the root directory.',
+            description: t('tools.glob.params.dir_path', {
+              defaultValue:
+                'Optional: The absolute path to the directory to search within. If omitted, searches the root directory.',
+            }),
             type: 'string',
           },
           case_sensitive: {
-            description:
-              'Optional: Whether the search should be case-sensitive. Defaults to false.',
+            description: t('tools.glob.params.case_sensitive', {
+              defaultValue:
+                'Optional: Whether the search should be case-sensitive. Defaults to false.',
+            }),
             type: 'boolean',
           },
           respect_git_ignore: {
-            description:
-              'Optional: Whether to respect .gitignore patterns when finding files. Only available in git repositories. Defaults to true.',
+            description: t('tools.glob.params.respect_git_ignore', {
+              defaultValue:
+                'Optional: Whether to respect .gitignore patterns when finding files. Only available in git repositories. Defaults to true.',
+            }),
             type: 'boolean',
           },
           respect_gemini_ignore: {
-            description:
-              'Optional: Whether to respect .geminiignore patterns when finding files. Defaults to true.',
+            description: t('tools.glob.params.respect_gemini_ignore', {
+              defaultValue:
+                'Optional: Whether to respect .geminiignore patterns when finding files. Defaults to true.',
+            }),
             type: 'boolean',
           },
         },
@@ -320,19 +361,24 @@ export class GlobTool extends BaseDeclarativeTool<GlobToolParams, ToolResult> {
     const workspaceContext = this.config.getWorkspaceContext();
     if (!workspaceContext.isPathWithinWorkspace(searchDirAbsolute)) {
       const directories = workspaceContext.getDirectories();
-      return `Search path ("${searchDirAbsolute}") resolves outside the allowed workspace directories: ${directories.join(', ')}`;
+      return t(
+        'Search path ("{{path}}") resolves outside the allowed workspace directories: {{dirs}}',
+        { path: searchDirAbsolute, dirs: directories.join(', ') },
+      );
     }
 
     const targetDir = searchDirAbsolute || this.config.getTargetDir();
     try {
       if (!fs.existsSync(targetDir)) {
-        return `Search path does not exist ${targetDir}`;
+        return t('Search path does not exist {{path}}', { path: targetDir });
       }
       if (!fs.statSync(targetDir).isDirectory()) {
-        return `Search path is not a directory: ${targetDir}`;
+        return t('Search path is not a directory: {{path}}', {
+          path: targetDir,
+        });
       }
     } catch (e: unknown) {
-      return `Error accessing search path: ${e}`;
+      return t('Error accessing search path: {{error}}', { error: e });
     }
 
     if (
@@ -340,7 +386,7 @@ export class GlobTool extends BaseDeclarativeTool<GlobToolParams, ToolResult> {
       typeof params.pattern !== 'string' ||
       params.pattern.trim() === ''
     ) {
-      return "The 'pattern' parameter cannot be empty.";
+      return t("The 'pattern' parameter cannot be empty.");
     }
 
     return null;

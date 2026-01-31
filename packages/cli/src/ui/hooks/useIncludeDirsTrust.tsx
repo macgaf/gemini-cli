@@ -15,6 +15,7 @@ import {
 import { MultiFolderTrustDialog } from '../components/MultiFolderTrustDialog.js';
 import type { UseHistoryManagerReturn } from './useHistoryManager.js';
 import { MessageType, type HistoryItem } from '../types.js';
+import { i18n } from '../../i18n/index.js';
 
 async function finishAddingDirectories(
   config: Config,
@@ -28,7 +29,7 @@ async function finishAddingDirectories(
   if (!config) {
     addItem({
       type: MessageType.ERROR,
-      text: 'Configuration is not available.',
+      text: i18n.t('commands:directory.configNotAvailable'),
     });
     return;
   }
@@ -38,7 +39,11 @@ async function finishAddingDirectories(
       await refreshServerHierarchicalMemory(config);
     }
   } catch (error) {
-    errors.push(`Error refreshing memory: ${(error as Error).message}`);
+    errors.push(
+      i18n.t('commands:directory.errorRefreshingMemory', {
+        error: (error as Error).message,
+      }),
+    );
   }
 
   if (added.length > 0) {
@@ -85,7 +90,12 @@ export function useIncludeDirsTrust(
           added.push(pathToAdd.trim());
         } catch (e) {
           const error = e as Error;
-          errors.push(`Error adding '${pathToAdd.trim()}': ${error.message}`);
+          errors.push(
+            i18n.t('commands:directory.errorAdding', {
+              path: pathToAdd.trim(),
+              error: error.message,
+            }),
+          );
         }
       }
 
@@ -118,9 +128,9 @@ export function useIncludeDirsTrust(
 
     if (untrustedDirs.length > 0) {
       errors.push(
-        `The following directories are explicitly untrusted and cannot be added to a trusted workspace:\n- ${untrustedDirs.join(
+        `${i18n.t('commands:directory.untrustedDirs')}\n- ${untrustedDirs.join(
           '\n- ',
-        )}\nPlease use the permissions command to modify their trust level.`,
+        )}\n${i18n.t('commands:directory.usePermissionsCommand')}`,
       );
     }
 
@@ -131,7 +141,12 @@ export function useIncludeDirsTrust(
         added.push(pathToAdd);
       } catch (e) {
         const error = e as Error;
-        errors.push(`Error adding '${pathToAdd}': ${error.message}`);
+        errors.push(
+          i18n.t('commands:directory.errorAdding', {
+            path: pathToAdd,
+            error: error.message,
+          }),
+        );
       }
     }
 

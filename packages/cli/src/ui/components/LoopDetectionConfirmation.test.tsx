@@ -26,8 +26,8 @@ describe('LoopDetectionConfirmation', () => {
     );
     const output = lastFrame()!.toString();
 
-    expect(output).toContain('loopDetection.description');
-    expect(output).toContain('loopDetection.options.keep');
-    expect(output).toContain('loopDetection.options.disable');
+    expect(output).toContain('It looks like the agent might be in a loop.');
+    expect(output).toContain('Keep loop detection enabled');
+    expect(output).toContain('Disable loop detection for this session');
   });
 });

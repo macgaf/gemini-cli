@@ -12,9 +12,9 @@ import {
   formatCheckpointDisplayList,
   getToolCallDataSchema,
   getTruncatedCheckpointNames,
-  performRestore,
   type ToolCallData,
 } from '@google/gemini-cli-core';
+import { t } from '../../i18n/index.js';
 import {
   type CommandContext,
   type SlashCommand,
@@ -46,7 +46,7 @@ async function restoreAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Could not determine the .gemini directory path.',
+      content: t('commands:restore.geminiDirNotFound'),
     };
   }
 
@@ -61,14 +61,14 @@ async function restoreAction(
         return {
           type: 'message',
           messageType: 'info',
-          content: 'No restorable tool calls found.',
+          content: t('commands:restore.noRestorable'),
         };
       }
       const fileList = formatCheckpointDisplayList(jsonFiles);
       return {
         type: 'message',
         messageType: 'info',
-        content: `Available tool calls to restore:\n\n${fileList}`,
+        content: t('commands:restore.availableList', { list: fileList }),
       };
     }
 
@@ -78,7 +78,9 @@ async function restoreAction(
       return {
         type: 'message',
         messageType: 'error',
-        content: `File not found: ${selectedFile}`,
+        content: t('commands:restore.fileNotFound', {
+          file: selectedFile,
+        }),
       };
     }
 
@@ -90,7 +92,9 @@ async function restoreAction(
       return {
         type: 'message',
         messageType: 'error',
-        content: `Checkpoint file is invalid: ${parseResult.error.message}`,
+        content: t('commands:restore.invalidCheckpoint', {
+          error: parseResult.error.message,
+        }),
       };
     }
 
@@ -102,21 +106,47 @@ async function restoreAction(
       Record<string, unknown>
     >;
 
-    const actionStream = performRestore(toolCallData, gitService);
+    if (toolCallData.history && toolCallData.clientHistory && loadHistory) {
+      loadHistory(toolCallData.history);
+      config?.getGeminiClient()?.setHistory(toolCallData.clientHistory);
+    }
 
-    for await (const action of actionStream) {
-      if (action.type === 'message') {
+    if (toolCallData.commitHash) {
+      if (!gitService) {
         addItem(
           {
-            type: action.messageType,
-            text: action.content,
+            type: 'error',
+            text: t('commands:restore.gitServiceUnavailable'),
           },
           Date.now(),
         );
-      } else if (action.type === 'load_history' && loadHistory) {
-        loadHistory(action.history);
-        if (action.clientHistory) {
-          config?.getGeminiClient()?.setHistory(action.clientHistory);
+      } else {
+        try {
+          await gitService.restoreProjectFromSnapshot(toolCallData.commitHash);
+          addItem(
+            {
+              type: 'info',
+              text: t('commands:restore.restored'),
+            },
+            Date.now(),
+          );
+        } catch (error) {
+          if (
+            error instanceof Error &&
+            error.message.includes('unable to read tree')
+          ) {
+            addItem(
+              {
+                type: 'error',
+                text: t('commands:restore.commitNotFound', {
+                  commitHash: toolCallData.commitHash,
+                }),
+              },
+              Date.now(),
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
@@ -130,7 +160,9 @@ async function restoreAction(
     return {
       type: 'message',
       messageType: 'error',
-      content: `Could not read restorable tool calls. This is the error: ${error}`,
+      content: t('commands:restore.errorReading', {
+        error: error instanceof Error ? error.message : String(error),
+      }),
     };
   }
 }
@@ -161,8 +193,7 @@ export const restoreCommand = (config: Config | null): SlashCommand | null => {
 
   return {
     name: 'restore',
-    description:
-      'Restore a tool call. This will reset the conversation and file history to the state it was in when the tool call was suggested',
+    description: t('commands:restore.description'),
     kind: CommandKind.BUILT_IN,
     autoExecute: true,
     action: restoreAction,

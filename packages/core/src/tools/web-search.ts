@@ -15,6 +15,7 @@ import { getErrorMessage } from '../utils/errors.js';
 import { type Config } from '../config/config.js';
 import { getResponseText } from '../utils/partUtils.js';
 import { debugLogger } from '../utils/debugLogger.js';
+import { t } from '../i18n/index.js';
 
 interface GroundingChunkWeb {
   uri?: string;
@@ -73,7 +74,9 @@ class WebSearchToolInvocation extends BaseToolInvocation<
   }
 
   override getDescription(): string {
-    return `Searching the web for: "${this.params.query}"`;
+    return t('Searching the web for: "{{query}}"', {
+      query: this.params.query,
+    });
   }
 
   async execute(signal: AbortSignal): Promise<WebSearchToolResult> {
@@ -97,8 +100,11 @@ class WebSearchToolInvocation extends BaseToolInvocation<
 
       if (!responseText || !responseText.trim()) {
         return {
-          llmContent: `No search results or information found for query: "${this.params.query}"`,
-          returnDisplay: 'No information found.',
+          llmContent: t(
+            'No search results or information found for query: "{{query}}"',
+            { query: this.params.query },
+          ),
+          returnDisplay: t('No information found.'),
         };
       }
 
@@ -107,8 +113,8 @@ class WebSearchToolInvocation extends BaseToolInvocation<
 
       if (sources && sources.length > 0) {
         sources.forEach((source: GroundingChunkItem, index: number) => {
-          const title = source.web?.title || 'Untitled';
-          const uri = source.web?.uri || 'No URI';
+          const title = source.web?.title || t('Untitled');
+          const uri = source.web?.uri || t('No URI');
           sourceListFormatted.push(`[${index + 1}] ${title} (${uri})`);
         });
 
@@ -155,23 +161,29 @@ class WebSearchToolInvocation extends BaseToolInvocation<
 
         if (sourceListFormatted.length > 0) {
           modifiedResponseText +=
-            '\n\nSources:\n' + sourceListFormatted.join('\n');
+            t('\n\nSources:\n') + sourceListFormatted.join('\n');
         }
       }
 
       return {
-        llmContent: `Web search results for "${this.params.query}":\n\n${modifiedResponseText}`,
-        returnDisplay: `Search results for "${this.params.query}" returned.`,
+        llmContent: t('Web search results for "{{query}}":\n\n{{content}}', {
+          query: this.params.query,
+          content: modifiedResponseText,
+        }),
+        returnDisplay: t('Search results for "{{query}}" returned.', {
+          query: this.params.query,
+        }),
         sources,
       };
     } catch (error: unknown) {
-      const errorMessage = `Error during web search for query "${
-        this.params.query
-      }": ${getErrorMessage(error)}`;
+      const errorMessage = t(
+        'Error during web search for query "{{query}}": {{error}}',
+        { query: this.params.query, error: getErrorMessage(error) },
+      );
       debugLogger.warn(errorMessage, error);
       return {
-        llmContent: `Error: ${errorMessage}`,
-        returnDisplay: `Error performing web search.`,
+        llmContent: t('Error: {{message}}', { message: errorMessage }),
+        returnDisplay: t('Error performing web search.'),
         error: {
           message: errorMessage,
           type: ToolErrorType.WEB_SEARCH_FAILED,
@@ -196,15 +208,20 @@ export class WebSearchTool extends BaseDeclarativeTool<
   ) {
     super(
       WebSearchTool.Name,
-      'GoogleSearch',
-      'Performs a web search using Google Search (via the Gemini API) and returns the results. This tool is useful for finding information on the internet based on a query.',
+      t('tools.webSearch.displayName', { defaultValue: 'GoogleSearch' }),
+      t('tools.webSearch.description', {
+        defaultValue:
+          'Performs a web search using Google Search (via the Gemini API) and returns the results. This tool is useful for finding information on the internet based on a query.',
+      }),
       Kind.Search,
       {
         type: 'object',
         properties: {
           query: {
             type: 'string',
-            description: 'The search query to find information on the web.',
+            description: t('tools.webSearch.params.query', {
+              defaultValue: 'The search query to find information on the web.',
+            }),
           },
         },
         required: ['query'],
@@ -224,7 +241,7 @@ export class WebSearchTool extends BaseDeclarativeTool<
     params: WebSearchToolParams,
   ): string | null {
     if (!params.query || params.query.trim() === '') {
-      return "The 'query' parameter cannot be empty.";
+      return t("The 'query' parameter cannot be empty.");
     }
     return null;
   }

@@ -76,6 +76,7 @@ import path from 'node:path';
 import { useSessionStats } from '../contexts/SessionContext.js';
 import { useKeypress } from './useKeypress.js';
 import type { LoadedSettings } from '../../config/settings.js';
+import { i18n } from '../../i18n/index.js';
 
 enum StreamProcessingStatus {
   Completed,
@@ -265,7 +266,10 @@ export const useGeminiStream = (
       prevActiveShellPtyIdRef.current !== null &&
       activeShellPtyId === null
     ) {
-      addItem({ type: MessageType.INFO, text: 'Request cancelled.' });
+      addItem({
+        type: MessageType.INFO,
+        text: i18n.t('common:request.cancelled'),
+      });
       setIsResponding(false);
     }
     prevActiveShellPtyIdRef.current = activeShellPtyId;
@@ -387,7 +391,7 @@ export const useGeminiStream = (
       if (!activeShellPtyId) {
         addItem({
           type: MessageType.INFO,
-          text: 'Request cancelled.',
+          text: i18n.t('common:request.cancelled'),
         });
         setIsResponding(false);
       }
@@ -630,7 +634,10 @@ export const useGeminiStream = (
         setPendingHistoryItem(null);
       }
       addItem(
-        { type: MessageType.INFO, text: 'User cancelled the request.' },
+        {
+          type: MessageType.INFO,
+          text: i18n.t('common:request.userCancelled'),
+        },
         userMessageTimestamp,
       );
       setIsResponding(false);
@@ -688,27 +695,27 @@ export const useGeminiStream = (
       const finishReasonMessages: Record<FinishReason, string | undefined> = {
         [FinishReason.FINISH_REASON_UNSPECIFIED]: undefined,
         [FinishReason.STOP]: undefined,
-        [FinishReason.MAX_TOKENS]: 'Response truncated due to token limits.',
-        [FinishReason.SAFETY]: 'Response stopped due to safety reasons.',
-        [FinishReason.RECITATION]: 'Response stopped due to recitation policy.',
-        [FinishReason.LANGUAGE]:
-          'Response stopped due to unsupported language.',
-        [FinishReason.BLOCKLIST]: 'Response stopped due to forbidden terms.',
-        [FinishReason.PROHIBITED_CONTENT]:
-          'Response stopped due to prohibited content.',
-        [FinishReason.SPII]:
-          'Response stopped due to sensitive personally identifiable information.',
-        [FinishReason.OTHER]: 'Response stopped for other reasons.',
-        [FinishReason.MALFORMED_FUNCTION_CALL]:
-          'Response stopped due to malformed function call.',
-        [FinishReason.IMAGE_SAFETY]:
-          'Response stopped due to image safety violations.',
-        [FinishReason.UNEXPECTED_TOOL_CALL]:
-          'Response stopped due to unexpected tool call.',
-        [FinishReason.IMAGE_PROHIBITED_CONTENT]:
-          'Response stopped due to prohibited image content.',
-        [FinishReason.NO_IMAGE]:
-          'Response stopped because no image was generated.',
+        [FinishReason.MAX_TOKENS]: i18n.t('common:finishReason.maxTokens'),
+        [FinishReason.SAFETY]: i18n.t('common:finishReason.safety'),
+        [FinishReason.RECITATION]: i18n.t('common:finishReason.recitation'),
+        [FinishReason.LANGUAGE]: i18n.t('common:finishReason.language'),
+        [FinishReason.BLOCKLIST]: i18n.t('common:finishReason.blocklist'),
+        [FinishReason.PROHIBITED_CONTENT]: i18n.t(
+          'common:finishReason.prohibitedContent',
+        ),
+        [FinishReason.SPII]: i18n.t('common:finishReason.spii'),
+        [FinishReason.OTHER]: i18n.t('common:finishReason.other'),
+        [FinishReason.MALFORMED_FUNCTION_CALL]: i18n.t(
+          'common:finishReason.malformedFunctionCall',
+        ),
+        [FinishReason.IMAGE_SAFETY]: i18n.t('common:finishReason.imageSafety'),
+        [FinishReason.UNEXPECTED_TOOL_CALL]: i18n.t(
+          'common:finishReason.unexpectedToolCall',
+        ),
+        [FinishReason.IMAGE_PROHIBITED_CONTENT]: i18n.t(
+          'common:finishReason.imageProhibitedContent',
+        ),
+        [FinishReason.NO_IMAGE]: i18n.t('common:finishReason.noImage'),
       };
 
       const message = finishReasonMessages[finishReason];
@@ -736,11 +743,10 @@ export const useGeminiStream = (
       }
       return addItem({
         type: 'info',
-        text:
-          `IMPORTANT: This conversation exceeded the compress threshold. ` +
-          `A compressed context will be sent for future messages (compressed from: ` +
-          `${eventValue?.originalTokenCount ?? 'unknown'} to ` +
-          `${eventValue?.newTokenCount ?? 'unknown'} tokens).`,
+        text: i18n.t('common:compression.thresholdExceeded', {
+          original: eventValue?.originalTokenCount ?? i18n.t('common:unknown'),
+          updated: eventValue?.newTokenCount ?? i18n.t('common:unknown'),
+        }),
       });
     },
     [addItem, pendingHistoryItemRef, setPendingHistoryItem],
@@ -750,9 +756,9 @@ export const useGeminiStream = (
     () =>
       addItem({
         type: 'info',
-        text:
-          `The session has reached the maximum number of turns: ${config.getMaxSessionTurns()}. ` +
-          `Please update this limit in your setting.json file.`,
+        text: i18n.t('common:session.maxTurnsReached', {
+          max: config.getMaxSessionTurns(),
+        }),
       }),
     [addItem, config],
   );
@@ -766,11 +772,13 @@ export const useGeminiStream = (
       const isLessThan75Percent =
         limit > 0 && remainingTokenCount < limit * 0.75;
 
-      let text = `Sending this message (${estimatedRequestTokenCount} tokens) might exceed the remaining context window limit (${remainingTokenCount} tokens).`;
+      let text = i18n.t('common:contextWindow.mightExceed', {
+        estimated: estimatedRequestTokenCount,
+        remaining: remainingTokenCount,
+      });
 
       if (isLessThan75Percent) {
-        text +=
-          ' Please try reducing the size of your message or use the `/compress` command to compress the chat history.';
+        text += ` ${i18n.t('common:contextWindow.tryReduce')}`;
       }
 
       addItem({
@@ -815,7 +823,9 @@ export const useGeminiStream = (
       addItem(
         {
           type: MessageType.INFO,
-          text: `Agent execution stopped: ${systemMessage?.trim() || reason}`,
+          text: i18n.t('common:agentExecution.stopped', {
+            reason: systemMessage?.trim() || reason,
+          }),
         },
         userMessageTimestamp,
       );
@@ -823,7 +833,7 @@ export const useGeminiStream = (
         addItem(
           {
             type: MessageType.INFO,
-            text: 'Conversation context has been cleared.',
+            text: i18n.t('common:conversation.contextCleared'),
           },
           userMessageTimestamp,
         );
@@ -847,7 +857,9 @@ export const useGeminiStream = (
       addItem(
         {
           type: MessageType.WARNING,
-          text: `Agent execution blocked: ${systemMessage?.trim() || reason}`,
+          text: i18n.t('common:agentExecution.blocked', {
+            reason: systemMessage?.trim() || reason,
+          }),
         },
         userMessageTimestamp,
       );
@@ -855,7 +867,7 @@ export const useGeminiStream = (
         addItem(
           {
             type: MessageType.INFO,
-            text: 'Conversation context has been cleared.',
+            text: i18n.t('common:conversation.contextCleared'),
           },
           userMessageTimestamp,
         );
@@ -1087,7 +1099,7 @@ export const useGeminiStream = (
                         .disableForSession();
                       addItem({
                         type: 'info',
-                        text: `Loop detection has been disabled for this session. Retrying request...`,
+                        text: i18n.t('common:loopDetection.disabledRetry'),
                       });
 
                       if (lastQueryRef.current && lastPromptIdRef.current) {
@@ -1101,7 +1113,7 @@ export const useGeminiStream = (
                     } else {
                       addItem({
                         type: 'info',
-                        text: `A potential loop was detected. This can happen due to repetitive tool calls or other model behavior. The request has been halted.`,
+                        text: i18n.t('common:loopDetection.haltMessage'),
                       });
                     }
                   },
@@ -1110,7 +1122,7 @@ export const useGeminiStream = (
             } catch (error: unknown) {
               spanMetadata.error = error;
               if (error instanceof UnauthorizedError) {
-                onAuthError('Session expired or is unauthorized.');
+                onAuthError(i18n.t('auth:errors.sessionExpiredOrUnauthorized'));
               } else if (
                 // Suppress ValidationRequiredError if it was marked as handled (e.g. user clicked change_auth or cancelled)
                 error instanceof ValidationRequiredError &&
@@ -1122,7 +1134,7 @@ export const useGeminiStream = (
                   {
                     type: MessageType.ERROR,
                     text: parseAndFormatApiError(
-                      getErrorMessage(error) || 'Unknown error',
+                      getErrorMessage(error) || i18n.t('common:unknownError'),
                       config.getContentGeneratorConfig()?.authType,
                       undefined,
                       config.getModel(),
@@ -1263,7 +1275,9 @@ export const useGeminiStream = (
       if (stopExecutionTool && stopExecutionTool.response.error) {
         addItem({
           type: MessageType.INFO,
-          text: `Agent execution stopped: ${stopExecutionTool.response.error.message}`,
+          text: i18n.t('common:agentExecution.stopped', {
+            reason: stopExecutionTool.response.error.message,
+          }),
         });
         setIsResponding(false);
 
@@ -1285,7 +1299,7 @@ export const useGeminiStream = (
         if (!turnCancelledRef.current) {
           addItem({
             type: MessageType.INFO,
-            text: 'Request cancelled.',
+            text: i18n.t('common:request.cancelled'),
           });
         }
         setIsResponding(false);

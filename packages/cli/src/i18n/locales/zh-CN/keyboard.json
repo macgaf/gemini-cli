@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "快捷键",
+    "submit": "发送消息",
+    "newline": "换行",
+    "newlineLinux": "换行（某些 Linux 发行版可用 Alt+Enter）",
+    "cancel": "取消/中断",
+    "clear": "清屏",
+    "exit": "退出",
+    "copy": "复制最后的回复",
+    "paste": "从剪贴板粘贴",
+    "jumpWords": "在输入中跳转单词",
+    "quit": "退出应用程序",
+    "clearScreen": "清除屏幕",
+    "selectionMode": "进入选择模式以复制文本",
+    "externalEditor": "在外部编辑器中打开输入",
+    "yoloMode": "切换 YOLO 模式",
+    "sendMessage": "发送消息",
+    "cancelOrClear": "取消操作 / 清除输入（双击）",
+    "scrollPage": "向上/向下翻页",
+    "autoAcceptEdits": "切换自动接受编辑",
+    "promptHistory": "浏览提示历史记录",
+    "fullListSee": "完整快捷键列表请参见",
+    "history": {
+      "title": "历史记录",
+      "previous": "上一条消息",
+      "next": "下一条消息"
+    },
+    "navigation": {
+      "title": "导航",
+      "scrollUp": "向上滚动",
+      "scrollDown": "向下滚动",
+      "top": "回到顶部",
+      "bottom": "回到底部"
+    }
+  },
+  "keys": {
+    "enter": "回车",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "空格",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "普通模式",
+    "insert": "插入模式",
+    "visual": "可视模式"
+  }
+}

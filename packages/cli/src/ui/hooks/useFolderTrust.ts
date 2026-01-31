@@ -16,6 +16,7 @@ import * as process from 'node:process';
 import { type HistoryItemWithoutId, MessageType } from '../types.js';
 import { coreEvents, ExitCodes } from '@google/gemini-cli-core';
 import { runExitCleanup } from '../../utils/cleanup.js';
+import { i18n } from '../../i18n/index.js';
 
 export const useFolderTrust = (
   settings: LoadedSettings,
@@ -39,7 +40,7 @@ export const useFolderTrust = (
       addItem(
         {
           type: MessageType.INFO,
-          text: 'This folder is not trusted. Some features may be disabled. Use the `/permissions` command to change the trust level.',
+          text: i18n.t('common:folderTrust.untrustedWarning'),
         },
         Date.now(),
       );
@@ -66,7 +67,7 @@ export const useFolderTrust = (
       } catch (_e) {
         coreEvents.emitFeedback(
           'error',
-          'Failed to save trust settings. Exiting Gemini CLI.',
+          i18n.t('common:folderTrust.saveFailedExiting'),
         );
         setTimeout(async () => {
           await runExitCleanup();

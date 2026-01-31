@@ -1,0 +1,356 @@
+{
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "yes": "Yes",
+  "no": "No",
+  "ok": "OK",
+  "close": "Close",
+  "save": "Save",
+  "loading": "Loading...",
+  "loading.escToCancel": "(esc to cancel, {{time}})",
+  "loading.interactiveShellWaiting": "Interactive shell awaiting input... press tab to focus shell",
+  "loading.waitingForConfirmation": "Waiting for user confirmation...",
+  "loading.retrying": "Trying to reach {{model}} (Attempt {{attempt}}/{{maxAttempts}})",
+  "modelRespondingWith": "Responding with {{model}}",
+  "error": "Error",
+  "warning": "Warning",
+  "info": "Info",
+  "success": "Success",
+  "retry": "Retry",
+  "back": "Back",
+  "next": "Next",
+  "done": "Done",
+  "exit": "Exit",
+  "quit": "Quit",
+  "help": "Help",
+  "settings": "Settings",
+  "version": "Version",
+  "versionDisplay": "v{{version}}",
+  "pressToExit": "Press {{key}} to exit",
+  "pressToCancel": "Press {{key}} to cancel",
+  "pressToContinue": "Press {{key}} to continue",
+  "or": "or",
+  "and": "and",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "on": "On",
+  "off": "Off",
+  "notAvailable": "Not available",
+  "unknown": "Unknown",
+  "unknownError": "Unknown error",
+  "none": "None",
+  "default": "Default",
+  "custom": "Custom",
+  "recommended": "Recommended",
+  "optional": "Optional",
+  "required": "Required",
+  "exitWarning": {
+    "ctrlC": "Press Ctrl+C again to exit.",
+    "ctrlD": "Press Ctrl+D again to exit."
+  },
+  "copyMode": {
+    "warning": "In Copy Mode. Press any key to exit."
+  },
+  "shellMode": {
+    "enabled": "shell mode enabled",
+    "escToDisable": "(esc to disable)"
+  },
+  "rawMarkdown": {
+    "mode": "raw markdown mode",
+    "toggle": "{{key}} to toggle"
+  },
+  "escapePrompt": {
+    "rewind": "Press Esc again to rewind.",
+    "clearPrompt": "Press Esc again to clear prompt."
+  },
+  "alerts": {
+    "selectionMode": "Mouse selection is disabled while Gemini CLI is handling mouse events.",
+    "pasteTimeout": "Paste operation timed out. Please try again.",
+    "shiftTabFocusOut": "Press Shift+Tab again to return focus to the CLI."
+  },
+  "loopDetection": {
+    "disabledRetry": "Loop detection has been disabled for this session. Retrying request...",
+    "haltMessage": "A potential loop was detected. This can happen due to repetitive tool calls or other model behavior. The request has been halted."
+  },
+  "screenReader": {
+    "userPrefix": "User: ",
+    "modelPrefix": "Model: ",
+    "loading": "loading",
+    "responding": "responding"
+  },
+  "redirectionWarning": {
+    "noteLabel": "Note: ",
+    "noteText": "Command contains redirection which can be undesirable.",
+    "tipLabel": "Tip:  ",
+    "tipText": "Toggle auto-edit (Shift+Tab) to allow redirection in the future."
+  },
+  "updateCheck": {
+    "newVersionAvailable": "A new version of Gemini CLI is available! {{current}} → {{latest}}",
+    "updateAvailable": "Gemini CLI update available! {{current}} → {{latest}}"
+  },
+  "slashCommand": {
+    "requiresSubcommand": "Command '/{{name}}' requires a subcommand. Available:",
+    "unknownCommand": "Unknown command: {{command}}",
+    "unknownCommandMcpLoading": "Unknown command: {{command}}. Command might have been from an MCP server but MCP servers are not done loading.",
+    "shellExpansionDeclined": "Slash command shell execution declined.",
+    "operationCancelled": "Operation cancelled.",
+    "shellExpansion": {
+      "title": "Confirm Shell Expansion",
+      "name": "Expansion",
+      "description": "Command expansion needs shell access"
+    }
+  },
+  "contextSummary": {
+    "openFiles": "{{count}} open file",
+    "openFilesPlural": "{{count}} open files",
+    "openFilesHint": "(ctrl+g to view)",
+    "contextFile": "{{count}} {{name}} file",
+    "contextFilePlural": "{{count}} {{name}} files",
+    "mcpServer": "{{count}} MCP server",
+    "mcpServerPlural": "{{count}} MCP servers",
+    "blockedMcpServer": "{{count}} Blocked",
+    "blockedMcpServerPlural": "{{count}} Blocked MCP servers",
+    "skill": "{{count}} skill",
+    "skillPlural": "{{count}} skills"
+  },
+  "footer": {
+    "noSandbox": "no sandbox",
+    "seeDocs": "(see /docs)",
+    "untrusted": "untrusted",
+    "contextLeft": "% context left",
+    "modelCommand": "/model",
+    "seatbelt": "macOS Seatbelt"
+  },
+  "mcp": {
+    "noServersConfigured": "No MCP servers configured.",
+    "serversStartingUp": "⏳ MCP servers are starting up",
+    "configuredServers": "Configured MCP servers:",
+    "connectingToServers": "Connecting to MCP servers... ({{connected}}/{{total}})",
+    "waitingFor": "Waiting for: {{servers}}",
+    "viewDocs": "Please view MCP documentation in your browser:",
+    "orUseDocs": "or use the cli /docs command",
+    "initializing": "{{count}} initializing",
+    "firstStartupNote": "Note: First startup may take longer. Tool availability will update automatically.",
+    "ready": "Ready",
+    "starting": "Starting... (first startup may take longer)",
+    "disconnected": "Disconnected",
+    "fromExtension": "from {{name}}",
+    "tool": "{{count}} tool",
+    "toolPlural": "{{count}} tools",
+    "prompt": "{{count}} prompt",
+    "promptPlural": "{{count}} prompts",
+    "resource": "{{count}} resource",
+    "resourcePlural": "{{count}} resources",
+    "resourceFallback": "resource",
+    "oauthLabel": "OAuth",
+    "oauthExpired": "OAuth expired",
+    "oauthNotAuthenticated": "OAuth not authenticated",
+    "toolsWillAppear": "tools and prompts will appear when ready",
+    "toolsCached": "{{count}} tools cached",
+    "tools": "Tools:",
+    "parameters": "Parameters:",
+    "prompts": "Prompts:",
+    "resources": "Resources:",
+    "resourcesHidden": "{{count}} resource hidden",
+    "resourcesHiddenPlural": "{{count}} resources hidden",
+    "blocked": "Blocked"
+  },
+  "input": {
+    "placeholder": "What would you like to do?",
+    "reverseSearchIndicator": "(r:)"
+  },
+  "debugConsole": {
+    "title": "Debug Console",
+    "closeHint": "(press ` to close)",
+    "repeatCount": "(x{{count}})"
+  },
+  "consoleSummary": {
+    "errorCount": "{{count}} error",
+    "errorCountPlural": "{{count}} errors",
+    "details": "(F12 for details)"
+  },
+  "queue": {
+    "title": "Queued (press ↑ to edit):",
+    "more": "... (+{{count}} more)",
+    "shellCommandsCannotBeQueued": "Shell commands cannot be queued",
+    "slashCommandsCannotBeQueued": "Slash commands cannot be queued"
+  },
+  "toolDisplay": {
+    "shell": {
+      "currentDir": "{{command}} [current working directory {{dir}}]",
+      "inDir": "{{command}} [in {{dir}}]",
+      "descriptionSuffix": "({{description}})"
+    }
+  },
+  "diff": {
+    "noContent": "No diff content.",
+    "noChanges": "No changes detected.",
+    "lineType": {
+      "add": "added",
+      "del": "removed",
+      "context": "context",
+      "hunk": "hunk",
+      "other": "other"
+    }
+  },
+  "suggestions": {
+    "loading": "Loading suggestions...",
+    "mcpSuffix": " [MCP]",
+    "agentSuffix": " [Agent]"
+  },
+  "todo": {
+    "title": "Todo",
+    "progress": "{{completed}}/{{total}} completed",
+    "toggleHint": "({{key}} to toggle)",
+    "ariaLabel": "Todo list",
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    }
+  },
+  "showMoreLines": "Press ctrl-s to show more lines",
+  "hooks": {
+    "executingSingle": "Executing hook",
+    "executingMultiple": "Executing hooks"
+  },
+  "stats": {
+    "sessionStats": "Session Stats",
+    "interactionSummary": "Interaction Summary",
+    "sessionId": "Session ID",
+    "toolCalls": "Tool Calls",
+    "successRate": "Success Rate",
+    "userAgreement": "User Agreement",
+    "reviewedCount": "({{count}} reviewed)",
+    "codeChanges": "Code Changes",
+    "performance": "Performance",
+    "wallTime": "Wall Time",
+    "agentActive": "Agent Active",
+    "apiTime": "API Time",
+    "toolTime": "Tool Execution Time",
+    "modelUsage": "Model",
+    "requests": "Requests",
+    "inputTokens": "Input Tokens",
+    "cacheReads": "Cache Reads",
+    "outputTokens": "Output Tokens",
+    "usageLeft": "Usage Left",
+    "resetsIn": "Resets in {{time}}",
+    "savingsHighlightLabel": "Cache Savings:",
+    "savingsHighlightBody": "{{cached}} tokens cached ({{percent}}% efficiency)",
+    "usageLimits": "Usage Limits",
+    "modelTip": "Note: Quotas are approximate."
+  },
+  "agentExecution": {
+    "stopped": "Agent execution stopped: {{reason}}",
+    "blocked": "Agent execution blocked: {{reason}}"
+  },
+  "atCommand": {
+    "toolNotFound": "read_many_files tool not found.",
+    "loneAtDetected": "Lone @ detected, will be treated as text in the modified query.",
+    "invalidCommandNoPath": "Invalid @ command \"{{command}}\": missing path.",
+    "pathOutsideWorkspace": "Path {{path}} is not in the workspace and will be skipped.",
+    "reasonGit": "git-ignored",
+    "reasonGemini": "gemini-ignored",
+    "reasonBoth": "git-ignored and gemini-ignored",
+    "pathIgnored": "Path {{path}} is {{reason}} and will be skipped.",
+    "resolvedPath": "Path {{path}} resolved to {{absolute}} using relative path: {{relative}}",
+    "resolvedDirectoryGlob": "Path {{path}} resolved to directory, using glob: {{glob}}",
+    "notFoundTryGlob": "Path {{path}} not found directly, attempting glob search.",
+    "globFound": "Glob search for \"{{path}}\" matched {{match}}, using relative path: {{relative}}.",
+    "globNoUsable": "Glob search for \"{{path}}\" returned no usable matches. Path {{path}} will be skipped.",
+    "globNoFiles": "Glob search for '**/*{{path}}*' found no files or an error. Path {{path}} will be skipped.",
+    "globError": "Error during glob search for {{path}}. Path {{path}} will be skipped.",
+    "globToolNotFound": "Glob tool not found. Path {{path}} will be skipped.",
+    "statError": "Error stating path {{path}}.",
+    "ignoredGit": "Git-ignored: {{paths}}",
+    "ignoredGemini": "Gemini-ignored: {{paths}}",
+    "ignoredBoth": "Git-ignored and Gemini-ignored: {{paths}}",
+    "ignoredFiles": "Ignored {{count}} files:\n{{details}}",
+    "noValidPaths": "No valid @ paths found. Continuing without file reads.",
+    "resourceClientUnavailable": "MCP client for server '{{server}}' is not available or not connected.",
+    "resourceReadSuccess": "Read resource {{uri}}.",
+    "resourceReadError": "Error reading resource {{uri}}: {{error}}",
+    "readManySuccess": "Read files: {{files}}",
+    "readManyNoContent": "read_many_files tool returned no content or empty content.",
+    "readManyErrorDescription": "Read many files",
+    "readManyError": "Error reading files ({{files}}): {{error}}",
+    "exitingProcessingError": "Exiting due to an error processing the @ command: {{error}}"
+  },
+  "autoAccept": {
+    "yoloDisabled": "You cannot enter YOLO mode since it is disabled in your settings."
+  },
+  "compression": {
+    "thresholdExceeded": "Compression threshold exceeded ({{original}} → {{updated}} tokens)."
+  },
+  "contextWindow": {
+    "mightExceed": "Sending this message ({{estimated}} tokens) might exceed the remaining context window limit ({{remaining}} tokens).",
+    "tryReduce": "Please try reducing the size of your message or use the `/compress` command to compress the chat history."
+  },
+  "conversation": {
+    "contextCleared": "Conversation context cleared."
+  },
+  "finishReason": {
+    "maxTokens": "Response truncated due to token limits.",
+    "safety": "Response stopped due to safety reasons.",
+    "recitation": "Response stopped due to recitation policy.",
+    "language": "Response stopped due to unsupported language.",
+    "blocklist": "Response stopped due to forbidden terms.",
+    "prohibitedContent": "Response stopped due to prohibited content.",
+    "spii": "Response stopped due to sensitive personally identifiable information.",
+    "other": "Response stopped for other reasons.",
+    "malformedFunctionCall": "Response stopped due to malformed function call.",
+    "imageSafety": "Response stopped due to image safety violations.",
+    "unexpectedToolCall": "Response stopped due to unexpected tool call.",
+    "imageProhibitedContent": "Response stopped due to prohibited image content.",
+    "noImage": "Response stopped because no image was provided."
+  },
+  "sessionSummary": {
+    "goodbye": "Agent powering down. Goodbye!"
+  },
+  "folderTrust": {
+    "untrustedWarning": "This folder is not trusted. Some features may be disabled. Use the `/permissions` command to change the trust level.",
+    "saveFailedExiting": "Failed to save trust settings. Exiting Gemini CLI."
+  },
+  "memory": {
+    "highUsage": "High memory usage detected: {{usage}} GB. If you experience a crash, please file a bug report by running `/bug`"
+  },
+  "request": {
+    "cancelled": "Request cancelled.",
+    "userCancelled": "User cancelled the request."
+  },
+  "session": {
+    "maxTurnsReached": "Maximum session turns reached ({{max}})."
+  },
+  "shell": {
+    "aborting": "Aborting command (pid {{pid}}).",
+    "executing": "Executing in {{dir}}: {{command}}",
+    "binaryReceiving": "[Receiving binary output... {{size}} received]",
+    "binaryDetected": "[Binary output detected. Halting stream...]",
+    "binaryOutputHidden": "[Command produced binary output, which is not shown.]",
+    "noOutput": "No output.",
+    "commandCancelled": "Command cancelled.",
+    "commandSignal": "Command terminated by signal {{signal}}",
+    "commandExitCode": "Command exited with code {{code}}",
+    "statelessWarning": "WARNING: shell mode is stateless; the directory change to '{{path}}' will not persist.",
+    "unexpectedError": "An unexpected error occurred: {{error}}"
+  },
+  "toolStats": {
+    "title": "Tool Stats",
+    "empty": "No tool calls have been made in this session.",
+    "header": {
+      "toolName": "Tool",
+      "calls": "Calls",
+      "successRate": "Success Rate",
+      "avgDuration": "Avg Duration"
+    },
+    "userDecision": {
+      "title": "User Decisions",
+      "totalReviewed": "Total Reviewed Suggestions:",
+      "accepted": "» Accepted:",
+      "rejected": "» Rejected:",
+      "modified": "» Modified:",
+      "overallAgreement": "Overall Agreement Rate:"
+    }
+  }
+}

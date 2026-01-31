@@ -19,6 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { glob } from 'glob';
 import { ToolErrorType } from './tool-error.js';
+import { t } from '../i18n/index.js';
 
 /**
  * Parameters for the GetInternalDocs tool.
@@ -65,7 +66,7 @@ async function getDocsRoot(): Promise<string> {
     searchDir = parent;
   }
 
-  throw new Error('Could not find Gemini CLI documentation directory.');
+  throw new Error(t('Could not find Gemini CLI documentation directory.'));
 }
 
 class GetInternalDocsInvocation extends BaseToolInvocation<
@@ -89,9 +90,11 @@ class GetInternalDocsInvocation extends BaseToolInvocation<
 
   getDescription(): string {
     if (this.params.path) {
-      return `Reading internal documentation: ${this.params.path}`;
+      return t('Reading internal documentation: {{path}}', {
+        path: this.params.path,
+      });
     }
-    return 'Listing all available internal documentation.';
+    return t('Listing all available internal documentation.');
   }
 
   async execute(_signal: AbortSignal): Promise<ToolResult> {
@@ -104,11 +107,16 @@ class GetInternalDocsInvocation extends BaseToolInvocation<
         files.sort();
 
         const fileList = files.map((f) => `- ${f}`).join('\n');
-        const resultContent = `Available Gemini CLI documentation files:\n\n${fileList}`;
+        const resultContent = t(
+          'Available Gemini CLI documentation files:\n\n{{list}}',
+          { list: fileList },
+        );
 
         return {
           llmContent: resultContent,
-          returnDisplay: `Found ${files.length} documentation files.`,
+          returnDisplay: t('Found {{count}} documentation files.', {
+            count: files.length,
+          }),
         };
       }
 
@@ -117,7 +125,9 @@ class GetInternalDocsInvocation extends BaseToolInvocation<
       const resolvedPath = path.resolve(docsRoot, this.params.path);
       if (!resolvedPath.startsWith(docsRoot)) {
         throw new Error(
-          'Access denied: Requested path is outside the documentation directory.',
+          t(
+            'Access denied: Requested path is outside the documentation directory.',
+          ),
         );
       }
 
@@ -125,14 +135,20 @@ class GetInternalDocsInvocation extends BaseToolInvocation<
 
       return {
         llmContent: content,
-        returnDisplay: `Successfully read documentation: ${this.params.path}`,
+        returnDisplay: t('Successfully read documentation: {{path}}', {
+          path: this.params.path,
+        }),
       };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       return {
-        llmContent: `Error accessing internal documentation: ${errorMessage}`,
-        returnDisplay: `Failed to access documentation: ${errorMessage}`,
+        llmContent: t('Error accessing internal documentation: {{error}}', {
+          error: errorMessage,
+        }),
+        returnDisplay: t('Failed to access documentation: {{error}}', {
+          error: errorMessage,
+        }),
         error: {
           message: errorMessage,
           type: ToolErrorType.EXECUTION_FAILED,
@@ -156,15 +172,22 @@ export class GetInternalDocsTool extends BaseDeclarativeTool<
   constructor(messageBus: MessageBus) {
     super(
       GetInternalDocsTool.Name,
-      'GetInternalDocs',
-      'Returns the content of Gemini CLI internal documentation files. If no path is provided, returns a list of all available documentation paths.',
+      t('tools.internalDocs.displayName', {
+        defaultValue: 'GetInternalDocs',
+      }),
+      t('tools.internalDocs.description', {
+        defaultValue:
+          'Returns the content of Gemini CLI internal documentation files. If no path is provided, returns a list of all available documentation paths.',
+      }),
       Kind.Think,
       {
         type: 'object',
         properties: {
           path: {
-            description:
-              "The relative path to the documentation file (e.g., 'cli/commands.md'). If omitted, lists all available documentation.",
+            description: t('tools.internalDocs.params.path', {
+              defaultValue:
+                "The relative path to the documentation file (e.g., 'cli/commands.md'). If omitted, lists all available documentation.",
+            }),
             type: 'string',
           },
         },

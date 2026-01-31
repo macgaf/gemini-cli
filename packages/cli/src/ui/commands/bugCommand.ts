@@ -24,10 +24,13 @@ import {
 import { terminalCapabilityManager } from '../utils/terminalCapabilityManager.js';
 import { exportHistoryToFile } from '../utils/historyExportUtils.js';
 import path from 'node:path';
+import { t } from '../../i18n/index.js';
 
 export const bugCommand: SlashCommand = {
   name: 'bug',
-  description: 'Submit a bug report',
+  get description() {
+    return t('commands:bug.description');
+  },
   kind: CommandKind.BUILT_IN,
   autoExecute: false,
   action: async (context: CommandContext, args?: string): Promise<void> => {
@@ -35,40 +38,42 @@ export const bugCommand: SlashCommand = {
     const { config } = context.services;
 
     const osVersion = `${process.platform} ${process.version}`;
-    let sandboxEnv = 'no sandbox';
+    let sandboxEnv = t('commands:about.noSandbox');
     if (process.env['SANDBOX'] && process.env['SANDBOX'] !== 'sandbox-exec') {
       sandboxEnv = process.env['SANDBOX'].replace(/^gemini-(?:code-)?/, '');
     } else if (process.env['SANDBOX'] === 'sandbox-exec') {
-      sandboxEnv = `sandbox-exec (${
-        process.env['SEATBELT_PROFILE'] || 'unknown'
-      })`;
+      sandboxEnv = t('commands:about.sandboxExec', {
+        profile: process.env['SEATBELT_PROFILE'] || t('common:unknown'),
+      });
     }
-    const modelVersion = config?.getModel() || 'Unknown';
+    const modelVersion = config?.getModel() || t('common:unknown');
     const cliVersion = await getVersion();
     const memoryUsage = formatMemoryUsage(process.memoryUsage().rss);
     const ideClient = await getIdeClientName(context);
     const terminalName =
-      terminalCapabilityManager.getTerminalName() || 'Unknown';
+      terminalCapabilityManager.getTerminalName() || t('common:unknown');
     const terminalBgColor =
-      terminalCapabilityManager.getTerminalBackgroundColor() || 'Unknown';
+      terminalCapabilityManager.getTerminalBackgroundColor() ||
+      t('common:unknown');
     const kittyProtocol = terminalCapabilityManager.isKittyProtocolEnabled()
-      ? 'Supported'
-      : 'Unsupported';
+      ? t('commands:bug.kittySupported')
+      : t('commands:bug.kittyUnsupported');
 
-    let info = `
-* **CLI Version:** ${cliVersion}
-* **Git Commit:** ${GIT_COMMIT_INFO}
-* **Session ID:** ${sessionId}
-* **Operating System:** ${osVersion}
-* **Sandbox Environment:** ${sandboxEnv}
-* **Model Version:** ${modelVersion}
-* **Memory Usage:** ${memoryUsage}
-* **Terminal Name:** ${terminalName}
-* **Terminal Background:** ${terminalBgColor}
-* **Kitty Keyboard Protocol:** ${kittyProtocol}
-`;
+    let info = [
+      `* **${t('commands:bug.info.cliVersion')}:** ${cliVersion}`,
+      `* **${t('commands:bug.info.gitCommit')}:** ${GIT_COMMIT_INFO}`,
+      `* **${t('commands:bug.info.sessionId')}:** ${sessionId}`,
+      `* **${t('commands:bug.info.operatingSystem')}:** ${osVersion}`,
+      `* **${t('commands:bug.info.sandboxEnv')}:** ${sandboxEnv}`,
+      `* **${t('commands:bug.info.modelVersion')}:** ${modelVersion}`,
+      `* **${t('commands:bug.info.memoryUsage')}:** ${memoryUsage}`,
+      `* **${t('commands:bug.info.terminalName')}:** ${terminalName}`,
+      `* **${t('commands:bug.info.terminalBackground')}:** ${terminalBgColor}`,
+      `* **${t('commands:bug.info.kittyKeyboard')}:** ${kittyProtocol}`,
+    ].join('\n');
+    info = `\n${info}\n`;
     if (ideClient) {
-      info += `* **IDE Client:** ${ideClient}\n`;
+      info += `* **${t('commands:bug.info.ideClient')}:** ${ideClient}\n`;
     }
 
     const chat = config?.getGeminiClient()?.getChat();
@@ -83,8 +88,8 @@ export const bugCommand: SlashCommand = {
         const historyFilePath = path.join(tempDir, historyFileName);
         try {
           await exportHistoryToFile({ history, filePath: historyFilePath });
-          historyFileMessage = `\n\n--------------------------------------------------------------------------------\n\n📄 **Chat History Exported**\nTo help us debug, we've exported your current chat history to:\n${historyFilePath}\n\nPlease consider attaching this file to your GitHub issue if you feel comfortable doing so.\n\n**Privacy Disclaimer:** Please do not upload any logs containing sensitive or private information that you are not comfortable sharing publicly.`;
-          problemValue += `\n\n[ACTION REQUIRED] 📎 PLEASE ATTACH THE EXPORTED CHAT HISTORY JSON FILE TO THIS ISSUE IF YOU FEEL COMFORTABLE SHARING IT.`;
+          historyFileMessage = `\n\n--------------------------------------------------------------------------------\n\n${t('commands:bug.historyExported')}\n${historyFilePath}\n\n${t('commands:bug.attachPrompt')}\n\n${t('commands:bug.privacyDisclaimer')}`;
+          problemValue += `\n\n${t('commands:bug.actionRequired')}`;
         } catch (err) {
           const errorMessage = err instanceof Error ? err.message : String(err);
           debugLogger.error(
@@ -110,7 +115,7 @@ export const bugCommand: SlashCommand = {
     context.ui.addItem(
       {
         type: MessageType.INFO,
-        text: `To submit your bug report, please open the following URL in your browser:\n${bugReportUrl}${historyFileMessage}`,
+        text: `${t('commands:bug.submitPrompt')}\n${bugReportUrl}${historyFileMessage}`,
       },
       Date.now(),
     );
@@ -123,7 +128,7 @@ export const bugCommand: SlashCommand = {
       context.ui.addItem(
         {
           type: MessageType.ERROR,
-          text: `Could not open URL in browser: ${errorMessage}`,
+          text: t('commands:bug.openError', { error: errorMessage }),
         },
         Date.now(),
       );

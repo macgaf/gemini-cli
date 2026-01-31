@@ -76,7 +76,7 @@ describe('MultiFolderTrustDialog', () => {
       <MultiFolderTrustDialog {...defaultProps} folders={folders} />,
     );
 
-    expect(lastFrame()).toContain('multiFolderTrust.title');
+    expect(lastFrame()).toContain('Do you trust these folders?');
     expect(lastFrame()).toContain('- /path/to/folder1');
     expect(lastFrame()).toContain('- /path/to/folder2');
   });
@@ -101,7 +101,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       [],
-      ['multiFolderTrust.cancelled'],
+      ['Cancelled trusting folders:\n/path/to/folder1'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
   });
@@ -119,7 +119,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       [],
-      ['multiFolderTrust.notTrusted'],
+      ['The following folders were not trusted:\n/path/to/folder1'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
     expect(mockAddDirectory).not.toHaveBeenCalled();
@@ -188,7 +188,7 @@ describe('MultiFolderTrustDialog', () => {
       onSelect(MultiFolderTrustChoice.NO);
     });
 
-    expect(lastFrame()).toContain('multiFolderTrust.applying');
+    expect(lastFrame()).toContain('Applying trust settings...');
   });
 
   it('shows an error message and completes when config is missing', async () => {
@@ -208,7 +208,7 @@ describe('MultiFolderTrustDialog', () => {
 
     expect(mockAddItem).toHaveBeenCalledWith({
       type: MessageType.ERROR,
-      text: 'multiFolderTrust.configNotAvailable',
+      text: 'Configuration not available.',
     });
     expect(mockOnComplete).toHaveBeenCalled();
     expect(mockFinishAddingDirectories).not.toHaveBeenCalled();
@@ -242,7 +242,7 @@ describe('MultiFolderTrustDialog', () => {
       mockConfig,
       mockAddItem,
       ['/path/to/good'],
-      ['initial error', 'multiFolderTrust.errorAdding'],
+      ['initial error', 'Error trusting /path/to/error: Test error'],
     );
     expect(mockOnComplete).toHaveBeenCalled();
   });

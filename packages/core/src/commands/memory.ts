@@ -7,6 +7,7 @@
 import type { Config } from '../config/config.js';
 import { refreshServerHierarchicalMemory } from '../utils/memoryDiscovery.js';
 import type { MessageActionReturn, ToolActionReturn } from './types.js';
+import { t } from '../i18n/index.js';
 
 export function showMemory(config: Config): MessageActionReturn {
   const memoryContent = config.getUserMemory() || '';
@@ -14,9 +15,12 @@ export function showMemory(config: Config): MessageActionReturn {
   let content: string;
 
   if (memoryContent.length > 0) {
-    content = `Current memory content from ${fileCount} file(s):\n\n---\n${memoryContent}\n---`;
+    content = t(
+      'Current memory content from {{count}} file(s):\n\n---\n{{content}}\n---',
+      { count: fileCount, content: memoryContent },
+    );
   } else {
-    content = 'Memory is currently empty.';
+    content = t('Memory is currently empty.');
   }
 
   return {
@@ -33,7 +37,7 @@ export function addMemory(
     return {
       type: 'message',
       messageType: 'error',
-      content: 'Usage: /memory add <text to remember>',
+      content: t('Usage: /memory add <text to remember>'),
     };
   }
   return {
@@ -63,9 +67,12 @@ export async function refreshMemory(
   let content: string;
 
   if (memoryContent.length > 0) {
-    content = `Memory refreshed successfully. Loaded ${memoryContent.length} characters from ${fileCount} file(s).`;
+    content = t(
+      'Memory refreshed successfully. Loaded {{chars}} characters from {{count}} file(s).',
+      { chars: memoryContent.length, count: fileCount },
+    );
   } else {
-    content = 'Memory refreshed successfully. No memory content found.';
+    content = t('Memory refreshed successfully. No memory content found.');
   }
 
   return {
@@ -81,11 +88,12 @@ export function listMemoryFiles(config: Config): MessageActionReturn {
   let content: string;
 
   if (fileCount > 0) {
-    content = `There are ${fileCount} GEMINI.md file(s) in use:\n\n${filePaths.join(
-      '\n',
-    )}`;
+    content = t('There are {{count}} GEMINI.md file(s) in use:\n\n{{list}}', {
+      count: fileCount,
+      list: filePaths.join('\n'),
+    });
   } else {
-    content = 'No GEMINI.md files in use.';
+    content = t('No GEMINI.md files in use.');
   }
 
   return {

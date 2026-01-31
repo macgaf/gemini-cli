@@ -118,8 +118,8 @@ describe('ConsentPrompt', () => {
     expect(MockedRadioButtonSelect).toHaveBeenCalledWith(
       expect.objectContaining({
         items: [
-          { label: 'Yes', value: true, key: 'Yes' },
-          { label: 'No', value: false, key: 'No' },
+          { label: 'Yes', value: true, key: 'yes' },
+          { label: 'No', value: false, key: 'no' },
         ],
       }),
       undefined,
