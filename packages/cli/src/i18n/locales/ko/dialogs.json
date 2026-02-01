@@ -1,0 +1,543 @@
+{
+  "model": {
+    "title": "모델 선택",
+    "autoDescription": "Gemini CLI가 작업에 가장 적합한 모델을 결정하도록 허용",
+    "manual": "수동",
+    "manualDescription": "수동으로 모델 선택",
+    "rememberForFuture": "향후 세션을 위해 모델 기억:",
+    "pressTabToToggle": "(Tab을 눌러 전환)",
+    "startupModelHint": "> 시작 시 특정 Gemini 모델을 사용하려면 --model 플래그를 사용하세요.",
+    "pressEscToClose": "(Esc를 눌러 닫기)",
+    "gemini3Available": "Gemini 3를 사용할 수 있습니다.",
+    "gemini3ComingSoon": "Gemini 3가 곧 출시됩니다.",
+    "enablePreviewFeatures": "/settings에서 \"미리보기 기능\"을 활성화하세요.\n자세한 내용은 https://goo.gle/enable-preview-features를 참조하세요."
+  },
+  "theme": {
+    "title": "테마 선택",
+    "selectTheme": "테마 선택",
+    "preview": "미리보기",
+    "incompatible": "(호환되지 않음)",
+    "matchesTerminal": "(터미널과 일치)",
+    "custom": "사용자 지정",
+    "helpText": "(Enter로 선택, Tab으로 범위 지정, Esc로 닫기)",
+    "helpTextScope": "(Enter로 범위 적용, Tab으로 테마 선택, Esc로 닫기)",
+    "noColorUnsupported": "\"색상 없음\" 테마는 이 터미널에서 지원되지 않습니다.",
+    "notFound": "테마 \"{{name}}\"을(를) 찾을 수 없습니다.",
+    "notFoundInScope": "현재 범위에서 테마 \"{{name}}\"을(를) 찾을 수 없습니다."
+  },
+  "settings": {
+    "title": "설정",
+    "searchPlaceholder": "검색하여 필터링",
+    "noMatchesFound": "일치하는 항목이 없습니다.",
+    "applyTo": "적용 대상",
+    "helpText": "(Enter로 선택, Tab으로 포커스 전환, Esc로 닫기)",
+    "helpTextNoScope": "(Enter로 선택, Esc로 닫기)",
+    "restartRequired": "변경 사항을 확인하려면 Gemini CLI를 다시 시작해야 합니다. r을 눌러 종료하고 변경 사항을 적용하세요.",
+    "items": {
+      "general_previewFeatures": {
+        "label": "미리보기 기능 (예: 모델)",
+        "description": "미리보기 기능(예: 미리보기 모델)을 활성화합니다."
+      },
+      "general_vimMode": {
+        "label": "Vim 모드",
+        "description": "Vim 키 바인딩을 활성화합니다."
+      },
+      "general_language": {
+        "label": "언어",
+        "description": "인터페이스 언어 (en, zh-CN, zh-TW, fr, ja, ko, es, ru, de)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "자동 업데이트 활성화",
+        "description": "자동 업데이트를 활성화합니다."
+      },
+      "general_enablePromptCompletion": {
+        "label": "프롬프트 완성 활성화",
+        "description": "입력 시 AI 기반 프롬프트 완성 제안을 활성화합니다."
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "키스트로크 로깅 디버그",
+        "description": "콘솔에 키스트로크 디버그 로깅을 활성화합니다."
+      },
+      "general_sessionRetention_enabled": {
+        "label": "세션 정리 활성화",
+        "description": "자동 세션 정리를 활성화합니다."
+      },
+      "output_format": {
+        "label": "출력 형식",
+        "description": "CLI 출력 형식입니다. `text` 또는 `json`일 수 있습니다."
+      },
+      "ui_hideWindowTitle": {
+        "label": "창 제목 숨기기",
+        "description": "창 제목 표시줄을 숨깁니다."
+      },
+      "ui_userMessageColor": {
+        "label": "사용자 메시지 색상",
+        "description": "채팅 기록의 사용자 메시지 색상을 재정의합니다. Hex 또는 명명된 ANSI 색상(예: \"#B27CFF\" 또는 \"magenta\")을 허용합니다."
+      },
+      "ui_showStatusInTitle": {
+        "label": "제목에 생각 표시",
+        "description": "작업 단계 동안 터미널 창 제목에 Gemini CLI 모델의 생각을 표시합니다."
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "동적 창 제목",
+        "description": "현재 상태 아이콘으로 터미널 창 제목을 업데이트합니다 (준비됨: ◇, 작업 필요: ✋, 작업 중: ✦)."
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "홈 디렉토리 경고 표시",
+        "description": "홈 디렉토리에서 Gemini CLI를 실행할 때 경고를 표시합니다."
+      },
+      "ui_hideTips": {
+        "label": "팀 숨기기",
+        "description": "UI에서 유용한 팁을 숨깁니다."
+      },
+      "ui_hideBanner": {
+        "label": "배너 숨기기",
+        "description": "애플리케이션 배너를 숨깁니다."
+      },
+      "ui_hideContextSummary": {
+        "label": "컨텍스트 요약 숨기기",
+        "description": "입력 위의 컨텍스트 요약(GEMINI.md, MCP 서버)을 숨깁니다."
+      },
+      "ui_footer_hideCWD": {
+        "label": "CWD 숨기기",
+        "description": "푸터에서 현재 작업 디렉토리 경로를 숨깁니다."
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "샌드박스 상태 숨기기",
+        "description": "푸터에서 샌드박스 상태 표시기를 숨깁니다."
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "모델 정보 숨기기",
+        "description": "푸터에서 모델 이름과 컨텍스트 사용량을 숨깁니다."
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "컨텍스트 백분율 숨기기",
+        "description": "남은 컨텍스트 창 백분율을 숨깁니다."
+      },
+      "ui_hideFooter": {
+        "label": "푸터 숨기기",
+        "description": "UI에서 푸터를 숨깁니다."
+      },
+      "ui_showMemoryUsage": {
+        "label": "메모리 사용량 표시",
+        "description": "UI에 메모리 사용량 정보를 표시합니다."
+      },
+      "ui_showLineNumbers": {
+        "label": "줄 번호 표시",
+        "description": "채팅에 줄 번호를 표시합니다."
+      },
+      "ui_showCitations": {
+        "label": "인용 표시",
+        "description": "채팅에 생성된 텍스트에 대한 인용을 표시합니다."
+      },
+      "ui_showModelInfoInChat": {
+        "label": "채팅에 모델 정보 표시",
+        "description": "각 모델 턴마다 채팅에 모델 이름을 표시합니다."
+      },
+      "ui_useFullWidth": {
+        "label": "전체 너비 사용",
+        "description": "출력에 전체 터미널 너비를 사용합니다."
+      },
+      "ui_useAlternateBuffer": {
+        "label": "대체 버퍼 사용",
+        "description": "UI에 대체 화면 버퍼를 사용하여 쉘 기록을 보존합니다."
+      },
+      "ui_incrementalRendering": {
+        "label": "증분 렌더링",
+        "description": "UI의 증분 렌더링을 활성화하여 깜박임을 줄이지만 렌더링 아티팩트가 발생할 수 있습니다. \"대체 버퍼 사용\"이 활성화된 경우에만 지원됩니다."
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "로딩 문구 활성화",
+        "description": "작업 중 로딩 문구를 활성화합니다."
+      },
+      "ui_accessibility_screenReader": {
+        "label": "스크린 리더 모드",
+        "description": "스크린 리더의 접근성을 높이기 위해 출력을 일반 텍스트로 렌더링합니다."
+      },
+      "ide_enabled": {
+        "label": "IDE 모드",
+        "description": "IDE 통합 모드를 활성화합니다."
+      },
+      "model_maxSessionTurns": {
+        "label": "최대 세션 턴 수",
+        "description": "세션에 유지할 최대 사용자/모델/도구 턴 수입니다. -1은 무제한을 의미합니다."
+      },
+      "model_compressionThreshold": {
+        "label": "압축 임계값",
+        "description": "컨텍스트 압축을 트리거할 컨텍스트 사용량 비율(예: 0.2, 0.3)입니다."
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "다음 화자 확인 건너뛰기",
+        "description": "다음 화자 확인을 건너뜁니다."
+      },
+      "context_discoveryMaxDirs": {
+        "label": "메모리 검색 최대 디렉토리",
+        "description": "메모리를 검색할 최대 디렉토리 수입니다."
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "포함 디렉토리에서 메모리 로드",
+        "description": "/memory refresh가 GEMINI.md 파일을 로드하는 방식을 제어합니다. true인 경우 포함 디렉토리를 스캔합니다. false인 경우 현재 디렉토리만 사용합니다."
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": ".gitignore 존중",
+        "description": "검색 시 .gitignore 파일을 존중합니다."
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": ".geminiignore 존중",
+        "description": "검색 시 .geminiignore 파일을 존중합니다."
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "재귀 파일 검색 활성화",
+        "description": "프롬프트에서 @ 참조 완성 시 재귀 파일 검색 기능을 활성화합니다."
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "퍼지 검색 활성화",
+        "description": "파일 검색 시 퍼지 검색을 활성화합니다."
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "대화형 쉘 활성화",
+        "description": "대화형 쉘 경험을 위해 node-pty를 사용합니다. child_process로의 폴백은 계속 적용됩니다."
+      },
+      "tools_shell_showColor": {
+        "label": "색상 표시",
+        "description": "쉘 출력에 색상을 표시합니다."
+      },
+      "tools_autoAccept": {
+        "label": "자동 승인",
+        "description": "안전하다고 간주되는 도구 호출(예: 읽기 전용 작업)을 자동으로 승인하고 실행합니다."
+      },
+      "tools_useRipgrep": {
+        "label": "Ripgrep 사용",
+        "description": "파일 콘텐츠 검색에 폴백 구현 대신 ripgrep을 사용하여 검색 성능을 높입니다."
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "도구 출력 자르기 활성화",
+        "description": "큰 도구 출력 자르기를 활성화합니다."
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "도구 출력 자르기 임계값",
+        "description": "도구 출력이 이 문자 수보다 클 경우 자릅니다. 비활성화하려면 -1로 설정하세요."
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "도구 출력 자르기 줄 수",
+        "description": "도구 출력을 자를 때 유지할 줄 수입니다."
+      },
+      "tools_disableLLMCorrection": {
+        "label": "LLM 수정 비활성화",
+        "description": "편집 도구에 대한 LLM 기반 오류 수정을 비활성화합니다. 활성화된 경우 완전한 문자열 일치를 찾지 못하면 자체 수정을 시도하는 대신 도구가 즉시 실패합니다."
+      },
+      "security_disableYoloMode": {
+        "label": "YOLO 모드 비활성화",
+        "description": "플래그를 통해 활성화된 경우에도 YOLO 모드를 비활성화합니다."
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "영구 도구 승인 허용",
+        "description": "도구 확인 대화 상자에서 \"향후 모든 세션에서 허용\" 옵션을 활성화합니다."
+      },
+      "security_blockGitExtensions": {
+        "label": "Git 확장 프로그램 차단",
+        "description": "Git에서 확장 프로그램을 설치하고 로드하는 것을 차단합니다."
+      },
+      "security_folderTrust_enabled": {
+        "label": "폴더 신뢰",
+        "description": "폴더 신뢰가 활성화되었는지 추적하기 위한 설정입니다."
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "환경 변수 삭제 활성화",
+        "description": "비밀이 포함될 수 있는 환경 변수의 삭제를 활성화합니다."
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "코드베이스 조사관 활성화",
+        "description": "코드베이스 조사관 에이전트를 활성화합니다."
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "코드베이스 조사관 최대 턴 수",
+        "description": "코드베이스 조사관 에이전트의 최대 턴 수입니다."
+      },
+      "experimental_useOSC52Paste": {
+        "label": "OSC 52 붙여넣기 사용",
+        "description": "clipboardy 대신 OSC 52 시퀀스를 사용하여 붙여넣습니다 (원격 세션에 유용)."
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "CLI 도움말 에이전트 활성화",
+        "description": "CLI 도움말 에이전트를 활성화합니다."
+      },
+      "experimental_plan": {
+        "label": "계획",
+        "description": "계획 기능(계획 모드 및 도구)을 활성화합니다."
+      },
+      "skills_enabled": {
+        "label": "에이전트 스킬 활성화",
+        "description": "에이전트 스킬을 활성화합니다."
+      },
+      "hooksConfig_notifications": {
+        "label": "후크 알림",
+        "description": "후크 실행 중 시각적 표시기를 표시합니다."
+      }
+    },
+    "scope": {
+      "user": "사용자 설정",
+      "workspace": "작업 공간 설정",
+      "system": "시스템 설정",
+      "alsoModifiedIn": "({{scopes}}에서도 수정됨)",
+      "modifiedIn": "({{scopes}}에서 수정됨)"
+    }
+  },
+  "auth": {
+    "title": "인증",
+    "getStarted": "시작하기",
+    "howToAuthenticate": "이 프로젝트에 대해 어떻게 인증하고 싶으신가요?",
+    "loginWithGoogle": "Google로 로그인",
+    "useCloudShell": "Cloud Shell 사용자 자격 증명 사용",
+    "useMetadataServer": "메타데이터 서버의 애플리케이션 기본 자격 증명 사용",
+    "useGeminiApiKey": "Gemini API 키 사용",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "(Enter로 선택)",
+    "termsOfService": "Gemini CLI의 서비스 약관 및 개인정보 고지 사항",
+    "loggingIn": "Google로 로그인 중... 계속하려면 Gemini CLI를 다시 시작하세요.",
+    "mustSelectAuth": "계속하려면 인증 방법을 선택해야 합니다. 종료하려면 Ctrl+C를 두 번 누르세요."
+  },
+  "permissions": {
+    "title": "권한",
+    "allow": "허용",
+    "deny": "거부",
+    "always": "항상",
+    "once": "한 번만",
+    "session": "이 세션 동안"
+  },
+  "folderTrust": {
+    "title": "이 폴더를 신뢰하시겠습니까?",
+    "description": "폴더를 신뢰하면 Gemini가 제안된 명령을 실행할 수 있습니다. 이는 신뢰할 수 없는 디렉토리에서의 우발적인 실행을 방지하기 위한 보안 기능입니다.",
+    "trustFolder": "폴더 신뢰",
+    "trustParent": "상위 폴더 신뢰",
+    "dontTrust": "신뢰하지 않음",
+    "restarting": "신뢰 설정을 적용하기 위해 Gemini CLI를 다시 시작하는 중...",
+    "exitingNoTrust": "계속하려면 폴더 신뢰 수준을 선택해야 합니다. Esc를 눌러 종료합니다."
+  },
+  "rewind": {
+    "title": "되감기 확인",
+    "fileSingle": "1개의 파일이 영향을 받음: {{file}}",
+    "filesAffected": "{{count}}개의 파일이 영향을 받음",
+    "linesAdded": "+{{count}}줄",
+    "linesRemoved": "-{{count}}줄",
+    "notice": "이 작업은 파일 변경 사항을 되돌립니다.",
+    "noChanges": "파일 변경 사항 없음.",
+    "selectAction": "작업 선택:",
+    "options": {
+      "rewindAndRevert": "대화를 되감고 파일 변경 사항 되돌리기",
+      "rewindOnly": "대화만 되감기",
+      "revertOnly": "파일 변경 사항만 되돌리기",
+      "cancel": "취소"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "이 폴더들을 신뢰하시겠습니까?",
+    "description": "폴더를 신뢰하면 Gemini가 해당 폴더 내에서 명령을 실행할 수 있습니다.",
+    "cancelled": "폴더 신뢰 취소됨:\n{{list}}",
+    "configNotAvailable": "설정을 사용할 수 없습니다.",
+    "notTrusted": "다음 폴더는 신뢰되지 않았습니다:\n{{list}}",
+    "errorAdding": "{{dir}}을(를) 신뢰하는 중 오류 발생: {{error}}",
+    "applying": "신뢰 설정 적용 중...",
+    "options": {
+      "yes": "예",
+      "yesRemember": "예, 기억하기",
+      "no": "아니요"
+    }
+  },
+  "loopDetection": {
+    "title": "루프 감지",
+    "description": "에이전트가 루프에 빠진 것 같습니다.",
+    "ariaLabel": "루프 감지 경고",
+    "options": {
+      "keep": "루프 감지 활도 유지",
+      "disable": "이 세션에 대해 루프 감지 비활성화"
+    }
+  },
+  "rewindViewer": {
+    "title": "대화 되감기",
+    "stay": "현재 위치 유지",
+    "rewinding": "되감는 중...",
+    "cancelText": "되감기 취소 및 여기 유지",
+    "fileChangeSingle": "1개의 파일 변경",
+    "fileChange": "{{count}}개의 파일 변경",
+    "noFileChange": "파일 변경 사항 없음",
+    "helpText": "(Enter로 메시지 선택, Esc로 닫기, 오른쪽/왼쪽으로 펼치기/접기)"
+  },
+  "logout": {
+    "title": "로그아웃됨.",
+    "message": "Gemini CLI를 계속 사용하려면 다시 로그인하거나 애플리케이션을 종료하세요.",
+    "login": "로그인",
+    "exit": "종료",
+    "helpText": "(Enter로 선택, Esc로 닫기)"
+  },
+  "editor": {
+    "title": "편집기 기본 설정",
+    "selectEditor": "편집기 선택",
+    "custom": "사용자 지정",
+    "enterCommand": "편집기 명령 입력",
+    "preferenceSet": "{{scope}} 설정에서 편집기 기본 설정을 \"{{editor}}\"로 설정했습니다.",
+    "preferenceCleared": "{{scope}} 설정에서 편집기 기본 설정을 지웠습니다.",
+    "preferenceSetFailed": "편집기 기본 설정 실패: {{error}}",
+    "unsupported": "편집기 \"{{editor}}\"는 지원되지 않습니다.",
+    "alsoModifiedIn": "({{scope}} 설정에서도 수정됨)",
+    "modifiedIn": "({{scope}} 설정에서 수정됨)",
+    "none": "없음",
+    "preferenceTitle": "편집기 기본 설정",
+    "supportedNote": "이 시스템에서 감지된 지원되는 편집기입니다.",
+    "preferredPrefix": "선호하는 편집기: ",
+    "preferredSuffix": ""
+  },
+  "scope": {
+    "user": "사용자",
+    "workspace": "작업 공간"
+  },
+  "ideIntegrationNudge": {
+    "title": "{{editor}}를 Gemini CLI에 연결하시겠습니까?",
+    "descriptionInstall": "\"예\"를 선택하면 CLI가 열린 파일에 액세스하고 {{editor}}에서 직접 차이점을 표시할 수 있도록 확장 프로그램이 설치됩니다.",
+    "descriptionInstalled": "\"예\"를 선택하면 CLI가 열린 파일에 액세스하고 {{editor}}에서 직접 차이점을 표시합니다.",
+    "defaultEditor": "편집기",
+    "options": {
+      "yes": "예",
+      "noEsc": "아니요 (esc)",
+      "noDontAskAgain": "아니요, 다시 묻지 않음"
+    }
+  },
+  "common": {
+    "yes": "예",
+    "no": "아니요",
+    "ok": "확인",
+    "cancel": "취소",
+    "confirm": "확인",
+    "close": "닫기",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "편집",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "warning": "경고",
+    "info": "정보",
+    "true": "참",
+    "false": "거짓"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "참고: 상위 폴더가 신뢰되므로 이 폴더는 여전히 신뢰됩니다.",
+    "noteTrustedByIde": "참고: 연결된 IDE 작업 공간이 신뢰되므로 이 폴더는 여전히 신뢰됩니다.",
+    "saveFailed": "신뢰 설정을 저장하지 못했습니다. 변경 사항이 유지되지 않을 수 있습니다.",
+    "title": "신뢰 수준 변경",
+    "folderLabel": "폴더:",
+    "currentLevel": "현재 수준:",
+    "notSet": "설정되지 않음",
+    "inheritedParentNote": "참고: 상위 폴더 중 하나가 신뢰되므로 이 폴더는 신뢰할 수 있는 폴더로 작동합니다.",
+    "inheritedIdeNote": "참고: 연결된 IDE 작업 공간이 신뢰되므로 이 폴더는 신뢰할 수 있는 폴더로 작동합니다.",
+    "helpText": "(Enter로 선택, Esc로 닫기)",
+    "restartWarning": "신뢰 설정이 변경되었습니다. 지금 다시 시작하려면 'r'을 누르세요.",
+    "options": {
+      "trustFolder": "이 폴더 신뢰 ({{folder}})",
+      "trustParent": "상위 폴더 신뢰 ({{folder}})",
+      "dontTrust": "신뢰하지 않음"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "계속 시도",
+    "stop": "중지",
+    "switchTo": "{{model}}로 전환",
+    "upgrade": "더 높은 제한의 요금제로 업그레이드",
+    "allProModels": "모든 Pro 모델",
+    "usageLimitReached": "{{model}}의 사용량 제한에 도달했습니다.",
+    "resetTime": "액세스는 {{time}}에 재설정됩니다",
+    "statsHint": "사용량 세부 정보는 /stats",
+    "modelHint": "모델을 전환하려면 /model을 사용하세요.",
+    "authHint": "API 키로 전환하려면 /auth를 사용하세요.",
+    "noAccess": "{{model}}에 대한 액세스 권한이 없는 것 같습니다.",
+    "previewLearnMore": "자세한 내용은 https://goo.gle/enable-preview-features를 참조하세요",
+    "disablePreview": "{{model}}을(를) 비활성화하려면 /settings에서 \"미리보기 기능\"을 비활성화하세요.",
+    "highDemand": "현재 수요가 많습니다.",
+    "highDemandApology": "불편을 드려 죄송합니다.",
+    "switchedToFallback": "폴백 모델 {{model}}로 전환했습니다"
+  },
+  "ideTrustChange": {
+    "default": "작업 공간 신뢰가 변경되었습니다.",
+    "connectionChange": "IDE 연결 변경으로 인해 작업 공간 신뢰가 변경되었습니다.",
+    "trustChange": "IDE 신뢰 변경으로 인해 작업 공간 신뢰가 변경되었습니다.",
+    "restartHint": "재시작하려면 'r'을 누르세요"
+  },
+  "sessionBrowser": {
+    "loading": "로딩 중...",
+    "error": "오류: {{error}}",
+    "pressToExit": "종료하려면 q 누르기",
+    "empty": "자동 저장된 대화를 찾을 수 없습니다.",
+    "searchLabel": "검색:",
+    "searchCancel": "(취소하려면 Esc)",
+    "filteredSuffix": ", 필터링됨",
+    "sortField": {
+      "date": "날짜",
+      "messages": "메시지",
+      "name": "이름"
+    },
+    "sortOrder": {
+      "asc": "오름차순",
+      "desc": "내림차순"
+    },
+    "listTitle": "채팅 세션 (총 {{count}}{{filtered}})",
+    "sortedBy": "{{field}}로 정렬 ({{order}})",
+    "help": {
+      "navigate": "탐색",
+      "resume": "재개",
+      "search": "검색",
+      "delete": "삭제",
+      "quit": "종료",
+      "sort": "정렬",
+      "reverse": "반전",
+      "firstLast": "처음/마지막"
+    },
+    "columns": {
+      "index": "#",
+      "messages": "Msgs",
+      "age": "기간",
+      "match": "일치",
+      "name": "이름"
+    },
+    "noResults": "\"{{query}}\"에 대한 결과 없음.",
+    "roleUser": "사용자",
+    "roleModel": "어시스턴트",
+    "current": "(현재)",
+    "moreMatches": "(+{{count}} 추가)",
+    "noMessages": "메시지 없음",
+    "loadFailed": "세션 로드 실패",
+    "loadFullFailed": "전체 세션 콘텐츠 로드 실패",
+    "deleteFailed": "세션 삭제 실패: {{error}}",
+    "unknownError": "알 수 없는 오류"
+  },
+  "toolConfirmation": {
+    "applyChange": "이 변경 사항을 적용하시겠습니까?",
+    "execMultiple": "{{count}}개의 명령 실행을 허용하시겠습니까?",
+    "execSingle": "'{{command}}' 실행을 허용하시겠습니까?",
+    "proceedQuestion": "계속하시겠습니까?",
+    "mcpQuestion": "서버 \"{{server}}\"의 MCP 도구 \"{{tool}}\" 실행을 허용하시겠습니까?",
+    "options": {
+      "allowOnce": "이번만 허용",
+      "allowSession": "이 세션 동안 허용",
+      "allowAllFuture": "향후 모든 세션에서 허용",
+      "modifyExternalEditor": "외부 편집기에서 수정",
+      "suggestChangesEsc": "아니요, 변경 제안 (esc)",
+      "allowToolSession": "이 세션에서 도구 허용",
+      "allowServerToolsSession": "이 세션에서 모든 서버 도구 허용",
+      "allowToolAllFuture": "향후 모든 세션에서 도구 허용"
+    },
+    "redirection": {
+      "noteLabel": "참고: ",
+      "noteText": "명령에 리디렉션이 포함되어 있어 원하지 않을 수 있습니다.",
+      "tipLabel": "팁: ",
+      "tipText": "나중에 리디렉션을 허용하려면 자동 편집(Shift+Tab)을 전환하세요."
+    },
+    "urlsToFetch": "가져올 URL:",
+    "mcpServer": "MCP 서버: {{server}}",
+    "mcpTool": "도구: {{tool}}",
+    "modifyInProgress": "수정 중:",
+    "modifyHint": "변경 사항을 적용하려면 외부 편집기를 사용하세요."
+  }
+}

@@ -78,6 +78,36 @@ import jaDialogs from './locales/ja/dialogs.json' with { type: 'json' };
 import jaPrivacy from './locales/ja/privacy.json' with { type: 'json' };
 import jaPhrases from './locales/ja/phrases.json' with { type: 'json' };
 
+import koCommon from './locales/ko/common.json' with { type: 'json' };
+import koCommands from './locales/ko/commands.json' with { type: 'json' };
+import koErrors from './locales/ko/errors.json' with { type: 'json' };
+import koAuth from './locales/ko/auth.json' with { type: 'json' };
+import koTips from './locales/ko/tips.json' with { type: 'json' };
+import koKeyboard from './locales/ko/keyboard.json' with { type: 'json' };
+import koDialogs from './locales/ko/dialogs.json' with { type: 'json' };
+import koPrivacy from './locales/ko/privacy.json' with { type: 'json' };
+import koPhrases from './locales/ko/phrases.json' with { type: 'json' };
+
+import esCommon from './locales/es/common.json' with { type: 'json' };
+import esCommands from './locales/es/commands.json' with { type: 'json' };
+import esErrors from './locales/es/errors.json' with { type: 'json' };
+import esAuth from './locales/es/auth.json' with { type: 'json' };
+import esTips from './locales/es/tips.json' with { type: 'json' };
+import esKeyboard from './locales/es/keyboard.json' with { type: 'json' };
+import esDialogs from './locales/es/dialogs.json' with { type: 'json' };
+import esPrivacy from './locales/es/privacy.json' with { type: 'json' };
+import esPhrases from './locales/es/phrases.json' with { type: 'json' };
+
+import ruCommon from './locales/ru/common.json' with { type: 'json' };
+import ruCommands from './locales/ru/commands.json' with { type: 'json' };
+import ruErrors from './locales/ru/errors.json' with { type: 'json' };
+import ruAuth from './locales/ru/auth.json' with { type: 'json' };
+import ruTips from './locales/ru/tips.json' with { type: 'json' };
+import ruKeyboard from './locales/ru/keyboard.json' with { type: 'json' };
+import ruDialogs from './locales/ru/dialogs.json' with { type: 'json' };
+import ruPrivacy from './locales/ru/privacy.json' with { type: 'json' };
+import ruPhrases from './locales/ru/phrases.json' with { type: 'json' };
+
 /* eslint-enable import/no-internal-modules */
 
 const resources = {
@@ -137,26 +167,37 @@ const resources = {
     phrases: jaPhrases,
   },
   es: {
-    common: zhCNCommon,
-    commands: zhCNCommands,
-    errors: zhCNErrors,
-    auth: zhCNAuth,
-    tips: zhCNTips,
-    keyboard: zhCNKeyboard,
-    dialogs: zhCNDialogs,
-    privacy: zhCNPrivacy,
-    phrases: zhCNPhrases,
+    common: esCommon,
+    commands: esCommands,
+    errors: esErrors,
+    auth: esAuth,
+    tips: esTips,
+    keyboard: esKeyboard,
+    dialogs: esDialogs,
+    privacy: esPrivacy,
+    phrases: esPhrases,
   },
   ru: {
-    common: zhCNCommon,
-    commands: zhCNCommands,
-    errors: zhCNErrors,
-    auth: zhCNAuth,
-    tips: zhCNTips,
-    keyboard: zhCNKeyboard,
-    dialogs: zhCNDialogs,
-    privacy: zhCNPrivacy,
-    phrases: zhCNPhrases,
+    common: ruCommon,
+    commands: ruCommands,
+    errors: ruErrors,
+    auth: ruAuth,
+    tips: ruTips,
+    keyboard: ruKeyboard,
+    dialogs: ruDialogs,
+    privacy: ruPrivacy,
+    phrases: ruPhrases,
+  },
+  ko: {
+    common: koCommon,
+    commands: koCommands,
+    errors: koErrors,
+    auth: koAuth,
+    tips: koTips,
+    keyboard: koKeyboard,
+    dialogs: koDialogs,
+    privacy: koPrivacy,
+    phrases: koPhrases,
   },
   de: {
     common: deCommon,

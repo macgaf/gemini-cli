@@ -1,0 +1,42 @@
+{
+  "generic": "Une erreur est survenue",
+  "network": {
+    "connectionFailed": "Échec de connexion",
+    "timeout": "Requête expirée",
+    "noInternet": "Pas de connexion internet"
+  },
+  "auth": {
+    "failed": "Authentification échouée",
+    "expired": "Session expirée",
+    "invalidCredentials": "Identifiants invalides",
+    "notLoggedIn": "Non connecté"
+  },
+  "api": {
+    "rateLimited": "Limite de débit dépassée. Veuillez réessayer plus tard.",
+    "quotaExceeded": "Quota API dépassé",
+    "serverError": "Erreur serveur survenue",
+    "invalidResponse": "Réponse invalide du serveur"
+  },
+  "file": {
+    "notFound": "Fichier introuvable : {{path}}",
+    "readError": "Erreur de lecture du fichier : {{path}}",
+    "writeError": "Erreur d'écriture du fichier : {{path}}",
+    "permissionDenied": "Permission refusée : {{path}}"
+  },
+  "config": {
+    "invalidSettings": "Configuration des paramètres invalide",
+    "loadError": "Erreur chargement configuration",
+    "saveError": "Erreur sauvegarde configuration"
+  },
+  "tool": {
+    "notFound": "Outil introuvable : {{name}}",
+    "executionFailed": "Exécution de l'outil échouée : {{name}}",
+    "timeout": "Exécution de l'outil expirée"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "invalid": "Valeur invalide",
+    "tooLong": "Valeur trop longue",
+    "tooShort": "Valeur trop courte"
+  }
+}

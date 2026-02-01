@@ -1,0 +1,24 @@
+{
+  "gettingStarted": {
+    "title": "시작하기 팁:",
+    "tip1": "질문하거나, 파일을 편집하거나, 명령을 실행하세요.",
+    "tip2": "최상의 결과를 위해 구체적으로 작성하세요.",
+    "tip3Prefix": "생성",
+    "tip3Suffix": "파일을 생성하여 Gemini와의 상호작용을 사용자 지정하세요.",
+    "tip4Suffix": "더 많은 정보를 확인하세요."
+  },
+  "welcome": {
+    "title": "Gemini CLI에 오신 것을 환영합니다",
+    "subtitle": "AI 기반 코딩 도우미"
+  },
+  "shortcuts": {
+    "title": "키보드 단축키:",
+    "helpHint": "사용 가능한 명령을 보려면 /help를 입력하세요"
+  },
+  "features": {
+    "codeEditing": "파일 직접 편집",
+    "runCommands": "쉘 명령 실행",
+    "askQuestions": "코딩 질문하기",
+    "generateCode": "코드 스니펫 생성"
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "model": {
+    "title": "Выбор модели",
+    "autoDescription": "Позволить Gemini CLI выбрать лучшую модель для задачи",
+    "manual": "Вручную",
+    "manualDescription": "Выбрать модель вручную",
+    "rememberForFuture": "Запомнить модель для будущих сессий:",
+    "pressTabToToggle": "(Нажмите Tab для переключения)",
+    "startupModelHint": "> Совет: Используйте флаг --model для использования конкретной модели Gemini при запуске.",
+    "pressEscToClose": "(Нажмите Esc, чтобы закрыть)",
+    "gemini3Available": "Gemini 3 доступен.",
+    "gemini3ComingSoon": "Gemini 3 скоро появится.",
+    "enablePreviewFeatures": "Включите \"Функции предварительного просмотра\" в /settings.\nПодробнее на https://goo.gle/enable-preview-features."
+  },
+  "theme": {
+    "title": "Выбор темы",
+    "selectTheme": "Выберите тему",
+    "preview": "Предпросмотр",
+    "incompatible": "(Несовместимо)",
+    "matchesTerminal": "(Совпадает с терминалом)",
+    "custom": "Пользовательская",
+    "helpText": "(Enter для выбора, Tab для смены области, Esc для закрытия)",
+    "helpTextScope": "(Enter для применения области, Tab для выбора темы, Esc для закрытия)",
+    "noColorUnsupported": "Тема \"без цвета\" не поддерживается этим терминалом.",
+    "notFound": "Тема \"{{name}}\" не найдена.",
+    "notFoundInScope": "Тема \"{{name}}\" не найдена в текущей области."
+  },
+  "settings": {
+    "title": "Настройки",
+    "searchPlaceholder": "Поиск для фильтрации",
+    "noMatchesFound": "Совпадений не найдено.",
+    "applyTo": "Применить к",
+    "helpText": "(Enter для выбора, Tab для смены фокуса, Esc для закрытия)",
+    "helpTextNoScope": "(Enter для выбора, Esc для закрытия)",
+    "restartRequired": "Вам необходимо перезапустить Gemini CLI, чтобы увидеть изменения. Нажмите r, чтобы выйти и применить изменения.",
+    "items": {
+      "general_previewFeatures": {
+        "label": "Функции предварительного просмотра (напр., Модели)",
+        "description": "Включает функции предварительного просмотра, такие как модели предварительного просмотра."
+      },
+      "general_vimMode": {
+        "label": "Режим Vim",
+        "description": "Включает привязки клавиш Vim."
+      },
+      "general_language": {
+        "label": "Язык",
+        "description": "Язык интерфейса (en, zh-CN, zh-TW, fr, ja, ko, es, ru, de)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "Автообновление",
+        "description": "Включает автоматические обновления версий."
+      },
+      "general_enablePromptCompletion": {
+        "label": "Автодополнение промптов",
+        "description": "Включает предложения автодополнения промптов на основе ИИ при вводе."
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "Отладка регистрации нажатий клавиш",
+        "description": "Включает отладочное логирование нажатий клавиш в консоль."
+      },
+      "general_sessionRetention_enabled": {
+        "label": "Очистка сессий",
+        "description": "Включает автоматическую очистку сессий."
+      },
+      "output_format": {
+        "label": "Формат вывода",
+        "description": "Формат вывода CLI. Может быть `text` или `json`."
+      },
+      "ui_hideWindowTitle": {
+        "label": "Скрыть заголовок окна",
+        "description": "Скрывает строку заголовка окна."
+      },
+      "ui_userMessageColor": {
+        "label": "Цвет сообщения пользователя",
+        "description": "Переопределяет цвет сообщений пользователя в истории чата. Принимает Hex или именованные цвета ANSI (напр. \"#B27CFF\" или \"magenta\")."
+      },
+      "ui_showStatusInTitle": {
+        "label": "Показывать мысли в заголовке",
+        "description": "Отображает мысли модели Gemini CLI в заголовке окна терминала во время шагов действий."
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "Динамический заголовок окна",
+        "description": "Обновляет заголовок окна терминала текущим значком статуса (Готово: ◇, Требуется действие: ✋, Работает: ✦)."
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "Показывать предупреждение домашнего каталога",
+        "description": "Показывает предупреждение при запуске Gemini CLI в домашнем каталоге."
+      },
+      "ui_hideTips": {
+        "label": "Скрыть советы",
+        "description": "Скрывает полезные советы в UI."
+      },
+      "ui_hideBanner": {
+        "label": "Скрыть баннер",
+        "description": "Скрывает баннер приложения."
+      },
+      "ui_hideContextSummary": {
+        "label": "Скрыть сводку контекста",
+        "description": "Скрывает сводку контекста (GEMINI.md, серверы MCP) над вводом."
+      },
+      "ui_footer_hideCWD": {
+        "label": "Скрыть CWD",
+        "description": "Скрывает путь текущего рабочего каталога в футере."
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "Скрыть статус песочницы",
+        "description": "Скрывает индикатор статуса песочницы в футере."
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "Скрыть информацию о модели",
+        "description": "Скрывает имя модели и использование контекста в футере."
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "Скрыть процент контекста",
+        "description": "Скрывает оставшийся процент окна контекста."
+      },
+      "ui_hideFooter": {
+        "label": "Скрыть футер",
+        "description": "Скрывает футер в UI."
+      },
+      "ui_showMemoryUsage": {
+        "label": "Показывать использование памяти",
+        "description": "Отображает информацию об использовании памяти в UI."
+      },
+      "ui_showLineNumbers": {
+        "label": "Показывать номера строк",
+        "description": "Отображает номера строк в чате."
+      },
+      "ui_showCitations": {
+        "label": "Показывать цитаты",
+        "description": "Отображает цитаты для сгенерированного текста в чате."
+      },
+      "ui_showModelInfoInChat": {
+        "label": "Показывать инфо о модели в чате",
+        "description": "Отображает имя модели в чате для каждого хода модели."
+      },
+      "ui_useFullWidth": {
+        "label": "Использовать полную ширину",
+        "description": "Использует всю ширину терминала для вывода."
+      },
+      "ui_useAlternateBuffer": {
+        "label": "Использовать альтернативный буфер",
+        "description": "Использует альтернативный экранный буфер для UI, сохраняя историю оболочки."
+      },
+      "ui_incrementalRendering": {
+        "label": "Инкрементальный рендеринг",
+        "description": "Включает инкрементальный рендеринг UI, который уменьшает мерцание, но может вызвать артефакты рендеринга. Поддерживается только при включенном \"Использовать альтернативный буфер\"."
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "Включить фразы загрузки",
+        "description": "Включает фразы загрузки во время работы."
+      },
+      "ui_accessibility_screenReader": {
+        "label": "Режим чтения с экрана",
+        "description": "Отображает вывод как простой текст для лучшей доступности с программами чтения с экрана."
+      },
+      "ide_enabled": {
+        "label": "Режим IDE",
+        "description": "Включает режим интеграции с IDE."
+      },
+      "model_maxSessionTurns": {
+        "label": "Макс. ходов сессии",
+        "description": "Максимальное количество ходов пользователя/модели/инструмента для сохранения в сессии. -1 для неограниченного."
+      },
+      "model_compressionThreshold": {
+        "label": "Порог сжатия",
+        "description": "Доля использования контекста, которая вызовет сжатие контекста (напр. 0.2, 0.3)."
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "Пропустить проверку след. спикера",
+        "description": "Пропускает проверку следующего спикера."
+      },
+      "context_discoveryMaxDirs": {
+        "label": "Макс. каталогов обнаружения памяти",
+        "description": "Максимальное количество каталогов для сканирования на наличие памяти."
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "Загружать память из вкл. каталогов",
+        "description": "Контролирует, как /memory refresh загружает файлы GEMINI.md. Если true, сканирует включенные каталоги. Если false, использует только текущий каталог."
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": "Уважать .gitignore",
+        "description": "Уважает файлы .gitignore при поиске."
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": "Уважать .geminiignore",
+        "description": "Уважает файлы .geminiignore при поиске."
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "Включить рекурсивный поиск",
+        "description": "Включает возможности рекурсивного поиска файлов для автодополнения @-ссылок."
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "Включить нечеткий поиск",
+        "description": "Включает нечеткий поиск при поиске файлов."
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "Включить интерактивную оболочку",
+        "description": "Использует node-pty для интерактивного опыта оболочки. Резервный вариант child_process все еще применяется."
+      },
+      "tools_shell_showColor": {
+        "label": "Показывать цвет",
+        "description": "Показывает цвета в выводе оболочки."
+      },
+      "tools_autoAccept": {
+        "label": "Авто-принятие",
+        "description": "Автоматически принимает и выполняет вызовы инструментов, считающиеся безопасными (напр. операции только для чтения)."
+      },
+      "tools_useRipgrep": {
+        "label": "Использовать Ripgrep",
+        "description": "Использует ripgrep для поиска содержимого файлов вместо реализации резервного копирования для лучшей производительности."
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "Включить усечение вывода инструментов",
+        "description": "Включает усечение больших выводов инструментов."
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "Порог усечения вывода",
+        "description": "Усекает вывод инструмента, если он больше этого количества символов. -1 для отключения."
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "Строки усечения вывода",
+        "description": "Количество строк, которые нужно сохранить при усечении вывода инструмента."
+      },
+      "tools_disableLLMCorrection": {
+        "label": "Отключить коррекцию LLM",
+        "description": "Отключает коррекцию ошибок на основе LLM для инструментов редактирования. Если включено, инструмент немедленно выйдет из строя вместо попытки автокоррекции, если он не найдет точного совпадения строки."
+      },
+      "security_disableYoloMode": {
+        "label": "Отключить режим YOLO",
+        "description": "Отключает режим YOLO, даже если он включен флагом."
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "Разрешить постоянное одобрение инстр.",
+        "description": "Включает опцию \"Разрешить во всех будущих сессиях\" в диалогах подтверждения инструментов."
+      },
+      "security_blockGitExtensions": {
+        "label": "Блокировать расширения Git",
+        "description": "Блокирует установку и загрузку расширений из Git."
+      },
+      "security_folderTrust_enabled": {
+        "label": "Доверие папке",
+        "description": "Настройка для отслеживания того, включено ли доверие к папке."
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "Включить редактирование перем. окружения",
+        "description": "Включает редактирование переменных окружения, которые могут содержать секреты."
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "Включить исследователя кодовой базы",
+        "description": "Включает агента исследователя кодовой базы."
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "Макс. ходов исследователя",
+        "description": "Максимальное количество ходов для агента исследователя кодовой базы."
+      },
+      "experimental_useOSC52Paste": {
+        "label": "Использовать вставку OSC 52",
+        "description": "Использует последовательности OSC 52 для вставки вместо clipboardy (полезно для удаленных сессий)."
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "Включить агента помощи CLI",
+        "description": "Включает агента помощи CLI."
+      },
+      "experimental_plan": {
+        "label": "Планирование",
+        "description": "Включает возможности планирования (режим планирования и инструменты)."
+      },
+      "skills_enabled": {
+        "label": "Включить навыки агента",
+        "description": "Включает навыки агента."
+      },
+      "hooksConfig_notifications": {
+        "label": "Настройки уведомлений Hooks",
+        "description": "Показывать визуальные индикаторы во время выполнения хуков."
+      }
+    },
+    "scope": {
+      "user": "Настройки пользователя",
+      "workspace": "Настройки рабочего пространства",
+      "system": "Настройки системы",
+      "alsoModifiedIn": "(также изменено в {{scopes}})",
+      "modifiedIn": "(изменено в {{scopes}})"
+    }
+  },
+  "auth": {
+    "title": "Аутентификация",
+    "getStarted": "Начать",
+    "howToAuthenticate": "Как бы вы хотели аутентифицироваться для этого проекта?",
+    "loginWithGoogle": "Войти через Google",
+    "useCloudShell": "Использовать учетные данные пользователя Cloud Shell",
+    "useMetadataServer": "Использовать учетные данные приложений по умолчанию сервера метаданных",
+    "useGeminiApiKey": "Использовать API-ключ Gemini",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "(Enter для выбора)",
+    "termsOfService": "Условия использования и Уведомление о конфиденциальности Gemini CLI",
+    "loggingIn": "Вход через Google... Пожалуйста, перезапустите Gemini CLI, чтобы продолжить.",
+    "mustSelectAuth": "Вы должны выбрать метод аутентификации, чтобы продолжить. Нажмите Ctrl+C дважды для выхода."
+  },
+  "permissions": {
+    "title": "Разрешения",
+    "allow": "Разрешить",
+    "deny": "Запретить",
+    "always": "Всегда",
+    "once": "Только один раз",
+    "session": "Для этой сессии"
+  },
+  "folderTrust": {
+    "title": "Доверяете ли вы этой папке?",
+    "description": "Доверие к папке позволяет Gemini выполнять предложенные команды. Это функция безопасности для предотвращения случайного выполнения в ненадежных каталогах.",
+    "trustFolder": "Доверять папке",
+    "trustParent": "Доверять родительской папке",
+    "dontTrust": "Не доверять",
+    "restarting": "Перезапуск Gemini CLI для применения настроек доверия...",
+    "exitingNoTrust": "Вы должны выбрать уровень доверия к папке, чтобы продолжить. Нажмите Esc для выхода."
+  },
+  "rewind": {
+    "title": "Подтвердить перемотку",
+    "fileSingle": "1 файл затронут: {{file}}",
+    "filesAffected": "{{count}} файлов затронуто",
+    "linesAdded": "+{{count}} строк",
+    "linesRemoved": "-{{count}} строк",
+    "notice": "Это действие откатит изменения в файлах.",
+    "noChanges": "Нет изменений в файлах.",
+    "selectAction": "Выберите действие:",
+    "options": {
+      "rewindAndRevert": "Перемотать чат и откатить изменения файлов",
+      "rewindOnly": "Только перемотать чат",
+      "revertOnly": "Только откатить изменения файлов",
+      "cancel": "Отмена"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "Доверяете ли вы этим папкам?",
+    "description": "Доверие к папкам позволяет Gemini выполнять команды внутри них.",
+    "cancelled": "Доверие к папкам отменено для:\n{{list}}",
+    "configNotAvailable": "Конфигурация недоступна.",
+    "notTrusted": "Следующие папки не получили доверия:\n{{list}}",
+    "errorAdding": "Ошибка добавления доверия для {{dir}}: {{error}}",
+    "applying": "Применение настроек доверия...",
+    "options": {
+      "yes": "Да",
+      "yesRemember": "Да, запомнить",
+      "no": "Нет"
+    }
+  },
+  "loopDetection": {
+    "title": "Обнаружение цикла",
+    "description": "Похоже, агент застрял в цикле.",
+    "ariaLabel": "Предупреждение об обнаружении цикла",
+    "options": {
+      "keep": "Оставить цикл активным",
+      "disable": "Отключить обнаружение цикла для этой сессии"
+    }
+  },
+  "rewindViewer": {
+    "title": "Перемотать разговор",
+    "stay": "Остаться здесь",
+    "rewinding": "Перемотка...",
+    "cancelText": "Отменить перемотку и остаться здесь",
+    "fileChangeSingle": "1 изменение файла",
+    "fileChange": "{{count}} изменений файлов",
+    "noFileChange": "Нет изменений файлов",
+    "helpText": "(Enter для выбора сообщения, Esc для закрытия, Вправо/Влево для разворачивания/сворачивания)"
+  },
+  "logout": {
+    "title": "Вы вышли.",
+    "message": "Чтобы продолжить использование Gemini CLI, пожалуйста, войдите снова или выйдите из приложения.",
+    "login": "Войти",
+    "exit": "Выход",
+    "helpText": "(Enter для выбора, Esc для закрытия)"
+  },
+  "editor": {
+    "title": "Предпочтение редактора",
+    "selectEditor": "Выбрать редактор",
+    "custom": "Пользовательский",
+    "enterCommand": "Введите команду редактора",
+    "preferenceSet": "Предпочтение редактора установлено на \"{{editor}}\" в конфигурации {{scope}}.",
+    "preferenceCleared": "Предпочтение редактора очищено в конфигурации {{scope}}.",
+    "preferenceSetFailed": "Не удалось установить предпочтение редактора: {{error}}",
+    "unsupported": "Редактор \"{{editor}}\" не поддерживается.",
+    "alsoModifiedIn": "(также изменено в конфигурации {{scope}})",
+    "modifiedIn": "(изменено в конфигурации {{scope}})",
+    "none": "Нет",
+    "preferenceTitle": "Предпочитаемый редактор",
+    "supportedNote": "Это поддерживаемые редакторы, обнаруженные в вашей системе.",
+    "preferredPrefix": "Предпочитаемый редактор: ",
+    "preferredSuffix": ""
+  },
+  "scope": {
+    "user": "Пользователь",
+    "workspace": "Рабочее пространство"
+  },
+  "ideIntegrationNudge": {
+    "title": "Подключить {{editor}} к Gemini CLI?",
+    "descriptionInstall": "Выбрав \"Да\", мы установим расширение, чтобы разрешить CLI доступ к вашим открытым файлам и показывать различия прямо в {{editor}}.",
+    "descriptionInstalled": "Выбрав \"Да\", мы разрешим CLI доступ к вашим открытым файлам и показывать различия прямо в {{editor}}.",
+    "defaultEditor": "вашем редакторе",
+    "options": {
+      "yes": "Да",
+      "noEsc": "Нет (esc)",
+      "noDontAskAgain": "Нет, больше не спрашивать"
+    }
+  },
+  "common": {
+    "yes": "Да",
+    "no": "Нет",
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "close": "Закрыть",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Назад",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успех",
+    "warning": "Предупреждение",
+    "info": "Инфо",
+    "true": "Истина",
+    "false": "Ложь"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "Примечание: Эта папка остается доверенной, так как ее родитель доверенный.",
+    "noteTrustedByIde": "Примечание: Эта папка остается доверенной, так как подключенное рабочее пространство IDE доверенное.",
+    "saveFailed": "Не удалось сохранить конфигурацию доверия. Изменения могут не сохраниться.",
+    "title": "Изменить уровень доверия",
+    "folderLabel": "Папка:",
+    "currentLevel": "Текущий уровень:",
+    "notSet": "Не установлено",
+    "inheritedParentNote": "Примечание: Эта папка действует как Доверенная, потому что один из ее родителей является доверенным.",
+    "inheritedIdeNote": "Примечание: Эта папка действует как Доверенная, потому что подключенное рабочее пространство IDE является доверенным.",
+    "helpText": "(Enter для выбора, Esc для закрытия)",
+    "restartWarning": "Настройки доверия изменились. Нажмите 'r', чтобы перезапустить сейчас.",
+    "options": {
+      "trustFolder": "Доверять этой папке ({{folder}})",
+      "trustParent": "Доверять родительской папке ({{folder}})",
+      "dontTrust": "Не доверять"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "Продолжать попытки",
+    "stop": "Остановить",
+    "switchTo": "Переключиться на {{model}}",
+    "upgrade": "Обновить до плана с более высокими лимитами",
+    "allProModels": "все модели Pro",
+    "usageLimitReached": "Достигнут лимит использования для {{model}}.",
+    "resetTime": "Доступ будет восстановлен через {{time}}",
+    "statsHint": "/stats для деталей использования",
+    "modelHint": "Используйте /model для смены моделей.",
+    "authHint": "Используйте /auth для переключения на API-ключ.",
+    "noAccess": "У вас, похоже, нет доступа к {{model}}.",
+    "previewLearnMore": "Подробнее на https://goo.gle/enable-preview-features",
+    "disablePreview": "Отключите \"Функции предварительного просмотра\" в /settings, чтобы отключить {{model}}.",
+    "highDemand": "Испытываем высокий спрос.",
+    "highDemandApology": "Приносим извинения за неудобства.",
+    "switchedToFallback": "Переключено на резервную модель {{model}}"
+  },
+  "ideTrustChange": {
+    "default": "Доверие к рабочему пространству изменилось.",
+    "connectionChange": "Доверие к рабочему пространству изменилось из-за изменения подключения IDE.",
+    "trustChange": "Доверие к рабочему пространству изменилось из-за изменения доверия IDE.",
+    "restartHint": "Нажмите 'r' для перезапуска"
+  },
+  "sessionBrowser": {
+    "loading": "Загрузка...",
+    "error": "Ошибка: {{error}}",
+    "pressToExit": "Нажмите q для выхода",
+    "empty": "Автоматически сохраненные разговоры не найдены.",
+    "searchLabel": "Поиск:",
+    "searchCancel": "(Esc для отмены)",
+    "filteredSuffix": ", отфильтровано",
+    "sortField": {
+      "date": "Дата",
+      "messages": "Сообщения",
+      "name": "Имя"
+    },
+    "sortOrder": {
+      "asc": "Возр",
+      "desc": "Убыв"
+    },
+    "listTitle": "Сессии чата (всего {{count}}{{filtered}})",
+    "sortedBy": "Отсортировано по {{field}} ({{order}})",
+    "help": {
+      "navigate": "Навигация",
+      "resume": "Возобновить",
+      "search": "Поиск",
+      "delete": "Удалить",
+      "quit": "Выход",
+      "sort": "Сортировка",
+      "reverse": "Обратно",
+      "firstLast": "Первый/Последний"
+    },
+    "columns": {
+      "index": "#",
+      "messages": "Сообщ.",
+      "age": "Возраст",
+      "match": "Совпадение",
+      "name": "Имя"
+    },
+    "noResults": "Нет результатов для \"{{query}}\".",
+    "roleUser": "Пользователь",
+    "roleModel": "Ассистент",
+    "current": "(Текущий)",
+    "moreMatches": "(+{{count}} еще)",
+    "noMessages": "Нет сообщений",
+    "loadFailed": "Ошибка загрузки сессии",
+    "loadFullFailed": "Ошибка загрузки полного содержимого сессии",
+    "deleteFailed": "Не удалось удалить сессию: {{error}}",
+    "unknownError": "Неизвестная ошибка"
+  },
+  "toolConfirmation": {
+    "applyChange": "Вы хотите применить это изменение?",
+    "execMultiple": "Вы хотите разрешить выполнение {{count}} команд?",
+    "execSingle": "Вы хотите разрешить выполнение '{{command}}'?",
+    "proceedQuestion": "Вы хотите продолжить?",
+    "mcpQuestion": "Вы хотите позволить выполнение инструмента MCP \"{{tool}}\" с сервера \"{{server}}\"?",
+    "options": {
+      "allowOnce": "Разрешить один раз",
+      "allowSession": "Разрешить в этой сессии",
+      "allowAllFuture": "Разрешить во всех будущих сессиях",
+      "modifyExternalEditor": "Изменить во внешнем редакторе",
+      "suggestChangesEsc": "Нет, предложить изменения (esc)",
+      "allowToolSession": "Разрешить инструмент в этой сессии",
+      "allowServerToolsSession": "Разрешить все инструменты с сервера в этой сессии",
+      "allowToolAllFuture": "Разрешить инструмент в будущем"
+    },
+    "redirection": {
+      "noteLabel": "Примечание: ",
+      "noteText": "Команда содержит перенаправление, что может быть непреднамеренным.",
+      "tipLabel": "Совет: ",
+      "tipText": "Переключите авто-правки (Shift+Tab), чтобы разрешить перенаправление в будущем."
+    },
+    "urlsToFetch": "URL-адреса для получения:",
+    "mcpServer": "Сервер MCP: {{server}}",
+    "mcpTool": "Инструмент: {{tool}}",
+    "modifyInProgress": "Изменение...",
+    "modifyHint": "Используйте внешний редактор для применения изменений."
+  }
+}

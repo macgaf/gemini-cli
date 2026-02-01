@@ -1,0 +1,24 @@
+{
+  "gettingStarted": {
+    "title": "Consejos para comenzar:",
+    "tip1": "Haz preguntas, edita archivos y ejecuta comandos.",
+    "tip2": "Sé específico para obtener los mejores resultados.",
+    "tip3Prefix": "Crea un archivo",
+    "tip3Suffix": "para personalizar cómo interactúas con Gemini.",
+    "tip4Suffix": "para más información."
+  },
+  "welcome": {
+    "title": "Bienvenido a Gemini CLI",
+    "subtitle": "Tu asistente de codificación impulsado por IA"
+  },
+  "shortcuts": {
+    "title": "Atajos de teclado:",
+    "helpHint": "Escribe /help para ver los comandos disponibles"
+  },
+  "features": {
+    "codeEditing": "Editar archivos directamente",
+    "runCommands": "Ejecutar comandos de shell",
+    "askQuestions": "Hacer preguntas de codificación",
+    "generateCode": "Generar fragmentos de código"
+  }
+}

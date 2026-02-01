@@ -17,7 +17,7 @@ exports[`SettingsDialog > Initial Rendering > should render settings list with v
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -63,7 +63,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'accessibility settings
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -109,7 +109,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'all boolean settings d
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                     true*  │
 │    Enable automatic updates.                                                                     │
@@ -155,7 +155,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'default state' correct
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -201,7 +201,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'file filtering setting
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -247,7 +247,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'focused on scope selec
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -293,7 +293,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'mixed boolean and numb
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                    false*  │
 │    Enable automatic updates.                                                                     │
@@ -339,7 +339,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'tools and security set
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                      true  │
 │    Enable automatic updates.                                                                     │
@@ -385,7 +385,7 @@ exports[`SettingsDialog > Snapshot Tests > should render 'various boolean settin
 │    Enable Vim keybindings                                                                        │
 │                                                                                                  │
 │    Language                                                                             English  │
-│    Interface language (en, zh-CN)                                                                │
+│    Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)                                     │
 │                                                                                                  │
 │    Enable Auto Update                                                                    false*  │
 │    Enable automatic updates.                                                                     │

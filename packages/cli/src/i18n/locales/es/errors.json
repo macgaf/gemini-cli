@@ -1,0 +1,43 @@
+{
+  "generic": "Ocurrió un error",
+  "network": {
+    "connectionFailed": "Conexión fallida",
+    "timeout": "Tiempo de espera de solicitud agotado",
+    "noInternet": "Sin conexión a internet"
+  },
+  "auth": {
+    "failed": "Autenticación fallida",
+    "expired": "Sesión expirada",
+    "invalidCredentials": "Credenciales inválidas",
+    "notLoggedIn": "No has iniciado sesión",
+    "loginRequired": "Se requiere inicio de sesión en Code Assist."
+  },
+  "api": {
+    "rateLimited": "Límite de velocidad excedido. Inténtalo de nuevo más tarde.",
+    "quotaExceeded": "Cuota de API excedida",
+    "serverError": "Ocurrió un error del servidor",
+    "invalidResponse": "Respuesta inválida del servidor"
+  },
+  "file": {
+    "notFound": "Archivo no encontrado: {{path}}",
+    "readError": "Error al leer el archivo: {{path}}",
+    "writeError": "Error al escribir el archivo: {{path}}",
+    "permissionDenied": "Permiso denegado: {{path}}"
+  },
+  "config": {
+    "invalidSettings": "Configuración inválida",
+    "loadError": "Error al cargar la configuración",
+    "saveError": "Error al guardar la configuración"
+  },
+  "tool": {
+    "notFound": "Herramienta no encontrada: {{name}}",
+    "executionFailed": "Falló la ejecución de la herramienta: {{name}}",
+    "timeout": "Tiempo de espera de ejecución de herramienta agotado"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "invalid": "Valor inválido",
+    "tooLong": "El valor es demasiado largo",
+    "tooShort": "El valor es demasiado corto"
+  }
+}

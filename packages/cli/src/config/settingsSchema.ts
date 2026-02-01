@@ -198,11 +198,19 @@ const SETTINGS_SCHEMA = {
         category: 'General',
         requiresRestart: true,
         default: 'en',
-        description: 'Interface language (en, zh-CN)',
+        description:
+          'Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de, ko)',
         showInDialog: true,
         options: [
           { value: 'en', label: 'English' },
           { value: 'zh-CN', label: '简体中文' },
+          { value: 'zh-TW', label: '繁體中文' },
+          { value: 'fr', label: 'Français' },
+          { value: 'ja', label: '日本語' },
+          { value: 'es', label: 'Español' },
+          { value: 'ru', label: 'Русский' },
+          { value: 'de', label: 'Deutsch' },
+          { value: 'ko', label: '한국어' },
         ],
       },
       enableAutoUpdate: {

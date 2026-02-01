@@ -1,0 +1,495 @@
+{
+  "help": {
+    "description": "Mostrar ayuda sobre comandos y uso",
+    "usage": "Uso: /help <comando>"
+  },
+  "clear": {
+    "description": "Limpiar la pantalla y el historial del chat",
+    "cleared": "Pantalla e historial limpiados."
+  },
+  "quit": {
+    "description": "Salir de Gemini CLI"
+  },
+  "model": {
+    "description": "Ver o cambiar el modelo Gemini actual",
+    "current": "Modelo actual: {{model}}",
+    "changed": "Se cambió el modelo a {{model}}",
+    "usage": "Uso: /model [nombre del modelo]",
+    "list": "Modelos disponibles:"
+  },
+  "theme": {
+    "description": "Cambiar el tema de la CLI",
+    "current": "Tema actual: {{theme}}",
+    "changed": "Se cambió el tema a {{theme}}",
+    "usage": "Uso: /theme [nombre del tema]",
+    "list": "Temas disponibles:"
+  },
+  "stats": {
+    "description": "Mostrar estadísticas de uso",
+    "usage": "Uso: /stats [model | tools]"
+  },
+  "copy": {
+    "description": "Copiar la última respuesta al portapapeles",
+    "copied": "¡Copiado al portapapeles!",
+    "noResponse": "No hay respuesta para copiar."
+  },
+  "save": {
+    "description": "Guardar el historial de chat actual en un archivo",
+    "usage": "Uso: /save <ruta del archivo>",
+    "saved": "Historial de chat guardado en {{path}}",
+    "error": "Error al guardar: {{error}}"
+  },
+  "restore": {
+    "description": "Restaurar el historial de chat desde un archivo",
+    "usage": "Uso: /restore <ruta del archivo>",
+    "restored": "Historial de chat restaurado desde {{path}}",
+    "error": "Error al restaurar: {{error}}"
+  },
+  "memory": {
+    "description": "Ver o administrar la memoria de instrucciones (GEMINI.md)",
+    "usage": "Uso: /memory [show | add | clear | list | refresh]",
+    "show": {
+      "description": "Mostrar memoria de instrucciones actual",
+      "empty": "La memoria está vacía."
+    },
+    "add": {
+      "description": "Agregar contenido a la memoria",
+      "usage": "Uso: /memory add <contenido>",
+      "added": "Agregado a la memoria."
+    },
+    "clear": {
+      "description": "Limpiar memoria",
+      "cleared": "Memoria limpiada."
+    },
+    "list": {
+      "description": "Listar todos los archivos GEMINI.md cargados",
+      "empty": "No hay archivos GEMINI.md cargados."
+    },
+    "refresh": {
+      "description": "Recargar memoria desde archivos GEMINI.md",
+      "refreshed": "Memoria recargada."
+    }
+  },
+  "tools": {
+    "description": "Listar herramientas disponibles",
+    "list": "Herramientas disponibles:",
+    "noTools": "No hay herramientas disponibles."
+  },
+  "mcp": {
+    "description": "Administrar servidores y herramientas del Protocolo de Contexto de Modelo (MCP)",
+    "usage": "Uso: /mcp [list | auth | refresh]",
+    "list": {
+      "description": "Listar todos los servidores MCP conectados y sus herramientas",
+      "servers": "Servidores MCP:",
+      "tools": "Herramientas:",
+      "noServers": "No hay servidores MCP conectados.",
+      "noTools": "No hay herramientas."
+    },
+    "auth": {
+      "description": "Autenticarse con un servidor MCP",
+      "usage": "Uso: /mcp auth <nombre del servidor>",
+      "success": "Autenticado con {{server}}",
+      "failed": "Falló la autenticación con {{server}}: {{error}}"
+    },
+    "refresh": {
+      "description": "Actualizar conexiones de servidores MCP y herramientas",
+      "refreshing": "Actualizando servidores MCP...",
+      "success": "Servidores MCP actualizados.",
+      "failed": "Falló la actualización de servidores MCP: {{error}}"
+    }
+  },
+  "chat": {
+    "description": "Administrar sesiones de chat",
+    "usage": "Uso: /chat [list | save | resume | delete | share]",
+    "list": {
+      "description": "Listar sesiones de chat guardadas",
+      "empty": "No hay sesiones de chat guardadas."
+    },
+    "save": {
+      "description": "Guardar la sesión de chat actual",
+      "usage": "Uso: /chat save <etiqueta>",
+      "saved": "Sesión de chat guardada con la etiqueta \"{{tag}}\"."
+    },
+    "resume": {
+      "description": "Reanudar una sesión de chat guardada",
+      "usage": "Uso: /chat resume <etiqueta>",
+      "resumed": "Sesión de chat con etiqueta \"{{tag}}\" reanudada.",
+      "notFound": "Sesión de chat con etiqueta \"{{tag}}\" no encontrada."
+    },
+    "delete": {
+      "description": "Eliminar una sesión de chat guardada",
+      "usage": "Uso: /chat delete <etiqueta>",
+      "deleted": "Sesión de chat con etiqueta \"{{tag}}\" eliminada.",
+      "notFound": "Sesión de chat con etiqueta \"{{tag}}\" no encontrada."
+    },
+    "share": {
+      "description": "Exportar sesión de chat a un archivo compartible (markdown)",
+      "usage": "Uso: /chat share <ruta del archivo>",
+      "shared": "Sesión de chat exportada a {{path}}"
+    }
+  },
+  "compress": {
+    "description": "Comprimir historial de chat para ahorrar ventana de contexto",
+    "compressing": "Comprimiendo historial de chat...",
+    "success": "Historial de chat comprimido (reducido en {{ratio}}%)",
+    "failed": "Falló la compresión del historial de chat: {{error}}"
+  },
+  "about": {
+    "description": "Mostrar información sobre Gemini CLI",
+    "title": "Acerca de Gemini CLI",
+    "version": "Versión: {{version}}"
+  },
+  "bug": {
+    "description": "Informar un error",
+    "usage": "Uso: /bug [título]",
+    "opened": "Página de informe de errores abierta en el navegador."
+  },
+  "docs": {
+    "description": "Abrir documentación",
+    "opened": "Documentación abierta en el navegador."
+  },
+  "directory": {
+    "description": "Administrar directorios del espacio de trabajo",
+    "usage": "Uso: /directory [add | remove | list | show]",
+    "add": {
+      "description": "Agregar un directorio al espacio de trabajo",
+      "usage": "Uso: /directory add <ruta>",
+      "added": "Directorio {{path}} agregado."
+    },
+    "remove": {
+      "description": "Eliminar un directorio del espacio de trabajo",
+      "usage": "Uso: /directory remove <ruta>",
+      "removed": "Directorio {{path}} eliminado."
+    },
+    "list": {
+      "description": "Listar todos los directorios en el espacio de trabajo",
+      "empty": "No hay directorios."
+    },
+    "show": {
+      "description": "Ver todos los directorios en el espacio de trabajo (alias)"
+    }
+  },
+  "extensions": {
+    "description": "Administrar extensiones",
+    "install": {
+      "success": "Extensión \"{{name}}\" instalada.",
+      "failed": "Falló la instalación de la extensión \"{{name}}\": {{error}}",
+      "description": "Instalar una extensión. Uso: /extensions install <nombre>"
+    },
+    "uninstall": {
+      "success": "Extensión \"{{name}}\" desinstalada.",
+      "failed": "Falló la desinstalación de la extensión \"{{name}}\": {{error}}",
+      "description": "Desinstalar una extensión. Uso: /extensions uninstall <nombre>"
+    },
+    "update": {
+      "success": "Extensión \"{{name}}\" actualizada.",
+      "successAll": "Todas las extensiones actualizadas.",
+      "failed": "Falló la actualización de la extensión \"{{name}}\": {{error}}",
+      "failedAll": "Falló la actualización de todas las extensiones: {{error}}",
+      "upToDate": "La extensión \"{{name}}\" está actualizada.",
+      "upToDateAll": "Todas las extensiones están actualizadas.",
+      "description": "Actualizar una extensión. Uso: /extensions update [nombre]"
+    },
+    "list": {
+      "platform": "Plataforma",
+      "user": "Usuario",
+      "workspace": "Espacio de trabajo",
+      "description": "Listar extensiones instaladas."
+    },
+    "link": {
+      "success": "Extensión \"{{name}}\" vinculada.",
+      "failed": "Falló la vinculación de la extensión \"{{name}}\": {{error}}",
+      "description": "Vincular una extensión local para desarrollo. Uso: /extensions link <ruta>"
+    },
+    "new": {
+      "description": "Crear una nueva extensión. Uso: /extensions new <nombre>"
+    },
+    "validate": {
+      "description": "Validar una extensión. Uso: /extensions validate <ruta>"
+    },
+    "configure": {
+      "description": "Configurar una extensión. Uso: /extensions configure <nombre>"
+    },
+    "enable": {
+      "description": "Habilitar una extensión. Uso: /extensions enable <nombre>",
+      "success": "Extensión \"{{name}}\" habilitada.",
+      "failed": "Falló al habilitar la extensión \"{{name}}\": {{error}}"
+    },
+    "disable": {
+      "description": "Deshabilitar una extensión. Uso: /extensions disable <nombre>",
+      "success": "Extensión \"{{name}}\" deshabilitada.",
+      "failed": "Falló al deshabilitar la extensión \"{{name}}\": {{error}}"
+    },
+    "scopeUnsupported": "Alcance no soportado: {{scope}}",
+    "describe": "Administrar extensiones de Gemini CLI"
+  },
+  "settings": {
+    "description": "Ver y editar la configuración de Gemini CLI"
+  },
+  "auth": {
+    "description": "Administrar autenticación",
+    "login": {
+      "description": "Iniciar sesión o cambiar método de autenticación"
+    },
+    "logout": {
+      "description": "Cerrar sesión y borrar credenciales almacenadas"
+    }
+  },
+  "privacy": {
+    "description": "Ver avisos de privacidad"
+  },
+  "permissions": {
+    "description": "Administrar confianza de carpetas y otros permisos",
+    "trust": {
+      "description": "Administrar configuración de confianza de carpetas. Uso: /permissions trust [<ruta del directorio>]"
+    }
+  },
+  "skills": {
+    "description": "Listar, habilitar, deshabilitar o recargar habilidades de agente de Gemini CLI. Uso: /skills [list | disable <nombre> | enable <nombre> | reload]",
+    "noSkillManager": "No se pudo obtener el administrador de habilidades.",
+    "noConfig": "No se pudo obtener la configuración.",
+    "reloading": "Recargando habilidades de agente...",
+    "reloadSuccess": "Habilidades de agente recargadas con éxito.",
+    "newlyAvailable": "{{count}} nuevas habilidades disponibles{{suffix}}",
+    "noLongerAvailable": "{{count}} habilidades ya no están disponibles{{suffix}}",
+    "reloadHint": "Usa \"/skills reload\" para activarlas.",
+    "reloadFailed": "Falló la recarga de habilidades: {{error}}",
+    "disabledByAdmin": "Las habilidades de agente están deshabilitadas por un administrador.",
+    "notFound": "Habilidad \"{{name}}\" no encontrada.",
+    "noSkillNameDisable": "Por favor proporciona un nombre de habilidad para deshabilitar.",
+    "noSkillNameEnable": "Por favor proporciona un nombre de habilidad para habilitar.",
+    "consent": {
+      "installingSkillsFrom": "Instalando habilidades de agente desde \"{{source}}\"",
+      "skillsWillBeInstalled": "Se instalarán las siguientes habilidades de agente:",
+      "installDestination": "Destino de instalación: {{path}}"
+    },
+    "list": {
+      "description": "Lista habilidades de agente disponibles. Uso: /skills list [nodesc] [all]",
+      "availableTitle": "Habilidades de agente disponibles:",
+      "disabledTitle": "Habilidades deshabilitadas:",
+      "empty": "No hay habilidades disponibles",
+      "builtinBadge": " [Integrada]"
+    },
+    "disable": {
+      "description": "Deshabilita una habilidad por nombre. Uso: /skills disable <nombre>"
+    },
+    "enable": {
+      "description": "Habilita una habilidad deshabilitada por nombre. Uso: /skills enable <nombre>"
+    },
+    "reload": {
+      "description": "Recarga la lista de habilidades detectadas. Uso: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "Rebobinar a un mensaje específico y reanudar",
+    "noConfig": "Configuración no encontrada",
+    "noClient": "Cliente no inicializado",
+    "noRecording": "Servicio de grabación no disponible",
+    "noConversation": "Conversación no encontrada.",
+    "nothingToRewind": "Nada que rebobinar.",
+    "fetchFailed": "Falló al obtener el archivo de conversación",
+    "unknownError": "Ocurrió un error desconocido durante el rebobinado",
+    "filesReverted": "Archivos revertidos.",
+    "revert": {
+      "readError": "Error al leer {{fileName}} durante la reversión: {{error}}",
+      "smartFailed": "Falló la reversión inteligente para {{fileName}}",
+      "missingFile": "Falta el archivo {{fileName}} durante la reversión.",
+      "unexpectedError": "Ocurrió un error inesperado al revertir {{fileName}}"
+    }
+  },
+  "hooks": {
+    "description": "Administrar hooks",
+    "list": {
+      "description": "Listar todos los hooks"
+    },
+    "panel": {
+      "description": "Mostrar todos los hooks registrados y su estado",
+      "securityWarningTitle": "Advertencia de Seguridad",
+      "securityWarningBody": "Los hooks pueden ejecutar comandos en tu computadora. Solo habilita hooks de fuentes confiables.",
+      "learnMoreLabel": "Aprende más:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "Hooks Configurados:",
+      "unknown": "Desconocido",
+      "status": {
+        "enabled": "Habilitado",
+        "disabled": "Deshabilitado"
+      },
+      "sourceLabel": "Fuente: {{source}}",
+      "commandLabel": "Comando: {{command}}",
+      "matcherLabel": "Coincidencia: {{matcher}}",
+      "sequentialLabel": "Secuencial",
+      "timeoutLabel": "Tiempo de espera: {{seconds}}s",
+      "tip": {
+        "prefix": "Consejo: También puedes usar ",
+        "or": " o ",
+        "middle": ". ",
+        "suffix": "."
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<nombre-hook>"
+    },
+    "enable": {
+      "description": "Habilitar un hook por nombre"
+    },
+    "disable": {
+      "description": "Deshabilitar un hook por nombre"
+    },
+    "enableAll": {
+      "description": "Habilitar todos los hooks deshabilitados"
+    },
+    "disableAll": {
+      "description": "Deshabilitar todos los hooks habilitados"
+    },
+    "configNotLoaded": "Configuración no cargada.",
+    "hookSystemNotEnabled": "El sistema de hooks no está habilitado.",
+    "usageEnable": "Uso: /hooks enable <nombre-hook>",
+    "usageDisable": "Uso: /hooks disable <nombre-hook>",
+    "enabledSuccess": "Hook \"{{name}}\" habilitado exitosamente.",
+    "disabledSuccess": "Hook \"{{name}}\" deshabilitado exitosamente.",
+    "failedToEnable": "Falló al habilitar hook: {{error}}",
+    "failedToDisable": "Falló al deshabilitar hook: {{error}}",
+    "noHooksConfigured": "No hay hooks configurados.",
+    "allHooksEnabled": "Todos los hooks ya están habilitados.",
+    "allHooksDisabled": "Todos los hooks ya están deshabilitados.",
+    "enabledCount": "{{count}} hooks habilitados exitosamente.",
+    "disabledCount": "{{count}} hooks deshabilitados exitosamente.",
+    "failedToEnableAll": "Falló al habilitar hooks: {{error}}",
+    "failedToDisableAll": "Falló al deshabilitar hooks: {{error}}"
+  },
+  "policies": {
+    "description": "Administrar políticas",
+    "errorConfigNotAvailable": "Error: Configuración no disponible.",
+    "noActive": "No hay políticas activas.",
+    "list": {
+      "description": "Listar todas las políticas activas",
+      "title": "Políticas Activas",
+      "tool": "Herramienta",
+      "allTools": "Todas las Herramientas",
+      "argsMatch": "Coincidencia de Argumentos",
+      "priority": "Prioridad",
+      "source": "Fuente"
+    }
+  },
+  "profile": {
+    "description": "Administrar perfil",
+    "toggled": "Vista de perfil alternada."
+  },
+  "init": {
+    "description": "Inicializar un nuevo proyecto",
+    "configNotAvailable": "Configuración no disponible.",
+    "alreadyExists": "El archivo GEMINI.md ya existe en este directorio. Sin cambios.",
+    "emptyCreated": "Se creó un archivo GEMINI.md vacío."
+  },
+  "editor": {
+    "description": "Configurar preferencia de editor externo"
+  },
+  "ide": {
+    "description": "Comandos de integración IDE",
+    "status": {
+      "description": "Verificar estado de integración IDE",
+      "connected": "Conectado a {{ide}}",
+      "connecting": "Conectando...",
+      "disconnected": "Desconectado",
+      "disconnectedWithDetails": "Desconectado: {{details}}",
+      "activeSuffix": "(activo)",
+      "fileListNote": "Nota: Solo se rastrean los archivos activos",
+      "openFilesHeader": "Archivos abiertos:"
+    },
+    "install": {
+      "description": "Instalar extensión IDE para {{ide}}",
+      "noInstaller": "No hay instalador disponible para {{ide}} ({{extension}})",
+      "installing": "Instalando extensión...",
+      "autoEnableFailed": "Falló la habilitación automática de la integración IDE. Por favor inicia la CLI en una nueva terminal para solucionarlo."
+    },
+    "enable": {
+      "description": "Habilitar integración IDE"
+    },
+    "disable": {
+      "description": "Deshabilitar integración IDE"
+    },
+    "unsupported": "Integración IDE no soportada en este entorno."
+  },
+  "vim": {
+    "description": "Alternar modo Vim",
+    "entered": "Entró en modo Vim.",
+    "exited": "Salió del modo Vim."
+  },
+  "terminalSetup": {
+    "description": "Configurar ajustes de terminal",
+    "restartRequired": "Por favor reinicia tu terminal para que los cambios surtan efecto.",
+    "failed": "Falló la configuración de terminal: {{error}}",
+    "windowsConfigPathMissing": "No se pudo encontrar el directorio de configuración de {{terminal}}. ¿Está instalado?",
+    "keybindingsNotArray": "El archivo de combinaciones de teclas de {{terminal}} ({{file}}) no es un array JSON.",
+    "keybindingsParseFailed": "Falló el análisis del archivo de combinaciones de teclas de {{terminal}} ({{file}}): JSON inválido ({{error}})",
+    "alreadyConfigured": "{{terminal}} ya está configurado para soporte shift+enter.",
+    "existingBindingsShift": "- Encontrado enlace existente para 'shift+enter'",
+    "existingBindingsCtrl": "- Encontrado enlace existente para 'ctrl+enter'",
+    "existingBindingsHeader": "Se encontraron combinaciones de teclas conflictivas:",
+    "existingBindingsFooter": "Por favor edita {{file}} manualmente para agregar los enlaces si es necesario.",
+    "addedBindings": "¡{{terminal}} configurado exitosamente! Combinaciones de teclas agregadas a {{file}}.",
+    "configureFailed": "Falló la configuración de {{terminal}} ({{file}}): {{error}}",
+    "kittyAlreadyConfigured": "¡Se detectó soporte para el protocolo de teclado Kitty! La entrada multilínea debería funcionar automáticamente sin configuración adicional.",
+    "detectFailed": "No se pudo detectar automáticamente el emulador de terminal. Consulta la documentación para la configuración manual.",
+    "notSupported": "La configuración automática para {{terminal}} no está soportada actualmente. Consulta la documentación para la configuración manual."
+  },
+  "setupGithub": {
+    "description": "Configurar integración con GitHub",
+    "notGitRepo": "No es un repositorio de GitHub.",
+    "downloadSuccess": "Descargados {{workflows}} flujos de trabajo y {{commands}} archivos de comando. Ver {{url}} para finalizar la configuración.",
+    "toolDescription": "Configurar GitHub Actions"
+  },
+  "resume": {
+    "description": "Reanudar sesión anterior"
+  },
+  "agents": {
+    "description": "Administrar agentes de IA",
+    "list": {
+      "description": "Listar agentes disponibles locales y remotos",
+      "configNotLoaded": "Configuración no cargada.",
+      "registryNotFound": "Registro de agentes no encontrado.",
+      "empty": "No hay agentes disponibles.",
+      "localTitle": "Agentes Locales",
+      "remoteTitle": "Agentes Remotos"
+    },
+    "enable": {
+      "description": "Habilitar un agente deshabilitado",
+      "usage": "Uso: /agents enable <nombre del agente>",
+      "registryNotFound": "Registro de agentes no encontrado.",
+      "alreadyEnabled": "El agente \"{{name}}\" ya está habilitado.",
+      "notFound": "Agente \"{{name}}\" no encontrado.",
+      "enabling": "Habilitando {{name}}..."
+    },
+    "disable": {
+      "description": "Deshabilitar un agente habilitado",
+      "usage": "Uso: /agents disable <nombre del agente>",
+      "registryNotFound": "Registro de agentes no encontrado.",
+      "alreadyDisabled": "El agente \"{{name}}\" ya está deshabilitado.",
+      "notFound": "Agente \"{{name}}\" no encontrado.",
+      "disabling": "Deshabilitando {{name}}..."
+    },
+    "refresh": {
+      "description": "Recargar registro de agentes",
+      "registryNotFound": "Registro de agentes no encontrado.",
+      "refreshing": "Refrescando agentes...",
+      "success": "Agentes refrescados exitosamente."
+    },
+    "feedback": {
+      "error": "Error al {{action}} el agente \"{{agentName}}\".",
+      "alreadyEnabled": "El agente \"{{agentName}}\" ya está habilitado.",
+      "alreadyDisabled": "El agente \"{{agentName}}\" ya está deshabilitado.",
+      "enabledTwoScopes": "Agente \"{{agentName}}\" habilitado al activarlo tanto en la configuración {{scope1}} como en {{scope2}}.",
+      "disabledTwoScopes": "Agente \"{{agentName}}\" ahora está deshabilitado tanto en la configuración {{scope1}} como en {{scope2}}.",
+      "singleScope": "{{actionVerb}} agente \"{{agentName}}\" estableciéndolo en {{enabledDisabled}} en la configuración {{scope}}.",
+      "scopeProject": "proyecto",
+      "scopeUser": "usuario"
+    }
+  },
+  "corgi": {
+    "description": "Alternar modo Corgi"
+  }
+}

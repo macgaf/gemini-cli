@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "Atajos de teclado",
+    "submit": "Enviar mensaje",
+    "newline": "Nueva línea",
+    "newlineLinux": "Nueva línea (Alt+Enter en algunas distros de Linux)",
+    "cancel": "Cancelar/Interrumpir",
+    "clear": "Limpiar pantalla",
+    "exit": "Salir",
+    "copy": "Copiar última respuesta",
+    "paste": "Pegar ddel portapapeles",
+    "jumpWords": "Saltar palabras en la entrada",
+    "quit": "Salir de la aplicación",
+    "clearScreen": "Limpiar pantalla",
+    "selectionMode": "Entrar en modo selección para copiar texto",
+    "externalEditor": "Abrir entrada en editor externo",
+    "yoloMode": "Alternar modo YOLO",
+    "sendMessage": "Enviar mensaje",
+    "cancelOrClear": "Cancelar operación / Limpiar entrada (presionar dos veces)",
+    "scrollPage": "Desplazarse página arriba/abajo",
+    "autoAcceptEdits": "Alternar aceptación automática de ediciones",
+    "promptHistory": "Recorrer historial de prompts",
+    "fullListSee": "Para una lista completa de atajos, ver:",
+    "history": {
+      "title": "Historial",
+      "previous": "Mensaje anterior",
+      "next": "Mensaje siguiente"
+    },
+    "navigation": {
+      "title": "Navegación",
+      "scrollUp": "Desplazarse hacia arriba",
+      "scrollDown": "Desplazarse hacia abajo",
+      "top": "Ir al principio",
+      "bottom": "Ir al final"
+    }
+  },
+  "keys": {
+    "enter": "Enter",
+    "shift": "Mayús",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Espacio",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "Modo Normal",
+    "insert": "Modo Insertar",
+    "visual": "Modo Visual"
+  }
+}

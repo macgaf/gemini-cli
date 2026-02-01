@@ -13,9 +13,9 @@
 ## 验证
 
 - ✅
-  `npm test --workspace @google/gemini-cli`（2026-01-30）已重新执行并通过（测试中有 act(...) 警告、MaxListenersExceededWarning 与部分日志输出，但未失败）。
+  `npm test --workspace @google/gemini-cli`（2026-01-31）已重新执行并通过（测试中有 act(...) 警告、MaxListenersExceededWarning 与部分日志输出，但未失败）。
 - ✅
-  `npm test -w @google/gemini-cli-core`（2026-01-30）已执行并通过（测试中有监听器数量告警，但未失败）。
+  `npm test -w @google/gemini-cli-core`（2026-01-31）已执行并通过（测试中有监听器数量告警，但未失败）。
 
 ## 未使用 i18n 的界面/命令文案
 

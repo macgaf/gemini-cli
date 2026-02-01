@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "Presiona Esc para salir."
+  },
+  "gemini": {
+    "title": "Aviso de API Key de Gemini",
+    "description1": "Al usar la API de Gemini",
+    "description2": ", Google AI Studio",
+    "description3": "y otros servicios para desarrolladores de Google que hacen referencia a estos términos (colectivamente, las \"API\" o \"Servicios\"), aceptas los Términos de Servicio de las API de Google (\"Términos de la API\")",
+    "description4": "y los Términos Adicionales de Servicio de la API de Gemini (\"Términos Adicionales\")"
+  },
+  "vertexAI": {
+    "title": "Aviso de Vertex AI",
+    "description1": "Los Términos Específicos del Servicio",
+    "description2": " se incorporan al acuerdo bajo el cual Google ha acordado proporcionar Google Cloud Platform",
+    "description3": " al Cliente (el \"Acuerdo\"). En la medida en que el Acuerdo autorice la reventa o el suministro de Google Cloud Platform bajo un programa de Socios o Distribuidores de Google Cloud, entonces, salvo en la sección titulada \"Términos Específicos de los Socios\", todas las referencias al Cliente en los Términos Específicos del Servicio significan Socio o Distribuidor (según corresponda), y todas las referencias a los Datos del Cliente en los Términos Específicos del Servicio significan Datos del Socio. Los términos en mayúscula utilizados pero no definidos en los Términos Específicos del Servicio tienen los significados que se les dan en el Acuerdo."
+  },
+  "codeAssist": {
+    "title": "Aviso de Privacidad de Gemini Code Assist"
+  },
+  "cloudFree": {
+    "title": "Aviso de Privacidad de Gemini Code Assist para Particulares",
+    "description1": "Este aviso y nuestra Política de Privacidad",
+    "description2": " describen cómo Gemini Code Assist maneja tus datos. Por favor, léelos cuidadosamente.",
+    "dataCollection": "Cuando usas Gemini Code Assist para particulares con Gemini CLI, Google recopila tus prompts, código relacionado, salida generada, ediciones de código e información sobre el uso de funciones relacionadas y comentarios para proporcionar, mejorar y desarrollar productos y servicios de Google y tecnologías de aprendizaje automático.",
+    "humanReviewers": "Para ayudar con la calidad y mejorar nuestros productos (como los modelos generativos de aprendizaje automático), revisores humanos pueden leer, anotar y procesar los datos recopilados anteriormente. Tomamos medidas para proteger tu privacidad como parte de este proceso. Esto incluye desconectar estos datos de tu cuenta de Google antes de que los revisores los vean o anoten y almacenar esas copias desconectadas por hasta 18 meses. Por favor, no envíes información confidencial o sensible, ni datos que no desees que un revisor vea o que Google use para mejorar sus productos, servicios y tecnologías de aprendizaje automático.",
+    "allowDataUse": "¿Permitir que Google use estos datos para desarrollar y mejorar sus productos?",
+    "pressEnterToChoose": "Presiona Enter para elegir una opción y salir.",
+    "errorLoading": "Error al cargar la configuración de consentimiento: {{error}}"
+  }
+}

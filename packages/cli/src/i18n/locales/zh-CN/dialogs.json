@@ -44,7 +44,7 @@
       },
       "general_language": {
         "label": "语言",
-        "description": "界面语言 (en, zh-CN)"
+        "description": "界面语言 (en, zh-CN, zh-TW, fr, ja, es, ru, de)"
       },
       "general_enableAutoUpdate": {
         "label": "启用自动更新",

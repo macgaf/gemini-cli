@@ -7,17 +7,59 @@
 import process from 'node:process';
 /* eslint-disable import/no-internal-modules -- 需要直接加载本地化 JSON 资源 */
 import zhCN from './locales/zh-CN.json' with { type: 'json' };
+import zhTW from './locales/zh-TW.json' with { type: 'json' };
 /* eslint-enable import/no-internal-modules */
 
-export type SupportedLanguage = 'en' | 'zh-CN';
+export type SupportedLanguage =
+  | 'en'
+  | 'zh-CN'
+  | 'zh-TW'
+  | 'fr'
+  | 'ja'
+  | 'es'
+  | 'ru'
+  | 'de';
 
 const DEFAULT_LANGUAGE: SupportedLanguage = 'en';
-const SUPPORTED_LANGUAGES = new Set<SupportedLanguage>(['en', 'zh-CN']);
+const SUPPORTED_LANGUAGES = new Set<SupportedLanguage>([
+  'en',
+  'zh-CN',
+  'zh-TW',
+  'fr',
+  'ja',
+  'es',
+  'ru',
+  'de',
+]);
 
 const translations: Partial<Record<SupportedLanguage, Record<string, string>>> =
   {
     'zh-CN': zhCN,
+    'zh-TW': zhTW,
+    fr: zhCN,
+    ja: zhCN,
+    es: zhCN,
+    ru: zhCN,
+    de: zhCN,
   };
+
+const PLACEHOLDER_PREFIX: Partial<Record<SupportedLanguage, string>> = {
+  // 当前不使用占位前缀，避免干扰中文输出
+};
+
+const shouldApplyPlaceholder = (language: SupportedLanguage): boolean =>
+  Boolean(PLACEHOLDER_PREFIX[language]);
+
+const applyPlaceholder = (
+  value: string,
+  language: SupportedLanguage,
+): string => {
+  const prefix = PLACEHOLDER_PREFIX[language];
+  if (!prefix) {
+    return value;
+  }
+  return `${prefix}${value}`;
+};
 
 const localeEnvVars = ['LC_ALL', 'LC_MESSAGES', 'LANG', 'LANGUAGE'];
 
@@ -46,9 +88,25 @@ const parseLocaleToLanguage = (locale: string): SupportedLanguage | null => {
     return normalized;
   }
 
-  const langOnly = normalized.split('-')[0];
+  const lower = normalized.toLowerCase();
+  if (lower === 'zh-tw' || lower === 'zh-hk' || lower === 'zh-mo') {
+    return 'zh-TW';
+  }
+  if (lower === 'zh-hant') {
+    return 'zh-TW';
+  }
+  if (lower === 'zh-cn' || lower === 'zh-hans' || lower === 'zh-sg') {
+    return 'zh-CN';
+  }
+
+  const langOnly = lower.split('-')[0];
   if (langOnly === 'zh') return 'zh-CN';
   if (langOnly === 'en') return 'en';
+  if (langOnly === 'fr') return 'fr';
+  if (langOnly === 'ja') return 'ja';
+  if (langOnly === 'es') return 'es';
+  if (langOnly === 'ru') return 'ru';
+  if (langOnly === 'de') return 'de';
   return null;
 };
 
@@ -106,5 +164,8 @@ export const t = (
       : typeof options?.defaultValue === 'string'
         ? options.defaultValue
         : key;
-  return interpolate(template, options);
+  const text = interpolate(template, options);
+  return shouldApplyPlaceholder(language)
+    ? applyPlaceholder(text, language)
+    : text;
 };

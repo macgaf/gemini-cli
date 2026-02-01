@@ -1,0 +1,367 @@
+{
+  "cancel": "取消",
+  "confirm": "確認",
+  "yes": "是",
+  "no": "否",
+  "ok": "確定",
+  "close": "關閉",
+  "save": "儲存",
+  "loading": "載入中...",
+  "loading.escToCancel": "（按 Esc 取消，{{time}}）",
+  "loading.interactiveShellWaiting": "互動式 Shell 等待輸入... 按 Tab 切換到 Shell",
+  "loading.waitingForConfirmation": "等待使用者確認...",
+  "loading.retrying": "正在嘗試連接 {{model}}（第 {{attempt}}/{{maxAttempts}} 次）",
+  "modelRespondingWith": "正在使用 {{model}} 回覆",
+  "error": "錯誤",
+  "warning": "警告",
+  "info": "資訊",
+  "success": "成功",
+  "retry": "重試",
+  "back": "返回",
+  "next": "下一步",
+  "done": "完成",
+  "exit": "退出",
+  "quit": "退出",
+  "help": "說明",
+  "settings": "設定",
+  "version": "版本",
+  "versionDisplay": "v{{version}}",
+  "pressToExit": "按 {{key}} 退出",
+  "pressToCancel": "按 {{key}} 取消",
+  "pressToContinue": "按 {{key}} 繼續",
+  "or": "或",
+  "and": "和",
+  "enabled": "已啟用",
+  "disabled": "已停用",
+  "on": "開",
+  "off": "關",
+  "notAvailable": "不可用",
+  "unknown": "未知",
+  "unknownError": "未知錯誤",
+  "none": "無",
+  "default": "預設",
+  "custom": "自定義",
+  "recommended": "推薦",
+  "optional": "可選",
+  "required": "必填",
+  "exitWarning": {
+    "ctrlC": "再次按 Ctrl+C 退出。",
+    "ctrlD": "再次按 Ctrl+D 退出。"
+  },
+  "copyMode": {
+    "warning": "複製模式中。按任意鍵退出。"
+  },
+  "shellMode": {
+    "enabled": "Shell 模式已啟用",
+    "escToDisable": "（按 Esc 停用）"
+  },
+  "rawMarkdown": {
+    "mode": "原始 Markdown 模式",
+    "toggle": "按 {{key}} 切換"
+  },
+  "escapePrompt": {
+    "rewind": "再次按 Esc 回退。",
+    "clearPrompt": "再次按 Esc 清除提示。"
+  },
+  "alerts": {
+    "selectionMode": "Gemini CLI 正在處理鼠標事件，無法進行文本選擇。",
+    "pasteTimeout": "貼上操作超時，請重試。",
+    "shiftTabFocusOut": "請再次按 Shift+Tab 將焦點返回到 CLI。"
+  },
+  "debug": {
+    "terminalBackgroundColorDetected": "檢測到終端背景色：{{color}}",
+    "terminalNameDetected": "檢測到終端名稱：{{name}}",
+    "modifyOtherKeysSupportDetected": "檢測到 modifyOtherKeys 支援：{{supported}}（level {{level}}）",
+    "terminalCapabilityQueryWriteFailed": "寫入終端能力查詢失敗：",
+    "enableKeyboardProtocolsFailed": "啟用鍵盤協議失敗：",
+    "idleFramesWarning": "過去 1 秒內應用在空閒狀態下渲染了 {{count}} 幀。這可能表示嚴重的 React 狀態管理死循環問題。",
+    "flickerDetected": "檢測到閃爍幀。這會導致介面不穩定。輸入 `/profile` 查看更多資訊。",
+    "extensionUpdateCheckFailedWithError": "無法檢查本地擴充套件 \"{{name}}\" 的更新，無法從源路徑載入擴充套件：{{path}}。錯誤：{{error}}",
+    "extensionUpdateCheckFailed": "無法檢查本地擴充套件 \"{{name}}\" 的更新，無法從源路徑載入擴充套件：{{path}}"
+  },
+  "loopDetection": {
+    "disabledRetry": "已為本次工作階段停用循環檢測，正在重試請求...",
+    "haltMessage": "檢測到潛在循環。這可能由於重複的工具調用或其他模型行為導致。請求已停止。"
+  },
+  "screenReader": {
+    "userPrefix": "使用者：",
+    "modelPrefix": "模型：",
+    "loading": "載入中",
+    "responding": "回應中"
+  },
+  "redirectionWarning": {
+    "noteLabel": "注意：",
+    "noteText": "命令包含重定向，可能不安全。",
+    "tipLabel": "提示：  ",
+    "tipText": "可通過切換自動編輯（Shift+Tab）允许將來使用重定向。"
+  },
+  "updateCheck": {
+    "newVersionAvailable": "Gemini CLI 有新版本可用！{{current}} → {{latest}}",
+    "updateAvailable": "Gemini CLI 更新可用！{{current}} → {{latest}}"
+  },
+  "slashCommand": {
+    "requiresSubcommand": "命令 '/{{name}}' 需要子命令。可用：",
+    "unknownCommand": "未知命令：{{command}}",
+    "unknownCommandMcpLoading": "未知命令：{{command}}。該命令可能來自 MCP 伺服器，但 MCP 伺服器尚未載入完成。",
+    "shellExpansionDeclined": "斜杠命令的 Shell 執行已拒绝。",
+    "operationCancelled": "操作已取消。",
+    "shellExpansion": {
+      "title": "確認 Shell 展開",
+      "name": "展開",
+      "description": "命令展開需要 Shell 存取權限"
+    }
+  },
+  "contextSummary": {
+    "openFiles": "{{count}} 個開啟的檔案",
+    "openFilesPlural": "{{count}} 個開啟的檔案",
+    "openFilesHint": "（Ctrl+G 查看）",
+    "contextFile": "{{count}} 個 {{name}} 檔案",
+    "contextFilePlural": "{{count}} 個 {{name}} 檔案",
+    "mcpServer": "{{count}} 個 MCP 伺服器",
+    "mcpServerPlural": "{{count}} 個 MCP 伺服器",
+    "blockedMcpServer": "{{count}} 個已阻止",
+    "blockedMcpServerPlural": "{{count}} 個已阻止的 MCP 伺服器",
+    "skill": "{{count}} 個技能",
+    "skillPlural": "{{count}} 個技能"
+  },
+  "footer": {
+    "noSandbox": "無沙箱",
+    "seeDocs": "（查看 /docs）",
+    "untrusted": "不受信任",
+    "contextLeft": "% 上下文剩餘",
+    "modelCommand": "/model",
+    "seatbelt": "macOS 安全沙盒"
+  },
+  "mcp": {
+    "noServersConfigured": "未設定 MCP 伺服器。",
+    "serversStartingUp": "⏳ MCP 伺服器正在啟動",
+    "configuredServers": "已設定的 MCP 伺服器：",
+    "connectingToServers": "正在連接 MCP 伺服器... ({{connected}}/{{total}})",
+    "waitingFor": "等待：{{servers}}",
+    "viewDocs": "請在瀏覽器中查看 MCP 文檔：",
+    "orUseDocs": "或使用 CLI /docs 命令",
+    "initializing": "{{count}} 個正在初始化",
+    "firstStartupNote": "注意：首次啟動可能需要較长時間。工具可用性將自動更新。",
+    "ready": "就绪",
+    "starting": "啟動中...（首次啟動可能需要較长時間）",
+    "disconnected": "已斷開",
+    "fromExtension": "來自 {{name}}",
+    "tool": "{{count}} 個工具",
+    "toolPlural": "{{count}} 個工具",
+    "prompt": "{{count}} 個提示",
+    "promptPlural": "{{count}} 個提示",
+    "resource": "{{count}} 個資源",
+    "resourcePlural": "{{count}} 個資源",
+    "resourceFallback": "資源",
+    "oauthLabel": "OAuth",
+    "oauthExpired": "OAuth 已過期",
+    "oauthNotAuthenticated": "OAuth 未驗證",
+    "toolsWillAppear": "工具和提示將在就绪後顯示",
+    "toolsCached": "{{count}} 個工具已快取",
+    "tools": "工具：",
+    "parameters": "參數：",
+    "prompts": "提示：",
+    "resources": "資源：",
+    "resourcesHidden": "{{count}} 個資源已隱藏",
+    "resourcesHiddenPlural": "{{count}} 個資源已隱藏",
+    "blocked": "已阻止"
+  },
+  "input": {
+    "placeholder": "你想做什麼？",
+    "reverseSearchIndicator": "(r:)"
+  },
+  "debugConsole": {
+    "title": "偵錯控制臺",
+    "closeHint": "（按 ` 關閉）",
+    "repeatCount": "(x{{count}})"
+  },
+  "consoleSummary": {
+    "errorCount": "{{count}} 個錯誤",
+    "errorCountPlural": "{{count}} 個錯誤",
+    "details": "（按 F12 查看详情）"
+  },
+  "queue": {
+    "title": "排队中（按 ↑ 編輯）：",
+    "more": "... （還有 {{count}} 條）",
+    "shellCommandsCannotBeQueued": "Shell 命令無法排队",
+    "slashCommandsCannotBeQueued": "斜杠命令無法排队"
+  },
+  "toolDisplay": {
+    "shell": {
+      "currentDir": "{{command}} [當前工作目錄 {{dir}}]",
+      "inDir": "{{command}} [目錄 {{dir}}]",
+      "descriptionSuffix": "（{{description}}）"
+    }
+  },
+  "diff": {
+    "noContent": "没有差异內容。",
+    "noChanges": "未檢測到變更。",
+    "lineType": {
+      "add": "新增",
+      "del": "刪除",
+      "context": "上下文",
+      "hunk": "區塊",
+      "other": "其他"
+    }
+  },
+  "suggestions": {
+    "loading": "正在載入建議...",
+    "mcpSuffix": " [MCP]",
+    "agentSuffix": " [Agent]"
+  },
+  "todo": {
+    "title": "待辦",
+    "progress": "{{completed}}/{{total}} 已完成",
+    "toggleHint": "（{{key}} 切換）",
+    "ariaLabel": "待辦列表",
+    "status": {
+      "completed": "已完成",
+      "inProgress": "進行中",
+      "pending": "待處理",
+      "cancelled": "已取消"
+    }
+  },
+  "showMoreLines": "按 Ctrl+S 顯示更多行",
+  "hooks": {
+    "executingSingle": "正在執行鉤子",
+    "executingMultiple": "正在執行多個鉤子"
+  },
+  "stats": {
+    "sessionStats": "工作階段統計",
+    "interactionSummary": "交互摘要",
+    "sessionId": "工作階段 ID",
+    "toolCalls": "工具調用",
+    "successRate": "成功率",
+    "userAgreement": "使用者一致率",
+    "reviewedCount": "（{{count}} 已審閱）",
+    "codeChanges": "程式碼變更",
+    "performance": "性能",
+    "wallTime": "總耗時",
+    "agentActive": "代理活跃",
+    "apiTime": "API 時間",
+    "toolTime": "工具執行時間",
+    "modelUsage": "模型",
+    "requests": "請求",
+    "inputTokens": "輸入 Token",
+    "cacheReads": "快取讀取",
+    "outputTokens": "輸出 Token",
+    "usageLeft": "剩餘额度",
+    "resetsIn": "{{time}} 後重置",
+    "savingsHighlightLabel": "快取節省：",
+    "savingsHighlightBody": "{{cached}} 個 Token 來自快取（效率 {{percent}}%）",
+    "usageLimits": "使用限制",
+    "modelTip": "注意：配額為估算值。"
+  },
+  "agentExecution": {
+    "stopped": "已停止代理執行：{{reason}}",
+    "blocked": "已阻止代理執行：{{reason}}"
+  },
+  "atCommand": {
+    "toolNotFound": "未找到 read_many_files 工具。",
+    "loneAtDetected": "檢測到孤立的 @，將按文本處理並保留在修改後的查詢中。",
+    "invalidCommandNoPath": "無效的 @ 命令 \"{{command}}\"：缺少路徑。",
+    "pathOutsideWorkspace": "路徑 {{path}} 不在工作區內，將被跳過。",
+    "reasonGit": "被 .gitignore 忽略",
+    "reasonGemini": "被 .geminiignore 忽略",
+    "reasonBoth": "同時被 .gitignore 與 .geminiignore 忽略",
+    "pathIgnored": "路徑 {{path}} {{reason}}，將被跳過。",
+    "resolvedPath": "路徑 {{path}} 已解析為 {{absolute}}，使用相對路徑：{{relative}}",
+    "resolvedDirectoryGlob": "路徑 {{path}} 解析為目錄，使用通配：{{glob}}",
+    "notFoundTryGlob": "未直接找到路徑 {{path}}，尝試使用 glob 搜索。",
+    "globFound": "glob 搜索 \"{{path}}\" 命中 {{match}}，使用相對路徑：{{relative}}。",
+    "globNoUsable": "glob 搜索 \"{{path}}\" 未找到可用匹配項，路徑 {{path}} 將被跳過。",
+    "globNoFiles": "glob 搜索 '**/*{{path}}*' 未找到檔案或發生錯誤。路徑 {{path}} 將被跳過。",
+    "globError": "glob 搜索 {{path}} 時發生錯誤，路徑將被跳過。",
+    "globToolNotFound": "未找到 glob 工具。路徑 {{path}} 將被跳過。",
+    "statError": "讀取路徑 {{path}} 的狀態失敗。",
+    "ignoredGit": "Git 忽略：{{paths}}",
+    "ignoredGemini": "Gemini 忽略：{{paths}}",
+    "ignoredBoth": "Git 與 Gemini 均忽略：{{paths}}",
+    "ignoredFiles": "已忽略 {{count}} 個檔案：\n{{details}}",
+    "noValidPaths": "未找到有效的 @ 路徑，繼續不讀取檔案。",
+    "resourceClientUnavailable": "MCP 伺服器 '{{server}}' 的用戶端不可用或未連接。",
+    "resourceReadSuccess": "已讀取資源 {{uri}}。",
+    "resourceReadError": "讀取資源 {{uri}} 失敗：{{error}}",
+    "readManySuccess": "已讀取檔案：{{files}}",
+    "readManyNoContent": "read_many_files 工具未返回內容或內容為空。",
+    "readManyErrorDescription": "讀取多個檔案",
+    "readManyError": "讀取檔案（{{files}}）失敗：{{error}}",
+    "exitingProcessingError": "由於處理 @ 命令出錯而退出：{{error}}"
+  },
+  "autoAccept": {
+    "yoloDisabled": "由於設定已停用 YOLO 模式，無法進入 YOLO 模式。"
+  },
+  "compression": {
+    "thresholdExceeded": "壓縮阈值已超出（{{original}} → {{updated}} 令牌）。"
+  },
+  "contextWindow": {
+    "mightExceed": "發送此訊息（{{estimated}} 個令牌）可能會超過剩餘上下文視窗上限（{{remaining}} 個令牌）。",
+    "tryReduce": "請尝試減少訊息內容，或使用 `/compress` 壓縮聊天歷史。"
+  },
+  "conversation": {
+    "contextCleared": "對話上下文已清除。"
+  },
+  "finishReason": {
+    "maxTokens": "由於令牌上限，回覆已被截斷。",
+    "safety": "由於安全原因，回覆已停止。",
+    "recitation": "由於復诵策略，回覆已停止。",
+    "language": "由於不支持的語言，回覆已停止。",
+    "blocklist": "由於包含停用詞，回覆已停止。",
+    "prohibitedContent": "由於包含禁止內容，回覆已停止。",
+    "spii": "由於包含敏感個人可識別資訊，回覆已停止。",
+    "other": "由於其他原因，回覆已停止。",
+    "malformedFunctionCall": "由於函數調用格式錯誤，回覆已停止。",
+    "imageSafety": "由於圖像安全违規，回覆已停止。",
+    "unexpectedToolCall": "由於意外的工具調用，回覆已停止。",
+    "imageProhibitedContent": "由於禁止的圖像內容，回覆已停止。",
+    "noImage": "由於未提供圖像，回覆已停止。"
+  },
+  "sessionSummary": {
+    "goodbye": "代理即將關閉。再見！"
+  },
+  "folderTrust": {
+    "untrustedWarning": "該檔案夹不受信任，部分功能可能被停用。使用 `/permissions` 命令更改信任級別。",
+    "saveFailedExiting": "儲存信任設定失敗。正在退出 Gemini CLI。"
+  },
+  "memory": {
+    "highUsage": "檢測到記憶體占用過高：{{usage}} GB。如遇崩潰，請執行 `/bug` 提交問題。"
+  },
+  "request": {
+    "cancelled": "請求已取消。",
+    "userCancelled": "使用者已取消請求。"
+  },
+  "session": {
+    "maxTurnsReached": "已達到工作階段最大輪數（{{max}}）。"
+  },
+  "shell": {
+    "aborting": "正在中止命令（PID {{pid}}）。",
+    "executing": "正在執行（{{dir}}）：{{command}}",
+    "binaryReceiving": "[正在接收二進制輸出... 已接收 {{size}}]",
+    "binaryDetected": "[檢測到二進制輸出。已停止流式輸出...]",
+    "binaryOutputHidden": "[命令產生了二進制輸出，未顯示。]",
+    "noOutput": "無輸出。",
+    "commandCancelled": "命令已取消。",
+    "commandSignal": "命令被信號 {{signal}} 終止。",
+    "commandExitCode": "命令退出碼 {{code}}",
+    "statelessWarning": "警告：shell 模式是無狀態的，目錄切換到“{{path}}”不會持久化。",
+    "unexpectedError": "發生未預期錯誤：{{error}}"
+  },
+  "toolStats": {
+    "title": "工具統計",
+    "empty": "本次工作階段尚未進行任何工具調用。",
+    "header": {
+      "toolName": "工具",
+      "calls": "調用數",
+      "successRate": "成功率",
+      "avgDuration": "平均耗時"
+    },
+    "userDecision": {
+      "title": "使用者決策",
+      "totalReviewed": "累計審核建議：",
+      "accepted": "» 接受：",
+      "rejected": "» 拒绝：",
+      "modified": "» 修改：",
+      "overallAgreement": "總體同意率："
+    }
+  }
+}

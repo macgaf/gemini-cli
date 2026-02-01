@@ -91,13 +91,40 @@ function parseLocaleToLanguage(locale: string): string | null {
     return normalized;
   }
 
+  const lower = normalized.toLowerCase();
+
+  if (lower === 'zh-tw' || lower === 'zh-hk' || lower === 'zh-mo') {
+    return 'zh-TW';
+  }
+  if (lower === 'zh-hant') {
+    return 'zh-TW';
+  }
+  if (lower === 'zh-cn' || lower === 'zh-hans' || lower === 'zh-sg') {
+    return 'zh-CN';
+  }
+
   // 再检查仅语言匹配（如 "zh" -> "zh-CN"）
-  const langOnly = normalized.split('-')[0];
+  const langOnly = lower.split('-')[0];
   if (langOnly === 'zh') {
     return 'zh-CN';
   }
   if (langOnly === 'en') {
     return 'en';
+  }
+  if (langOnly === 'fr') {
+    return 'fr';
+  }
+  if (langOnly === 'ja') {
+    return 'ja';
+  }
+  if (langOnly === 'es') {
+    return 'es';
+  }
+  if (langOnly === 'ru') {
+    return 'ru';
+  }
+  if (langOnly === 'de') {
+    return 'de';
   }
 
   return null;

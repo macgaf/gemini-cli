@@ -1,0 +1,543 @@
+{
+  "model": {
+    "title": "Sélectionner Modèle",
+    "autoDescription": "Laisser Gemini CLI décider du meilleur modèle pour la tâche",
+    "manual": "Manuel",
+    "manualDescription": "Sélectionner manuellement un modèle",
+    "rememberForFuture": "Mémoriser le modèle pour les futures sessions :",
+    "pressTabToToggle": "(Appuyez sur Tab pour basculer)",
+    "startupModelHint": "> Pour utiliser un modèle Gemini spécifique au démarrage, utilisez le drapeau --model.",
+    "pressEscToClose": "(Appuyez sur Esc pour fermer)",
+    "gemini3Available": "Gemini 3 est maintenant disponible.",
+    "gemini3ComingSoon": "Gemini 3 arrive bientôt.",
+    "enablePreviewFeatures": "Activez \"Fonctionnalités en aperçu\" dans /settings.\nEn savoir plus sur https://goo.gle/enable-preview-features"
+  },
+  "theme": {
+    "title": "Sélectionner Thème",
+    "selectTheme": "Sélectionner Thème",
+    "preview": "Aperçu",
+    "incompatible": "(Incompatible)",
+    "matchesTerminal": "(Correspond au terminal)",
+    "custom": "Personnalisé",
+    "helpText": "(Utilisez Entrée pour sélectionner, Tab pour configurer la portée, Esc pour fermer)",
+    "helpTextScope": "(Utilisez Entrée pour appliquer la portée, Tab pour sélectionner le thème, Esc pour fermer)",
+    "noColorUnsupported": "Le thème sans couleur n'est pas supporté dans ce terminal.",
+    "notFound": "Thème \"{{name}}\" introuvable.",
+    "notFoundInScope": "Thème \"{{name}}\" introuvable dans la portée actuelle."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "searchPlaceholder": "Rechercher pour filtrer",
+    "noMatchesFound": "Aucune correspondance trouvée.",
+    "applyTo": "Appliquer à",
+    "helpText": "(Utilisez Entrée pour sélectionner, Tab pour changer le focus, Esc pour fermer)",
+    "helpTextNoScope": "(Utilisez Entrée pour sélectionner, Esc pour fermer)",
+    "restartRequired": "Pour voir les changements, Gemini CLI doit être redémarré. Appuyez sur r pour quitter et appliquer les changements maintenant.",
+    "items": {
+      "general_previewFeatures": {
+        "label": "Fonctionnalités en aperçu (ex: modèles)",
+        "description": "Activer les fonctionnalités en aperçu (ex: modèles en aperçu)."
+      },
+      "general_vimMode": {
+        "label": "Mode Vim",
+        "description": "Activer les raccourcis clavier Vim"
+      },
+      "general_language": {
+        "label": "Langue",
+        "description": "Langue de l'interface (en, zh-CN, zh-TW, fr, ja, es, ru, de)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "Activer Mise à jour Auto",
+        "description": "Activer les mises à jour automatiques."
+      },
+      "general_enablePromptCompletion": {
+        "label": "Activer Complétion Prompt",
+        "description": "Activer les suggestions de complétion de prompt par IA pendant la frappe."
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "Débogage Frappe Clavier",
+        "description": "Activer la journalisation de débogage des frappes vers la console."
+      },
+      "general_sessionRetention_enabled": {
+        "label": "Activer Nettoyage Session",
+        "description": "Activer le nettoyage automatique de session"
+      },
+      "output_format": {
+        "label": "Format Sortie",
+        "description": "Le format de la sortie CLI. Peut être `text` ou `json`."
+      },
+      "ui_hideWindowTitle": {
+        "label": "Masquer Titre Fenêtre",
+        "description": "Masquer la barre de titre de la fenêtre"
+      },
+      "ui_userMessageColor": {
+        "label": "Couleur Message Utilisateur",
+        "description": "Remplacer la couleur du message utilisateur dans l'historique. Accepte hex ou couleurs ANSI nommées (ex: \"#B27CFF\" ou \"magenta\")."
+      },
+      "ui_showStatusInTitle": {
+        "label": "Afficher Pensées dans Titre",
+        "description": "Afficher les pensées du modèle Gemini CLI dans le titre de la fenêtre pendant la phase de travail"
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "Titre Fenêtre Dynamique",
+        "description": "Mettre à jour le titre de la fenêtre avec les icônes de statut actuelles (Prêt: ◇, Action Requise: ✋, Au travail: ✦)"
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "Afficher Avertissement Dossier Home",
+        "description": "Afficher un avertissement lors de l'exécution de Gemini CLI dans le dossier home."
+      },
+      "ui_hideTips": {
+        "label": "Masquer Astuces",
+        "description": "Masquer les astuces utiles dans l'UI"
+      },
+      "ui_hideBanner": {
+        "label": "Masquer Bannière",
+        "description": "Masquer la bannière de l'application"
+      },
+      "ui_hideContextSummary": {
+        "label": "Masquer Résumé Contexte",
+        "description": "Masquer le résumé du contexte (GEMINI.md, serveurs MCP) au-dessus de l'entrée."
+      },
+      "ui_footer_hideCWD": {
+        "label": "Masquer CWD",
+        "description": "Masquer le chemin du répertoire de travail actuel dans le pied de page."
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "Masquer Statut Bac à sable",
+        "description": "Masquer l'indicateur de statut du bac à sable dans le pied de page."
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "Masquer Info Modèle",
+        "description": "Masquer le nom du modèle et l'utilisation du contexte dans le pied de page."
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "Masquer Pourcentage Fenêtre Contexte",
+        "description": "Masque le pourcentage restant de la fenêtre de contexte."
+      },
+      "ui_hideFooter": {
+        "label": "Masquer Pied de page",
+        "description": "Masquer le pied de page de l'UI"
+      },
+      "ui_showMemoryUsage": {
+        "label": "Afficher Utilisation Mémoire",
+        "description": "Afficher les informations d'utilisation de la mémoire dans l'UI"
+      },
+      "ui_showLineNumbers": {
+        "label": "Afficher Numéros Ligne",
+        "description": "Afficher les numéros de ligne dans le chat."
+      },
+      "ui_showCitations": {
+        "label": "Afficher Citations",
+        "description": "Afficher les citations pour le texte généré dans le chat."
+      },
+      "ui_showModelInfoInChat": {
+        "label": "Afficher Info Modèle dans Chat",
+        "description": "Afficher le nom du modèle dans le chat pour chaque tour du modèle."
+      },
+      "ui_useFullWidth": {
+        "label": "Utiliser Largeur Complète",
+        "description": "Utiliser toute la largeur du terminal pour la sortie."
+      },
+      "ui_useAlternateBuffer": {
+        "label": "Utiliser Tampon Écran Alternatif",
+        "description": "Utiliser un tampon d'écran alternatif pour l'UI, préservant l'historique shell."
+      },
+      "ui_incrementalRendering": {
+        "label": "Rendu Incrémental",
+        "description": "Activer le rendu incrémental pour l'UI. Cette option réduira le scintillement mais peut causer des artefacts de rendu. Supporté uniquement si useAlternateBuffer est activé."
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "Activer Phrases Chargement",
+        "description": "Activer les phrases de chargement pendant les opérations."
+      },
+      "ui_accessibility_screenReader": {
+        "label": "Mode Lecteur Écran",
+        "description": "Rendre la sortie en texte brut pour être plus accessible aux lecteurs d'écran"
+      },
+      "ide_enabled": {
+        "label": "Mode IDE",
+        "description": "Activer le mode d'intégration IDE."
+      },
+      "model_maxSessionTurns": {
+        "label": "Tours Session Max",
+        "description": "Nombre maximum de tours utilisateur/modèle/outil à conserver dans une session. -1 signifie illimité."
+      },
+      "model_compressionThreshold": {
+        "label": "Seuil Compression",
+        "description": "La fraction de l'utilisation du contexte à partir de laquelle déclencher la compression du contexte (ex: 0.2, 0.3)."
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "Sauter Vérif Prochain Locuteur",
+        "description": "Sauter la vérification du prochain locuteur."
+      },
+      "context_discoveryMaxDirs": {
+        "label": "Max Dossiers Découverte Mémoire",
+        "description": "Nombre maximum de répertoires à chercher pour la mémoire."
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "Charger Mémoire depuis Dossiers Inclus",
+        "description": "Contrôle comment /memory refresh charge les fichiers GEMINI.md. Si vrai, les dossiers inclus sont scannés ; si faux, seul le dossier actuel est utilisé."
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": "Respecter .gitignore",
+        "description": "Respecter les fichiers .gitignore lors de la recherche."
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": "Respecter .geminiignore",
+        "description": "Respecter les fichiers .geminiignore lors de la recherche."
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "Activer Recherche Fichier Récursive",
+        "description": "Activer la fonctionnalité de recherche de fichier récursive lors de la complétion des références @ dans le prompt."
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "Activer Recherche Floue",
+        "description": "Activer la recherche floue lors de la recherche de fichiers."
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "Activer Shell Interactif",
+        "description": "Utiliser node-pty pour une expérience shell interactive. Le repli vers child_process s'applique toujours."
+      },
+      "tools_shell_showColor": {
+        "label": "Afficher Couleur",
+        "description": "Afficher la couleur dans la sortie shell."
+      },
+      "tools_autoAccept": {
+        "label": "Auto Accepter",
+        "description": "Automatiquement accepter et exécuter les appels d'outils considérés sûrs (ex: opérations lecture seule)."
+      },
+      "tools_useRipgrep": {
+        "label": "Utiliser Ripgrep",
+        "description": "Utiliser ripgrep pour la recherche de contenu de fichier au lieu de l'implémentation de repli. Fournit une performance de recherche plus rapide."
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "Activer Troncation Sortie Outil",
+        "description": "Activer la troncation des grandes sorties d'outils."
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "Seuil Troncation Sortie Outil",
+        "description": "Tronquer la sortie de l'outil si elle dépasse ce nombre de caractères. Définir à -1 pour désactiver."
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "Lignes Troncation Sortie Outil",
+        "description": "Le nombre de lignes à conserver lors de la troncation de la sortie de l'outil."
+      },
+      "tools_disableLLMCorrection": {
+        "label": "Désactiver Correction LLM",
+        "description": "Désactiver la correction d'erreur basée sur LLM pour les outils d'édition. Si activé, les outils échoueront immédiatement si des correspondances exactes de chaînes ne sont pas trouvées, au lieu de tenter de s'autocorriger."
+      },
+      "security_disableYoloMode": {
+        "label": "Désactiver Mode YOLO",
+        "description": "Désactiver le mode YOLO, même si activé par un drapeau."
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "Autoriser Approbation Outil Permanente",
+        "description": "Activer l'optionation \"Autoriser pour toutes les sessions futures\" dans les dialogues de confirmation d'outils."
+      },
+      "security_blockGitExtensions": {
+        "label": "Bloquer extensions depuis Git",
+        "description": "Bloque l'installation et le chargement d'extensions depuis Git."
+      },
+      "security_folderTrust_enabled": {
+        "label": "Confiance Dossier",
+        "description": "Paramètre pour suivre si la confiance des dossiers est activée."
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "Activer Rédaction Variable Environnement",
+        "description": "Activer la rédaction des variables d'environnement pouvant contenir des secrets."
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "Activer Enquêteur Codebase",
+        "description": "Activer l'agent Enquêteur Codebase."
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "Max Tours Enquêteur Codebase",
+        "description": "Nombre maximum de tours pour l'agent Enquêteur Codebase."
+      },
+      "experimental_useOSC52Paste": {
+        "label": "Utiliser Collage OSC 52",
+        "description": "Utiliser la séquence OSC 52 pour coller au lieu de clipboardy (utile pour sessions distantes)."
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "Activer Agent Aide CLI",
+        "description": "Activer l'Agent Aide CLI."
+      },
+      "experimental_plan": {
+        "label": "Plan",
+        "description": "Activer les fonctionnalités de planification (Mode Plan et outils)."
+      },
+      "skills_enabled": {
+        "label": "Activer Compétences Agent",
+        "description": "Activer les Compétences Agent."
+      },
+      "hooksConfig_notifications": {
+        "label": "Notifications Hook",
+        "description": "Afficher des indicateurs visuels quand des hooks s'exécutent."
+      }
+    },
+    "scope": {
+      "user": "Paramètres Utilisateur",
+      "workspace": "Paramètres Espace de Travail",
+      "system": "Paramètres Système",
+      "alsoModifiedIn": "(Aussi modifié dans {{scopes}})",
+      "modifiedIn": "(Modifié dans {{scopes}})"
+    }
+  },
+  "auth": {
+    "title": "Authentification",
+    "getStarted": "Commencer",
+    "howToAuthenticate": "Comment souhaitez-vous vous authentifier pour ce projet ?",
+    "loginWithGoogle": "Se connecter avec Google",
+    "useCloudShell": "Utiliser les identifiants utilisateur Cloud Shell",
+    "useMetadataServer": "Utiliser les identifiants par défaut de l'application serveur de métadonnées",
+    "useGeminiApiKey": "Utiliser une clé API Gemini",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "(Utilisez Entrée pour sélectionner)",
+    "termsOfService": "Conditions d'utilisation et avis de confidentialité pour Gemini CLI",
+    "loggingIn": "Connexion avec Google... Redémarrage de Gemini CLI pour continuer.",
+    "mustSelectAuth": "Vous devez sélectionner une méthode d'authentification pour continuer. Appuyez deux fois sur Ctrl+C pour quitter."
+  },
+  "permissions": {
+    "title": "Permissions",
+    "allow": "Autoriser",
+    "deny": "Refuser",
+    "always": "Toujours",
+    "once": "Une fois",
+    "session": "Cette session"
+  },
+  "folderTrust": {
+    "title": "Faites-vous confiance à ce dossier ?",
+    "description": "Faire confiance à un dossier permet à Gemini d'exécuter les commandes qu'il suggère. C'est une fonctionnalité de sécurité pour empêcher l'exécution accidentelle dans des répertoires non approuvés.",
+    "trustFolder": "Faire confiance au dossier",
+    "trustParent": "Faire confiance au dossier parent",
+    "dontTrust": "Ne pas faire confiance",
+    "restarting": "Gemini CLI redémarre pour appliquer les changements de confiance...",
+    "exitingNoTrust": "Un niveau de confiance de dossier doit être sélectionné pour continuer. Sortie car échap a été pressé."
+  },
+  "rewind": {
+    "title": "Confirmer Rembobinage",
+    "fileSingle": "1 fichier affecté : {{file}}",
+    "filesAffected": "{{count}} fichiers affectés",
+    "linesAdded": "+{{count}} lignes",
+    "linesRemoved": "-{{count}} lignes",
+    "notice": "Cela annulera les changements de fichiers.",
+    "noChanges": "Aucun fichier n'a été modifié.",
+    "selectAction": "Sélectionnez une action :",
+    "options": {
+      "rewindAndRevert": "Rembobiner conversation et annuler changements fichiers",
+      "rewindOnly": "Rembobiner conversation seulement",
+      "revertOnly": "Annuler changements fichiers seulement",
+      "cancel": "Annuler"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "Faites-vous confiance à ces dossiers ?",
+    "description": "Faire confiance aux dossiers permet à Gemini d'exécuter des commandes à l'intérieur.",
+    "cancelled": "Confiance aux dossiers annulée :\n{{list}}",
+    "configNotAvailable": "Configuration non disponible.",
+    "notTrusted": "Les dossiers suivants n'ont pas été approuvés :\n{{list}}",
+    "errorAdding": "Erreur de confiance {{dir}} : {{error}}",
+    "applying": "Application des paramètres de confiance...",
+    "options": {
+      "yes": "Oui",
+      "yesRemember": "Oui, et mémoriser",
+      "no": "Non"
+    }
+  },
+  "loopDetection": {
+    "title": "Détection de Boucle",
+    "description": "Il semble que l'agent soit dans une boucle.",
+    "ariaLabel": "Avertissement Détection Boucle",
+    "options": {
+      "keep": "Garder la détection de boucle activée",
+      "disable": "Désactiver la détection de boucle pour cette session"
+    }
+  },
+  "rewindViewer": {
+    "title": "Rembobiner Conversation",
+    "stay": "Rester à la position actuelle",
+    "rewinding": "Rembobinage...",
+    "cancelText": "Annuler rembobinage et rester ici",
+    "fileChangeSingle": "1 fichier changé",
+    "fileChange": "{{count}} fichiers changés",
+    "noFileChange": "Aucun fichier n'a été changé",
+    "helpText": "(Utilisez Entrée pour sélectionner un message, Esc pour fermer, Droite/Gauche pour étendre/réduire)"
+  },
+  "logout": {
+    "title": "Vous êtes maintenant déconnecté.",
+    "message": "Connectez-vous à nouveau pour continuer à utiliser Gemini CLI, ou quittez l'application.",
+    "login": "Connexion",
+    "exit": "Quitter",
+    "helpText": "(Utilisez Entrée pour sélectionner, Esc pour fermer)"
+  },
+  "editor": {
+    "title": "Paramètres Éditeur",
+    "selectEditor": "Sélectionner Éditeur",
+    "custom": "Personnalisé",
+    "enterCommand": "Entrer commande éditeur",
+    "preferenceSet": "Préférence éditeur définie sur \"{{editor}}\" dans les paramètres {{scope}}.",
+    "preferenceCleared": "Préférence éditeur effacée dans les paramètres {{scope}}.",
+    "preferenceSetFailed": "Échec définition préférence éditeur : {{error}}",
+    "unsupported": "L'éditeur \"{{editor}}\" n'est pas supporté.",
+    "alsoModifiedIn": "(Aussi modifié dans les paramètres {{scope}})",
+    "modifiedIn": "(Modifié dans les paramètres {{scope}})",
+    "none": "Aucun",
+    "preferenceTitle": "Préférence Éditeur",
+    "supportedNote": "Éditeurs supportés détectés sur ce système.",
+    "preferredPrefix": "Éditeur préféré : ",
+    "preferredSuffix": ""
+  },
+  "scope": {
+    "user": "Utilisateur",
+    "workspace": "Espace de travail"
+  },
+  "ideIntegrationNudge": {
+    "title": "Voulez-vous connecter {{editor}} à Gemini CLI ?",
+    "descriptionInstall": "Si vous sélectionnez Oui, nous installerons une extension qui permet à la CLI d'accéder à vos fichiers ouverts et d'afficher les diffs directement dans {{editor}}.",
+    "descriptionInstalled": "Si vous sélectionnez Oui, la CLI aura accès à vos fichiers ouverts et affichera les diffs directement dans {{editor}}.",
+    "defaultEditor": "votre éditeur",
+    "options": {
+      "yes": "Oui",
+      "noEsc": "Non (esc)",
+      "noDontAskAgain": "Non, ne plus demander"
+    }
+  },
+  "common": {
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Éditer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "warning": "Avertissement",
+    "info": "Info",
+    "true": "vrai",
+    "false": "faux"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "Note : Ce dossier est toujours approuvé car un dossier parent est approuvé.",
+    "noteTrustedByIde": "Note : Ce dossier est toujours approuvé car l'espace de travail IDE connecté est approuvé.",
+    "saveFailed": "Échec de l'enregistrement des paramètres de confiance. Vos changements peuvent ne pas persister.",
+    "title": "Modifier Niveau Confiance",
+    "folderLabel": "Dossier :",
+    "currentLevel": "Niveau Actuel :",
+    "notSet": "Non Défini",
+    "inheritedParentNote": "Note : Ce dossier se comporte comme un dossier approuvé car l'un des dossiers parents est approuvé.",
+    "inheritedIdeNote": "Note : Ce dossier se comporte comme un dossier approuvé car l'espace de travail IDE connecté est approuvé.",
+    "helpText": "(Utilisez Entrée pour sélectionner, Esc pour fermer)",
+    "restartWarning": "Paramètres de confiance modifiés. Appuyez sur 'r' pour redémarrer maintenant.",
+    "options": {
+      "trustFolder": "Faire confiance à ce dossier ({{folder}})",
+      "trustParent": "Faire confiance au dossier parent ({{folder}})",
+      "dontTrust": "Ne pas faire confiance"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "Continuer à essayer",
+    "stop": "Arrêter",
+    "switchTo": "Passer à {{model}}",
+    "upgrade": "Mettre à niveau pour des limites plus élevées",
+    "allProModels": "tous les modèles pro",
+    "usageLimitReached": "Limite d'utilisation atteinte pour {{model}}.",
+    "resetTime": "L'accès se réinitialise à {{time}}",
+    "statsHint": "/stats pour détails utilisation",
+    "modelHint": "Utilisez /model pour changer de modèle.",
+    "authHint": "Utilisez /auth pour passer à la clé API.",
+    "noAccess": "Il semble que vous n'ayez pas accès à {{model}}.",
+    "previewLearnMore": "En savoir plus sur https://goo.gle/enable-preview-features",
+    "disablePreview": "Pour désactiver {{model}}, désactivez \"Fonctionnalités en aperçu\" dans /settings.",
+    "highDemand": "Nous connaissons actuellement une forte demande.",
+    "highDemandApology": "Désolé pour le désagrément.",
+    "switchedToFallback": "Basculé vers le modèle de repli {{model}}"
+  },
+  "ideTrustChange": {
+    "default": "La confiance de l'espace de travail a changé.",
+    "connectionChange": "La confiance de l'espace de travail a changé en raison d'un changement de connexion IDE.",
+    "trustChange": "La confiance de l'espace de travail a changé en raison d'un changement de confiance IDE.",
+    "restartHint": "Appuyez sur 'r' pour redémarrer Gemini"
+  },
+  "sessionBrowser": {
+    "loading": "Chargement sessions...",
+    "error": "Erreur : {{error}}",
+    "pressToExit": "Appuyez sur q pour quitter",
+    "empty": "Aucune conversation auto-sauvegardée trouvée.",
+    "searchLabel": "Rechercher :",
+    "searchCancel": "(Esc pour annuler)",
+    "filteredSuffix": ", filtré",
+    "sortField": {
+      "date": "date",
+      "messages": "messages",
+      "name": "nom"
+    },
+    "sortOrder": {
+      "asc": "ascendant",
+      "desc": "descendant"
+    },
+    "listTitle": "Sessions Chat ({{count}} total{{filtered}})",
+    "sortedBy": "Trié par {{field}} ({{order}})",
+    "help": {
+      "navigate": "Naviguer",
+      "resume": "Reprendre",
+      "search": "Chercher",
+      "delete": "Supprimer",
+      "quit": "Quitter",
+      "sort": "Trier",
+      "reverse": "Inverser",
+      "firstLast": "Premier/Dernier"
+    },
+    "columns": {
+      "index": "#",
+      "messages": "Msgs",
+      "age": "Âge",
+      "match": "Corresp",
+      "name": "Nom"
+    },
+    "noResults": "Aucun résultat pour \"{{query}}\".",
+    "roleUser": "utilisateur",
+    "roleModel": "assistant",
+    "current": "(actuel)",
+    "moreMatches": "(+{{count}} de plus)",
+    "noMessages": "Pas de messages",
+    "loadFailed": "Échec chargement sessions",
+    "loadFullFailed": "Échec chargement contenu complet session",
+    "deleteFailed": "Échec suppression session : {{error}}",
+    "unknownError": "Erreur inconnue"
+  },
+  "toolConfirmation": {
+    "applyChange": "Appliquer ce changement ?",
+    "execMultiple": "Autoriser exécution de {{count}} commandes ?",
+    "execSingle": "Autoriser exécution de : '{{command}}' ?",
+    "proceedQuestion": "Voulez-vous continuer ?",
+    "mcpQuestion": "Autoriser exécution de l'outil MCP \"{{tool}}\" du serveur \"{{server}}\" ?",
+    "options": {
+      "allowOnce": "Autoriser une fois",
+      "allowSession": "Autoriser pour cette session",
+      "allowAllFuture": "Autoriser pour toutes les sessions futures",
+      "modifyExternalEditor": "Modifier avec éditeur externe",
+      "suggestChangesEsc": "Non, suggérer changements (esc)",
+      "allowToolSession": "Autoriser outil pour cette session",
+      "allowServerToolsSession": "Autoriser tous outils serveur pour cette session",
+      "allowToolAllFuture": "Autoriser outil pour toutes les sessions futures"
+    },
+    "redirection": {
+      "noteLabel": "Note : ",
+      "noteText": "La commande contient une redirection, ce qui peut être indésirable.",
+      "tipLabel": "Astuce : ",
+      "tipText": "Basculez l'auto-édition (Shift+Tab) pour autoriser la redirection à l'avenir."
+    },
+    "urlsToFetch": "URLs à récupérer :",
+    "mcpServer": "Serveur MCP : {{server}}",
+    "mcpTool": "Outil : {{tool}}",
+    "modifyInProgress": "Modification en cours :",
+    "modifyHint": "Utilisez votre éditeur externe pour appliquer les changements."
+  }
+}

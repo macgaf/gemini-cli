@@ -44,7 +44,7 @@
       },
       "general_language": {
         "label": "Language",
-        "description": "Interface language (en, zh-CN)"
+        "description": "Interface language (en, zh-CN, zh-TW, fr, ja, es, ru, de)"
       },
       "general_enableAutoUpdate": {
         "label": "Enable Auto Update",

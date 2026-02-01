@@ -7,7 +7,16 @@
 /**
  * CLI 支持的语言列表。
  */
-export type SupportedLanguage = 'en' | 'zh-CN';
+export type SupportedLanguage =
+  | 'en'
+  | 'zh-CN'
+  | 'zh-TW'
+  | 'fr'
+  | 'ja'
+  | 'es'
+  | 'ru'
+  | 'de'
+  | 'ko';
 
 /**
  * 语言检测的来源（按优先级）。
@@ -52,6 +61,13 @@ export const DEFAULT_LANGUAGE: SupportedLanguage = 'en';
 export const SUPPORTED_LANGUAGES: readonly SupportedLanguage[] = [
   'en',
   'zh-CN',
+  'zh-TW',
+  'fr',
+  'ja',
+  'es',
+  'ru',
+  'de',
+  'ko',
 ];
 
 /**

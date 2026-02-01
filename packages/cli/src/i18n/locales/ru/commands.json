@@ -1,0 +1,495 @@
+{
+  "help": {
+    "description": "Показать справку по командам и использованию",
+    "usage": "Использование: /help <команда>"
+  },
+  "clear": {
+    "description": "Очистить экран и историю чата",
+    "cleared": "Экран и история очищены."
+  },
+  "quit": {
+    "description": "Выйти из Gemini CLI"
+  },
+  "model": {
+    "description": "Просмотреть или изменить текущую модель Gemini",
+    "current": "Текущая модель: {{model}}",
+    "changed": "Модель изменена на {{model}}",
+    "usage": "Использование: /model [имя модели]",
+    "list": "Доступные модели:"
+  },
+  "theme": {
+    "description": "Изменить тему CLI",
+    "current": "Текущая тема: {{theme}}",
+    "changed": "Тема изменена на {{theme}}",
+    "usage": "Использование: /theme [имя темы]",
+    "list": "Доступные темы:"
+  },
+  "stats": {
+    "description": "Показать статистику использования",
+    "usage": "Использование: /stats [model | tools]"
+  },
+  "copy": {
+    "description": "Копировать последний ответ в буфер обмена",
+    "copied": "Скопировано в буфер обмена!",
+    "noResponse": "Нет ответа для копирования."
+  },
+  "save": {
+    "description": "Сохранить текущую историю чата в файл",
+    "usage": "Использование: /save <путь к файлу>",
+    "saved": "История чата сохранена в {{path}}",
+    "error": "Ошибка сохранения: {{error}}"
+  },
+  "restore": {
+    "description": "Восстановить историю чата из файла",
+    "usage": "Использование: /restore <путь к файлу>",
+    "restored": "История чата восстановлена из {{path}}",
+    "error": "Ошибка восстановления: {{error}}"
+  },
+  "memory": {
+    "description": "Просмотр или управление памятью инструкций (GEMINI.md)",
+    "usage": "Использование: /memory [show | add | clear | list | refresh]",
+    "show": {
+      "description": "Показать текущую память инструкций",
+      "empty": "Память пуста."
+    },
+    "add": {
+      "description": "Добавить содержимое в память",
+      "usage": "Использование: /memory add <содержимое>",
+      "added": "Добавлено в память."
+    },
+    "clear": {
+      "description": "Очистить память",
+      "cleared": "Память очищена."
+    },
+    "list": {
+      "description": "Список всех загруженных файлов GEMINI.md",
+      "empty": "Нет загруженных файлов GEMINI.md."
+    },
+    "refresh": {
+      "description": "Перезагрузить память из файлов GEMINI.md",
+      "refreshed": "Память перезагружена."
+    }
+  },
+  "tools": {
+    "description": "Список доступных инструментов",
+    "list": "Доступные инструменты:",
+    "noTools": "Нет доступных инструментов."
+  },
+  "mcp": {
+    "description": "Управление серверами и инструментами Model Context Protocol (MCP)",
+    "usage": "Использование: /mcp [list | auth | refresh]",
+    "list": {
+      "description": "Список всех подключенных серверов MCP и их инструментов",
+      "servers": "Серверы MCP:",
+      "tools": "Инструменты:",
+      "noServers": "Нет подключенных серверов MCP.",
+      "noTools": "Нет инструментов."
+    },
+    "auth": {
+      "description": "Аутентификация с сервером MCP",
+      "usage": "Использование: /mcp auth <имя сервера>",
+      "success": "Аутентифицирован с {{server}}",
+      "failed": "Ошибка аутентификации с {{server}}: {{error}}"
+    },
+    "refresh": {
+      "description": "Обновить соединения серверов MCP и инструменты",
+      "refreshing": "Обновление серверов MCP...",
+      "success": "Серверы MCP обновлены.",
+      "failed": "Ошибка обновления серверов MCP: {{error}}"
+    }
+  },
+  "chat": {
+    "description": "Управление сессиями чата",
+    "usage": "Использование: /chat [list | save | resume | delete | share]",
+    "list": {
+      "description": "Список сохраненных сессий чата",
+      "empty": "Нет сохраненных сессий чата."
+    },
+    "save": {
+      "description": "Сохранить текущую сессию чата",
+      "usage": "Использование: /chat save <тег>",
+      "saved": "Сессия чата сохранена с тегом \"{{tag}}\"."
+    },
+    "resume": {
+      "description": "Возобновить сохраненную сессию чата",
+      "usage": "Использование: /chat resume <тег>",
+      "resumed": "Сессия чата с тегом \"{{tag}}\" возобновлена.",
+      "notFound": "Сессия чата с тегом \"{{tag}}\" не найдена."
+    },
+    "delete": {
+      "description": "Удалить сохраненную сессию чата",
+      "usage": "Использование: /chat delete <тег>",
+      "deleted": "Сессия чата с тегом \"{{tag}}\" удалена.",
+      "notFound": "Сессия чата с тегом \"{{tag}}\" не найдена."
+    },
+    "share": {
+      "description": "Экспортировать сессию чата в файл (markdown)",
+      "usage": "Использование: /chat share <путь к файлу>",
+      "shared": "Сессия чата экспортирована в {{path}}"
+    }
+  },
+  "compress": {
+    "description": "Сжать историю чата для экономии окна контекста",
+    "compressing": "Сжатие истории чата...",
+    "success": "История чата сжата (уменьшена на {{ratio}}%)",
+    "failed": "Ошибка сжатия истории чата: {{error}}"
+  },
+  "about": {
+    "description": "Показать информацию о Gemini CLI",
+    "title": "О Gemini CLI",
+    "version": "Версия: {{version}}"
+  },
+  "bug": {
+    "description": "Сообщить об ошибке",
+    "usage": "Использование: /bug [заголовок]",
+    "opened": "Страница отчета об ошибке открыта в браузере."
+  },
+  "docs": {
+    "description": "Открыть документацию",
+    "opened": "Документация открыта в браузере."
+  },
+  "directory": {
+    "description": "Управление каталогами рабочего пространства",
+    "usage": "Использование: /directory [add | remove | list | show]",
+    "add": {
+      "description": "Добавить каталог в рабочее пространство",
+      "usage": "Использование: /directory add <путь>",
+      "added": "Каталог {{path}} добавлен."
+    },
+    "remove": {
+      "description": "Удалить каталог из рабочего пространства",
+      "usage": "Использование: /directory remove <путь>",
+      "removed": "Каталог {{path}} удален."
+    },
+    "list": {
+      "description": "Показать все каталоги в рабочем пространстве",
+      "empty": "Нет каталогов."
+    },
+    "show": {
+      "description": "Показать все каталоги в рабочем пространстве (псевдоним)"
+    }
+  },
+  "extensions": {
+    "description": "Управление расширениями",
+    "install": {
+      "success": "Расширение \"{{name}}\" установлено.",
+      "failed": "Ошибка установки расширения \"{{name}}\": {{error}}",
+      "description": "Установить расширение. Использование: /extensions install <имя>"
+    },
+    "uninstall": {
+      "success": "Расширение \"{{name}}\" удалено.",
+      "failed": "Ошибка удаления расширения \"{{name}}\": {{error}}",
+      "description": "Удалить расширение. Использование: /extensions uninstall <имя>"
+    },
+    "update": {
+      "success": "Расширение \"{{name}}\" обновлено.",
+      "successAll": "Все расширения обновлены.",
+      "failed": "Ошибка обновления расширения \"{{name}}\": {{error}}",
+      "failedAll": "Ошибка обновления всех расширений: {{error}}",
+      "upToDate": "Расширение \"{{name}}\" обновлено.",
+      "upToDateAll": "Все расширения обновлены.",
+      "description": "Обновить расширение. Использование: /extensions update [имя]"
+    },
+    "list": {
+      "platform": "Платформа",
+      "user": "Пользователь",
+      "workspace": "Рабочее пространство",
+      "description": "Список установленных расширений."
+    },
+    "link": {
+      "success": "Расширение \"{{name}}\" связано.",
+      "failed": "Ошибка связывания расширения \"{{name}}\": {{error}}",
+      "description": "Связать локальное расширение для разработки. Использование: /extensions link <путь>"
+    },
+    "new": {
+      "description": "Создать новое расширение. Использование: /extensions new <имя>"
+    },
+    "validate": {
+      "description": "Проверить расширение. Использование: /extensions validate <путь>"
+    },
+    "configure": {
+      "description": "Настроить расширение. Использование: /extensions configure <имя>"
+    },
+    "enable": {
+      "description": "Включить расширение. Использование: /extensions enable <имя>",
+      "success": "Расширение \"{{name}}\" включено.",
+      "failed": "Ошибка включения расширения \"{{name}}\": {{error}}"
+    },
+    "disable": {
+      "description": "Отключить расширение. Использование: /extensions disable <имя>",
+      "success": "Расширение \"{{name}}\" отключено.",
+      "failed": "Ошибка отключения расширения \"{{name}}\": {{error}}"
+    },
+    "scopeUnsupported": "Область не поддерживается: {{scope}}",
+    "describe": "Управление расширениями Gemini CLI"
+  },
+  "settings": {
+    "description": "Просмотр и редактирование настроек Gemini CLI"
+  },
+  "auth": {
+    "description": "Управление аутентификацией",
+    "login": {
+      "description": "Войти или сменить метод аутентификации"
+    },
+    "logout": {
+      "description": "Выйти и очистить сохраненные учетные данные"
+    }
+  },
+  "privacy": {
+    "description": "Просмотр уведомлений о конфиденциальности"
+  },
+  "permissions": {
+    "description": "Управление доверием к папкам и другими разрешениями",
+    "trust": {
+      "description": "Управление настройками доверия к папкам. Использование: /permissions trust [<путь к каталогу>]"
+    }
+  },
+  "skills": {
+    "description": "Управление навыками агента Gemini CLI. Использование: /skills [list | disable <имя> | enable <имя> | reload]",
+    "noSkillManager": "Не удалось получить менеджер навыков.",
+    "noConfig": "Не удалось получить конфигурацию.",
+    "reloading": "Перезагрузка навыков агента...",
+    "reloadSuccess": "Навыки агента успешно перезагружены.",
+    "newlyAvailable": "{{count}} новых навыков доступно{{suffix}}",
+    "noLongerAvailable": "{{count}} навыков больше недоступно{{suffix}}",
+    "reloadHint": "Используйте \"/skills reload\", чтобы активировать их.",
+    "reloadFailed": "Ошибка перезагрузки навыков: {{error}}",
+    "disabledByAdmin": "Навыки агента отключены администратором.",
+    "notFound": "Навык \"{{name}}\" не найден.",
+    "noSkillNameDisable": "Пожалуйста, укажите имя навыка для отключения.",
+    "noSkillNameEnable": "Пожалуйста, укажите имя навыка для включения.",
+    "consent": {
+      "installingSkillsFrom": "Установка навыков агента из \"{{source}}\"",
+      "skillsWillBeInstalled": "Следующие навыки агента будут установлены:",
+      "installDestination": "Место установки: {{path}}"
+    },
+    "list": {
+      "description": "Список доступных навыков агента. Использование: /skills list [nodesc] [all]",
+      "availableTitle": "Доступные навыки агента:",
+      "disabledTitle": "Отключенные навыки:",
+      "empty": "Нет доступных навыков",
+      "builtinBadge": " [Встроенный]"
+    },
+    "disable": {
+      "description": "Отключить навык по имени. Использование: /skills disable <имя>"
+    },
+    "enable": {
+      "description": "Включить отключенный навык по имени. Использование: /skills enable <имя>"
+    },
+    "reload": {
+      "description": "Перезагрузить список обнаруженных навыков. Использование: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "Перемотать к конкретному сообщению и возобновить",
+    "noConfig": "Конфигурация не найдена",
+    "noClient": "Клиент не инициализирован",
+    "noRecording": "Сервис записи недоступен",
+    "noConversation": "Разговор не найден.",
+    "nothingToRewind": "Нечего перематывать.",
+    "fetchFailed": "Не удалось получить файл разговора",
+    "unknownError": "Произошла неизвестная ошибка во время перемотки",
+    "filesReverted": "Файлы возвращены.",
+    "revert": {
+      "readError": "Ошибка чтения {{fileName}} во время возврата: {{error}}",
+      "smartFailed": "Умный возврат не удался для {{fileName}}",
+      "missingFile": "Файл {{fileName}} отсутствует во время возврата.",
+      "unexpectedError": "Произошла непредвиденная ошибка при возврате {{fileName}}"
+    }
+  },
+  "hooks": {
+    "description": "Управление хуками",
+    "list": {
+      "description": "Список всех хуков"
+    },
+    "panel": {
+      "description": "Показать все зарегистрированные хуки и их статус",
+      "securityWarningTitle": "Предупреждение безопасности",
+      "securityWarningBody": "Хуки могут выполнять команды на вашем компьютере. Включайте только хуки из надежных источников.",
+      "learnMoreLabel": "Узнать больше:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "Настроенные хуки:",
+      "unknown": "Неизвестно",
+      "status": {
+        "enabled": "Включено",
+        "disabled": "Отключено"
+      },
+      "sourceLabel": "Источник: {{source}}",
+      "commandLabel": "Команда: {{command}}",
+      "matcherLabel": "Совпадение: {{matcher}}",
+      "sequentialLabel": "Последовательный",
+      "timeoutLabel": "Таймаут: {{seconds}}с",
+      "tip": {
+        "prefix": "Совет: Вы также можете использовать ",
+        "or": " или ",
+        "middle": ". ",
+        "suffix": "."
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<имя-хука>"
+    },
+    "enable": {
+      "description": "Включить хук по имени"
+    },
+    "disable": {
+      "description": "Отключить хук по имени"
+    },
+    "enableAll": {
+      "description": "Включить все отключенные хуки"
+    },
+    "disableAll": {
+      "description": "Отключить все включенные хуки"
+    },
+    "configNotLoaded": "Конфигурация не загружена.",
+    "hookSystemNotEnabled": "Система хуков не включена.",
+    "usageEnable": "Использование: /hooks enable <имя-хука>",
+    "usageDisable": "Использование: /hooks disable <имя-хука>",
+    "enabledSuccess": "Хук \"{{name}}\" успешно включен.",
+    "disabledSuccess": "Хук \"{{name}}\" успешно отключен.",
+    "failedToEnable": "Не удалось включить хук: {{error}}",
+    "failedToDisable": "Не удалось отключить хук: {{error}}",
+    "noHooksConfigured": "Хуки не настроены.",
+    "allHooksEnabled": "Все хуки уже включены.",
+    "allHooksDisabled": "Все хуки уже отключены.",
+    "enabledCount": "{{count}} хуков успешно включено.",
+    "disabledCount": "{{count}} хуков успешно отключено.",
+    "failedToEnableAll": "Не удалось включить хуки: {{error}}",
+    "failedToDisableAll": "Не удалось отключить хуки: {{error}}"
+  },
+  "policies": {
+    "description": "Управление политиками",
+    "errorConfigNotAvailable": "Ошибка: Конфигурация недоступна.",
+    "noActive": "Нет активных политик.",
+    "list": {
+      "description": "Список всех активных политик",
+      "title": "Активные политики",
+      "tool": "Инструмент",
+      "allTools": "Все инструменты",
+      "argsMatch": "Совпадение аргументов",
+      "priority": "Приоритет",
+      "source": "Источник"
+    }
+  },
+  "profile": {
+    "description": "Управление профилем",
+    "toggled": "Вид профиля переключен."
+  },
+  "init": {
+    "description": "Инициализировать новый проект",
+    "configNotAvailable": "Конфигурация недоступна.",
+    "alreadyExists": "Файл GEMINI.md уже существует в этом каталоге. Изменений нет.",
+    "emptyCreated": "Создан пустой файл GEMINI.md."
+  },
+  "editor": {
+    "description": "Настроить предпочтительный внешний редактор"
+  },
+  "ide": {
+    "description": "Команды интеграции с IDE",
+    "status": {
+      "description": "Проверить статус интеграции с IDE",
+      "connected": "Подключено к {{ide}}",
+      "connecting": "Подключение...",
+      "disconnected": "Отключено",
+      "disconnectedWithDetails": "Отключено: {{details}}",
+      "activeSuffix": "(активно)",
+      "fileListNote": "Примечание: Отслеживаются только активные файлы",
+      "openFilesHeader": "Открытые файлы:"
+    },
+    "install": {
+      "description": "Установить расширение IDE для {{ide}}",
+      "noInstaller": "Для {{ide}} ({{extension}}) нет доступного установщика",
+      "installing": "Установка расширения...",
+      "autoEnableFailed": "Автоматическое включение интеграции с IDE не удалось. Пожалуйста, запустите CLI в новом окне терминала, чтобы исправить это."
+    },
+    "enable": {
+      "description": "Включить интеграцию с IDE"
+    },
+    "disable": {
+      "description": "Отключить интеграцию с IDE"
+    },
+    "unsupported": "Интеграция с IDE не поддерживается в этой среде."
+  },
+  "vim": {
+    "description": "Переключить режим Vim",
+    "entered": "Вошел в режим Vim.",
+    "exited": "Вышел из режима Vim."
+  },
+  "terminalSetup": {
+    "description": "Настроить параметры терминала",
+    "restartRequired": "Пожалуйста, перезапустите терминал, чтобы изменения вступили в силу.",
+    "failed": "Настройка терминала не удалась: {{error}}",
+    "windowsConfigPathMissing": "Не удалось найти каталог конфигурации {{terminal}}. Он установлен?",
+    "keybindingsNotArray": "Файл привязок клавиш {{terminal}} ({{file}}) не является массивом JSON.",
+    "keybindingsParseFailed": "Ошибка разбора файла привязок клавиш {{terminal}} ({{file}}): Недействительный JSON ({{error}})",
+    "alreadyConfigured": "{{terminal}} уже настроен для поддержки shift+enter.",
+    "existingBindingsShift": "- Найдена существующая привязка для 'shift+enter'",
+    "existingBindingsCtrl": "- Найдена существующая привязка для 'ctrl+enter'",
+    "existingBindingsHeader": "Найдены конфликтующие привязки клавиш:",
+    "existingBindingsFooter": "Пожалуйста, отредактируйте {{file}} вручную, чтобы добавить привязки при необходимости.",
+    "addedBindings": "{{terminal}} успешно настроен! Привязки клавиш добавлены в {{file}}.",
+    "configureFailed": "Настройка {{terminal}} ({{file}}) не удалась: {{error}}",
+    "kittyAlreadyConfigured": "Обнаружена поддержка протокола клавиатуры Kitty! Многострочный ввод должен работать автоматически без дополнительной настройки.",
+    "detectFailed": "Не удалось автоматически определить эмулятор терминала. Проверьте документацию для ручной настройки.",
+    "notSupported": "Автоматическая настройка для {{terminal}} в настоящее время не поддерживается. Проверьте документацию для ручной настройки."
+  },
+  "setupGithub": {
+    "description": "Настроить интеграцию с GitHub",
+    "notGitRepo": "Не является репозиторием GitHub.",
+    "downloadSuccess": "Загружено {{workflows}} рабочих процессов и {{commands}} файлов команд. См. {{url}} для завершения настройки.",
+    "toolDescription": "Настроить GitHub Actions"
+  },
+  "resume": {
+    "description": "Возобновить предыдущую сессию"
+  },
+  "agents": {
+    "description": "Управление агентами ИИ",
+    "list": {
+      "description": "Список доступных локальных и удаленных агентов",
+      "configNotLoaded": "Конфигурация не загружена.",
+      "registryNotFound": "Реестр агентов не найден.",
+      "empty": "Нет доступных агентов.",
+      "localTitle": "Локальные агенты",
+      "remoteTitle": "Удаленные агенты"
+    },
+    "enable": {
+      "description": "Включить отключенного агента",
+      "usage": "Использование: /agents enable <имя агента>",
+      "registryNotFound": "Реестр агентов не найден.",
+      "alreadyEnabled": "Агент \"{{name}}\" уже включен.",
+      "notFound": "Агент \"{{name}}\" не найден.",
+      "enabling": "Включение {{name}}..."
+    },
+    "disable": {
+      "description": "Отключить включенного агента",
+      "usage": "Использование: /agents disable <имя агента>",
+      "registryNotFound": "Реестр агентов не найден.",
+      "alreadyDisabled": "Агент \"{{name}}\" уже отключен.",
+      "notFound": "Агент \"{{name}}\" не найден.",
+      "disabling": "Отключение {{name}}..."
+    },
+    "refresh": {
+      "description": "Перезагрузить реестр агентов",
+      "registryNotFound": "Реестр агентов не найден.",
+      "refreshing": "Обновление агентов...",
+      "success": "Агенты успешно обновлены."
+    },
+    "feedback": {
+      "error": "Ошибка при {{action}} агента \"{{agentName}}\".",
+      "alreadyEnabled": "Агент \"{{agentName}}\" уже включен.",
+      "alreadyDisabled": "Агент \"{{agentName}}\" уже отключен.",
+      "enabledTwoScopes": "Агент \"{{agentName}}\" включен путем активации как в конфигурации {{scope1}}, так и в {{scope2}}.",
+      "disabledTwoScopes": "Агент \"{{agentName}}\" теперь отключен как в конфигурации {{scope1}}, так и в {{scope2}}.",
+      "singleScope": "{{actionVerb}} агент \"{{agentName}}\", установив его в {{enabledDisabled}} в конфигурации {{scope}}.",
+      "scopeProject": "проекта",
+      "scopeUser": "пользователя"
+    }
+  },
+  "corgi": {
+    "description": "Переключить режим корги"
+  }
+}

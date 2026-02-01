@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "快捷鍵",
+    "submit": "發送訊息",
+    "newline": "換行",
+    "newlineLinux": "換行（某些 Linux 發行版可用 Alt+Enter）",
+    "cancel": "取消/中斷",
+    "clear": "清屏",
+    "exit": "退出",
+    "copy": "複製最後的回覆",
+    "paste": "從剪貼簿貼上",
+    "jumpWords": "在輸入中跳轉單詞",
+    "quit": "退出應用程式",
+    "clearScreen": "清除螢幕",
+    "selectionMode": "進入選擇模式以複製文本",
+    "externalEditor": "在外部編輯器中開啟輸入",
+    "yoloMode": "切換 YOLO 模式",
+    "sendMessage": "發送訊息",
+    "cancelOrClear": "取消操作 / 清除輸入（双擊）",
+    "scrollPage": "向上/向下翻頁",
+    "autoAcceptEdits": "切換自動接受編輯",
+    "promptHistory": "瀏覽提示歷史記錄",
+    "fullListSee": "完整快捷鍵列表請參見",
+    "history": {
+      "title": "歷史記錄",
+      "previous": "上一條訊息",
+      "next": "下一條訊息"
+    },
+    "navigation": {
+      "title": "導航",
+      "scrollUp": "向上滚動",
+      "scrollDown": "向下滚動",
+      "top": "回到顶部",
+      "bottom": "回到底部"
+    }
+  },
+  "keys": {
+    "enter": "回車",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "空格",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "普通模式",
+    "insert": "插入模式",
+    "visual": "可視模式"
+  }
+}

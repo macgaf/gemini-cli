@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "키보드 단축키",
+    "submit": "메시지 전송",
+    "newline": "새 줄",
+    "newlineLinux": "새 줄 (일부 Linux 배포판의 경우 Alt+Enter)",
+    "cancel": "취소/중단",
+    "clear": "화면 지우기",
+    "exit": "종료",
+    "copy": "마지막 응답 복사",
+    "paste": "클립보드에서 붙여넣기",
+    "jumpWords": "입력 내 단어 점프",
+    "quit": "애플리케이션 종료",
+    "clearScreen": "화면 지우기",
+    "selectionMode": "텍스트 복사를 위한 선택 모드 진입",
+    "externalEditor": "외부 편집기에서 입력 열기",
+    "yoloMode": "YOLO 모드 전환",
+    "sendMessage": "메시지 전송",
+    "cancelOrClear": "작업 취소 / 입력 지우기 (두 번 누름)",
+    "scrollPage": "페이지 위/아래로 스크롤",
+    "autoAcceptEdits": "편집 자동 수락 전환",
+    "promptHistory": "프롬프트 기록 순환",
+    "fullListSee": "전체 단축키 목록은 다음을 참조하세요:",
+    "history": {
+      "title": "기록",
+      "previous": "이전 메시지",
+      "next": "다음 메시지"
+    },
+    "navigation": {
+      "title": "탐색",
+      "scrollUp": "위로 스크롤",
+      "scrollDown": "아래로 스크롤",
+      "top": "맨 위로 이동",
+      "bottom": "맨 아래로 이동"
+    }
+  },
+  "keys": {
+    "enter": "Enter",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Space",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "일반 모드",
+    "insert": "삽입 모드",
+    "visual": "비주얼 모드"
+  }
+}

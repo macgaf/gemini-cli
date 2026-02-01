@@ -9,7 +9,8 @@
     "failed": "Authentication failed",
     "expired": "Session expired",
     "invalidCredentials": "Invalid credentials",
-    "notLoggedIn": "Not logged in"
+    "notLoggedIn": "Not logged in",
+    "loginRequired": "Code Assist login required."
   },
   "api": {
     "rateLimited": "Rate limit exceeded. Please try again later.",

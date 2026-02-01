@@ -1,0 +1,31 @@
+{
+  "common": {
+    "pressEscToExit": "Appuyez sur Esc pour quitter."
+  },
+  "gemini": {
+    "title": "Avis sur la clé API Gemini",
+    "description1": "En utilisant l'API Gemini",
+    "description2": ", Google AI Studio",
+    "description3": ", et les autres services développeurs Google référençant ces conditions (collectivement, les \"APIs\" ou \"Services\"), vous acceptez les Conditions d'Utilisation des APIs Google (les \"Conditions API\")",
+    "description4": ", et les Conditions d'Utilisation Supplémentaires de l'API Gemini (les \"Conditions Supplémentaires\")"
+  },
+  "vertexAI": {
+    "title": "Avis Vertex AI",
+    "description1": "Conditions Spécifiques du Service",
+    "description2": " sont incorporées dans l'accord en vertu duquel Google a accepté de fournir Google Cloud Platform",
+    "description3": " au Client (l'\"Accord\"). Si l'Accord autorise la revente ou la fourniture de Google Cloud Platform dans le cadre d'un programme partenaire ou revendeur Google Cloud, alors sauf indication contraire dans la section intitulée \"Conditions Spécifiques Partenaire\", toutes les références au Client dans les Conditions Spécifiques du Service désignent le Partenaire ou le Revendeur (selon le cas), et toutes les références aux Données Client dans les Conditions Spécifiques du Service désignent les Données Partenaire. Les termes commençant par une majuscule utilisés mais non définis dans les Conditions Spécifiques du Service ont la signification qui leur est donnée dans l'Accord."
+  },
+  "codeAssist": {
+    "title": "Avis de Confidentialité Gemini Code Assist"
+  },
+  "cloudFree": {
+    "title": "Avis de Confidentialité Gemini Code Assist pour les Particuliers",
+    "description1": "Cet avis et notre Politique de Confidentialité",
+    "description2": " décrivent comment Gemini Code Assist traite vos données. Veuillez les lire attentivement.",
+    "dataCollection": "Lorsque vous utilisez Gemini Code Assist pour les particuliers avec Gemini CLI, Google collecte vos prompts, le code associé, la sortie générée, les modifications de code, les informations d'utilisation des fonctionnalités associées, et vos commentaires pour fournir, améliorer et développer les produits et services Google et les technologies d'apprentissage automatique.",
+    "humanReviewers": "Pour aider à la qualité et améliorer nos produits (tels que les modèles d'apprentissage automatique génératifs), des réviseurs humains peuvent lire, annoter et traiter les données collectées ci-dessus. Nous prenons des mesures pour protéger votre vie privée dans le cadre de ce processus. Cela inclut la déconnexion des données de votre compte Google avant que les réviseurs ne les voient ou ne les annotent, et le stockage de ces copies déconnectées jusqu'à 18 mois. Veuillez ne pas soumettre d'informations confidentielles ou de données que vous ne voudriez pas qu'un réviseur voie ou que Google utilise pour améliorer nos produits, services et technologies d'apprentissage automatique.",
+    "allowDataUse": "Autoriser Google à utiliser ces données pour développer et améliorer nos produits ?",
+    "pressEnterToChoose": "Appuyez sur Entrée pour choisir une option et quitter.",
+    "errorLoading": "Erreur de chargement des paramètres d'option : {{error}}"
+  }
+}

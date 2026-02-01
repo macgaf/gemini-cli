@@ -1,0 +1,543 @@
+{
+  "model": {
+    "title": "選擇模型",
+    "autoDescription": "讓 Gemini CLI 為任務選擇最佳模型",
+    "manual": "手動",
+    "manualDescription": "手動選擇模型",
+    "rememberForFuture": "記住模型用於未來工作階段：",
+    "pressTabToToggle": "（按 Tab 切換）",
+    "startupModelHint": "> 要在啟動時使用特定的 Gemini 模型，請使用 --model 參數。",
+    "pressEscToClose": "（按 Esc 關閉）",
+    "gemini3Available": "Gemini 3 現已可用。",
+    "gemini3ComingSoon": "Gemini 3 即將推出。",
+    "enablePreviewFeatures": "在 /settings 中啟用「預覽功能」。\n了解更多：https://goo.gle/enable-preview-features"
+  },
+  "theme": {
+    "title": "選擇主題",
+    "selectTheme": "選擇主題",
+    "preview": "預覽",
+    "incompatible": "（不兼容）",
+    "matchesTerminal": "（匹配終端）",
+    "custom": "自定義",
+    "helpText": "（按 Enter 選擇，Tab 設定範圍，Esc 關閉）",
+    "helpTextScope": "（按 Enter 應用範圍，Tab 選擇主題，Esc 關閉）",
+    "noColorUnsupported": "當前終端不支持 no-color 主題。",
+    "notFound": "未找到主題 \"{{name}}\"。",
+    "notFoundInScope": "在當前作用域內未找到主題 \"{{name}}\"。"
+  },
+  "settings": {
+    "title": "設定",
+    "searchPlaceholder": "搜索以過滤",
+    "noMatchesFound": "未找到匹配項。",
+    "applyTo": "應用到",
+    "helpText": "（按 Enter 選擇，Tab 切換焦點，Esc 關閉）",
+    "helpTextNoScope": "（按 Enter 選擇，Esc 關閉）",
+    "restartRequired": "要查看更改，Gemini CLI 必須重新啟動。按 r 退出並立即應用更改。",
+    "items": {
+      "general_previewFeatures": {
+        "label": "預覽功能（如模型）",
+        "description": "啟用預覽功能（如預覽模型）。"
+      },
+      "general_vimMode": {
+        "label": "Vim 模式",
+        "description": "啟用 Vim 鍵位綁定"
+      },
+      "general_language": {
+        "label": "語言",
+        "description": "介面語言 (en, zh-CN, zh-TW, fr, ja, es, ru, de)"
+      },
+      "general_enableAutoUpdate": {
+        "label": "啟用自動更新",
+        "description": "啟用自動更新。"
+      },
+      "general_enablePromptCompletion": {
+        "label": "啟用提示補全",
+        "description": "啟用輸入時的 AI 驅動提示補全建議。"
+      },
+      "general_debugKeystrokeLogging": {
+        "label": "偵錯按鍵日誌",
+        "description": "啟用按鍵偵錯日誌輸出到控制臺。"
+      },
+      "general_sessionRetention_enabled": {
+        "label": "啟用工作階段清理",
+        "description": "啟用自動工作階段清理"
+      },
+      "output_format": {
+        "label": "輸出格式",
+        "description": "CLI 輸出格式。可以是 `text` 或 `json`。"
+      },
+      "ui_hideWindowTitle": {
+        "label": "隱藏視窗標題",
+        "description": "隱藏視窗標題欄"
+      },
+      "ui_userMessageColor": {
+        "label": "使用者發言顏色",
+        "description": "覆蓋聊天歷史中使用者發言的顏色。支持十六進制或命名 ANSI 顏色（如 \"#B27CFF\" 或 \"magenta\"）。"
+      },
+      "ui_showStatusInTitle": {
+        "label": "在標題中顯示思考",
+        "description": "在工作階段於終端視窗標題中顯示 Gemini CLI 模型思考"
+      },
+      "ui_dynamicWindowTitle": {
+        "label": "動態視窗標題",
+        "description": "使用當前狀態圖標更新終端視窗標題（就绪：◇，需要操作：✋，工作中：✦）"
+      },
+      "ui_showHomeDirectoryWarning": {
+        "label": "顯示主目錄警告",
+        "description": "在主目錄執行 Gemini CLI 時顯示警告。"
+      },
+      "ui_hideTips": {
+        "label": "隱藏提示",
+        "description": "隱藏 UI 中的說明提示"
+      },
+      "ui_hideBanner": {
+        "label": "隱藏横幅",
+        "description": "隱藏應用程式横幅"
+      },
+      "ui_hideContextSummary": {
+        "label": "隱藏上下文摘要",
+        "description": "隱藏輸入框上方的上下文摘要（GEMINI.md、MCP 伺服器）。"
+      },
+      "ui_footer_hideCWD": {
+        "label": "隱藏當前目錄",
+        "description": "隱藏頁脚中的當前工作目錄路徑。"
+      },
+      "ui_footer_hideSandboxStatus": {
+        "label": "隱藏沙盒狀態",
+        "description": "隱藏頁脚中的沙盒狀態指示器。"
+      },
+      "ui_footer_hideModelInfo": {
+        "label": "隱藏模型資訊",
+        "description": "隱藏頁脚中的模型名稱和上下文使用情況。"
+      },
+      "ui_footer_hideContextPercentage": {
+        "label": "隱藏上下文視窗百分比",
+        "description": "隱藏上下文視窗剩餘百分比。"
+      },
+      "ui_hideFooter": {
+        "label": "隱藏頁脚",
+        "description": "隱藏 UI 中的頁脚"
+      },
+      "ui_showMemoryUsage": {
+        "label": "顯示記憶體使用",
+        "description": "在 UI 中顯示記憶體使用資訊"
+      },
+      "ui_showLineNumbers": {
+        "label": "顯示行號",
+        "description": "在聊天中顯示行號。"
+      },
+      "ui_showCitations": {
+        "label": "顯示引用",
+        "description": "在聊天中顯示生成文本的引用。"
+      },
+      "ui_showModelInfoInChat": {
+        "label": "在聊天中顯示模型資訊",
+        "description": "在每個模型回合的聊天中顯示模型名稱。"
+      },
+      "ui_useFullWidth": {
+        "label": "使用全寬",
+        "description": "使用終端的整個寬度輸出。"
+      },
+      "ui_useAlternateBuffer": {
+        "label": "使用備用螢幕缓衝區",
+        "description": "使用備用螢幕缓衝區，保留 shell 歷史記錄。"
+      },
+      "ui_incrementalRendering": {
+        "label": "增量渲染",
+        "description": "啟用 UI 增量渲染。此選項可減少闪烁但可能導致渲染問題。僅在啟用備用螢幕缓衝區時支持。"
+      },
+      "ui_accessibility_enableLoadingPhrases": {
+        "label": "啟用載入短語",
+        "description": "在操作期間啟用載入短語。"
+      },
+      "ui_accessibility_screenReader": {
+        "label": "螢幕閱讀器模式",
+        "description": "以纯文本渲染輸出，更適合螢幕閱讀器存取"
+      },
+      "ide_enabled": {
+        "label": "IDE 模式",
+        "description": "啟用 IDE 集成模式。"
+      },
+      "model_maxSessionTurns": {
+        "label": "最大工作階段輪數",
+        "description": "工作階段中保留的最大使用者/模型/工具輪數。-1 表示無限制。"
+      },
+      "model_compressionThreshold": {
+        "label": "壓縮阈值",
+        "description": "触發上下文壓縮的上下文使用比例（如 0.2、0.3）。"
+      },
+      "model_skipNextSpeakerCheck": {
+        "label": "跳過下一發言者檢查",
+        "description": "跳過下一發言者檢查。"
+      },
+      "context_discoveryMaxDirs": {
+        "label": "記忆發現最大目錄數",
+        "description": "搜索記忆的最大目錄數。"
+      },
+      "context_loadMemoryFromIncludeDirectories": {
+        "label": "從包含目錄載入記忆",
+        "description": "控制 /memory refresh 如何載入 GEMINI.md 檔案。為 true 時掃描包含目錄；為 false 時僅使用當前目錄。"
+      },
+      "context_fileFiltering_respectGitIgnore": {
+        "label": "遵循 .gitignore",
+        "description": "搜索時遵循 .gitignore 檔案。"
+      },
+      "context_fileFiltering_respectGeminiIgnore": {
+        "label": "遵循 .geminiignore",
+        "description": "搜索時遵循 .geminiignore 檔案。"
+      },
+      "context_fileFiltering_enableRecursiveFileSearch": {
+        "label": "啟用递歸檔案搜索",
+        "description": "在提示中完成 @ 引用時啟用递歸檔案搜索功能。"
+      },
+      "context_fileFiltering_enableFuzzySearch": {
+        "label": "啟用模糊搜索",
+        "description": "搜索檔案時啟用模糊搜索。"
+      },
+      "tools_shell_enableInteractiveShell": {
+        "label": "啟用交互式 Shell",
+        "description": "使用 node-pty 提供交互式 shell 體驗。仍可回退到 child_process。"
+      },
+      "tools_shell_showColor": {
+        "label": "顯示顏色",
+        "description": "在 shell 輸出中顯示顏色。"
+      },
+      "tools_autoAccept": {
+        "label": "自動接受",
+        "description": "自動接受並執行被認為安全的工具調用（如只讀操作）。"
+      },
+      "tools_useRipgrep": {
+        "label": "使用 Ripgrep",
+        "description": "使用 ripgrep 進行檔案內容搜索而非回退實現。提供更快的搜索性能。"
+      },
+      "tools_enableToolOutputTruncation": {
+        "label": "啟用工具輸出截斷",
+        "description": "啟用大型工具輸出的截斷。"
+      },
+      "tools_truncateToolOutputThreshold": {
+        "label": "工具輸出截斷阈值",
+        "description": "當工具輸出超過此字符數時截斷。設為 -1 停用。"
+      },
+      "tools_truncateToolOutputLines": {
+        "label": "工具輸出截斷行數",
+        "description": "截斷工具輸出時保留的行數。"
+      },
+      "tools_disableLLMCorrection": {
+        "label": "停用 LLM 糾錯",
+        "description": "停用編輯工具的 LLM 錯誤糾正。啟用後，如果找不到精確字符串匹配，工具將立即失敗，而不是尝試自我糾正。"
+      },
+      "security_disableYoloMode": {
+        "label": "停用 YOLO 模式",
+        "description": "停用 YOLO 模式，即使通過標志啟用也是如此。"
+      },
+      "security_enablePermanentToolApproval": {
+        "label": "允许永久工具批準",
+        "description": "在工具確認對話框中啟用「允许所有未來工作階段」選項。"
+      },
+      "security_blockGitExtensions": {
+        "label": "阻止來自 Git 的擴展",
+        "description": "阻止從 Git 安裝和載入擴展。"
+      },
+      "security_folderTrust_enabled": {
+        "label": "檔案夹信任",
+        "description": "用於跟踪是否啟用檔案夹信任的設定。"
+      },
+      "security_environmentVariableRedaction_enabled": {
+        "label": "啟用環境變量編輯",
+        "description": "啟用對可能包含密钥的環境變量的編輯。"
+      },
+      "experimental_codebaseInvestigatorSettings_enabled": {
+        "label": "啟用程式碼庫調查器",
+        "description": "啟用程式碼庫調查器代理。"
+      },
+      "experimental_codebaseInvestigatorSettings_maxNumTurns": {
+        "label": "程式碼庫調查器最大輪數",
+        "description": "程式碼庫調查器代理的最大輪數。"
+      },
+      "experimental_useOSC52Paste": {
+        "label": "使用 OSC 52 貼上",
+        "description": "使用 OSC 52 序列貼上而非 clipboardy（適用於遠程工作階段）。"
+      },
+      "experimental_cliHelpAgentSettings_enabled": {
+        "label": "啟用 CLI 說明代理",
+        "description": "啟用 CLI 說明代理。"
+      },
+      "experimental_plan": {
+        "label": "計劃",
+        "description": "啟用計劃功能（計劃模式和工具）。"
+      },
+      "skills_enabled": {
+        "label": "啟用代理技能",
+        "description": "啟用代理技能。"
+      },
+      "hooksConfig_notifications": {
+        "label": "鉤子通知",
+        "description": "在鉤子執行時顯示視覺指示器。"
+      }
+    },
+    "scope": {
+      "user": "使用者設定",
+      "workspace": "工作區設定",
+      "system": "系統設定",
+      "alsoModifiedIn": "（也在 {{scopes}} 中修改）",
+      "modifiedIn": "（在 {{scopes}} 中修改）"
+    }
+  },
+  "auth": {
+    "title": "驗證",
+    "getStarted": "開始使用",
+    "howToAuthenticate": "您想為此專案使用哪种驗證方式？",
+    "loginWithGoogle": "使用 Google 登入",
+    "useCloudShell": "使用 Cloud Shell 使用者憑證",
+    "useMetadataServer": "使用元資料伺服器應用預設憑證",
+    "useGeminiApiKey": "使用 Gemini API 密钥",
+    "useVertexAI": "Vertex AI",
+    "selectPrompt": "（按 Enter 選擇）",
+    "termsOfService": "Gemini CLI 服務條款和隱私声明",
+    "loggingIn": "正在使用 Google 登入... 正在重新啟動 Gemini CLI 以繼續。",
+    "mustSelectAuth": "您必須選擇一种驗證方式才能繼續。按 Ctrl+C 两次退出。"
+  },
+  "permissions": {
+    "title": "權限",
+    "allow": "允许",
+    "deny": "拒绝",
+    "always": "始終",
+    "once": "僅此一次",
+    "session": "本次工作階段"
+  },
+  "folderTrust": {
+    "title": "您信任此檔案夹嗎？",
+    "description": "信任檔案夹允许 Gemini 執行它建議的命令。這是一個安全功能，可以防止在不受信任的目錄中意外執行命令。",
+    "trustFolder": "信任檔案夹",
+    "trustParent": "信任父檔案夹",
+    "dontTrust": "不信任",
+    "restarting": "Gemini CLI 正在重新啟動以應用信任更改...",
+    "exitingNoTrust": "必須選擇檔案夹信任級別才能繼續。由於按下了 Esc，正在退出。"
+  },
+  "rewind": {
+    "title": "確認回退",
+    "fileSingle": "1 個檔案受影响：{{file}}",
+    "filesAffected": "{{count}} 個檔案受影响",
+    "linesAdded": "+{{count}} 行",
+    "linesRemoved": "-{{count}} 行",
+    "notice": "這將回滚檔案更改。",
+    "noChanges": "未更改任何檔案。",
+    "selectAction": "請選擇操作：",
+    "options": {
+      "rewindAndRevert": "回退對話並回滚檔案更改",
+      "rewindOnly": "僅回退對話",
+      "revertOnly": "僅回滚檔案更改",
+      "cancel": "取消"
+    }
+  },
+  "multiFolderTrust": {
+    "title": "您信任這些檔案夹嗎？",
+    "description": "信任檔案夹允许 Gemini 在其中執行命令。",
+    "cancelled": "已取消信任以下檔案夹：\n{{list}}",
+    "configNotAvailable": "設定不可用。",
+    "notTrusted": "以下檔案夹未被信任：\n{{list}}",
+    "errorAdding": "信任 {{dir}} 時出錯：{{error}}",
+    "applying": "正在應用信任設定...",
+    "options": {
+      "yes": "是",
+      "yesRemember": "是，並記住",
+      "no": "否"
+    }
+  },
+  "loopDetection": {
+    "title": "循環檢測",
+    "description": "看起來代理可能陷入了循環。",
+    "ariaLabel": "循環檢測警告",
+    "options": {
+      "keep": "保持循環檢測啟用",
+      "disable": "本次工作階段停用循環檢測"
+    }
+  },
+  "rewindViewer": {
+    "title": "回退對話",
+    "stay": "保持當前位置",
+    "rewinding": "正在回退...",
+    "cancelText": "取消回退並保持當前位置",
+    "fileChangeSingle": "1 個檔案已更改",
+    "fileChange": "{{count}} 個檔案已更改",
+    "noFileChange": "未更改任何檔案",
+    "helpText": "（按 Enter 選擇訊息，Esc 關閉，左右鍵展開/摺疊）"
+  },
+  "logout": {
+    "title": "您已退出登入。",
+    "message": "重新登入以繼續使用 Gemini CLI，或退出應用程式。",
+    "login": "登入",
+    "exit": "退出",
+    "helpText": "（按 Enter 選擇，Esc 關閉）"
+  },
+  "editor": {
+    "title": "編輯器設定",
+    "selectEditor": "選擇編輯器",
+    "custom": "自定義",
+    "enterCommand": "輸入編輯器命令",
+    "preferenceSet": "已在{{scope}}設定中將編輯器偏好設定為“{{editor}}”。",
+    "preferenceCleared": "已在{{scope}}設定中清除編輯器偏好。",
+    "preferenceSetFailed": "設定編輯器偏好失敗：{{error}}",
+    "unsupported": "不支持編輯器“{{editor}}”。",
+    "alsoModifiedIn": "（也在 {{scope}} 設定中修改）",
+    "modifiedIn": "（在 {{scope}} 設定中修改）",
+    "none": "無",
+    "preferenceTitle": "編輯器偏好",
+    "supportedNote": "系統中檢測到的受支持編輯器。",
+    "preferredPrefix": "首選編輯器：",
+    "preferredSuffix": ""
+  },
+  "scope": {
+    "user": "使用者",
+    "workspace": "工作區"
+  },
+  "ideIntegrationNudge": {
+    "title": "是否將 {{editor}} 連接到 Gemini CLI？",
+    "descriptionInstall": "如果選擇“是”，我們會安裝擴展，使 CLI 能存取你開啟的檔案並在 {{editor}} 中直接顯示差异。",
+    "descriptionInstalled": "如果選擇“是”，CLI 將存取你開啟的檔案並在 {{editor}} 中直接顯示差异。",
+    "defaultEditor": "你的編輯器",
+    "options": {
+      "yes": "是",
+      "noEsc": "否（esc）",
+      "noDontAskAgain": "否，不再詢問"
+    }
+  },
+  "common": {
+    "yes": "是",
+    "no": "否",
+    "ok": "確定",
+    "cancel": "取消",
+    "confirm": "確認",
+    "close": "關閉",
+    "save": "儲存",
+    "delete": "刪除",
+    "edit": "編輯",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "warning": "警告",
+    "info": "資訊",
+    "true": "是",
+    "false": "否"
+  },
+  "permissionsModifyTrust": {
+    "noteTrustedByParent": "注意：該檔案夹仍被信任，因為其父檔案夹已被信任。",
+    "noteTrustedByIde": "注意：該檔案夹仍被信任，因為已連接的 IDE 工作區被信任。",
+    "saveFailed": "儲存信任設定失敗，變更可能不會生效。",
+    "title": "修改信任級別",
+    "folderLabel": "檔案夹：",
+    "currentLevel": "當前級別：",
+    "notSet": "未設定",
+    "inheritedParentNote": "注意：由於父級檔案夹受信任，該檔案夹仍視為受信任。",
+    "inheritedIdeNote": "注意：由於連接的 IDE 工作區受信任，該檔案夹仍視為受信任。",
+    "helpText": "（按 Enter 選擇，Esc 關閉）",
+    "restartWarning": "信任設定已更改。按 'r' 立即重新啟動。",
+    "options": {
+      "trustFolder": "信任此檔案夹（{{folder}}）",
+      "trustParent": "信任父檔案夹（{{folder}}）",
+      "dontTrust": "不信任"
+    }
+  },
+  "proQuota": {
+    "keepTrying": "繼續尝試",
+    "stop": "停止",
+    "switchTo": "切換到 {{model}}",
+    "upgrade": "升級以獲得更高配额",
+    "allProModels": "所有 Pro 模型",
+    "usageLimitReached": "已達到 {{model}} 的使用上限。",
+    "resetTime": "存取將在 {{time}} 重置",
+    "statsHint": "使用 /stats 查看使用情況",
+    "modelHint": "使用 /model 切換模型",
+    "authHint": "使用 /auth 切換到 API Key。",
+    "noAccess": "看起來你没有存取 {{model}} 的權限。",
+    "previewLearnMore": "了解更多：https://goo.gle/enable-preview-features",
+    "disablePreview": "如需停用 {{model}}，請在 /settings 中關閉“預覽功能”。",
+    "highDemand": "當前系統负載較高。",
+    "highDemandApology": "給你帶來不便，敬請谅解。",
+    "switchedToFallback": "已切換到備用模型 {{model}}"
+  },
+  "ideTrustChange": {
+    "default": "工作區信任已變更。",
+    "connectionChange": "工作區信任因 IDE 連接變化而變更。",
+    "trustChange": "工作區信任因 IDE 信任變化而變更。",
+    "restartHint": "按 'r' 重新啟動 Gemini"
+  },
+  "sessionBrowser": {
+    "loading": "正在載入工作階段...",
+    "error": "錯誤：{{error}}",
+    "pressToExit": "按 q 退出",
+    "empty": "未找到自動儲存的工作階段。",
+    "searchLabel": "搜索：",
+    "searchCancel": "（Esc 取消）",
+    "filteredSuffix": "，已筛選",
+    "sortField": {
+      "date": "日期",
+      "messages": "訊息數",
+      "name": "名稱"
+    },
+    "sortOrder": {
+      "asc": "升序",
+      "desc": "降序"
+    },
+    "listTitle": "聊天工作階段（共 {{count}} 條{{filtered}}）",
+    "sortedBy": "排序：{{field}}（{{order}}）",
+    "help": {
+      "navigate": "導航",
+      "resume": "還原",
+      "search": "搜索",
+      "delete": "刪除",
+      "quit": "退出",
+      "sort": "排序",
+      "reverse": "倒序",
+      "firstLast": "首/末"
+    },
+    "columns": {
+      "index": "序號",
+      "messages": "訊息",
+      "age": "時間",
+      "match": "匹配",
+      "name": "名稱"
+    },
+    "noResults": "未找到與“{{query}}”匹配的結果。",
+    "roleUser": "使用者",
+    "roleModel": "助手",
+    "current": "（當前）",
+    "moreMatches": "（另有 {{count}} 處）",
+    "noMessages": "無訊息",
+    "loadFailed": "載入工作階段失敗",
+    "loadFullFailed": "載入完整工作階段內容失敗",
+    "deleteFailed": "刪除工作階段失敗：{{error}}",
+    "unknownError": "未知錯誤"
+  },
+  "toolConfirmation": {
+    "applyChange": "應用此更改？",
+    "execMultiple": "允许執行 {{count}} 條命令？",
+    "execSingle": "允许執行：'{{command}}'？",
+    "proceedQuestion": "是否繼續？",
+    "mcpQuestion": "允许從伺服器“{{server}}”執行 MCP 工具“{{tool}}”嗎？",
+    "options": {
+      "allowOnce": "僅允许一次",
+      "allowSession": "本次工作階段允许",
+      "allowAllFuture": "以後所有工作階段允许",
+      "modifyExternalEditor": "使用外部編輯器修改",
+      "suggestChangesEsc": "不，建議修改（esc）",
+      "allowToolSession": "本次工作階段允许該工具",
+      "allowServerToolsSession": "本次工作階段允许該伺服器所有工具",
+      "allowToolAllFuture": "以後所有工作階段允许該工具"
+    },
+    "redirection": {
+      "noteLabel": "注意：",
+      "noteText": "命令包含重定向，可能存在風险。",
+      "tipLabel": "提示：  ",
+      "tipText": "可通過切換自動編輯（Shift+Tab）允许將來使用重定向。"
+    },
+    "urlsToFetch": "將取得的 URL：",
+    "mcpServer": "MCP 伺服器：{{server}}",
+    "mcpTool": "工具：{{tool}}",
+    "modifyInProgress": "修改中：",
+    "modifyHint": "請在外部編輯器中完成修改。"
+  }
+}

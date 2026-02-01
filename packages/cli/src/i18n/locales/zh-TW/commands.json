@@ -1,0 +1,764 @@
+{
+  "help": {
+    "name": "help",
+    "description": "顯示說明資訊",
+    "usage": "顯示可用命令和使用說明",
+    "sections": {
+      "basics": "基础用法：",
+      "commands": "命令：",
+      "shortcuts": "快捷鍵：",
+      "addContext": "添加上下文",
+      "addContextDesc": "使用 @ 指定檔案作為上下文（例如 @src/myFile.ts）來定位特定檔案或資料夾。",
+      "addContextPrefix": "使用 ",
+      "addContextMiddle": " 指定檔案作為上下文（例如 ",
+      "addContextSuffix": "）來定位特定檔案或資料夾。",
+      "shellMode": "Shell 模式",
+      "shellModeDesc": "透過 ! 執行 shell 命令（例如 !npm run start）或使用自然語言（例如 啟動伺服器）。",
+      "shellModePrefix": "透過 ",
+      "shellModeMiddle1": " 執行 shell 命令（例如 ",
+      "shellModeMiddle2": "）或使用自然語言（例如 ",
+      "shellModeSuffix": "）。",
+      "shellModeExample": "啟動伺服器",
+      "shellCommand": "shell 命令",
+      "mcpNote": "Model Context Protocol 命令（來自外部伺服器）"
+    }
+  },
+  "clear": {
+    "name": "clear",
+    "description": "清空對話",
+    "usage": "清空當前對話歷史",
+    "clearingTerminal": "正在清理終端。",
+    "clearingTerminalAndResettingChat": "正在清理終端並重置聊天。"
+  },
+  "quit": {
+    "name": "quit",
+    "description": "退出 CLI",
+    "usage": "退出 Gemini CLI"
+  },
+  "model": {
+    "name": "model",
+    "description": "開啟設定模型的對話框",
+    "usage": "查看或切換 AI 模型"
+  },
+  "theme": {
+    "name": "theme",
+    "description": "更改主題",
+    "usage": "在可用的顏色主題之間切換"
+  },
+  "stats": {
+    "name": "stats",
+    "description": "查看工作階段統計。用法：/stats [session|model|tools]",
+    "usage": "顯示 token 使用情況和工作階段資訊",
+    "sessionStartUnavailable": "工作階段開始時間不可用，無法計算統計資料。",
+    "session": {
+      "description": "顯示工作階段特定的使用統計"
+    },
+    "model": {
+      "description": "顯示模型特定的使用統計"
+    },
+    "tools": {
+      "description": "顯示工具特定的使用統計"
+    }
+  },
+  "copy": {
+    "name": "copy",
+    "description": "複製最後的回覆",
+    "usage": "將最後的 AI 回覆複製到剪貼簿",
+    "noOutput": "歷史中沒有輸出",
+    "copied": "已複製最新輸出到剪貼簿",
+    "failed": "複製到剪貼簿失敗。{{error}}",
+    "noText": "最新 AI 輸出不包含可複製文本。"
+  },
+  "save": {
+    "name": "save",
+    "description": "儲存對話",
+    "usage": "將當前對話儲存到檔案"
+  },
+  "restore": {
+    "name": "restore",
+    "description": "還原之前的對話",
+    "usage": "還原之前儲存的對話",
+    "geminiDirNotFound": "無法確定 .gemini 目錄路徑。",
+    "noRestorable": "未找到可還原的工具調用。",
+    "availableList": "可用的檢查點：\n{{list}}",
+    "fileNotFound": "未找到檔案：{{file}}",
+    "errorReading": "無法讀取可還原的工具調用。錯誤：{{error}}",
+    "invalidCheckpoint": "無效的檢查點檔案：{{error}}",
+    "gitServiceUnavailable": "Git 服務不可用，無法還原檢查點。請確認目前位於 Git 倉庫中。",
+    "restored": "已將專案還原到該工具調用之前的狀態。",
+    "commitNotFound": "與該檢查點關聯的提交哈希 '{{commitHash}}' 在當前 Git 倉庫中未找到。可能原因：倉庫被重新克隆/重置，或舊提交已經被垃圾回收。此檢查點無法還原。"
+  },
+  "memory": {
+    "name": "memory",
+    "description": "管理對話記憶",
+    "usage": "查看或管理對話記憶",
+    "show": {
+      "description": "顯示目前記憶內容",
+      "configNotAvailable": "設定不可用，無法顯示記憶。",
+      "contextLabel": "上下文檔案",
+      "loadedFromSingle": "已從 {{count}} 個{{name}}檔案載入記憶。",
+      "loadedFromPlural": "已從 {{count}} 個{{name}}檔案載入記憶。",
+      "currentContentWithCount": "目前記憶內容來自 {{count}} 個檔案：\n\n---\n{{content}}\n---",
+      "currentContent": "目前記憶內容：\n\n---\n{{content}}\n---",
+      "emptyContent": "分層記憶（GEMINI.md 或其他上下文檔案）已載入，但內容為空。",
+      "noneLoaded": "目前沒有記憶內容。"
+    },
+    "add": {
+      "description": "添加內容到記憶",
+      "usage": "用法：/memory add <要記住的內容>",
+      "saving": "正在嘗試儲存到記憶：\"{{content}}\""
+    },
+    "refresh": {
+      "description": "從源檔案重新整理記憶",
+      "refreshing": "正在從源檔案重新整理記憶...",
+      "successWithCount": "記憶重新整理成功。從 {{count}} 個檔案載入了 {{chars}} 個字符。",
+      "successEmpty": "記憶重新整理成功。未發現記憶內容。",
+      "error": "重新整理記憶時出錯：{{error}}"
+    },
+    "list": {
+      "description": "列出正在使用的 GEMINI.md 檔案路徑",
+      "withCount": "目前使用 {{count}} 個 GEMINI.md 檔案：\n\n{{list}}",
+      "empty": "目前沒有使用 GEMINI.md 檔案。"
+    }
+  },
+  "tools": {
+    "name": "tools",
+    "description": "列出可用的 Gemini CLI 工具。用法：/tools [desc]",
+    "usage": "顯示所有可用工具",
+    "noRegistry": "無法取得工具注冊表。",
+    "list": {
+      "title": "可用的 Gemini CLI 工具：",
+      "empty": "沒有可用工具"
+    }
+  },
+  "mcp": {
+    "name": "mcp",
+    "description": "管理已設定的模型上下文協議 (MCP) 伺服器",
+    "usage": "設定模型上下文協議伺服器",
+    "configNotLoaded": "設定未載入。",
+    "noOAuthServers": "沒有設定 OAuth 驗證的 MCP 伺服器。",
+    "oauthServersList": "支援 OAuth 驗證的 MCP 伺服器：",
+    "useAuthHint": "使用 /mcp auth <伺服器名稱> 進行驗證。",
+    "serverNotFound": "未找到 MCP 伺服器 '{{name}}'。",
+    "noClientManager": "無法取得 MCP 客戶端管理器。",
+    "restarting": "正在重新啟動 MCP 伺服器...",
+    "auth": {
+      "description": "向啟用 OAuth 的 MCP 伺服器進行驗證",
+      "starting": "正在啟動 MCP 伺服器 '{{name}}' 的 OAuth 驗證...",
+      "success": "成功驗證 MCP 伺服器 '{{name}}'！",
+      "restarting": "正在重新啟動 MCP 伺服器 '{{name}}'...",
+      "refreshed": "已成功驗證並重新整理 '{{name}}' 的工具。",
+      "failed": "MCP 伺服器 '{{name}}' 驗證失敗：{{error}}"
+    },
+    "list": {
+      "description": "列出已設定的 MCP 伺服器和工具"
+    },
+    "desc": {
+      "description": "列出已設定的 MCP 伺服器和工具（含描述）"
+    },
+    "schema": {
+      "description": "列出已設定的 MCP 伺服器和工具（含描述和模式）"
+    },
+    "refresh": {
+      "description": "重新啟動 MCP 伺服器"
+    }
+  },
+  "chat": {
+    "name": "chat",
+    "description": "管理對話歷史",
+    "usage": "開始一個新的對話",
+    "list": {
+      "description": "列出已儲存的聊天檢查點"
+    },
+    "save": {
+      "description": "將當前對話儲存為檢查點",
+      "missingTag": "缺少標籤。用法：/chat save <tag>",
+      "noClient": "無可用聊天客戶端，無法儲存工作階段。",
+      "noConversation": "未找到可儲存的對話。",
+      "saved": "已儲存工作階段檢查點，標籤：{{tag}}。",
+      "overwritePromptPrefix": "該標籤已存在：",
+      "overwritePromptSuffix": "。是否覆蓋？"
+    },
+    "resume": {
+      "description": "還原已儲存的對話檢查點",
+      "missingTag": "缺少標籤。用法：/chat resume <tag>",
+      "noCheckpoint": "未找到標籤為 {{tag}} 的檢查點。",
+      "authMismatch": "無法還原工作階段。儲存時使用的驗證方式（{{saved}}）與當前方式（{{current}}）不同。"
+    },
+    "delete": {
+      "description": "刪除已儲存的對話檢查點",
+      "missingTag": "缺少標籤。用法：/chat delete <tag>",
+      "deleted": "工作階段檢查點 '{{tag}}' 已刪除。",
+      "notFound": "錯誤：未找到標籤為 '{{tag}}' 的檢查點。"
+    },
+    "share": {
+      "description": "將對話導出到檔案（.md 或 .json）",
+      "noClient": "無可用聊天客戶端，無法分享工作階段。",
+      "noConversation": "未找到可分享的對話。",
+      "shared": "對話已分享至 {{path}}",
+      "shareFailed": "分享對話失敗：{{error}}"
+    },
+    "debug": {
+      "description": "導出最新的 API 請求用於偵錯",
+      "noRecentRequest": "未找到可導出的最近 API 請求。",
+      "saved": "偵錯 API 請求已儲存至 {{filename}}",
+      "saveFailed": "儲存偵錯請求失敗：{{error}}"
+    },
+    "noCheckpoints": "未找到已儲存的對話檢查點。",
+    "listTitle": "已儲存的對話列表：",
+    "invalidDate": "無效日期",
+    "newestLast": "注意：最新的在最後，最舊的在最前",
+    "export": {
+      "invalidFormat": "檔案格式無效。僅支持 .md 和 .json。"
+    }
+  },
+  "compress": {
+    "name": "compress",
+    "description": "壓縮對話歷史",
+    "usage": "壓縮對話以節省上下文空間",
+    "alreadyCompressing": "正在壓縮，請等待上一次請求完成",
+    "failed": "壓縮聊天歷史失敗。",
+    "failedWithError": "壓縮聊天歷史失敗：{{error}}",
+    "status": {
+      "pending": "正在壓縮聊天記錄",
+      "compressed": "聊天記錄已從 {{original}} 壓縮到 {{new}} tokens。",
+      "notBeneficial": "該歷史規模下壓縮收益不大。",
+      "noReduction": "聊天記錄壓縮未減少大小。",
+      "tokenCountError": "由於 tokens 統計錯誤，無法壓縮聊天記錄。",
+      "emptySummary": "聊天記錄壓縮失敗：模型返回了空摘要。",
+      "noop": "無需壓縮。"
+    }
+  },
+  "about": {
+    "description": "顯示版本資訊",
+    "title": "關於 Gemini CLI",
+    "cliVersion": "CLI 版本",
+    "gitCommit": "Git 提交",
+    "model": "模型",
+    "sandbox": "沙箱",
+    "noSandbox": "無沙箱",
+    "os": "操作系統",
+    "authMethod": "驗證方式",
+    "userEmail": "使用者邮箱",
+    "gcpProject": "GCP 專案",
+    "ideClient": "IDE 客戶端",
+    "sandboxExec": "sandbox-exec（{{profile}}）"
+  },
+  "bug": {
+    "description": "提交錯誤報告",
+    "submitPrompt": "要提交錯誤報告，請在瀏覽器中開啟以下 URL：",
+    "historyExported": "📄 **聊天記錄已導出**\n為了協助我們偵錯，我們已將您目前的聊天記錄導出到：",
+    "attachPrompt": "如果您願意，請考慮將此檔案附加到您的 GitHub issue。",
+    "privacyDisclaimer": "**隱私声明：** 請不要上傳任何包含您不願公開分享的敏感或私人資訊的日誌。",
+    "actionRequired": "[需要操作] 📎 如果您願意分享，請將導出的聊天記錄 JSON 檔案附加到此 issue。",
+    "openError": "無法在瀏覽器中開啟 URL：{{error}}",
+    "kittySupported": "支援",
+    "kittyUnsupported": "不支援",
+    "info": {
+      "cliVersion": "CLI 版本",
+      "gitCommit": "Git 提交",
+      "sessionId": "工作階段 ID",
+      "operatingSystem": "操作系統",
+      "sandboxEnv": "沙箱環境",
+      "modelVersion": "模型版本",
+      "memoryUsage": "記憶體占用",
+      "terminalName": "終端名稱",
+      "terminalBackground": "終端背景",
+      "kittyKeyboard": "Kitty 鍵盤協議",
+      "ideClient": "IDE 客戶端"
+    }
+  },
+  "docs": {
+    "description": "在瀏覽器中開啟完整的 Gemini CLI 文檔",
+    "openInBrowser": "請在瀏覽器中開啟以下 URL 查看文檔：",
+    "opening": "正在瀏覽器中開啟文檔："
+  },
+  "directory": {
+    "description": "管理工作區目錄",
+    "currentWorkspace": "當前工作區目錄：",
+    "add": {
+      "description": "添加目錄到工作區。使用逗號分隔多個路徑"
+    },
+    "show": {
+      "description": "顯示工作區中的所有目錄"
+    },
+    "configNotAvailable": "設定不可用。",
+    "successAddedGeminiMd": "已成功從以下目錄添加 GEMINI.md 檔案（如果存在）：",
+    "errorRefreshingMemory": "重新整理記憶時出錯：{{error}}",
+    "successAddedDirs": "已成功添加目錄：",
+    "sandboxNotSupported": "在限制性沙箱設定中不支持 /directory add 命令。請在啟動工作階段時使用 --include-directories。",
+    "provideAtLeastOnePath": "請提供至少一個要添加的路徑。",
+    "alreadyInWorkspace": "以下目錄已在工作區中：",
+    "untrustedDirs": "以下目錄被明確標記為不受信任，無法添加到受信任的工作區：",
+    "usePermissionsCommand": "請使用 permissions 命令修改其信任級別。",
+    "errorAdding": "添加 '{{path}}' 時出錯：{{error}}"
+  },
+  "extensions": {
+    "description": "管理 Gemini CLI 擴充套件。",
+    "demandClient": "在繼續之前，您至少需要一個命令。",
+    "updateAvailable": "您有 {{count}} 個擴充套件有可用更新。執行",
+    "install": {
+      "description": "從 Git 倉庫 URL 或本地路徑安裝擴充套件。",
+      "source": "要安裝的擴充套件的 Github URL 或本地路徑。",
+      "ref": "要安裝的 Git 引用 (Git ref)。",
+      "autoUpdate": "為此擴充套件啟用自動更新。",
+      "preRelease": "為此擴充套件啟用預發布版本。",
+      "consent": "確認安裝擴充套件的安全風险並跳過確認提示。",
+      "error": {
+        "noSource": "必須提供 source 參數。"
+      },
+      "log": {
+        "consent": "您已同意以下內容：",
+        "success": "擴充套件 \"{{name}}\" 安裝成功並已啟用。"
+      },
+      "describe": "從 Git 倉庫 URL 或本地路徑安裝擴充套件。",
+      "usage": "用法：/extensions install <source>",
+      "invalidSource": "無效來源：{{source}}",
+      "installing": "正在從 \"{{source}}\" 安裝擴充套件...",
+      "success": "擴充套件 \"{{name}}\" 安裝成功。",
+      "failed": "安裝擴充套件 \"{{source}}\" 失敗：{{error}}"
+    },
+    "list": {
+      "description": "列出已安裝的擴充套件。",
+      "log": {
+        "empty": "未安裝任何擴充套件。"
+      },
+      "describe": "列出已安裝的擴充套件。",
+      "empty": "未安裝任何擴充套件。執行 `/extensions explore` 查看擴充套件庫。",
+      "installedTitle": "已安裝的擴充套件：",
+      "status": {
+        "active": "已啟用",
+        "disabled": "已停用"
+      },
+      "updateState": {
+        "unknown": "狀態未知",
+        "checkingForUpdates": "正在檢查更新",
+        "updating": "正在更新",
+        "updateAvailable": "有可用更新",
+        "updatedNeedsRestart": "已更新，需要重新啟動",
+        "updated": "已更新",
+        "error": "錯誤",
+        "upToDate": "已是最新",
+        "notUpdatable": "不可更新"
+      },
+      "settingsLabel": "設定："
+    },
+    "update": {
+      "description": "更新所有擴充套件或指定擴充套件到最新版本。",
+      "name": "要更新的擴充套件名稱。",
+      "all": "更新所有擴充套件。",
+      "error": {
+        "missingArgs": "必須提供擴充套件名稱或 --all 參數。"
+      },
+      "log": {
+        "success": "擴充套件 \"{{name}}\" 已成功更新：{{v1}} → {{v2}}。",
+        "notFound": "未找到擴充套件 \"{{name}}\"。",
+        "missingMetadata": "由於缺少安裝元資料，無法安裝擴充套件 \"{{name}}\"",
+        "upToDate": "擴充套件 \"{{name}}\" 已是最新版本。",
+        "noneToUpdate": "沒有可更新的擴充套件。"
+      },
+      "usage": "用法：/extensions update <extension-names>|--all",
+      "none": "沒有可更新的擴充套件。",
+      "notFound": "未找到擴充套件 \"{{name}}\"。",
+      "available": "有 {{count}} 個擴充套件可更新。執行 \"/extensions update {{names}}\"。"
+    },
+    "disable": {
+      "description": "停用擴充套件。",
+      "name": "要停用的擴充套件名稱。",
+      "scope": "停用擴充套件的作用域。",
+      "error": {
+        "invalidScope": "無效的作用域：{{scope}}。請使用 {{allowed}} 之一。"
+      },
+      "log": {
+        "success": "擴充套件 \"{{name}}\" 已成功在 \"{{scope}}\" 作用域中停用。"
+      },
+      "success": "已在 {{scope}} 作用域停用擴充套件 \"{{name}}\"。"
+    },
+    "enable": {
+      "description": "啟用擴充套件。",
+      "name": "要啟用的擴充套件名稱。",
+      "scope": "啟用擴充套件的作用域。如果未設定，將在所有作用域中啟用。",
+      "error": {
+        "invalidScope": "無效的作用域：{{scope}}。請使用 {{allowed}} 之一。"
+      },
+      "log": {
+        "success": "擴充套件 \"{{name}}\" 已成功在 \"{{scope}}\" 作用域中啟用。",
+        "successAll": "擴充套件 \"{{name}}\" 已成功在所有作用域中啟用。"
+      },
+      "success": "已在 {{scope}} 作用域啟用擴充套件 \"{{name}}\"。"
+    },
+    "link": {
+      "description": "連結本地擴充套件。對本地路徑的更改將始終反映出來。",
+      "path": "要連結的擴充套件名稱（路徑）。",
+      "consent": "確認安裝擴充套件的安全風险並跳過確認提示。",
+      "log": {
+        "success": "擴充套件 \"{{name}}\" 已成功連結並啟用。"
+      },
+      "usage": "用法：/extensions link <source>",
+      "disallowedPath": "無效來源：{{path}}",
+      "invalidSource": "無效來源：{{source}}",
+      "linking": "正在從 \"{{source}}\" 進行連結...",
+      "success": "擴充套件 \"{{name}}\" 連結成功。",
+      "failed": "連結擴充套件 \"{{source}}\" 失敗：{{error}}"
+    },
+    "new": {
+      "description": "從樣板範例建立新擴充套件。",
+      "path": "建立擴充套件的路徑。",
+      "template": "使用的樣板模版。",
+      "log": {
+        "successTemplate": "已成功從模版 \"{{template}}\" 在 {{path}} 建立新擴充套件。",
+        "success": "已成功在 {{path}} 建立新擴充套件。",
+        "hint": "您可以使用 \"gemini extensions link {{path}}\" 安裝並測試它。"
+      }
+    },
+    "validate": {
+      "description": "驗證本地路徑的擴充套件。",
+      "path": "要驗證的擴充套件路徑。",
+      "log": {
+        "success": "擴充套件 {{path}} 已成功驗證。",
+        "warnings": "驗證警告：",
+        "errors": "驗證失敗，包含以下錯誤："
+      },
+      "error": {
+        "failed": "擴充套件驗證失敗。"
+      }
+    },
+    "configure": {
+      "description": "設定擴充套件設定。",
+      "name": "要設定的擴充套件名稱。",
+      "setting": "要設定的具體設定（名稱或環境變量）。",
+      "scope": "設定的作用域。",
+      "log": {
+        "disabled": "擴充套件設定當前已停用。通過設定 \"experimental.extensionConfig\" 為 true 來啟用。",
+        "invalidName": "無效的擴充套件名稱。名稱不能包含路徑分隔符或 \"..\"。",
+        "notFound": "找不到擴充套件 \"{{name}}\" 的設定。",
+        "noSettings": "擴充套件 \"{{name}}\" 沒有可設定的設定。",
+        "configuring": "正在設定 \"{{name}}\" 的設定...",
+        "noInstalled": "未安裝任何擴充套件。",
+        "alreadyConfigured": "注意：設定 \"{{name}}\" 已在工作區作用域中設定。",
+        "promptOverwrite": "設定 \"{{name}}\" ({{env}}) 已設定。覆蓋嗎？"
+      }
+    },
+    "home": {
+      "description": "進入擴充套件主頁"
+    },
+    "uninstall": {
+      "description": "卸載擴充套件",
+      "usage": "用法：/extensions uninstall <extension-name>",
+      "uninstalling": "正在卸載擴充套件 \"{{name}}\"...",
+      "success": "擴充套件 \"{{name}}\" 卸載成功。",
+      "failed": "卸載擴充套件 \"{{name}}\" 失敗：{{error}}"
+    },
+    "explore": {
+      "description": "瀏覽擴充套件庫",
+      "opening": "正在在瀏覽器中開啟擴充套件頁面：{{url}}",
+      "viewAvailable": "在 {{url}} 查看可用擴充套件",
+      "skippedTest": "將會在瀏覽器中開啟擴充套件頁面：{{url}}（測試環境中已跳過）",
+      "openFailed": "開啟瀏覽器失敗。請存取擴充套件庫：{{url}}"
+    },
+    "restart": {
+      "description": "重新啟動活動擴充套件",
+      "notLoaded": "擴充套件尚未載入，暂無法重新啟動",
+      "usage": "用法：/extensions restart <extension-names>|--all",
+      "restartingSingle": "正在重新啟動擴充套件...",
+      "restartingMultiple": "正在重新啟動 {{count}} 個擴充套件...",
+      "failedSome": "部分擴充套件重新啟動失敗：\n  {{errors}}",
+      "notFoundOrInactive": "未找到或未啟用的擴充套件：{{names}}",
+      "successSingle": "擴充套件重新啟動成功。",
+      "successMultiple": "已成功重新啟動 {{count}} 個擴充套件。"
+    },
+    "consent": {
+      "installingExtension": "正在安裝擴充套件 \"{{name}}\"。",
+      "mcpServersTitle": "該擴充套件將執行以下 MCP 伺服器：",
+      "mcpServerLocal": "本地",
+      "mcpServerRemote": "遠程",
+      "mcpServerEntry": "  * {{name}}（{{location}}）：{{source}}",
+      "contextFile": "該擴充套件將使用 {{name}} 向你的 gemini.md 上下文追加資訊",
+      "excludeTools": "該擴充套件將排除以下核心工具：{{tools}}",
+      "hooksWarning": "⚠️  該擴充套件包含會自動執行命令的 Hooks。",
+      "agentSkillsTitle": "代理技能：",
+      "agentSkillsIntro": "該擴充套件將安裝以下代理技能：",
+      "installWarning": "你即將安裝的擴充套件可能由第三方開發者建立並來自公開倉庫。Google 不對擴充套件的功能或安全性進行審核、背書或保證。請在安裝前仔细檢查擴充套件及其源碼，以了解其所需權限及可能執行的操作。",
+      "skillsWarning": "代理技能會將專用指令和領域知識注入到代理系統提示中，這可能改變代理對請求的理解和與環境的交互方式。請檢查下方提供的技能定義位置，確保符合你的安全標準。",
+      "continuePrompt": "是否繼續？",
+      "continuePromptWithDefault": "是否繼續？[Y/n]: ",
+      "skillSourceLabel": "來源",
+      "skillItemsCount": "（目錄中有 {{count}} 個專案）",
+      "skillItemsCountFailed": "⚠️（無法統計目錄中的專案數）"
+    },
+    "enableDisable": {
+      "usage": "用法：/extensions {{action}} <extension> [--scope=<user|workspace|session>]"
+    },
+    "scopeUnsupported": "不支持的作用域：{{scope}}",
+    "describe": "管理 Gemini CLI 擴充套件。"
+  },
+  "settings": {
+    "description": "查看並編輯 Gemini CLI 設定"
+  },
+  "auth": {
+    "description": "管理驗證",
+    "login": {
+      "description": "登入或更改驗證方式"
+    },
+    "logout": {
+      "description": "登出並清除所有快取的憑據"
+    }
+  },
+  "privacy": {
+    "description": "顯示隱私声明"
+  },
+  "permissions": {
+    "description": "管理檔案夹信任設定及其他權限",
+    "trust": {
+      "description": "管理檔案夹信任設定。用法：/permissions trust [<directory-path>]"
+    }
+  },
+  "skills": {
+    "description": "列出、啟用、停用或重新載入 Gemini CLI 代理技能。用法：/skills [list | disable <名稱> | enable <名稱> | reload]",
+    "noSkillManager": "無法取得技能管理器。",
+    "noConfig": "無法取得設定。",
+    "reloading": "正在重新載入代理技能...",
+    "reloadSuccess": "代理技能重新載入成功。",
+    "newlyAvailable": "{{count}} 個新可用技能",
+    "noLongerAvailable": "{{count}} 個技能不再可用",
+    "reloadHint": "使用 \"/skills reload\" 使其生效。",
+    "reloadFailed": "重新載入技能失敗：{{error}}",
+    "disabledByAdmin": "代理技能已被管理員停用。",
+    "notFound": "未找到技能 \"{{name}}\"。",
+    "noSkillNameDisable": "請提供要停用的技能名稱。",
+    "noSkillNameEnable": "請提供要啟用的技能名稱。",
+    "consent": {
+      "installingSkillsFrom": "正在從 \"{{source}}\" 安裝代理技能。",
+      "skillsWillBeInstalled": "將安裝以下代理技能：",
+      "installDestination": "安裝位置：{{path}}"
+    },
+    "list": {
+      "description": "列出可用的代理技能。用法：/skills list [nodesc] [all]",
+      "availableTitle": "可用的智能體技能：",
+      "disabledTitle": "已停用的技能：",
+      "empty": "沒有可用技能",
+      "builtinBadge": " [內置]"
+    },
+    "disable": {
+      "description": "按名稱停用技能。用法：/skills disable <名稱>"
+    },
+    "enable": {
+      "description": "按名稱啟用已停用的技能。用法：/skills enable <名稱>"
+    },
+    "reload": {
+      "description": "重新載入已發現的技能列表。用法：/skills reload"
+    }
+  },
+  "rewind": {
+    "description": "跳回到特定訊息並重新開始對話",
+    "noConfig": "未找到設定",
+    "noClient": "客戶端未初始化",
+    "noRecording": "錄制服務不可用",
+    "noConversation": "未找到對話。",
+    "nothingToRewind": "沒有可回退的內容。",
+    "fetchFailed": "無法取得對話檔案",
+    "unknownError": "回退過程中發生未知錯誤",
+    "filesReverted": "檔案更改已還原。",
+    "revert": {
+      "readError": "回滚時讀取 {{fileName}} 出錯：{{error}}",
+      "smartFailed": "智能回滚 {{fileName}} 失敗",
+      "missingFile": "缺少檔案 {{fileName}}，無法回滚。",
+      "unexpectedError": "回滚 {{fileName}} 時發生意外錯誤。"
+    }
+  },
+  "agents": {
+    "description": "管理本地和遠程代理",
+    "list": {
+      "description": "列出可用的本地和遠程代理",
+      "configNotLoaded": "設定未載入。",
+      "registryNotFound": "未找到代理注冊表。",
+      "empty": "沒有可用的代理。",
+      "localTitle": "本地代理",
+      "remoteTitle": "遠程代理"
+    },
+    "enable": {
+      "description": "啟用已停用的代理",
+      "usage": "用法：/agents enable <agent-name>",
+      "registryNotFound": "未找到代理注冊表。",
+      "alreadyEnabled": "代理 \"{{name}}\" 已啟用。",
+      "notFound": "未找到代理 \"{{name}}\"。",
+      "enabling": "正在啟用 {{name}}..."
+    },
+    "disable": {
+      "description": "停用已啟用的代理",
+      "usage": "用法：/agents disable <agent-name>",
+      "registryNotFound": "未找到代理注冊表。",
+      "alreadyDisabled": "代理 \"{{name}}\" 已停用。",
+      "notFound": "未找到代理 \"{{name}}\"。",
+      "disabling": "正在停用 {{name}}..."
+    },
+    "refresh": {
+      "description": "重新載入代理注冊表",
+      "registryNotFound": "未找到代理注冊表。",
+      "refreshing": "正在重新整理代理...",
+      "success": "代理重新整理成功。"
+    },
+    "feedback": {
+      "error": "尝試{{action}}代理 \"{{agentName}}\" 時出錯。",
+      "alreadyEnabled": "代理 \"{{agentName}}\" 已啟用。",
+      "alreadyDisabled": "代理 \"{{agentName}}\" 已停用。",
+      "enabledTwoScopes": "通過在 {{scope1}} 和 {{scope2}} 設定中啟用，代理 \"{{agentName}}\" 已啟用。",
+      "disabledTwoScopes": "通過在 {{scope1}} 和 {{scope2}} 設定中停用，代理 \"{{agentName}}\" 已在两個作用域均被停用。",
+      "singleScope": "通過在 {{scope}} 設定中將其設為 {{enabledDisabled}}，代理 \"{{agentName}}\" 已{{actionVerb}}。",
+      "scopeProject": "專案",
+      "scopeUser": "使用者"
+    }
+  },
+  "hooks": {
+    "description": "管理鉤子",
+    "list": {
+      "description": "列出所有鉤子"
+    },
+    "panel": {
+      "description": "顯示所有已注冊鉤子及其狀態",
+      "securityWarningTitle": "安全警告",
+      "securityWarningBody": "Hook 可以在你的机器上執行命令。只啟用你信任來源的 Hook。",
+      "learnMoreLabel": "了解更多：",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "已設定的 Hook：",
+      "unknown": "未知",
+      "status": {
+        "enabled": "已啟用",
+        "disabled": "已停用"
+      },
+      "sourceLabel": "來源：{{source}}",
+      "commandLabel": "命令：{{command}}",
+      "matcherLabel": "匹配器：{{matcher}}",
+      "sequentialLabel": "顺序執行",
+      "timeoutLabel": "超時：{{seconds}} 秒",
+      "tip": {
+        "prefix": "提示：",
+        "or": " 或 ",
+        "middle": "。也可以使用 ",
+        "suffix": "。"
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<hook-name>"
+    },
+    "enable": {
+      "description": "按名稱啟用鉤子"
+    },
+    "disable": {
+      "description": "按名稱停用鉤子"
+    },
+    "enableAll": {
+      "description": "啟用所有已停用的鉤子"
+    },
+    "disableAll": {
+      "description": "停用所有已啟用的鉤子"
+    },
+    "configNotLoaded": "設定未載入。",
+    "hookSystemNotEnabled": "鉤子系統未啟用。",
+    "usageEnable": "用法：/hooks enable <鉤子名稱>",
+    "usageDisable": "用法：/hooks disable <鉤子名稱>",
+    "enabledSuccess": "鉤子 \"{{name}}\" 已成功啟用。",
+    "disabledSuccess": "鉤子 \"{{name}}\" 已成功停用。",
+    "failedToEnable": "啟用鉤子失敗：{{error}}",
+    "failedToDisable": "停用鉤子失敗：{{error}}",
+    "noHooksConfigured": "沒有設定鉤子。",
+    "allHooksEnabled": "所有鉤子已啟用。",
+    "allHooksDisabled": "所有鉤子已停用。",
+    "enabledCount": "已成功啟用 {{count}} 個鉤子。",
+    "disabledCount": "已成功停用 {{count}} 個鉤子。",
+    "failedToEnableAll": "啟用鉤子失敗：{{error}}",
+    "failedToDisableAll": "停用鉤子失敗：{{error}}"
+  },
+  "policies": {
+    "description": "管理策略",
+    "errorConfigNotAvailable": "錯誤：設定不可用。",
+    "noActive": "沒有活動策略。",
+    "list": {
+      "description": "列出所有活動策略",
+      "title": "活動策略",
+      "tool": "工具",
+      "allTools": "所有工具",
+      "argsMatch": "參數匹配",
+      "priority": "優先級",
+      "source": "來源"
+    }
+  },
+  "profile": {
+    "description": "管理設定檔案",
+    "toggled": "已切換性能分析顯示。"
+  },
+  "init": {
+    "description": "初始化新專案",
+    "configNotAvailable": "設定不可用。",
+    "alreadyExists": "當前目錄已存在 GEMINI.md 檔案，未進行任何更改。",
+    "emptyCreated": "已建立空的 GEMINI.md 檔案。"
+  },
+  "editor": {
+    "description": "設定外部編輯器偏好"
+  },
+  "ide": {
+    "description": "IDE 集成命令",
+    "status": {
+      "description": "檢查 IDE 集成狀態",
+      "connected": "已連接到 {{ide}}",
+      "connecting": "正在連接...",
+      "disconnected": "已斷開連接",
+      "disconnectedWithDetails": "已斷開連接：{{details}}",
+      "activeSuffix": "（活動）",
+      "fileListNote": "注意：僅跟踪當前活動檔案",
+      "openFilesHeader": "開啟的檔案："
+    },
+    "install": {
+      "description": "為 {{ide}} 安裝 IDE 擴充套件",
+      "noInstaller": "{{ide}}（{{extension}}）沒有可用的安裝器",
+      "installing": "正在安裝擴充套件...",
+      "autoEnableFailed": "無法自動啟用 IDE 集成。請在新的終端視窗執行 CLI 以修復。"
+    },
+    "enable": {
+      "description": "啟用 IDE 集成"
+    },
+    "disable": {
+      "description": "停用 IDE 集成"
+    },
+    "unsupported": "目前環境不支援 IDE 集成。"
+  },
+  "vim": {
+    "description": "切換 vim 模式",
+    "entered": "已進入 vim 模式。",
+    "exited": "已退出 vim 模式。"
+  },
+  "terminalSetup": {
+    "description": "設定終端設定",
+    "restartRequired": "請重新啟動終端以使更改生效。",
+    "failed": "終端設定失敗：{{error}}",
+    "windowsConfigPathMissing": "找不到 {{terminal}} 設定目錄。是否已安裝？",
+    "keybindingsNotArray": "{{terminal}} 的 keybindings 檔案（{{file}}）不是 JSON 數組。",
+    "keybindingsParseFailed": "無法解析 {{terminal}} 的 keybindings 檔案（{{file}}）：無效 JSON（{{error}}）",
+    "alreadyConfigured": "{{terminal}} 已設定為支援 Shift+Enter。",
+    "existingBindingsShift": "- 已存在 'shift+enter' 綁定",
+    "existingBindingsCtrl": "- 已存在 'ctrl+enter' 綁定",
+    "existingBindingsHeader": "發現已有衝突的按鍵綁定：",
+    "existingBindingsFooter": "如需添加，請手動編輯 {{file}}。",
+    "addedBindings": "已成功設定 {{terminal}}！已將按鍵綁定寫入 {{file}}。",
+    "configureFailed": "設定 {{terminal}}（{{file}}）失敗：{{error}}",
+    "kittyAlreadyConfigured": "檢測到 Kitty 鍵盤協議支援！多行輸入無需額外設定。",
+    "detectFailed": "無法自動檢測終端模擬器。請查看文檔手動設定。",
+    "notSupported": "目前不支援為 {{terminal}} 自動設定。請查看文檔手動設定。"
+  },
+  "setupGithub": {
+    "description": "設定 GitHub 集成",
+    "notGitRepo": "當前目錄不是 GitHub 倉庫。",
+    "downloadSuccess": "已下載 {{workflows}} 個 workflow 和 {{commands}} 個 command 檔案。請查看 {{url}} 完成後續設定。",
+    "toolDescription": "設定 GitHub Actions"
+  },
+  "resume": {
+    "description": "還原之前的工作階段"
+  },
+  "corgi": {
+    "description": "切換柯基模式"
+  }
+}

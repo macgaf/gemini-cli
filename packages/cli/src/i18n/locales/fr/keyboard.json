@@ -1,0 +1,56 @@
+{
+  "shortcuts": {
+    "title": "Raccourcis clavier",
+    "submit": "Envoyer message",
+    "newline": "Nouvelle ligne",
+    "newlineLinux": "Nouvelle ligne (Alt+Enter fonctionne pour certaines distros linux)",
+    "cancel": "Annuler/Interrompre",
+    "clear": "Effacer l'écran",
+    "exit": "Quitter",
+    "copy": "Copier dernière réponse",
+    "paste": "Coller du presse-papiers",
+    "jumpWords": "Sauter les mots dans l'entrée",
+    "quit": "Quitter l'application",
+    "clearScreen": "Effacer l'écran",
+    "selectionMode": "Entrer en mode sélection pour copier du texte",
+    "externalEditor": "Ouvrir l'entrée dans un éditeur externe",
+    "yoloMode": "Basculer le mode YOLO",
+    "sendMessage": "Envoyer message",
+    "cancelOrClear": "Annuler opération / Effacer entrée (double appui)",
+    "scrollPage": "Défiler page haut/bas",
+    "autoAcceptEdits": "Basculer l'auto-acceptation des modifications",
+    "promptHistory": "Parcourir l'historique des prompts",
+    "fullListSee": "Pour une liste complète des raccourcis, voir",
+    "history": {
+      "title": "Historique",
+      "previous": "Message précédent",
+      "next": "Message suivant"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "scrollUp": "Défiler vers le haut",
+      "scrollDown": "Défiler vers le bas",
+      "top": "Aller en haut",
+      "bottom": "Aller en bas"
+    }
+  },
+  "keys": {
+    "enter": "Entrée",
+    "shift": "Shift",
+    "ctrl": "Ctrl",
+    "alt": "Alt",
+    "cmd": "Cmd",
+    "esc": "Esc",
+    "tab": "Tab",
+    "space": "Espace",
+    "up": "↑",
+    "down": "↓",
+    "left": "←",
+    "right": "→"
+  },
+  "modes": {
+    "normal": "Mode normal",
+    "insert": "Mode insertion",
+    "visual": "Mode visuel"
+  }
+}

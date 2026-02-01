@@ -1,0 +1,495 @@
+{
+  "help": {
+    "description": "명령 및 사용법에 대한 도움말 표시",
+    "usage": "사용법: /help <명령>"
+  },
+  "clear": {
+    "description": "화면 및 채팅 기록 지우기",
+    "cleared": "화면 및 기록이 지워졌습니다."
+  },
+  "quit": {
+    "description": "Gemini CLI 종료"
+  },
+  "model": {
+    "description": "현재 Gemini 모델 보기 또는 변경",
+    "current": "현재 모델: {{model}}",
+    "changed": "모델이 {{model}}(으)로 변경되었습니다.",
+    "usage": "사용법: /model [모델 이름]",
+    "list": "사용 가능한 모델:"
+  },
+  "theme": {
+    "description": "CLI 테마 변경",
+    "current": "현재 테마: {{theme}}",
+    "changed": "테마가 {{theme}}(으)로 변경되었습니다.",
+    "usage": "사용법: /theme [테마 이름]",
+    "list": "사용 가능한 테마:"
+  },
+  "stats": {
+    "description": "사용 통계 표시",
+    "usage": "사용법: /stats [model | tools]"
+  },
+  "copy": {
+    "description": "마지막 응답을 클립보드에 복사",
+    "copied": "클립보드에 복사되었습니다!",
+    "noResponse": "복사할 응답이 없습니다."
+  },
+  "save": {
+    "description": "현재 채팅 기록을 파일에 저장",
+    "usage": "사용법: /save <파일 경로>",
+    "saved": "채팅 기록이 {{path}}에 저장되었습니다.",
+    "error": "저장 실패: {{error}}"
+  },
+  "restore": {
+    "description": "파일에서 채팅 기록 복원",
+    "usage": "사용법: /restore <파일 경로>",
+    "restored": "{{path}}에서 채팅 기록이 복원되었습니다.",
+    "error": "복원 실패: {{error}}"
+  },
+  "memory": {
+    "description": "지침 메모리(GEMINI.md) 보기 또는 관리",
+    "usage": "사용법: /memory [show | add | clear | list | refresh]",
+    "show": {
+      "description": "현재 지침 메모리 표시",
+      "empty": "메모리가 비어 있습니다."
+    },
+    "add": {
+      "description": "메모리에 콘텐츠 추가",
+      "usage": "사용법: /memory add <콘텐츠>",
+      "added": "메모리에 추가되었습니다."
+    },
+    "clear": {
+      "description": "메모리 지우기",
+      "cleared": "메모리가 지워졌습니다."
+    },
+    "list": {
+      "description": "로드된 모든 GEMINI.md 파일 나열",
+      "empty": "로드된 GEMINI.md 파일이 없습니다."
+    },
+    "refresh": {
+      "description": "GEMINI.md 파일에서 메모리 다시 로드",
+      "refreshed": "메모리가 다시 로드되었습니다."
+    }
+  },
+  "tools": {
+    "description": "사용 가능한 도구 나열",
+    "list": "사용 가능한 도구:",
+    "noTools": "사용 가능한 도구가 없습니다."
+  },
+  "mcp": {
+    "description": "Model Context Protocol (MCP) 서버 및 도구 관리",
+    "usage": "사용법: /mcp [list | auth | refresh]",
+    "list": {
+      "description": "연결된 모든 MCP 서버 및 도구 나열",
+      "servers": "MCP 서버:",
+      "tools": "도구:",
+      "noServers": "연결된 MCP 서버가 없습니다.",
+      "noTools": "도구가 없습니다."
+    },
+    "auth": {
+      "description": "MCP 서버로 인증",
+      "usage": "사용법: /mcp auth <서버 이름>",
+      "success": "{{server}}에 대해 인증되었습니다.",
+      "failed": "{{server}} 인증 실패: {{error}}"
+    },
+    "refresh": {
+      "description": "MCP 서버 연결 및 도구 새로 고침",
+      "refreshing": "MCP 서버 새로 고침 중...",
+      "success": "MCP 서버가 새로 고쳐졌습니다.",
+      "failed": "MCP 서버 새로 고침 실패: {{error}}"
+    }
+  },
+  "chat": {
+    "description": "채팅 세션 관리",
+    "usage": "사용법: /chat [list | save | resume | delete | share]",
+    "list": {
+      "description": "저장된 채팅 세션 나열",
+      "empty": "저장된 채팅 세션이 없습니다."
+    },
+    "save": {
+      "description": "현재 채팅 세션 저장",
+      "usage": "사용법: /chat save <태그>",
+      "saved": "채팅 세션이 태그 \"{{tag}}\"로 저장되었습니다."
+    },
+    "resume": {
+      "description": "저장된 채팅 세션 재개",
+      "usage": "사용법: /chat resume <태그>",
+      "resumed": "태그 \"{{tag}}\"의 채팅 세션이 재개되었습니다.",
+      "notFound": "태그 \"{{tag}}\"의 채팅 세션을 찾을 수 없습니다."
+    },
+    "delete": {
+      "description": "저장된 채팅 세션 삭제",
+      "usage": "사용법: /chat delete <태그>",
+      "deleted": "태그 \"{{tag}}\"의 채팅 세션이 삭제되었습니다.",
+      "notFound": "태그 \"{{tag}}\"의 채팅 세션을 찾을 수 없습니다."
+    },
+    "share": {
+      "description": "채팅 세션을 공유 가능한 파일(markdown)로 내보내기",
+      "usage": "사용법: /chat share <파일 경로>",
+      "shared": "채팅 세션이 {{path}}로 내보내졌습니다."
+    }
+  },
+  "compress": {
+    "description": "컨텍스트 창 저장을 위해 채팅 기록 압축",
+    "compressing": "채팅 기록 압축 중...",
+    "success": "채팅 기록이 압축되었습니다. ({{ratio}}% 감소)",
+    "failed": "채팅 기록 압축 실패: {{error}}"
+  },
+  "about": {
+    "description": "Gemini CLI에 대한 정보 표시",
+    "title": "Gemini CLI 정보",
+    "version": "버전: {{version}}"
+  },
+  "bug": {
+    "description": "버그 신고",
+    "usage": "사용법: /bug [제목]",
+    "opened": "브라우저에서 버그 신고 페이지가 열렸습니다."
+  },
+  "docs": {
+    "description": "문서 열기",
+    "opened": "브라우저에서 문서가 열렸습니다."
+  },
+  "directory": {
+    "description": "작업 공간 디렉토리 관리",
+    "usage": "사용법: /directory [add | remove | list | show]",
+    "add": {
+      "description": "작업 공간에 디렉토리 추가",
+      "usage": "사용법: /directory add <경로>",
+      "added": "디렉토리 {{path}}이(가) 추가되었습니다."
+    },
+    "remove": {
+      "description": "작업 공간에서 디렉토리 제거",
+      "usage": "사용법: /directory remove <경로>",
+      "removed": "디렉토리 {{path}}이(가) 제거되었습니다."
+    },
+    "list": {
+      "description": "작업 공간의 모든 디렉토리 나열",
+      "empty": "디렉토리가 없습니다."
+    },
+    "show": {
+      "description": "작업 공간의 모든 디렉토리 보기 (별칭)"
+    }
+  },
+  "extensions": {
+    "description": "확장 프로그램 관리",
+    "install": {
+      "success": "확장 프로그램 \"{{name}}\"이(가) 설치되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 설치 실패: {{error}}",
+      "description": "확장 프로그램을 설치합니다. 사용법: /extensions install <이름>"
+    },
+    "uninstall": {
+      "success": "확장 프로그램 \"{{name}}\"이(가) 제거되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 제거 실패: {{error}}",
+      "description": "확장 프로그램을 제거합니다. 사용법: /extensions uninstall <이름>"
+    },
+    "update": {
+      "success": "확장 프로그램 \"{{name}}\"이(가) 업데이트되었습니다.",
+      "successAll": "모든 확장 프로그램이 업데이트되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 업데이트 실패: {{error}}",
+      "failedAll": "모든 확장 프로그램 업데이트 실패: {{error}}",
+      "upToDate": "확장 프로그램 \"{{name}}\"은(는) 최신 상태입니다.",
+      "upToDateAll": "모든 확장 프로그램이 최신 상태입니다.",
+      "description": "확장 프로그램을 업데이트합니다. 사용법: /extensions update [이름]"
+    },
+    "list": {
+      "platform": "플랫폼",
+      "user": "사용자",
+      "workspace": "작업 공간",
+      "description": "설치된 확장 프로그램을 나열합니다."
+    },
+    "link": {
+      "success": "확장 프로그램 \"{{name}}\"이(가) 연결되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 연결 실패: {{error}}",
+      "description": "개발용 로컬 확장 프로그램을 연결합니다. 사용법: /extensions link <경로>"
+    },
+    "new": {
+      "description": "새 확장 프로그램을 만듭니다. 사용법: /extensions new <이름>"
+    },
+    "validate": {
+      "description": "확장 프로그램을 검증합니다. 사용법: /extensions validate <경로>"
+    },
+    "configure": {
+      "description": "확장 프로그램을 구성합니다. 사용법: /extensions configure <이름>"
+    },
+    "enable": {
+      "description": "확장 프로그램을 활성화합니다. 사용법: /extensions enable <이름>",
+      "success": "확장 프로그램 \"{{name}}\"이(가) 활성화되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 활성화 실패: {{error}}"
+    },
+    "disable": {
+      "description": "확장 프로그램을 비활성화합니다. 사용법: /extensions disable <이름>",
+      "success": "확장 프로그램 \"{{name}}\"이(가) 비활성화되었습니다.",
+      "failed": "확장 프로그램 \"{{name}}\" 비활성화 실패: {{error}}"
+    },
+    "scopeUnsupported": "지원되지 않는 범위: {{scope}}",
+    "describe": "Gemini CLI 확장 프로그램을 관리합니다."
+  },
+  "settings": {
+    "description": "Gemini CLI 설정 보기 및 편집"
+  },
+  "auth": {
+    "description": "인증 관리",
+    "login": {
+      "description": "로그인 또는 인증 방법 변경"
+    },
+    "logout": {
+      "description": "로그아웃 및 모든 캐시된 자격 증명 지우기"
+    }
+  },
+  "privacy": {
+    "description": "개인정보 고지 사항 보기"
+  },
+  "permissions": {
+    "description": "폴더 신뢰 및 기타 권한 관리",
+    "trust": {
+      "description": "폴더 신뢰 설정을 관리합니다. 사용법: /permissions trust [<디렉토리 경로>]"
+    }
+  },
+  "skills": {
+    "description": "Gemini CLI 에이전트 스킬 나열, 활성화, 비활성화 또는 다시 로드. 사용법: /skills [list | disable <이름> | enable <이름> | reload]",
+    "noSkillManager": "스킬 관리자를 가져올 수 없습니다.",
+    "noConfig": "구성을 가져올 수 없습니다.",
+    "reloading": "에이전트 스킬 다시 로드 중...",
+    "reloadSuccess": "에이전트 스킬을 성공적으로 다시 로드했습니다.",
+    "newlyAvailable": "{{count}}개의 새로운 스킬을 사용할 수 있습니다{{suffix}}",
+    "noLongerAvailable": "{{count}}개의 스킬을 더 이상 사용할 수 없습니다{{suffix}}",
+    "reloadHint": "활성화하려면 \"/skills reload\"를 사용하세요.",
+    "reloadFailed": "스킬 다시 로드 실패: {{error}}",
+    "disabledByAdmin": "에이전트 스킬이 관리자에 의해 비활성화되었습니다.",
+    "notFound": "스킬 \"{{name}}\"을(를) 찾을 수 없습니다.",
+    "noSkillNameDisable": "비활성화할 스킬 이름을 제공해주세요.",
+    "noSkillNameEnable": "활성화할 스킬 이름을 제공해주세요.",
+    "consent": {
+      "installingSkillsFrom": "\"{{source}}\"에서 에이전트 스킬을 설치 중입니다.",
+      "skillsWillBeInstalled": "다음 에이전트 스킬이 설치됩니다:",
+      "installDestination": "설치 위치: {{path}}"
+    },
+    "list": {
+      "description": "사용 가능한 에이전트 스킬을 나열합니다. 사용법: /skills list [nodesc] [all]",
+      "availableTitle": "사용 가능한 에이전트 스킬:",
+      "disabledTitle": "비활성화된 스킬:",
+      "empty": "사용 가능한 스킬 없음",
+      "builtinBadge": " [내장]"
+    },
+    "disable": {
+      "description": "이름으로 스킬을 비활성화합니다. 사용법: /skills disable <이름>"
+    },
+    "enable": {
+      "description": "이름으로 비활성화된 스킬을 활성화합니다. 사용법: /skills enable <이름>"
+    },
+    "reload": {
+      "description": "감지된 스킬 목록을 다시 로드합니다. 사용법: /skills reload"
+    }
+  },
+  "rewind": {
+    "description": "특정 메시지로 되감고 대화 재개",
+    "noConfig": "구성을 찾을 수 없음",
+    "noClient": "클라이언트가 초기화되지 않음",
+    "noRecording": "녹화 서비스를 사용할 수 없음",
+    "noConversation": "대화를 찾을 수 없습니다.",
+    "nothingToRewind": "되감을 내용이 없습니다.",
+    "fetchFailed": "대화 파일을 가져오지 못했습니다",
+    "unknownError": "되감기 중 알 수 없는 오류 발생",
+    "filesReverted": "파일이 되돌려졌습니다.",
+    "revert": {
+      "readError": "되돌리는 중 {{fileName}} 읽기 오류: {{error}}",
+      "smartFailed": "{{fileName}} 스마트 되돌리기 실패",
+      "missingFile": "되돌리는 중 {{fileName}} 파일이 누락되었습니다.",
+      "unexpectedError": "{{fileName}}을(를) 되돌리는 중 예기치 않은 오류가 발생했습니다."
+    }
+  },
+  "hooks": {
+    "description": "후크 관리",
+    "list": {
+      "description": "모든 후크 나열"
+    },
+    "panel": {
+      "description": "등록된 모든 후크 및 상태 표시",
+      "securityWarningTitle": "보안 경고",
+      "securityWarningBody": "후크는 컴퓨터에서 명령을 실행할 수 있습니다. 신뢰할 수 있는 소스의 후크만 활성화하세요.",
+      "learnMoreLabel": "더 알아보기:",
+      "learnMoreUrl": "https://geminicli.com/docs/hooks",
+      "configuredTitle": "구성된 후크:",
+      "unknown": "알 수 없음",
+      "status": {
+        "enabled": "활성화됨",
+        "disabled": "비활성화됨"
+      },
+      "sourceLabel": "소스: {{source}}",
+      "commandLabel": "명령: {{command}}",
+      "matcherLabel": "매처: {{matcher}}",
+      "sequentialLabel": "순차적",
+      "timeoutLabel": "시간 초과: {{seconds}}초",
+      "tip": {
+        "prefix": "팁: ",
+        "or": " 또는 ",
+        "middle": ". ",
+        "suffix": "을(를) 사용할 수도 있습니다."
+      },
+      "commands": {
+        "enable": "/hooks enable {{hookName}}",
+        "disable": "/hooks disable {{hookName}}",
+        "enableAll": "/hooks enable-all",
+        "disableAll": "/hooks disable-all"
+      },
+      "hookNamePlaceholder": "<후크 이름>"
+    },
+    "enable": {
+      "description": "이름으로 후크 활성화"
+    },
+    "disable": {
+      "description": "이름으로 후크 비활성화"
+    },
+    "enableAll": {
+      "description": "비활성화된 모든 후크 활성화"
+    },
+    "disableAll": {
+      "description": "활성화된 모든 후크 비활성화"
+    },
+    "configNotLoaded": "구성이 로드되지 않았습니다.",
+    "hookSystemNotEnabled": "후크 시스템이 활성화되지 않았습니다.",
+    "usageEnable": "사용법: /hooks enable <후크 이름>",
+    "usageDisable": "사용법: /hooks disable <후크 이름>",
+    "enabledSuccess": "후크 \"{{name}}\"이(가) 성공적으로 활성화되었습니다.",
+    "disabledSuccess": "후크 \"{{name}}\"이(가) 성공적으로 비활성화되었습니다.",
+    "failedToEnable": "후크 활성화 실패: {{error}}",
+    "failedToDisable": "후크 비활성화 실패: {{error}}",
+    "noHooksConfigured": "구성된 후크가 없습니다.",
+    "allHooksEnabled": "모든 후크가 이미 활성화되어 있습니다.",
+    "allHooksDisabled": "모든 후크가 이미 비활성화되어 있습니다.",
+    "enabledCount": "{{count}}개의 후크가 성공적으로 활성화되었습니다.",
+    "disabledCount": "{{count}}개의 후크가 성공적으로 비활성화되었습니다.",
+    "failedToEnableAll": "후크 활성화 실패: {{error}}",
+    "failedToDisableAll": "후크 비활성화 실패: {{error}}"
+  },
+  "policies": {
+    "description": "정책 관리",
+    "errorConfigNotAvailable": "오류: 구성을 사용할 수 없습니다.",
+    "noActive": "활성 정책이 없습니다.",
+    "list": {
+      "description": "모든 활성 정책 나열",
+      "title": "활성 정책",
+      "tool": "도구",
+      "allTools": "모든 도구",
+      "argsMatch": "인수 일치",
+      "priority": "우선순위",
+      "source": "소스"
+    }
+  },
+  "profile": {
+    "description": "프로필 관리",
+    "toggled": "프로필 보기가 전환되었습니다."
+  },
+  "init": {
+    "description": "새 프로젝트 초기화",
+    "configNotAvailable": "구성을 사용할 수 없습니다.",
+    "alreadyExists": "이 디렉토리에 GEMINI.md 파일이 이미 존재합니다. 변경 사항이 없습니다.",
+    "emptyCreated": "빈 GEMINI.md 파일을 생성했습니다."
+  },
+  "editor": {
+    "description": "외부 편집기 기본 설정 구성"
+  },
+  "ide": {
+    "description": "IDE 통합 명령",
+    "status": {
+      "description": "IDE 통합 상태 확인",
+      "connected": "{{ide}}에 연결됨",
+      "connecting": "연결 중...",
+      "disconnected": "연결 끊김",
+      "disconnectedWithDetails": "연결 끊김: {{details}}",
+      "activeSuffix": "(활성)",
+      "fileListNote": "참고: 활성 파일만 추적됨",
+      "openFilesHeader": "열린 파일:"
+    },
+    "install": {
+      "description": "{{ide}}용 IDE 확장 프로그램 설치",
+      "noInstaller": "{{ide}} ({{extension}})용 설치 프로그램을 사용할 수 없음",
+      "installing": "확장 프로그램 설치 중...",
+      "autoEnableFailed": "IDE 통합 자동 활성화 실패. 이를 수정하려면 새 터미널 창에서 CLI를 시작하세요."
+    },
+    "enable": {
+      "description": "IDE 통합 활성화"
+    },
+    "disable": {
+      "description": "IDE 통합 비활성화"
+    },
+    "unsupported": "이 환경에서는 IDE 통합이 지원되지 않습니다."
+  },
+  "vim": {
+    "description": "Vim 모드 전환",
+    "entered": "Vim 모드에 진입했습니다.",
+    "exited": "Vim 모드를 종료했습니다."
+  },
+  "terminalSetup": {
+    "description": "터미널 설정 구성",
+    "restartRequired": "변경 사항을 적용하려면 터미널을 다시 시작하세요.",
+    "failed": "터미널 설정 실패: {{error}}",
+    "windowsConfigPathMissing": "{{terminal}} 설정 디렉토리를 찾을 수 없습니다. 설치되어 있습니까?",
+    "keybindingsNotArray": "{{terminal}} 키 바인딩 파일({{file}})이 JSON 배열이 아닙니다.",
+    "keybindingsParseFailed": "{{terminal}} 키 바인딩 파일({{file}}) 구문 분석 실패: 유효하지 않은 JSON ({{error}})",
+    "alreadyConfigured": "{{terminal}}이(가) Shift+Enter 지원을 위해 이미 구성되어 있습니다.",
+    "existingBindingsShift": "- 기존 'shift+enter' 바인딩 발견",
+    "existingBindingsCtrl": "- 기존 'ctrl+enter' 바인딩 발견",
+    "existingBindingsHeader": "기존의 충돌하는 키 바인딩 발견:",
+    "existingBindingsFooter": "필요한 경우 바인딩을 추가하도록 {{file}}을(를) 수동으로 편집하세요.",
+    "addedBindings": "{{terminal}}이(가) 성공적으로 구성되었습니다! {{file}}에 키 바인딩이 추가되었습니다.",
+    "configureFailed": "{{terminal}} ({{file}}) 구성 실패: {{error}}",
+    "kittyAlreadyConfigured": "Kitty 키보드 프로토콜 지원이 감지되었습니다! 추가 구성 없이 여러 줄 입력이 자동으로 작동합니다.",
+    "detectFailed": "터미널 에뮬레이터를 자동 감지할 수 없습니다. 수동 설정에 대해서는 문서를 확인하세요.",
+    "notSupported": "{{terminal}}에 대한 자동 설정은 현재 지원되지 않습니다. 수동 설정에 대해서는 문서를 확인하세요."
+  },
+  "setupGithub": {
+    "description": "GitHub 통합 설정",
+    "notGitRepo": "GitHub 리포지토리가 아닙니다.",
+    "downloadSuccess": "{{workflows}}개의 워크플로와 {{commands}}개의 명령 파일을 다운로드했습니다. 설정을 완료하려면 {{url}}을(를) 참조하세요.",
+    "toolDescription": "GitHub Actions 구성"
+  },
+  "resume": {
+    "description": "이전 세션 재개"
+  },
+  "agents": {
+    "description": "AI 에이전트 관리",
+    "list": {
+      "description": "사용 가능한 로컬 및 원격 에이전트 나열",
+      "configNotLoaded": "구성이 로드되지 않았습니다.",
+      "registryNotFound": "에이전트 레지스트리를 찾을 수 없습니다.",
+      "empty": "사용 가능한 에이전트가 없습니다.",
+      "localTitle": "로컬 에이전트",
+      "remoteTitle": "원격 에이전트"
+    },
+    "enable": {
+      "description": "비활성화된 에이전트 활성화",
+      "usage": "사용법: /agents enable <에이전트 이름>",
+      "registryNotFound": "에이전트 레지스트리를 찾을 수 없습니다.",
+      "alreadyEnabled": "에이전트 \"{{name}}\"은(는) 이미 활성화되어 있습니다.",
+      "notFound": "에이전트 \"{{name}}\"을(를) 찾을 수 없습니다.",
+      "enabling": "{{name}} 활성화 중..."
+    },
+    "disable": {
+      "description": "활성화된 에이전트 비활성화",
+      "usage": "사용법: /agents disable <에이전트 이름>",
+      "registryNotFound": "에이전트 레지스트리를 찾을 수 없습니다.",
+      "alreadyDisabled": "에이전트 \"{{name}}\"은(는) 이미 비활성화되어 있습니다.",
+      "notFound": "에이전트 \"{{name}}\"을(를) 찾을 수 없습니다.",
+      "disabling": "{{name}} 비활성화 중..."
+    },
+    "refresh": {
+      "description": "에이전트 레지스트리 다시 로드",
+      "registryNotFound": "에이전트 레지스트리를 찾을 수 없습니다.",
+      "refreshing": "에이전트 상쾌하게 하는 중...",
+      "success": "에이전트를 성공적으로 새로 고쳤습니다."
+    },
+    "feedback": {
+      "error": "에이전트 \"{{agentName}}\"을(를) {{action}}하는 중 오류 발생.",
+      "alreadyEnabled": "에이전트 \"{{agentName}}\"은(는) 이미 활성화되어 있습니다.",
+      "alreadyDisabled": "에이전트 \"{{agentName}}\"은(는) 이미 비활성화되어 있습니다.",
+      "enabledTwoScopes": "{{scope1}} 및 {{scope2}} 구성 모두에서 활성화하여 에이전트 \"{{agentName}}\"을(를) 활성화했습니다.",
+      "disabledTwoScopes": "에이전트 \"{{agentName}}\"은(는) 이제 {{scope1}} 및 {{scope2}} 구성 모두에서 비활성화되었습니다.",
+      "singleScope": "{{scope}} 구성에서 {{enabledDisabled}}(으)로 설정하여 에이전트 \"{{agentName}}\"을(를) {{actionVerb}}했습니다.",
+      "scopeProject": "프로젝트",
+      "scopeUser": "사용자"
+    }
+  },
+  "corgi": {
+    "description": "코기 모드 전환"
+  }
+}

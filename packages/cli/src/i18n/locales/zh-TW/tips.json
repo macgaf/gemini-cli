@@ -1,0 +1,24 @@
+{
+  "gettingStarted": {
+    "title": "入門提示：",
+    "tip1": "提問、編輯檔案或執行命令。",
+    "tip2": "描述越具體，效果越好。",
+    "tip3Prefix": "建立",
+    "tip3Suffix": "檔案來自定義與 Gemini 的交互方式。",
+    "tip4Suffix": "取得更多資訊。"
+  },
+  "welcome": {
+    "title": "欢迎使用 Gemini CLI",
+    "subtitle": "您的 AI 編程助手"
+  },
+  "shortcuts": {
+    "title": "快捷鍵：",
+    "helpHint": "輸入 /help 查看可用命令"
+  },
+  "features": {
+    "codeEditing": "直接編輯檔案",
+    "runCommands": "執行 shell 命令",
+    "askQuestions": "提問編程問題",
+    "generateCode": "生成程式碼片段"
+  }
+}
