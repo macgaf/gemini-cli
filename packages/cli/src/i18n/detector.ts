@@ -126,6 +126,9 @@ function parseLocaleToLanguage(locale: string): string | null {
   if (langOnly === 'de') {
     return 'de';
   }
+  if (langOnly === 'ko') {
+    return 'ko';
+  }
 
   return null;
 }

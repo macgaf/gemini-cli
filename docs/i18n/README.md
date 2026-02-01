@@ -1,30 +1,37 @@
-# CLI 多语言支持说明
+[English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md)
+| [Français](README.fr.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) |
+[한국어](README.ko.md) | [Español](README.es.md) | [Русский](README.ru.md)
 
-本文档说明当前 CLI 的多语言支持范围、切换方式，以及如何补充翻译内容。
+# CLI Multi-language Support Guide
 
-## 当前支持的语言
+This document explains the scope of multi-language support in the current CLI,
+how to switch languages, and how to add translations.
 
-- 英语：`en`
-- 简体中文：`zh-CN`
-- 繁体中文：`zh-TW`
-- 法语：`fr`
-- 日语：`ja`
-- 西班牙语：`es`
-- 俄语：`ru`
-- 德语：`de`
+## Currently Supported Languages
 
-### 说明
+- English: `en`
+- Simplified Chinese: `zh-CN`
+- Traditional Chinese: `zh-TW`
+- French: `fr`
+- Japanese: `ja`
+- German: `de`
+- Korean: `ko`
+- Spanish: `es`
+- Russian: `ru`
 
-- 目前 `fr/ja/es/ru/de` 直接复用 `zh-CN`
-  文案作为显示内容，确保界面可用且不显示占位前缀。
-- `zh-TW` 基于简繁自动转换并进行了人工修订，仍建议结合实际 UI 复核用词与语气。
-- 若需要完整本地化，请参考下文“如何补充翻译”。
+### Explanation
 
-## 如何切换语言
+- `zh-TW` is based on automated Simplified-Traditional conversion with manual
+  revision. It is recommended to review wording and tone against the actual UI.
+- If you need to add a new language, please refer to "How to Add Translations"
+  below.
 
-你可以通过以下方式选择界面语言（修改后需要重启 CLI 生效）：
+## How to Switch Languages
 
-1. **设置文件** 在 `.gemini/settings.json` 中设置：
+You can select the interface language in the following ways (restart CLI to take
+effect):
+
+1. **Settings File** Set in `.gemini/settings.json`:
 
 ```json
 {
@@ -34,19 +41,36 @@
 }
 ```
 
-2. **环境变量**
+2. **Environment Variable**
 
 ```bash
 export GEMINI_LANG=fr
 ```
 
-> 若同时设置了多种来源，优先级为：命令行参数（若存在） > 环境变量 > 设置文件 > 系统区域设置。
+```bash
+export GEMINI_LANG=fr
+```
 
-## 如何补充翻译
+3. **Interactive Settings**
 
-### CLI 层翻译（界面与提示）
+Run the `gemini settings` command (or enter the interactive settings menu),
+navigate to the `language` option, select your language, and confirm. Restart
+the CLI for changes to take effect.
 
-1. 在 `packages/cli/src/i18n/locales/` 下创建语言目录，例如 `fr`：
+4. **System Locale**
+
+If the above configurations are not set, the CLI will default to using the
+system's locale (if supported).
+
+> If multiple sources are set, priority is: Command Line Args (if any) >
+> Environment Variable > Settings File > System Locale.
+
+## How to Add Translations
+
+### CLI Layer Translations (UI & Prompts)
+
+1. Create a language directory under `packages/cli/src/i18n/locales/`, e.g.,
+   `fr`:
 
 ```
 packages/cli/src/i18n/locales/fr/
@@ -61,23 +85,25 @@ packages/cli/src/i18n/locales/fr/
   phrases.json
 ```
 
-2. 可以先复制英文文件作为模板：
+2. You can copy English files as a template:
 
 ```bash
 cp -R packages/cli/src/i18n/locales/en packages/cli/src/i18n/locales/fr
 ```
 
-3. 修改 `packages/cli/src/i18n/index.ts`，将新语言资源映射到实际的 JSON 文件。
+3. Modify `packages/cli/src/i18n/index.ts` to map the new language resources to
+   the actual JSON files.
 
-### Core 层翻译（日志与底层提示）
+### Core Layer Translations (Logs & Low-level Prompts)
 
-- Core 目前提供中文翻译文件：`packages/core/src/i18n/locales/zh-CN.json`、`packages/core/src/i18n/locales/zh-TW.json`
-- 如需其他语言，可新增对应 JSON，并在 `packages/core/src/i18n/index.ts` 中注册
+- Core currently provides translation files:
+  `packages/core/src/i18n/locales/zh-CN.json`,
+  `packages/core/src/i18n/locales/zh-TW.json`
+- For other languages, add corresponding JSON and register in
+  `packages/core/src/i18n/index.ts`.
 
-## 翻译注意事项
+## Translation Notes
 
-- 保持 key 不变，仅翻译 value
-- 保持变量占位符不变，例如 `{{name}}`、`{{count}}`
-- 数组类型的翻译需保持数组结构
-
-如需我继续补全具体语言的翻译内容，请指定目标语言与优先级。
+- Keep keys unchanged, translate only values.
+- Keep variable placeholders unchanged, e.g., `{{name}}`, `{{count}}`.
+- Array type translations must maintain array structure.
